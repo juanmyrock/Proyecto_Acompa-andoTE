@@ -41,11 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Login\cls_BloquearUser.cs" />
+    <Compile Include="Login\cls_CambiarPass.cs" />
+    <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Login\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>
