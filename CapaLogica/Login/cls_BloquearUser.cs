@@ -8,7 +8,7 @@ namespace CapaLogicaNegocio.Logica_Login
     {
         public cls_BloquearUser(string usuario)
     {
-        cls_BloquearUserQ Bloquear = new cls_BloquearUserQ();
+        //cls_BloquearUserQ Bloquear = new cls_BloquearUserQ();
         Bloquear.BloquearUsuario(usuario);
     }
 }
