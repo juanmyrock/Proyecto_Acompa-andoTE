@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaSesion
+namespace CapaServicios
 {
-    public class Class1
+    internal class cls_DigitVerif
     {
     }
 }

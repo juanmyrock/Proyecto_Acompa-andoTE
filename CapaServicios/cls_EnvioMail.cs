@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CapaServicios
 {
-    public class Class1
+    internal class cls_EnvioMail
     {
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
-using CapaDatos.Query_Login;
+using CapaDatos.Login;
 using CapaSesion;
 using CapaServicios;
 
-namespace CapaLogicaNegocio.Logica_Login
+namespace CapaLogica.Login
 {
     public class cls_LogicaLogin
     {

@@ -9,7 +9,7 @@ namespace CapaDatos
                                                   //solo puede ser establecido adentro del constructor de la clase en este caso.
         public cls_ConexionBD()
         {
-            conexion = $"Server=DESKTOP-HJFED8D; Database=LoginBD; User Id=DESKTOP-HJFED8D\\juanm; Integrated Security=True;"; // Si no usamos Integrated Security (por defecto de Windows)
+            conexion = $"Server=DESKTOP-HJFED8D; Database=ProyectoAT; User Id=DESKTOP-HJFED8D\\juanm; Integrated Security=True;"; // Si no usamos Integrated Security (por defecto de Windows)
                                                                                                                                 // y sí autenticación SQL, hay que incluir Password.
         }
 

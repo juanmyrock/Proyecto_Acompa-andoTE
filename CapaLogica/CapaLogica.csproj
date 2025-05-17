@@ -41,12 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\cls_Empleados.cs" />
+    <Compile Include="Entidades\cls_Usuarios.cs" />
     <Compile Include="Login\cls_BloquearUser.cs" />
     <Compile Include="Login\cls_CambiarPass.cs" />
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Llenar Combos\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>
