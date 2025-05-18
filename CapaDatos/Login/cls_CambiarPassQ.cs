@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CapaDatos.Querys_Login
+namespace CapaDatos.Login
 {
     public class cls_CambiarPassQ : cls_EjecutarQ
     {

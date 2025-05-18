@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{64182B3C-C9F4-4D08-AC8A-12EF479EA15F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B1A67CE0-7577-46AA-8CF0-B57D4EDCBA9C} = {B1A67CE0-7577-46AA-8CF0-B57D4EDCBA9C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaLogica", "CapaLogica\CapaLogica.csproj", "{A9EDB598-C99A-44D9-A0A1-7F798410DA2F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -22,9 +25,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaServicios", "CapaServicios\CapaServicios.csproj", "{C57E7C55-1B10-4DCD-B5E2-F14C4BB7AF4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaSesion", "CapaSesion\CapaSesion.csproj", "{B1A67CE0-7577-46AA-8CF0-B57D4EDCBA9C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{64182B3C-C9F4-4D08-AC8A-12EF479EA15F} = {64182B3C-C9F4-4D08-AC8A-12EF479EA15F}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

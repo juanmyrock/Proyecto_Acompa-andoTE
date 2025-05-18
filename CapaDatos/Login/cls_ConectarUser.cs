@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using CapaSesion;
 
-namespace CapaDatos.Query_Login
+namespace CapaDatos.Login
 {
     public class cls_ConectarUser : cls_EjecutarQ
     {

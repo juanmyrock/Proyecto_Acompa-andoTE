@@ -52,6 +52,14 @@
     <Compile Include="Login\cls_Permisos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapaSesion\CapaSesion.csproj">
+      <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
+      <Name>CapaSesion</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

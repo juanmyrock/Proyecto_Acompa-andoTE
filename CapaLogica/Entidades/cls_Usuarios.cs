@@ -2,7 +2,7 @@
 using System.Data;
 using CapaDatos.Entidades;
 
-namespace CapaLogicaNegocio.Entidades
+namespace CapaLogica.Entidades
 {
     public class cls_Usuarios
     {

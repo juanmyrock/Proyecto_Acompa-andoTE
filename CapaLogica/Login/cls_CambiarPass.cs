@@ -1,6 +1,5 @@
 ﻿using System;
-using CapaDatos.Query_Login;
-using CapaDatos.Querys_Login;
+using CapaDatos.Login;
 using CapaSesion;
 using CapaServicios;
 
