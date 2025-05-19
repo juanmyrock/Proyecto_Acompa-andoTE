@@ -7,7 +7,7 @@ namespace CapaLogicaNegocio.Logica_Login
 {
     public class cls_CambiarPass
     {
-        cls_ConectarUser VerificaPass = new cls_ConectarUser();
+        cls_ConectarUserQ VerificaPass = new cls_ConectarUserQ();
 
 
         private bool existe;
@@ -19,8 +19,8 @@ namespace CapaLogicaNegocio.Logica_Login
             {
                 if (passNueva == passNueva2)
                 {
-                    cls_CambiarPassQ MP = new cls_CambiarPassQ();
-                    MP.ModificaPass(idUser: cls_UserCache.IdUsuario, pass: cls_Encriptacion.SHA256(passNueva));
+                    cls_ContraseñaQ MP = new cls_ContraseñaQ();
+                    //MP.ModificaPass(idUser: cls_SesionUsuario.IdUsuario, pass: cls_Encriptacion.SHA256(passNueva));
                 }
                 else
                 {

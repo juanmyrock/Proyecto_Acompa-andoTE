@@ -58,11 +58,29 @@
     <Compile Include="Forms Login\frmRecuperarContraseña.designer.cs">
       <DependentUpon>frmRecuperarContraseña.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmEmpleados.designer.cs">
+      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmUsuarios.designer.cs">
+      <DependentUpon>frmUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmLogin.designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMenu.designer.cs">
+      <DependentUpon>frmMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,8 +90,17 @@
     <EmbeddedResource Include="Forms Login\frmRecuperarContraseña.resx">
       <DependentUpon>frmRecuperarContraseña.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
+      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmUsuarios.resx">
+      <DependentUpon>frmUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMenu.resx">
+      <DependentUpon>frmMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -102,9 +129,9 @@
       <Project>{a9edb598-c99a-44d9-a0a1-7f798410da2f}</Project>
       <Name>CapaLogica</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CapaServicios\CapaServicios.csproj">
+    <ProjectReference Include="..\CapaServicios\CapaUtilidades.csproj">
       <Project>{c57e7c55-1b10-4dcd-b5e2-f14c4bb7af4a}</Project>
-      <Name>CapaServicios</Name>
+      <Name>CapaUtilidades</Name>
     </ProjectReference>
     <ProjectReference Include="..\CapaSesion\CapaSesion.csproj">
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>

@@ -43,19 +43,24 @@
   <ItemGroup>
     <Compile Include="AccesoBD\cls_ConexionBD.cs" />
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
-    <Compile Include="Entidades\cls_EmpleadosQ.cs" />
-    <Compile Include="Entidades\cls_UsuariosQ.cs" />
+    <Compile Include="ABM\cls_EmpleadosQ.cs" />
+    <Compile Include="ABM\cls_UsuariosQ.cs" />
     <Compile Include="LlenarCombos\cls_LlenarCombosQ.cs" />
-    <Compile Include="Login\cls_BloquearUserQ.cs" />
-    <Compile Include="Login\cls_CambiarPassQ.cs" />
-    <Compile Include="Login\cls_ConectarUser.cs" />
-    <Compile Include="Login\cls_Permisos.cs" />
+    <Compile Include="Login\cls_ContraseñaQ.cs" />
+    <Compile Include="Login\cls_ConectarUserQ.cs" />
+    <Compile Include="Login\cls_ParamContraseñaQ.cs" />
+    <Compile Include="Login\cls_PermisosQ.cs" />
+    <Compile Include="Login\cls_RolQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CapaDTO\CapaDTO.csproj">
+      <Project>{16026b95-b08d-411b-856e-563c3c97e2fc}</Project>
+      <Name>CapaDTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CapaSesion\CapaSesion.csproj">
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
       <Name>CapaSesion</Name>

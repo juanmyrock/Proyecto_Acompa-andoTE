@@ -196,12 +196,12 @@ namespace CapaVistas
             else
             {
                 // Mostrar mensaje de ingreso exitoso y permisos del usuario
-                string permisos = "";
-                foreach (string elemento in cls_UserCache.PermisosUsuario)
-                {
-                    permisos += elemento + "\n";
-                }
-                MessageBox.Show($"¡Ingreso Exitoso!\n\n{cls_UserCache.ApellidoEmpleado} {cls_UserCache.NombreEmpleado}\n\nPERMISOS:\n{permisos}");
+                //string permisos = "";
+                //foreach (string elemento in cls_SesionUsuario.PermisosUsuario)
+                //{
+                //    permisos += elemento + "\n";
+                //}
+                //MessageBox.Show($"¡Ingreso Exitoso!\n\n{cls_SesionUsuario.ApellidoEmpleado} {cls_SesionUsuario.NombreEmpleado}\n\nPERMISOS:\n{permisos}");
                 // Aca va el registro en la bitácora 
                 // clsBitacora Guardar = new clsBitacora("Ingreso al Sistema", "Ingreso Exitoso", "frmLoguin");
 

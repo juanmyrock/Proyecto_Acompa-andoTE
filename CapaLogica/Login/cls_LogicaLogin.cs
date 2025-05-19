@@ -1,6 +1,6 @@
 ﻿using System;
 using CapaDatos.Login;
-using CapaSesion;
+using CapaSesion.Login;
 using CapaServicios;
 
 namespace CapaLogica.Login
@@ -11,13 +11,13 @@ namespace CapaLogica.Login
         {
             try
             {
-                cls_ConectarUser conexionUsuario = new cls_ConectarUser();
-                cls_Permisos permisos = new cls_Permisos();
+                cls_ConectarUserQ conexionUsuario = new cls_ConectarUserQ();
+                cls_PermisosQ permisos = new cls_PermisosQ();
                 
 
                 if (conexionUsuario.ValidarUsuario(user, pass)) //(user, cls_Encriptacion.SHA256(pass)))
                 {
-                    permisos.ObtenerPermisos(cls_UserCache.IdUsuario);
+                    permisos.ObtenerPermisos(cls_SesionUsuario.IdUsuario);
                     return conexionUsuario.CargarUsuario(user, pass); //(user, cls_Encriptacion.SHA256(pass));
                 }
                 else

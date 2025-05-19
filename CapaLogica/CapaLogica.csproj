@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,17 +49,15 @@
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Llenar Combos\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>
       <Name>CapaDatos</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CapaServicios\CapaServicios.csproj">
+    <ProjectReference Include="..\CapaServicios\CapaUtilidades.csproj">
       <Project>{c57e7c55-1b10-4dcd-b5e2-f14c4bb7af4a}</Project>
-      <Name>CapaServicios</Name>
+      <Name>CapaUtilidades</Name>
     </ProjectReference>
     <ProjectReference Include="..\CapaSesion\CapaSesion.csproj">
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
