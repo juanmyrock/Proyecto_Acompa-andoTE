@@ -8,9 +8,9 @@ namespace CapaDatos
 {
     public class cls_ConectarUserQ
     {
-        private readonly cls_EjecutarQ ejecutar = new cls_EjecutarQ();
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        public cls_UsuarioDTO ObtenerUsuarioConEmpleado(string username)
+        public cls_UsuarioDTO ObtenerUsuarioEmpleado(string username)
         {
             string sql = @"
                 SELECT u.id_usuario, u.username, u.fecha_alta, u.fecha_baja,
@@ -26,7 +26,7 @@ namespace CapaDatos
                 new SqlParameter("@username", username)
             };
 
-            DataTable tabla = ejecutar.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
 
             if (tabla.Rows.Count == 0)
                 return null;
@@ -49,6 +49,56 @@ namespace CapaDatos
                 NombreEmpleado = row["nombre_empleado"].ToString(),
                 ApellidoEmpleado = row["apellido_empleado"].ToString()
             };
+        }
+
+        public void RegistrarIntentoFallido(int idUsuario, int intentosMaximosPermitidos)
+        {
+            string sql = @"
+                UPDATE Usuarios
+                SET intentos_fallidos = intentos_fallidos + 1,
+                    fecha_bloqueo = CASE 
+                        WHEN intentos_fallidos + 1 >= @maxIntentos THEN GETDATE() 
+                        ELSE fecha_bloqueo 
+                    END
+                WHERE id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idUsuario", idUsuario),
+                new SqlParameter("@maxIntentos", intentosMaximosPermitidos)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
+
+        public void ResetearIntentosFallidos(int idUsuario)
+        {
+            string sql = @"
+                UPDATE Usuarios
+                SET intentos_fallidos = 0
+                WHERE id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idUsuario", idUsuario)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
+
+        public void RegistrarIngreso(int idUsuario)
+        {
+            string sql = @"
+                UPDATE Usuarios
+                SET fecha_ultimo_ingreso = GETDATE()
+                WHERE id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idUsuario", idUsuario)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
     }
 }

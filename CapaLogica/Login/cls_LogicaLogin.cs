@@ -1,35 +1,62 @@
-﻿using System;
-using CapaDatos.Login;
+﻿using CapaDatos;
+using CapaUtilidades;
+using CapaDTO;
 using CapaSesion.Login;
-using CapaServicios;
+using System;
 
 namespace CapaLogica.Login
 {
     public class cls_LogicaLogin
     {
-        public bool LoginUser(string user, string pass)
-        {
-            try
-            {
-                cls_ConectarUserQ conexionUsuario = new cls_ConectarUserQ();
-                cls_PermisosQ permisos = new cls_PermisosQ();
-                
+        private readonly cls_ConectarUserQ _userDatos = new cls_ConectarUserQ();
+        private readonly cls_ContraseñasQ _passDatos = new cls_ContraseñasQ();
+        private readonly cls_SeguridadPass _seguridad = new cls_SeguridadPass();
 
-                if (conexionUsuario.ValidarUsuario(user, pass)) //(user, cls_Encriptacion.SHA256(pass)))
-                {
-                    permisos.ObtenerPermisos(cls_SesionUsuario.IdUsuario);
-                    return conexionUsuario.CargarUsuario(user, pass); //(user, cls_Encriptacion.SHA256(pass));
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
+        int intentosMaximosPermitidos = 5; // Lo reemplazarás con el valor parametrizado real
+
+
+
+        public bool ValidarLogin(cls_CredencialesLoginDTO credenciales)
+        {
+            // 1. Verificar usuario
+            cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(credenciales.Username);
+            if (usuario == null)
+                throw new Exception("Usuario no registrado");
+
+            // 2. Verificar si está activo
+            if (usuario.EsActivo != true || usuario.FechaBaja.HasValue)
+                throw new Exception("Usuario inactivo o dado de baja");
+
+            // 3. Verificar si está bloqueado
+            if (usuario.FechaBloqueo.HasValue && usuario.FechaBloqueo > DateTime.Now)
+                throw new Exception("El usuario está bloqueado");
+
+            // 4. Obtener contraseña activa
+            cls_ContraseñaDTO contraseña = _passDatos.ObtenerContraseñaActiva(usuario.IdUsuario);
+            if (contraseña == null)
+                throw new Exception("No hay contraseña activa para este usuario");
+
+            // 5. Validar hash
+            if (!_seguridad.VerificarHashSHA256(credenciales.Password, contraseña.HashContraseña))
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return false; // O retorna false para indicar que hubo un problema en el proceso de login
+                _userDatos.RegistrarIntentoFallido(usuario.IdUsuario); // Incrementa el contador
+                throw new Exception("Contraseña incorrecta");
             }
+
+            // 6. Validar expiración
+            if (contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
+            {
+                throw new Exception("Contraseña expirada. Debe cambiarla");
+            }
+
+            // 7. Resetear intentos fallidos y registrar ingreso
+            _userDatos.ResetearIntentosFallidos(usuario.IdUsuario);
+            _userDatos.RegistrarIngreso(usuario.IdUsuario);
+
+            // 8. Iniciar sesión (singleton)
+            SesionUsuario.Instancia(usuario);
+
+            return true;
         }
     }
 }

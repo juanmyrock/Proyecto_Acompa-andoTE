@@ -8,12 +8,12 @@ namespace CapaDatos
 {
     public class cls_RolQ
     {
-        private readonly cls_EjecutarQ ejecutar = new cls_EjecutarQ();
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
         public List<cls_RolDTO> ObtenerTodosLosRoles()
         {
             string sql = "SELECT id_rol, nombre_rol, descripcion FROM Roles";
-            DataTable tabla = ejecutar.ConsultaRead(sql);
+            DataTable tabla = _ejecutar.ConsultaRead(sql);
 
             var lista = new List<cls_RolDTO>();
             foreach (DataRow row in tabla.Rows)
@@ -38,7 +38,7 @@ namespace CapaDatos
                 new SqlParameter("@idRol", idRol)
             };
 
-            DataTable tabla = ejecutar.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
 
             if (tabla.Rows.Count == 0)
                 return null;
@@ -61,7 +61,7 @@ namespace CapaDatos
                 new SqlParameter("@descripcion", (object)rol.Descripcion ?? DBNull.Value)
             };
 
-            ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
 
         public void ActualizarRol(cls_RolDTO rol)
@@ -79,7 +79,7 @@ namespace CapaDatos
                 new SqlParameter("@descripcion", (object)rol.Descripcion ?? DBNull.Value)
             };
 
-            ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
 
         public void EliminarRol(int idRol)
@@ -91,7 +91,7 @@ namespace CapaDatos
                 new SqlParameter("@idRol", idRol)
             };
 
-            ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
     }
 }

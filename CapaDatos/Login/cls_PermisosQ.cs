@@ -8,7 +8,7 @@ namespace CapaDatos
 {
     public class cls_PermisosQ
     {
-        private readonly cls_EjecutarQ ejecutor = new cls_EjecutarQ();
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
         public List<cls_PermisoDTO> ObtenerPermisosEfectivosPorUsuario(int idUsuario)
         {
@@ -37,7 +37,7 @@ namespace CapaDatos
                 new SqlParameter("@idUsuario", idUsuario)
             };
 
-            DataTable tabla = ejecutor.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
 
             var lista = new List<cls_PermisoDTO>();
             foreach (DataRow row in tabla.Rows)

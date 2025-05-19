@@ -42,8 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cls_DigitVerif.cs" />
-    <Compile Include="cls_Encriptacion.cs" />
+    <Compile Include="cls_SeguridadPass.cs" />
     <Compile Include="cls_EnvioMail.cs" />
     <Compile Include="cls_LlenarCombos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

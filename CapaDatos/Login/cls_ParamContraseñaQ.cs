@@ -8,7 +8,7 @@ namespace CapaDatos
 {
     public class cls_ParamContraseñaQ
     {
-        private readonly cls_EjecutarQ ejecutar = new cls_EjecutarQ();
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
         public cls_ParamContraseñaDTO ObtenerParametro()
         {
@@ -19,7 +19,7 @@ namespace CapaDatos
                     dias_validez_password
                 FROM Parametros_Contraseña";
 
-            DataTable tabla = ejecutar.ConsultaRead(sql);
+            DataTable tabla = _ejecutar.ConsultaRead(sql);
 
             if (tabla.Rows.Count == 0)
                 return null;

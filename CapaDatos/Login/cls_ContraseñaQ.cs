@@ -8,7 +8,7 @@ namespace CapaDatos
 {
     public class cls_ContraseñasQ
     {
-        private readonly cls_EjecutarQ ejecutar = new cls_EjecutarQ();
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
         public cls_ContraseñaDTO ObtenerContraseñaActiva(int idUsuario)
         {
@@ -22,7 +22,7 @@ namespace CapaDatos
                 new SqlParameter("@idUsuario", idUsuario)
             };
 
-            DataTable tabla = ejecutar.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
 
             if (tabla.Rows.Count == 0)
                 return null;
@@ -51,7 +51,7 @@ namespace CapaDatos
                 new SqlParameter("@idUsuario", idUsuario)
             };
 
-            ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
 
         public void InsertarNuevaContraseña(cls_ContraseñaDTO nuevaContraseña)
@@ -67,7 +67,7 @@ namespace CapaDatos
                 new SqlParameter("@activa", nuevaContraseña.EsActiva)
             };
 
-            ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
     }
 }
