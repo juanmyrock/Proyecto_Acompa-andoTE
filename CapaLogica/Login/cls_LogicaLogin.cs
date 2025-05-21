@@ -1,20 +1,19 @@
-﻿using CapaDatos;
-using CapaUtilidades;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CapaDatos;
 using CapaDTO;
 using CapaSesion.Login;
-using System;
+using CapaUtilidades;
 
-namespace CapaLogica.Login
+namespace CapaLogica
 {
     public class cls_LogicaLogin
     {
         private readonly cls_ConectarUserQ _userDatos = new cls_ConectarUserQ();
         private readonly cls_ContraseñasQ _passDatos = new cls_ContraseñasQ();
-        private readonly cls_SeguridadPass _seguridad = new cls_SeguridadPass();
-
-        int intentosMaximosPermitidos = 5; // Lo reemplazarás con el valor parametrizado real
-
-
+        private readonly cls_PermisosQ _permisos = new cls_PermisosQ();
+        private const int intentosMaximosPermitidos = 3;
 
         public bool ValidarLogin(cls_CredencialesLoginDTO credenciales)
         {
@@ -28,7 +27,7 @@ namespace CapaLogica.Login
                 throw new Exception("Usuario inactivo o dado de baja");
 
             // 3. Verificar si está bloqueado
-            if (usuario.FechaBloqueo.HasValue && usuario.FechaBloqueo > DateTime.Now)
+            if ((usuario.FechaBloqueo.HasValue) && usuario.EsActivo != true)
                 throw new Exception("El usuario está bloqueado");
 
             // 4. Obtener contraseña activa
@@ -37,9 +36,9 @@ namespace CapaLogica.Login
                 throw new Exception("No hay contraseña activa para este usuario");
 
             // 5. Validar hash
-            if (!_seguridad.VerificarHashSHA256(credenciales.Password, contraseña.HashContraseña))
+            if (!cls_SeguridadPass.VerificarHashSHA256(credenciales.Password, contraseña.HashContraseña))
             {
-                _userDatos.RegistrarIntentoFallido(usuario.IdUsuario); // Incrementa el contador
+                _userDatos.RegistrarIntentoFallido(usuario.IdUsuario, intentosMaximosPermitidos);
                 throw new Exception("Contraseña incorrecta");
             }
 
@@ -53,8 +52,12 @@ namespace CapaLogica.Login
             _userDatos.ResetearIntentosFallidos(usuario.IdUsuario);
             _userDatos.RegistrarIngreso(usuario.IdUsuario);
 
-            // 8. Iniciar sesión (singleton)
-            SesionUsuario.Instancia(usuario);
+            // 8. Obtener permisos y preparar lista de nombres
+            List<cls_PermisoDTO> permisos = _permisos.ObtenerPermisosEfectivosPorUsuario(usuario.IdUsuario);
+            List<string> nombresPermisos = permisos.Select(p => p.NombrePermiso).ToList();
+
+            // 9. Iniciar sesión (singleton)
+            SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
             return true;
         }

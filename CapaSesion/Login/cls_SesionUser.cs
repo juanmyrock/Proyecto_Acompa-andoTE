@@ -1,33 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using CapaDTO;
 
 namespace CapaSesion.Login
 {
-    // Clase que gestiona la sesión del usuario actual utilizando el patrón Singleton
-    public sealed class SesionUsuario
+    public sealed class SesionUsuario  // Clase que gestiona la sesión del usuario actual utilizando el patrón Singleton
     {
-        // Campo estático que almacenará la única instancia de la clase
-        private static SesionUsuario _instancia;
 
-        // Objeto usado para garantizar que la instancia se cree de forma segura en entornos multihilo
-        private static readonly object _bloqueo = new object();
+        private static SesionUsuario _instancia; // almacenará la única instancia de la clase
 
-        // Constructor privado para evitar que se instancien objetos desde fuera de la clase
-        private SesionUsuario() { }
+        private static readonly object _bloqueo = new object();  // Objeto usado para garantizar que la instancia se cree de forma segura en entornos multihilo
+        private SesionUsuario() { } // Constructor privado para evitar que se instancien objetos desde fuera de la clase
 
-        // Propiedad pública para acceder a la única instancia de la clase (patrón Singleton)
-        public static SesionUsuario Instancia
+        
+        public static SesionUsuario Instancia // Propiedad pública para acceder a la única instancia de la clase (patrón Singleton)
         {
             get
             {
-                // Verifica si la instancia ya fue creada
-                if (_instancia == null)
+                if (_instancia == null)  // Verifica si la instancia ya fue creada
                 {
-                    // Bloquea el acceso a otros hilos mientras se crea la instancia
-                    lock (_bloqueo)
+                    lock (_bloqueo) // Bloquea el acceso a otros hilos mientras se crea la instancia
                     {
-                        // Doble verificación en caso de que otro hilo la haya creado mientras este esperaba
-                        if (_instancia == null)
+                        if (_instancia == null) // Doble verificación en caso de que otro hilo la haya creado mientras este esperaba
                         {
                             _instancia = new SesionUsuario();
                         }
@@ -39,35 +33,28 @@ namespace CapaSesion.Login
 
         // Propiedades públicas con setters privados para almacenar los datos del usuario
         public int IdUsuario { get; private set; }
-        public int IdEmpleado { get; private set; }
         public string NombreUsuario { get; private set; }
-        public string PasswordUsuario { get; private set; }
         public bool EstadoUsuario { get; private set; }
-        public DateTime FechaAlta { get; private set; }
         public int IdRol { get; private set; }
         public string NombreEmpleado { get; private set; }
         public string ApellidoEmpleado { get; private set; }
         public List<string> Permisos { get; private set; } = new List<string>();
 
-        // Propiedad calculada para saber si hay una sesión iniciada (basada en IdUsuario distinto de 0)
-        public bool EstaSesionIniciada => IdUsuario != 0;
+       
+        public bool EstaSesionIniciada => IdUsuario != 0; // Propiedad calculada para saber si hay una sesión iniciada (basada en IdUsuario distinto de 0)
 
         // Método que se llama una vez que el login fue exitoso, para cargar los datos del usuario
-        public void IniciarSesion(int idUsuario, int idEmpleado, string nombreUsuario, string passwordUsuario,
-                                  bool estadoUsuario, DateTime fechaAlta, int idRol,
-                                  string nombreEmpleado, string apellidoEmpleado,
-                                  List<string> permisos)
+        public void IniciarSesion(cls_UsuarioDTO usuario, List<string> permisos)
         {
-            IdUsuario = idUsuario;
-            IdEmpleado = idEmpleado;
-            NombreUsuario = nombreUsuario;
-            PasswordUsuario = passwordUsuario;
-            EstadoUsuario = estadoUsuario;
-            FechaAlta = fechaAlta;
-            IdRol = idRol;
-            NombreEmpleado = nombreEmpleado;
-            ApellidoEmpleado = apellidoEmpleado;
-            Permisos = permisos ?? new List<string>(); // si es null, inicializa con lista vacía
+            if (usuario == null) throw new ArgumentNullException(nameof(usuario));
+
+            IdUsuario = usuario.IdUsuario;
+            NombreUsuario = usuario.Username;
+            EstadoUsuario = usuario.EsActivo ?? false;
+            IdRol = usuario.IdRol ?? 0;
+            NombreEmpleado = usuario.NombreEmpleado;
+            ApellidoEmpleado = usuario.ApellidoEmpleado;
+            Permisos = permisos ?? new List<string>();
         }
 
         // Método opcional para "cerrar sesión" (reinicia la instancia)
