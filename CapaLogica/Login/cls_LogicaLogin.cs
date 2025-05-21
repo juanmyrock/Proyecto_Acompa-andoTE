@@ -63,3 +63,29 @@ namespace CapaLogica
         }
     }
 }
+
+//Cuando tenga el resto lo implemento
+//// 4. Generar token único
+//string token = Guid.NewGuid().ToString("N");
+
+//// 5. Verificar sesión única
+//if (_sesiones.ValidarSesionUnica(usuario.IdUsuario, token))
+//    throw new ApplicationException("El usuario ya tiene una sesión activa");
+
+//// 6. Registrar sesión
+//_sesiones.RegistrarSesion(usuario.IdUsuario, token, ipCliente);
+
+//// 7. Iniciar sesión local
+//SesionUsuario.Instancia.IniciarSesion(usuario, token);
+
+//return true;
+//        }
+
+//        public void CerrarSesion()
+//{
+//    if (SesionUsuario.Instancia.Usuario != null)
+//    {
+//        _sesiones.CerrarSesion(SesionUsuario.Instancia.Usuario.IdUsuario);
+//        SesionUsuario.Instancia.CerrarSesion();
+//    }
+//}
