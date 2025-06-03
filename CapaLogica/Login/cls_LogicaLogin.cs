@@ -10,10 +10,19 @@ namespace CapaLogica
 {
     public class cls_LogicaLogin
     {
-        private readonly cls_ConectarUserQ _userDatos = new cls_ConectarUserQ();
-        private readonly cls_ContraseñasQ _passDatos = new cls_ContraseñasQ();
-        private readonly cls_PermisosQ _permisos = new cls_PermisosQ();
-        private const int intentosMaximosPermitidos = 3;
+        private readonly cls_ConectarUserQ _userDatos;
+        private readonly cls_ContraseñasQ _passDatos;
+        private readonly cls_PermisosQ _permisos;
+        private readonly int intentosMaximosPermitidos;
+
+        // Constructor
+        public cls_LogicaLogin()
+        {
+            _userDatos = new cls_ConectarUserQ();
+            _passDatos = new cls_ContraseñasQ();
+            _permisos = new cls_PermisosQ();
+            intentosMaximosPermitidos = _userDatos.ObtenerCantidadIntentosMaximos();
+        }
 
         public bool ValidarLogin(cls_CredencialesLoginDTO credenciales)
         {
@@ -69,14 +78,14 @@ namespace CapaLogica
 //string token = Guid.NewGuid().ToString("N");
 
 //// 5. Verificar sesión única
-//if (_sesiones.ValidarSesionUnica(usuario.IdUsuario, token))
+//if (_sesiones.ValidarSesionUnica(usuario.IdUsuario))
 //    throw new ApplicationException("El usuario ya tiene una sesión activa");
 
 //// 6. Registrar sesión
-//_sesiones.RegistrarSesion(usuario.IdUsuario, token, ipCliente);
+//_sesiones.RegistrarSesion(usuario.IdUsuario, ipCliente);
 
 //// 7. Iniciar sesión local
-//SesionUsuario.Instancia.IniciarSesion(usuario, token);
+//SesionUsuario.Instancia.IniciarSesion(usuario);
 
 //return true;
 //        }
