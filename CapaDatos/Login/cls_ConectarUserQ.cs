@@ -50,6 +50,17 @@ namespace CapaDatos
                 ApellidoEmpleado = row["apellido_empleado"].ToString()
             };
         }
+        public int ObtenerCantidadIntentosMaximos()
+        {
+            string sql = "SELECT cantidad_intentos FROM Parametros_Contraseña";
+
+            DataTable tabla = _ejecutar.ConsultaRead(sql, null);
+
+            if (tabla.Rows.Count == 0)
+                throw new Exception("No se encontró configuración en Parametros_Contraseña");
+
+            return Convert.ToInt32(tabla.Rows[0]["cantidad_intentos"]);
+        }
 
         public void RegistrarIntentoFallido(int idUsuario, int intentosMaximosPermitidos)
         {

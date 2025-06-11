@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using CapaLogica.Login;
 using CapaSesion;
 
 namespace CapaVistas

@@ -10,5 +10,6 @@
         public bool? RequiereCaracterEspecial { get; set; }
         public int? CantidadPreguntasSeguridad { get; set; }
         public int? DiasValidezPassword { get; set; }
+        public int? Cantidad_Intentos { get; set; }
     }
 }
