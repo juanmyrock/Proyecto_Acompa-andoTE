@@ -9,4 +9,5 @@ namespace CapaDTO
         public string IP { get; set; }
         public DateTime? FechaInicio { get; set; }
     }
+
 }
