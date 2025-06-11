@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CapaDatos;
+using CapaDatos.Login;
 using CapaDTO;
 using CapaSesion.Login;
 using CapaUtilidades;
@@ -13,7 +14,9 @@ namespace CapaLogica
         private readonly cls_ConectarUserQ _userDatos;
         private readonly cls_ContraseñasQ _passDatos;
         private readonly cls_PermisosQ _permisos;
+        private readonly cls_SesionActivaQ _sesiones;
         private readonly int intentosMaximosPermitidos;
+
 
         // Constructor
         public cls_LogicaLogin()
@@ -21,6 +24,7 @@ namespace CapaLogica
             _userDatos = new cls_ConectarUserQ();
             _passDatos = new cls_ContraseñasQ();
             _permisos = new cls_PermisosQ();
+            _sesiones = new cls_SesionActivaQ();
             intentosMaximosPermitidos = _userDatos.ObtenerCantidadIntentosMaximos();
         }
 
@@ -57,44 +61,55 @@ namespace CapaLogica
                 throw new Exception("Contraseña expirada. Debe cambiarla");
             }
 
-            // 7. Resetear intentos fallidos y registrar ingreso
+            // 7. Verificar sesión única
+            if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
+                throw new Exception("El usuario ya tiene una sesión activa en otro dispositivo");
+
+            // 8. Registrar nueva sesión en BD
+            _sesiones.RegistrarSesion(new cls_SesionActivaDTO
+            {
+                UsuarioId = usuario.IdUsuario,
+                IP = ipCliente,
+                FechaInicio = DateTime.Now
+            });
+
+            // 9. Resetear intentos fallidos y registrar ingreso
             _userDatos.ResetearIntentosFallidos(usuario.IdUsuario);
             _userDatos.RegistrarIngreso(usuario.IdUsuario);
 
-            // 8. Obtener permisos y preparar lista de nombres
+            // 10. Obtener permisos
             List<cls_PermisoDTO> permisos = _permisos.ObtenerPermisosEfectivosPorUsuario(usuario.IdUsuario);
             List<string> nombresPermisos = permisos.Select(p => p.NombrePermiso).ToList();
 
-            // 9. Iniciar sesión (singleton)
+            // 11. Iniciar sesión local (Singleton)
             SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
             return true;
+
         }
+
+        /// <summary>
+        /// Cierra la sesión activa, tanto en la base de datos como en la sesión local.
+        /// </summary>
+        public void CerrarSesion()
+        {
+            if (SesionUsuario.Instancia.EstaSesionIniciada)
+            {
+                try
+                {
+                    // Cerrar sesión en BD
+                    _sesiones.CerrarSesion(SesionUsuario.Instancia.IdUsuario);
+
+                    // Registrar en bitácora
+                    //_userDatos.RegistrarSalida(SesionUsuario.Instancia.IdUsuario);
+                }
+                finally
+                {
+                    // Cerrar sesión local siempre
+                    SesionUsuario.Instancia.CerrarSesion();
+                }
+            }
+        }
+
     }
 }
-
-//Cuando tenga el resto lo implemento
-//// 4. Generar token único
-//string token = Guid.NewGuid().ToString("N");
-
-//// 5. Verificar sesión única
-//if (_sesiones.ValidarSesionUnica(usuario.IdUsuario))
-//    throw new ApplicationException("El usuario ya tiene una sesión activa");
-
-//// 6. Registrar sesión
-//_sesiones.RegistrarSesion(usuario.IdUsuario, ipCliente);
-
-//// 7. Iniciar sesión local
-//SesionUsuario.Instancia.IniciarSesion(usuario);
-
-//return true;
-//        }
-
-//        public void CerrarSesion()
-//{
-//    if (SesionUsuario.Instancia.Usuario != null)
-//    {
-//        _sesiones.CerrarSesion(SesionUsuario.Instancia.Usuario.IdUsuario);
-//        SesionUsuario.Instancia.CerrarSesion();
-//    }
-//}
