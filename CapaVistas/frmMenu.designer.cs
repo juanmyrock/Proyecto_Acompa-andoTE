@@ -78,6 +78,7 @@ namespace CapaVistas
             this.panelTitulo = new System.Windows.Forms.Panel();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             this.panelChildFrm = new System.Windows.Forms.Panel();
+            this.btnAdminSist = new System.Windows.Forms.Button();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -127,9 +128,8 @@ namespace CapaVistas
             this.labelTittle.Location = new System.Drawing.Point(380, 1);
             this.labelTittle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTittle.Name = "labelTittle";
-            this.labelTittle.Size = new System.Drawing.Size(613, 38);
+            this.labelTittle.Size = new System.Drawing.Size(0, 33);
             this.labelTittle.TabIndex = 4;
-            this.labelTittle.Text = "SISTEMA GESTOR DE VENTAS Y STOCK\r\n";
             this.labelTittle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnMaximize
@@ -614,7 +614,7 @@ namespace CapaVistas
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblTitulo.Location = new System.Drawing.Point(5, 13);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(97, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(87, 32);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Inicio";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -622,6 +622,7 @@ namespace CapaVistas
             // panelTitulo
             // 
             this.panelTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.panelTitulo.Controls.Add(this.btnAdminSist);
             this.panelTitulo.Controls.Add(this.btnCerrarForm);
             this.panelTitulo.Controls.Add(this.lblTitulo);
             this.panelTitulo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -653,6 +654,15 @@ namespace CapaVistas
             this.panelChildFrm.Name = "panelChildFrm";
             this.panelChildFrm.Size = new System.Drawing.Size(1040, 700);
             this.panelChildFrm.TabIndex = 4;
+            // 
+            // btnAdminSist
+            // 
+            this.btnAdminSist.Location = new System.Drawing.Point(859, 13);
+            this.btnAdminSist.Name = "btnAdminSist";
+            this.btnAdminSist.Size = new System.Drawing.Size(112, 32);
+            this.btnAdminSist.TabIndex = 0;
+            this.btnAdminSist.Text = "Administrar Sistema";
+            this.btnAdminSist.UseVisualStyleBackColor = true;
             // 
             // frmMenu
             // 
@@ -736,5 +746,6 @@ namespace CapaVistas
         private Panel panelChildFrm;
         private PictureBox btnCerrarForm;
         private PictureBox btnConfigSist;
+        private Button btnAdminSist;
     }
 }

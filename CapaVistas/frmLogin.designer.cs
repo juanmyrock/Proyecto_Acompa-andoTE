@@ -83,7 +83,7 @@
             this.lblLogin.ForeColor = System.Drawing.Color.White;
             this.lblLogin.Location = new System.Drawing.Point(142, 53);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(127, 41);
+            this.lblLogin.Size = new System.Drawing.Size(110, 37);
             this.lblLogin.TabIndex = 8;
             this.lblLogin.Text = "LOGIN";
             this.lblLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -97,7 +97,7 @@
             this.txtUsers.ForeColor = System.Drawing.Color.Silver;
             this.txtUsers.Location = new System.Drawing.Point(35, 109);
             this.txtUsers.Name = "txtUsers";
-            this.txtUsers.Size = new System.Drawing.Size(340, 30);
+            this.txtUsers.Size = new System.Drawing.Size(340, 27);
             this.txtUsers.TabIndex = 2;
             this.txtUsers.Text = "USUARIO";
             this.txtUsers.Enter += new System.EventHandler(this.txtBoxUsers_Enter);
@@ -112,7 +112,7 @@
             this.txtPass.ForeColor = System.Drawing.Color.Silver;
             this.txtPass.Location = new System.Drawing.Point(35, 160);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(340, 30);
+            this.txtPass.Size = new System.Drawing.Size(340, 27);
             this.txtPass.TabIndex = 3;
             this.txtPass.Text = "CONTRASEÑA";
             this.txtPass.Enter += new System.EventHandler(this.txtBoxPassw_Enter);
@@ -146,7 +146,7 @@
             this.lblForgotPass.LinkColor = System.Drawing.Color.DarkGray;
             this.lblForgotPass.Location = new System.Drawing.Point(137, 313);
             this.lblForgotPass.Name = "lblForgotPass";
-            this.lblForgotPass.Size = new System.Drawing.Size(133, 21);
+            this.lblForgotPass.Size = new System.Drawing.Size(118, 19);
             this.lblForgotPass.TabIndex = 1;
             this.lblForgotPass.TabStop = true;
             this.lblForgotPass.Text = "Forgot Password?";
@@ -160,7 +160,7 @@
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblErrorMsg.Location = new System.Drawing.Point(25, 205);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(116, 19);
+            this.lblErrorMsg.Size = new System.Drawing.Size(109, 18);
             this.lblErrorMsg.TabIndex = 10;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
@@ -232,7 +232,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ejemplo ADO.Net en N-Capas";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_Login_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarLogin)).EndInit();

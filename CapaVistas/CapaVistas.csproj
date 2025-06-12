@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms Login\frmRecoverPass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Login\frmRecoverPass.Designer.cs">
+      <DependentUpon>frmRecoverPass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Login\frmSecurityQuestions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Login\frmSecurityQuestions.Designer.cs">
+      <DependentUpon>frmSecurityQuestions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Login\frmPreguntas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +69,12 @@
     </Compile>
     <Compile Include="Forms Login\frmRecuperarContraseña.designer.cs">
       <DependentUpon>frmRecuperarContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdminSyst.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
+      <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms Menu\frmEmpleados.cs">
       <SubType>Form</SubType>
@@ -84,11 +102,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms Login\frmRecoverPass.resx">
+      <DependentUpon>frmRecoverPass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Login\frmSecurityQuestions.resx">
+      <DependentUpon>frmSecurityQuestions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Login\frmPreguntas.resx">
       <DependentUpon>frmPreguntas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Login\frmRecuperarContraseña.resx">
       <DependentUpon>frmRecuperarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
+      <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
