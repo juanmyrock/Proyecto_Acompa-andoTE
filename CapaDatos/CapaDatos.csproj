@@ -54,6 +54,10 @@
     <Compile Include="Login\cls_PermisosQ.cs" />
     <Compile Include="Login\cls_RolQ.cs" />
     <Compile Include="Login\cls_SesionesActivasQ.cs" />
+    <Compile Include="Login\cls_SesionesActivasQ.cs" />
+=========
+    <Compile Include="Login\cls_SesionActivaQ.cs" />
+>>>>>>>>> Temporary merge branch 2
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
