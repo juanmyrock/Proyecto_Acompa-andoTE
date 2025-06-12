@@ -53,7 +53,7 @@
     <Compile Include="Login\cls_ParamContraseñaQ.cs" />
     <Compile Include="Login\cls_PermisosQ.cs" />
     <Compile Include="Login\cls_RolQ.cs" />
-    <Compile Include="Login\cls_SesionActivaQ.cs" />
+    <Compile Include="Login\cls_SesionesActivasQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
