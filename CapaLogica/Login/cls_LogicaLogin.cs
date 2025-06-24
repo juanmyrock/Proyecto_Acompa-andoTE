@@ -56,17 +56,15 @@ namespace CapaLogica
                 _userDatos.RegistrarIntentoFallido(usuario.IdUsuario, intentosMaximosPermitidos);
                 throw new Exception("Contraseña incorrecta");
             }
-            // --- CAMBIO #2: Lógica para determinar si es el primer login. ---
-            // Se asume que tu 'cls_ContraseñaDTO' tiene una propiedad booleana como 'EsTemporal'.
-            // Si no la tienes, debes añadirla para que esto funcione.
-            bool requiereConfig = contraseña.EsTemporal; // Ejemplo: contraseña.EsTemporal puede ser true
+            bool necesitaCambioPass = usuario.EsRandomPass == true;
+            bool necesitaPreguntas = usuario.EsPrimerIngreso == true;
 
-
-            // 6. Validar expiración (si la contraseña no es temporal)
-            if (!requiereConfig && contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
+            // 6. Validar expiración (solo si no se requiere un cambio forzado)
+            if (!necesitaCambioPass && contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
             {
                 throw new Exception("Contraseña expirada. Debe cambiarla");
             }
+
 
             // 7. Verificar sesión única
             if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
@@ -98,7 +96,8 @@ namespace CapaLogica
             return new ResultadoLoginDTO
             {
                 Exitoso = true,
-                RequiereConfiguracionInicial = requiereConfig
+                RequiereCambioContraseña = necesitaCambioPass,
+                RequiereConfigurarPreguntas = necesitaPreguntas
             };
 
         }
@@ -125,6 +124,73 @@ namespace CapaLogica
                 }
             }
         }
+
+        /// <summary>
+        /// Verifica si un nombre de usuario existe y devuelve sus datos básicos si es así.
+        /// Usado en el primer paso de "Olvidé mi contraseña".
+        /// </summary>
+        public cls_UsuarioDTO ObtenerDatosParaRecuperacion(string username)
+        {
+            cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(username);
+            if (usuario == null)
+            {
+                throw new Exception("El nombre de usuario ingresado no existe.");
+            }
+            if (usuario.EsActivo != true)
+            {
+                throw new Exception("El usuario no se encuentra activo.");
+            }
+            // Si todo está bien, devuelve los datos del usuario.
+            return usuario;
+        }
+
+        /// <summary>
+        /// Valida la respuesta a una pregunta de seguridad.
+        /// (Necesitarás crear un método en CapaDatos para esto)
+        /// </summary>
+        public bool ValidarRespuestaDeSeguridad(int idUsuario, int idPregunta, string respuesta)
+        {
+            // TODO: Debes crear un método en tu CapaDatos que:
+            // 1. Obtenga la respuesta correcta (hasheada) de la base de datos.
+            // 2. Compare el hash de la 'respuesta' proporcionada con el hash de la BD.
+            // Ejemplo: return _userDatos.ValidarRespuesta(idUsuario, idPregunta, respuesta);
+
+            // Por ahora, simulamos que la validación es exitosa para poder avanzar.
+            Console.WriteLine($"Simulando validación para Usuario: {idUsuario}, Pregunta: {idPregunta}, Respuesta: {respuesta}");
+            return true;
+        }
+
+        /// <summary>
+        /// Establece la nueva contraseña para un usuario.
+        /// (Necesitarás un método en CapaDatos que desactive la vieja y cree la nueva)
+        /// </summary>
+        public void RestablecerContraseña(int idUsuario, string nuevaContraseña)
+        {
+            // 1. Hashear la nueva contraseña
+            string hash = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(nuevaContraseña);
+
+            // 2. Desactivar las contraseñas anteriores para ese usuario
+            _passDatos.DesactivarContraseñasAnteriores(idUsuario);
+
+            // 3. Crear el nuevo DTO de contraseña
+            var passDTO = new cls_ContraseñaDTO
+            {
+                IdUsuario = idUsuario,
+                HashContraseña = hash,
+                EsActiva = true,
+                FechaExpiracion = null // O establecer una nueva fecha de expiración según tus reglas
+            };
+
+            // 4. Insertar la nueva contraseña en la base de datos
+            _passDatos.InsertarNuevaContraseña(passDTO);
+
+            // 5. IMPORTANTE: Actualizar el estado del usuario en la BD para que ya no tenga
+            // una contraseña random y no sea su primer ingreso.
+            // TODO: Debes crear este método en tu CapaDatos.
+            // _userDatos.ActualizarEstadoPostConfiguracion(idUsuario);
+            Console.WriteLine($"Contraseña restablecida para el usuario {idUsuario}.");
+        }
+
 
     }
 }

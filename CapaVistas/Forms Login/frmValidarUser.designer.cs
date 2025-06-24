@@ -1,6 +1,6 @@
 ﻿namespace CapaVistas.Forms_Login
 {
-    partial class frmRecuperarPass
+    partial class frmValidarUser
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRecuperarPass));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmValidarUser));
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblLogin = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();

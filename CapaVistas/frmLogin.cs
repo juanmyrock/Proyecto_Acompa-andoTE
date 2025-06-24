@@ -151,10 +151,11 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // La lógica para recuperar contraseña se mantiene
-            using (var frmForgot = new Forms_Login.frmRecuperarPass())
+            // -- Dispara el FLUJO B: RECUPERACIÓN DE CONTRASEÑA --
+            using (var formValidar = new frmValidarUser())
             {
-                frmForgot.ShowDialog();
+                // Abrimos el primer paso del flujo de recuperación
+                formValidar.ShowDialog();
             }
         }
 
@@ -163,10 +164,7 @@ namespace CapaVistas
             lblErrorMsg.Visible = false;
             picError.Visible = false;
 
-            if (!ValidarCampos())
-            {
-                return;
-            }
+            if (!ValidarCampos()) return;
 
             var credenciales = new cls_CredencialesLoginDTO
             {
@@ -177,38 +175,45 @@ namespace CapaVistas
             try
             {
                 var logicaLogin = new cls_LogicaLogin();
-
-                // Obtenemos la IP local para el registro de sesión
-                string ipCliente = Dns.GetHostEntry(Dns.GetHostName())
-                                      .AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
+                string ipCliente = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
 
                 ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente);
 
                 if (resultado.Exitoso)
                 {
-                    if (resultado.RequiereConfiguracionInicial)
+                    if (resultado.RequiereCambioContraseña || resultado.RequiereConfigurarPreguntas)
                     {
-                        // Si se requiere configuración, mostramos el form de configuración de forma modal.
-                        // El flujo de la aplicación se detiene aquí hasta que se cierre.
-                        MessageBox.Show("Es su primer inicio de sesión. Por favor, configure su cuenta.", "Configuración Requerida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // -- Dispara el FLUJO A: PRIMER INGRESO --
                         this.Hide();
-                        using (var formConfig = new frmPreguntas())
+
+                        // Le pasamos el IdUsuario y le indicamos el modo "Configurar"
+                        int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
+
+                        // Primero, el usuario DEBE configurar sus preguntas si es necesario
+                        if (resultado.RequiereConfigurarPreguntas)
                         {
-                            formConfig.ShowDialog();
-                            // Aquí iría la lógica para verificar si la configuración fue exitosa
-                            // antes de continuar. Por ahora, asumimos que sí.
+                            using (var formPreguntas = new frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
+                            {
+                                formPreguntas.ShowDialog();
+                            }
+                        }
+
+                        // Luego, si tiene contraseña random, DEBE cambiarla
+                        if (resultado.RequiereCambioContraseña)
+                        {
+                            using (var formNuevaPass = new frmNuevaContraseña(idUsuarioLogueado))
+                            {
+                                formNuevaPass.ShowDialog();
+                            }
                         }
                     }
 
-                    // Si el login fue exitoso (y la configuración ya se completó si era necesaria),
-                    // establecemos el resultado en OK para que Program.cs continúe.
-                    this.DialogResult = DialogResult.OK;
-                    this.Close(); // Cerramos el form de login
+                    this.DialogResult = DialogResult.OK; // Indica a Program.cs que continúe al menú
+                    this.Close();
                 }
             }
             catch (Exception ex)
             {
-                // Mostramos cualquier error que la capa de lógica haya lanzado
                 MsgError(ex.Message);
             }
         }

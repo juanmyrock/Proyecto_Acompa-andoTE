@@ -52,11 +52,17 @@
     <Compile Include="Forms Login\frmPreguntas.designer.cs">
       <DependentUpon>frmPreguntas.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms Login\frmRecuperarPass.cs">
+    <Compile Include="Forms Login\frmNuevaContraseña.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms Login\frmRecuperarPass.designer.cs">
-      <DependentUpon>frmRecuperarPass.cs</DependentUpon>
+    <Compile Include="Forms Login\frmNuevaContraseña.designer.cs">
+      <DependentUpon>frmNuevaContraseña.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Login\frmValidarUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Login\frmValidarUser.designer.cs">
+      <DependentUpon>frmValidarUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms Menu\frmEmpleados.cs">
       <SubType>Form</SubType>
@@ -87,8 +93,11 @@
     <EmbeddedResource Include="Forms Login\frmPreguntas.resx">
       <DependentUpon>frmPreguntas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms Login\frmRecuperarPass.resx">
-      <DependentUpon>frmRecuperarPass.cs</DependentUpon>
+    <EmbeddedResource Include="Forms Login\frmNuevaContraseña.resx">
+      <DependentUpon>frmNuevaContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Login\frmValidarUser.resx">
+      <DependentUpon>frmValidarUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
