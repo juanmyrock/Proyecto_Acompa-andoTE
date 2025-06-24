@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace CapaVistas.Forms_Login
 {
-    public partial class frmRecuperarContraseña : Form
+    public partial class frmRecuperarPass : Form
     {
         //private UsuarioService usuarioService;
 
-        public frmRecuperarContraseña()
+        public frmRecuperarPass()
         {
             InitializeComponent();
             //usuarioService = new UsuarioService();

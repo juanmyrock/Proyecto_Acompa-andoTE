@@ -36,8 +36,6 @@
             this.lblPregunta1 = new System.Windows.Forms.Label();
             this.txtPregunta2 = new System.Windows.Forms.TextBox();
             this.lblPregunta2 = new System.Windows.Forms.Label();
-            this.txtPregunta3 = new System.Windows.Forms.TextBox();
-            this.lblPregunta3 = new System.Windows.Forms.Label();
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
             this.SuspendLayout();
@@ -83,7 +81,7 @@
             this.lblLogin.Location = new System.Drawing.Point(151, 58);
             this.lblLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(409, 40);
+            this.lblLogin.Size = new System.Drawing.Size(366, 37);
             this.lblLogin.TabIndex = 27;
             this.lblLogin.Text = "Preguntas de Seguridad";
             // 
@@ -96,7 +94,7 @@
             this.txtPregunta1.Location = new System.Drawing.Point(137, 175);
             this.txtPregunta1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPregunta1.Name = "txtPregunta1";
-            this.txtPregunta1.Size = new System.Drawing.Size(434, 30);
+            this.txtPregunta1.Size = new System.Drawing.Size(434, 27);
             this.txtPregunta1.TabIndex = 26;
             // 
             // lblPregunta1
@@ -107,9 +105,9 @@
             this.lblPregunta1.Location = new System.Drawing.Point(129, 127);
             this.lblPregunta1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPregunta1.Name = "lblPregunta1";
-            this.lblPregunta1.Size = new System.Drawing.Size(160, 34);
+            this.lblPregunta1.Size = new System.Drawing.Size(122, 28);
             this.lblPregunta1.TabIndex = 25;
-            this.lblPregunta1.Text = "Pregunta 1";
+            this.lblPregunta1.Text = "Pregunta:";
             // 
             // txtPregunta2
             // 
@@ -120,7 +118,7 @@
             this.txtPregunta2.Location = new System.Drawing.Point(137, 265);
             this.txtPregunta2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPregunta2.Name = "txtPregunta2";
-            this.txtPregunta2.Size = new System.Drawing.Size(434, 30);
+            this.txtPregunta2.Size = new System.Drawing.Size(434, 27);
             this.txtPregunta2.TabIndex = 31;
             // 
             // lblPregunta2
@@ -131,33 +129,9 @@
             this.lblPregunta2.Location = new System.Drawing.Point(129, 217);
             this.lblPregunta2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPregunta2.Name = "lblPregunta2";
-            this.lblPregunta2.Size = new System.Drawing.Size(160, 34);
+            this.lblPregunta2.Size = new System.Drawing.Size(138, 28);
             this.lblPregunta2.TabIndex = 30;
-            this.lblPregunta2.Text = "Pregunta 2";
-            // 
-            // txtPregunta3
-            // 
-            this.txtPregunta3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.txtPregunta3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPregunta3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPregunta3.ForeColor = System.Drawing.Color.DimGray;
-            this.txtPregunta3.Location = new System.Drawing.Point(137, 355);
-            this.txtPregunta3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtPregunta3.Name = "txtPregunta3";
-            this.txtPregunta3.Size = new System.Drawing.Size(434, 30);
-            this.txtPregunta3.TabIndex = 33;
-            // 
-            // lblPregunta3
-            // 
-            this.lblPregunta3.AutoSize = true;
-            this.lblPregunta3.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPregunta3.ForeColor = System.Drawing.Color.Silver;
-            this.lblPregunta3.Location = new System.Drawing.Point(129, 307);
-            this.lblPregunta3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPregunta3.Name = "lblPregunta3";
-            this.lblPregunta3.Size = new System.Drawing.Size(160, 34);
-            this.lblPregunta3.TabIndex = 32;
-            this.lblPregunta3.Text = "Pregunta 3";
+            this.lblPregunta2.Text = "Respuesta:";
             // 
             // btnCerrar
             // 
@@ -175,13 +149,11 @@
             // 
             // frmPreguntas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
             this.ClientSize = new System.Drawing.Size(699, 494);
             this.Controls.Add(this.btnCerrar);
-            this.Controls.Add(this.txtPregunta3);
-            this.Controls.Add(this.lblPregunta3);
             this.Controls.Add(this.txtPregunta2);
             this.Controls.Add(this.lblPregunta2);
             this.Controls.Add(this.btnAceptar);
@@ -210,8 +182,6 @@
         private System.Windows.Forms.Label lblPregunta1;
         private System.Windows.Forms.TextBox txtPregunta2;
         private System.Windows.Forms.Label lblPregunta2;
-        private System.Windows.Forms.TextBox txtPregunta3;
-        private System.Windows.Forms.Label lblPregunta3;
         private System.Windows.Forms.PictureBox btnCerrar;
     }
 }

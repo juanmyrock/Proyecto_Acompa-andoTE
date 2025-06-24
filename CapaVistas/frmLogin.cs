@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-// Añadir los 'usings' para las capas de Lógica y DTO
 using CapaLogica;
 using CapaDTO;
+using CapaVistas.Forms_Login;   
 
 namespace CapaVistas
 {
@@ -152,7 +152,7 @@ namespace CapaVistas
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // La lógica para recuperar contraseña se mantiene
-            using (var frmForgot = new Forms_Login.frmRecuperarContraseña())
+            using (var frmForgot = new Forms_Login.frmRecuperarPass())
             {
                 frmForgot.ShowDialog();
             }
@@ -192,7 +192,7 @@ namespace CapaVistas
                         // El flujo de la aplicación se detiene aquí hasta que se cierre.
                         MessageBox.Show("Es su primer inicio de sesión. Por favor, configure su cuenta.", "Configuración Requerida", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
-                        using (var formConfig = new frmConfiguracionInicial())
+                        using (var formConfig = new frmPreguntas())
                         {
                             formConfig.ShowDialog();
                             // Aquí iría la lógica para verificar si la configuración fue exitosa
