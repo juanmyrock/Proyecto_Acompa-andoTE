@@ -57,7 +57,7 @@
             this.picLogin.Location = new System.Drawing.Point(0, 0);
             this.picLogin.Name = "picLogin";
             this.picLogin.Size = new System.Drawing.Size(368, 350);
-            this.picLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLogin.TabIndex = 0;
             this.picLogin.TabStop = false;
             this.picLogin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoxLogin_MouseDown);
@@ -83,7 +83,7 @@
             this.lblLogin.ForeColor = System.Drawing.Color.White;
             this.lblLogin.Location = new System.Drawing.Point(142, 53);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(127, 41);
+            this.lblLogin.Size = new System.Drawing.Size(110, 37);
             this.lblLogin.TabIndex = 8;
             this.lblLogin.Text = "LOGIN";
             this.lblLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -97,7 +97,7 @@
             this.txtUsers.ForeColor = System.Drawing.Color.Silver;
             this.txtUsers.Location = new System.Drawing.Point(35, 109);
             this.txtUsers.Name = "txtUsers";
-            this.txtUsers.Size = new System.Drawing.Size(340, 30);
+            this.txtUsers.Size = new System.Drawing.Size(340, 27);
             this.txtUsers.TabIndex = 2;
             this.txtUsers.Text = "USUARIO";
             this.txtUsers.Enter += new System.EventHandler(this.txtBoxUsers_Enter);
@@ -112,7 +112,7 @@
             this.txtPass.ForeColor = System.Drawing.Color.Silver;
             this.txtPass.Location = new System.Drawing.Point(35, 160);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(340, 30);
+            this.txtPass.Size = new System.Drawing.Size(340, 27);
             this.txtPass.TabIndex = 3;
             this.txtPass.Text = "CONTRASEÑA";
             this.txtPass.Enter += new System.EventHandler(this.txtBoxPassw_Enter);
@@ -146,7 +146,7 @@
             this.lblForgotPass.LinkColor = System.Drawing.Color.DarkGray;
             this.lblForgotPass.Location = new System.Drawing.Point(137, 313);
             this.lblForgotPass.Name = "lblForgotPass";
-            this.lblForgotPass.Size = new System.Drawing.Size(133, 21);
+            this.lblForgotPass.Size = new System.Drawing.Size(118, 19);
             this.lblForgotPass.TabIndex = 1;
             this.lblForgotPass.TabStop = true;
             this.lblForgotPass.Text = "Forgot Password?";
@@ -158,9 +158,9 @@
             this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrorMsg.Location = new System.Drawing.Point(25, 205);
+            this.lblErrorMsg.Location = new System.Drawing.Point(3, 220);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(116, 19);
+            this.lblErrorMsg.Size = new System.Drawing.Size(109, 18);
             this.lblErrorMsg.TabIndex = 10;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
@@ -168,7 +168,7 @@
             // picError
             // 
             this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
-            this.picError.Location = new System.Drawing.Point(3, 202);
+            this.picError.Location = new System.Drawing.Point(5, 189);
             this.picError.Name = "picError";
             this.picError.Size = new System.Drawing.Size(24, 27);
             this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
