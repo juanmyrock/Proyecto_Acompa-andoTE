@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using CapaSesion;
+// Añadir los 'usings' para las capas de Lógica y DTO
+using CapaLogica;
+using CapaDTO;
 
 namespace CapaVistas
 {
@@ -15,10 +17,6 @@ namespace CapaVistas
             InitializeComponent();
             picShowPass.BringToFront(); //que inicie con el logo para habilitar la contraseña Show (que se vea)
         }
-
-
-        private int intentos = 0;
-        private string usuario = "";
 
 
 
@@ -153,61 +151,67 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CapaVistas.Forms_Login.frmRecuperarContraseña frmForgot = new CapaVistas.Forms_Login.frmRecuperarContraseña();
-            frmForgot.ShowDialog();
+            // La lógica para recuperar contraseña se mantiene
+            using (var frmForgot = new Forms_Login.frmRecuperarContraseña())
+            {
+                frmForgot.ShowDialog();
+            }
         }
 
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            //Validar que los campos estén llenos
+            lblErrorMsg.Visible = false;
+            picError.Visible = false;
+
             if (!ValidarCampos())
             {
-                return; //Si no están llenos, salir del método 'Click'
+                return;
             }
 
-            cls_LogicaLogin BuscarUsuario = new cls_LogicaLogin();
-
-            //Verificar las credenciales del usuario
-            if (BuscarUsuario.LoginUser(txtUsers.Text, /*txtUsers.Text +*/ txtPass.Text) == false) //La condicion envía los dos parámetros del método LoginUser en cls_LogicaLogin que son (user, pass)
+            var credenciales = new cls_CredencialesLoginDTO
             {
-                MessageBox.Show("Usuario o Contraseña Inexistentes");
-                if (intentos < 3) //Bloquear al usuario si introdujo 3 intentos fallidos
+                Username = txtUsers.Text,
+                Password = txtPass.Text
+            };
+
+            try
+            {
+                var logicaLogin = new cls_LogicaLogin();
+
+                // Obtenemos la IP local para el registro de sesión
+                string ipCliente = Dns.GetHostEntry(Dns.GetHostName())
+                                      .AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
+
+                ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente);
+
+                if (resultado.Exitoso)
                 {
-                    if (intentos == 0)
+                    if (resultado.RequiereConfiguracionInicial)
                     {
-                        usuario = txtUsers.Text;
-                        intentos = 1;
-                    }
-                    else
-                    {
-                        if (usuario == txtUsers.Text)
+                        // Si se requiere configuración, mostramos el form de configuración de forma modal.
+                        // El flujo de la aplicación se detiene aquí hasta que se cierre.
+                        MessageBox.Show("Es su primer inicio de sesión. Por favor, configure su cuenta.", "Configuración Requerida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Hide();
+                        using (var formConfig = new frmConfiguracionInicial())
                         {
-                            intentos++;
+                            formConfig.ShowDialog();
+                            // Aquí iría la lógica para verificar si la configuración fue exitosa
+                            // antes de continuar. Por ahora, asumimos que sí.
                         }
                     }
-                }
-                else
-                {
-                    cls_BloquearUser Block = new cls_BloquearUser(usuario);
-                }
 
+                    // Si el login fue exitoso (y la configuración ya se completó si era necesaria),
+                    // establecemos el resultado en OK para que Program.cs continúe.
+                    this.DialogResult = DialogResult.OK;
+                    this.Close(); // Cerramos el form de login
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Mostrar mensaje de ingreso exitoso y permisos del usuario
-                //string permisos = "";
-                //foreach (string elemento in cls_SesionUsuario.PermisosUsuario)
-                //{
-                //    permisos += elemento + "\n";
-                //}
-                //MessageBox.Show($"¡Ingreso Exitoso!\n\n{cls_SesionUsuario.ApellidoEmpleado} {cls_SesionUsuario.NombreEmpleado}\n\nPERMISOS:\n{permisos}");
-                // Aca va el registro en la bitácora 
-                // clsBitacora Guardar = new clsBitacora("Ingreso al Sistema", "Ingreso Exitoso", "frmLoguin");
-
-                this.DialogResult = DialogResult.OK; // Cerrar el formulario de inicio de sesión
-
-                
+                // Mostramos cualquier error que la capa de lógica haya lanzado
+                MsgError(ex.Message);
             }
         }
+
     }
 }

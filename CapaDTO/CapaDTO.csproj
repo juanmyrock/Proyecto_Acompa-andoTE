@@ -45,6 +45,7 @@
     <Compile Include="cls_CredencialesLoginDTO.cs" />
     <Compile Include="cls_ParamContraseñaDTO.cs" />
     <Compile Include="cls_PermisosDTO.cs" />
+    <Compile Include="cls_ResultadoLoginDTO.cs" />
     <Compile Include="cls_RolDTO.cs" />
     <Compile Include="cls_SesionActivaDTO.cs" />
     <Compile Include="cls_UsuarioDTO.cs" />

@@ -28,7 +28,9 @@ namespace CapaLogica
             intentosMaximosPermitidos = _userDatos.ObtenerCantidadIntentosMaximos();
         }
 
-        public bool ValidarLogin(cls_CredencialesLoginDTO credenciales)
+        // --- CAMBIO #1: El método ahora devuelve 'ResultadoLoginDTO' en lugar de 'bool' ---
+        // --- y acepta la IP del cliente como parámetro para el registro de sesión ---
+        public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente)
         {
             // 1. Verificar usuario
             cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(credenciales.Username);
@@ -54,16 +56,24 @@ namespace CapaLogica
                 _userDatos.RegistrarIntentoFallido(usuario.IdUsuario, intentosMaximosPermitidos);
                 throw new Exception("Contraseña incorrecta");
             }
+            // --- CAMBIO #2: Lógica para determinar si es el primer login. ---
+            // Se asume que tu 'cls_ContraseñaDTO' tiene una propiedad booleana como 'EsTemporal'.
+            // Si no la tienes, debes añadirla para que esto funcione.
+            bool requiereConfig = contraseña.EsTemporal; // Ejemplo: contraseña.EsTemporal puede ser true
 
-            // 6. Validar expiración
-            if (contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
+
+            // 6. Validar expiración (si la contraseña no es temporal)
+            if (!requiereConfig && contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
             {
                 throw new Exception("Contraseña expirada. Debe cambiarla");
             }
 
             // 7. Verificar sesión única
             if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
+            {
+                // Podrías mostrar un diálogo para forzar el cierre de la otra sesión
                 throw new Exception("El usuario ya tiene una sesión activa en otro dispositivo");
+            }
 
             // 8. Registrar nueva sesión en BD
             _sesiones.RegistrarSesion(new cls_SesionActivaDTO
@@ -84,7 +94,12 @@ namespace CapaLogica
             // 11. Iniciar sesión local (Singleton)
             SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
-            return true;
+            // --- CAMBIO #3: Devolver el objeto DTO con el resultado completo ---
+            return new ResultadoLoginDTO
+            {
+                Exitoso = true,
+                RequiereConfiguracionInicial = requiereConfig
+            };
 
         }
 
