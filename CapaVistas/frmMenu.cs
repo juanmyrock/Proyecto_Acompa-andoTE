@@ -80,16 +80,32 @@ namespace CapaVistas
 
         private void picLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
         {
-            if (MessageBox.Show("¿Está seguro que desea cerrar sesión?", "¡Alerta!", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                this.Hide();
-                CapaVistas.frmLogin frm = new CapaVistas.frmLogin();
-                frm.ShowDialog();
-                if (frm.DialogResult == DialogResult.OK)
-                {
-                    this.Show();
-                }
+            // Preguntar al usuario para confirmar la acción
+            var confirmacion = MessageBox.Show(
+                "¿Está seguro de que desea cerrar la sesión?",
+                "Confirmar Cierre de Sesión",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
+            if (confirmacion == DialogResult.Yes)
+            {
+                try
+                {
+                    // 1. Instanciar la capa de lógica
+                    var logicaLogin = new CapaLogica.cls_LogicaLogin();
+
+                    // 2. Llamar al método que cierra la sesión en la BD y en el Singleton
+                    logicaLogin.CerrarSesion();
+
+                    // 3. Reiniciar la aplicación para volver a la pantalla de login de forma limpia
+                    // Application.Restart() cierra la instancia actual y lanza una nueva.
+                    // Es la forma más segura de garantizar que no queden datos en memoria.
+                    Application.Restart();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocurrió un error al intentar cerrar la sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void btnConfigSist_MouseHover(object sender, EventArgs e)
