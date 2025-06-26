@@ -65,7 +65,6 @@
             // btnCerrarLogin
             // 
             this.btnCerrarLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCerrarLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrarLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarLogin.Image")));
             this.btnCerrarLogin.Location = new System.Drawing.Point(366, 11);
             this.btnCerrarLogin.Margin = new System.Windows.Forms.Padding(2);
@@ -92,7 +91,6 @@
             // 
             this.txtUsers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtUsers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUsers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txtUsers.Font = new System.Drawing.Font("Century Gothic", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsers.ForeColor = System.Drawing.Color.Silver;
             this.txtUsers.Location = new System.Drawing.Point(35, 109);
@@ -107,7 +105,6 @@
             // 
             this.txtPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.txtPass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txtPass.Font = new System.Drawing.Font("Century Gothic", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPass.ForeColor = System.Drawing.Color.Silver;
             this.txtPass.Location = new System.Drawing.Point(35, 160);
@@ -122,7 +119,6 @@
             // 
             this.btnAcceder.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnAcceder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnAcceder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAcceder.FlatAppearance.BorderSize = 0;
             this.btnAcceder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAcceder.Font = new System.Drawing.Font("Century Gothic", 13.74545F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -140,7 +136,6 @@
             // 
             this.lblForgotPass.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.lblForgotPass.AutoSize = true;
-            this.lblForgotPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblForgotPass.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblForgotPass.ForeColor = System.Drawing.Color.White;
             this.lblForgotPass.LinkColor = System.Drawing.Color.DarkGray;
@@ -198,7 +193,6 @@
             // 
             // picHidePass
             // 
-            this.picHidePass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picHidePass.Image = ((System.Drawing.Image)(resources.GetObject("picHidePass.Image")));
             this.picHidePass.Location = new System.Drawing.Point(379, 160);
             this.picHidePass.Name = "picHidePass";
@@ -210,7 +204,6 @@
             // 
             // picShowPass
             // 
-            this.picShowPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picShowPass.Image = ((System.Drawing.Image)(resources.GetObject("picShowPass.Image")));
             this.picShowPass.Location = new System.Drawing.Point(379, 160);
             this.picShowPass.Name = "picShowPass";
