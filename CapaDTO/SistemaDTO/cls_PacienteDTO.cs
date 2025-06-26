@@ -18,8 +18,5 @@ namespace CapaDTO.SistemaDTO
         public int? IntentosFallidos { get; set; }
         public int? IdRol { get; set; }
 
-        // Datos del empleado asociados
-        public string NombreEmpleado { get; set; }
-        public string ApellidoEmpleado { get; set; }
     }
 }

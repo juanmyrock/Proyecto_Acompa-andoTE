@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using CapaSesion;
+using CapaLogica;
+using CapaDTO;
+using CapaVistas.Forms_Login;   
 
 namespace CapaVistas
 {
@@ -15,10 +17,6 @@ namespace CapaVistas
             InitializeComponent();
             picShowPass.BringToFront(); //que inicie con el logo para habilitar la contraseña Show (que se vea)
         }
-
-
-        private int intentos = 0;
-        private string usuario = "";
 
 
 
@@ -153,61 +151,100 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CapaVistas.Forms_Login.frmRecuperarContraseña frmForgot = new CapaVistas.Forms_Login.frmRecuperarContraseña();
-            frmForgot.ShowDialog();
+            // -- Dispara el FLUJO B: RECUPERACIÓN DE CONTRASEÑA --
+            using (var formValidar = new frmValidarUser())
+            {
+                // Abrimos el primer paso del flujo de recuperación
+                formValidar.ShowDialog();
+            }
         }
 
         private void btnAcceder_Click(object sender, EventArgs e)
         {
-            //Validar que los campos estén llenos
-            if (!ValidarCampos())
-            {
-                return; //Si no están llenos, salir del método 'Click'
-            }
+            lblErrorMsg.Visible = false;
+            picError.Visible = false;
 
-            cls_LogicaLogin BuscarUsuario = new cls_LogicaLogin();
+            if (!ValidarCampos()) return;
 
-            //Verificar las credenciales del usuario
-            if (BuscarUsuario.LoginUser(txtUsers.Text, /*txtUsers.Text +*/ txtPass.Text) == false) //La condicion envía los dos parámetros del método LoginUser en cls_LogicaLogin que son (user, pass)
+            var credenciales = new cls_CredencialesLoginDTO
             {
-                MessageBox.Show("Usuario o Contraseña Inexistentes");
-                if (intentos < 3) //Bloquear al usuario si introdujo 3 intentos fallidos
+                Username = txtUsers.Text,
+                Password = txtPass.Text
+            };
+
+            try
+            {
+                var logicaLogin = new cls_LogicaLogin();
+                string ipCliente = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
+
+                ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente);
+
+                if (resultado.Exitoso)
                 {
-                    if (intentos == 0)
+                    if (resultado.RequiereCambioContraseña || resultado.RequiereConfigurarPreguntas)
                     {
-                        usuario = txtUsers.Text;
-                        intentos = 1;
-                    }
-                    else
-                    {
-                        if (usuario == txtUsers.Text)
+                        // -- Dispara el FLUJO A: PRIMER INGRESO --
+                        this.Hide();
+
+                        // Le pasamos el IdUsuario y le indicamos el modo "Configurar"
+                        int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
+
+                        // Primero, el usuario DEBE configurar sus preguntas si es necesario
+                        if (resultado.RequiereConfigurarPreguntas)
                         {
-                            intentos++;
+                            using (var formPreguntas = new frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
+                            {
+                                formPreguntas.ShowDialog();
+                            }
+                        }
+
+                        // Luego, si tiene contraseña random, DEBE cambiarla
+                        if (resultado.RequiereCambioContraseña)
+                        {
+                            using (var formNuevaPass = new frmNuevaContraseña(idUsuarioLogueado))
+                            {
+                                formNuevaPass.ShowDialog();
+                            }
                         }
                     }
-                }
-                else
-                {
-                    cls_BloquearUser Block = new cls_BloquearUser(usuario);
-                }
 
+                    this.DialogResult = DialogResult.OK; // Indica a Program.cs que continúe al menú
+                    this.Close();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Mostrar mensaje de ingreso exitoso y permisos del usuario
-                //string permisos = "";
-                //foreach (string elemento in cls_SesionUsuario.PermisosUsuario)
-                //{
-                //    permisos += elemento + "\n";
-                //}
-                //MessageBox.Show($"¡Ingreso Exitoso!\n\n{cls_SesionUsuario.ApellidoEmpleado} {cls_SesionUsuario.NombreEmpleado}\n\nPERMISOS:\n{permisos}");
-                // Aca va el registro en la bitácora 
-                // clsBitacora Guardar = new clsBitacora("Ingreso al Sistema", "Ingreso Exitoso", "frmLoguin");
-
-                this.DialogResult = DialogResult.OK; // Cerrar el formulario de inicio de sesión
-
-                
+                MsgError(ex.Message);
             }
+        }
+
+        private void GenerarHash_Click(object sender, EventArgs e)
+        {
+            // La contraseña que queremos hashear
+            string contraseñaDePrueba = "admin123";
+
+            // Usamos TU PROPIA clase de seguridad para generar el hash
+            string hashGenerado = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaDePrueba);
+
+            // Mostramos el hash en un cuadro de texto para poder copiarlo fácilmente
+            string mensaje = $"El hash SHA256 para '{contraseñaDePrueba}' es:\n\n{hashGenerado}\n\n(Copia este valor completo)";
+
+            // Usamos un TextBox en un MessageBox para facilitar la copia
+            TextBox txtCopiable = new TextBox { Text = hashGenerado, Multiline = true, ReadOnly = true, Height = 50, Width = 400 };
+            Form prompt = new Form()
+            {
+                Width = 450,
+                Height = 150,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = "Hash Generado por tu Aplicación",
+                StartPosition = FormStartPosition.CenterScreen
+            };
+            Label textLabel = new Label() { Left = 50, Top = 20, Text = $"Hash para '{contraseñaDePrueba}':" };
+            txtCopiable.Left = 50;
+            txtCopiable.Top = 50;
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(txtCopiable);
+            prompt.ShowDialog();
         }
     }
 }

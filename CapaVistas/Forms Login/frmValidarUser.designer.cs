@@ -1,6 +1,6 @@
 ﻿namespace CapaVistas.Forms_Login
 {
-    partial class frmRecuperarContraseña
+    partial class frmValidarUser
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRecuperarContraseña));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmValidarUser));
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblLogin = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
@@ -63,9 +63,9 @@
             this.lblLogin.AutoSize = true;
             this.lblLogin.Font = new System.Drawing.Font("Century Gothic", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogin.ForeColor = System.Drawing.Color.White;
-            this.lblLogin.Location = new System.Drawing.Point(12, 48);
+            this.lblLogin.Location = new System.Drawing.Point(40, 48);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(497, 49);
+            this.lblLogin.Size = new System.Drawing.Size(432, 44);
             this.lblLogin.TabIndex = 22;
             this.lblLogin.Text = "Recuperar Contraseña";
             // 
@@ -77,7 +77,7 @@
             this.txtUsuario.ForeColor = System.Drawing.Color.DimGray;
             this.txtUsuario.Location = new System.Drawing.Point(83, 163);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(346, 41);
+            this.txtUsuario.Size = new System.Drawing.Size(346, 37);
             this.txtUsuario.TabIndex = 21;
             // 
             // lblUsuario
@@ -85,9 +85,9 @@
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.Silver;
-            this.lblUsuario.Location = new System.Drawing.Point(105, 110);
+            this.lblUsuario.Location = new System.Drawing.Point(134, 111);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(306, 34);
+            this.lblUsuario.Size = new System.Drawing.Size(256, 28);
             this.lblUsuario.TabIndex = 20;
             this.lblUsuario.Text = "INGRESE SU USUARIO:";
             // 
@@ -125,7 +125,7 @@
             // picError
             // 
             this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
-            this.picError.Location = new System.Drawing.Point(60, 210);
+            this.picError.Location = new System.Drawing.Point(26, 213);
             this.picError.Name = "picError";
             this.picError.Size = new System.Drawing.Size(24, 27);
             this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -139,9 +139,9 @@
             this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrorMsg.Location = new System.Drawing.Point(82, 213);
+            this.lblErrorMsg.Location = new System.Drawing.Point(59, 217);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(116, 19);
+            this.lblErrorMsg.Size = new System.Drawing.Size(109, 18);
             this.lblErrorMsg.TabIndex = 26;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
