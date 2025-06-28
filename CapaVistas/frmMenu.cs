@@ -1,7 +1,10 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+using CapaDTO;
+using CapaLogica.Login;
 using CapaVistas.Forms_Menu;
 
 namespace CapaVistas
@@ -9,10 +12,12 @@ namespace CapaVistas
     public partial class frmMenu : Form
     {
         private Form activeForm = null;
+        
 
         public frmMenu()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
@@ -37,9 +42,30 @@ namespace CapaVistas
         #region Botones de la Barra
         private void btnCerrar_Click(object sender, EventArgs e) //para cerrar la aplicación
         {
-            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            var confirmacion = MessageBox.Show(
+                "¿Está seguro que desea salir?", "¡Alerta!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
             {
-                Application.Exit();
+                try
+                {
+                    // 1. Instanciar la capa de lógica
+                    var logicaLogin = new CapaLogica.cls_LogicaLogin();
+
+                    // 2. Llamar al método que cierra la sesión en la BD y en el Singleton
+                    logicaLogin.CerrarSesion();
+
+                    // 
+                    // 2. Application.Exit() cierra la instancia actual.
+                    // Es la forma más segura de garantizar que no queden datos en memoria.
+                    Application.Exit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocurrió un error al intentar cerrar la sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         
@@ -143,6 +169,19 @@ namespace CapaVistas
 
         private void btnAdministrar_Click(object sender, EventArgs e)
         {
+            //try
+            //{
+            //    cls_ParamContraseñaDTO parametrosContra = new cls_ParamContraseñaDTO();
+            //    parametrosContra.CantidadPreguntasSeguridad = 
+            //    cls_ParamContraseñaDTO TraerDatos()
+            //    {
+                    
+            //    }
+            //}
+            //catch 
+            //{
+            
+            //}
             OpenChildForm(new CapaVistas.Forms_Menu.frmAdminSyst(), sender);
         }
     }

@@ -40,11 +40,25 @@ namespace CapaVistas
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMenu));
             this.panelBarraClose = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblTittle2 = new System.Windows.Forms.Label();
+            this.btnMaximize = new System.Windows.Forms.PictureBox();
+            this.lblTittle = new System.Windows.Forms.Label();
+            this.btnCerrar = new System.Windows.Forms.PictureBox();
+            this.btnOcultar = new System.Windows.Forms.PictureBox();
+            this.btnMinimize = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.panel8 = new System.Windows.Forms.Panel();
             this.btnUserLog = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.picReportes = new System.Windows.Forms.PictureBox();
+            this.picFacturas = new System.Windows.Forms.PictureBox();
+            this.picClientes = new System.Windows.Forms.PictureBox();
+            this.picVentas = new System.Windows.Forms.PictureBox();
+            this.picProductos = new System.Windows.Forms.PictureBox();
             this.btnReportes = new System.Windows.Forms.Button();
             this.btnTurnos = new System.Windows.Forms.Button();
             this.btnInformes = new System.Windows.Forms.Button();
@@ -55,32 +69,20 @@ namespace CapaVistas
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPacientes = new System.Windows.Forms.Button();
+            this.logoMenu = new System.Windows.Forms.PictureBox();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.panelTitulo = new System.Windows.Forms.Panel();
-            this.btnAdministrar = new System.Windows.Forms.Button();
-            this.panelChildFrm = new System.Windows.Forms.Panel();
-            this.lblTittle = new System.Windows.Forms.Label();
-            this.lblTittle2 = new System.Windows.Forms.Label();
             this.btnConfigSist = new System.Windows.Forms.PictureBox();
+            this.btnAdministrar = new System.Windows.Forms.Button();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
-            this.btnLogOut = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.picReportes = new System.Windows.Forms.PictureBox();
-            this.picFacturas = new System.Windows.Forms.PictureBox();
-            this.picClientes = new System.Windows.Forms.PictureBox();
-            this.picVentas = new System.Windows.Forms.PictureBox();
-            this.picProductos = new System.Windows.Forms.PictureBox();
-            this.logoMenu = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnMaximize = new System.Windows.Forms.PictureBox();
-            this.btnCerrar = new System.Windows.Forms.PictureBox();
-            this.btnOcultar = new System.Windows.Forms.PictureBox();
-            this.btnMinimize = new System.Windows.Forms.PictureBox();
+            this.panelChildFrm = new System.Windows.Forms.Panel();
             this.panelBarraClose.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).BeginInit();
             this.panelMenu.SuspendLayout();
-            this.panelTitulo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).BeginInit();
@@ -89,11 +91,9 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.picVentas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoMenu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).BeginInit();
+            this.panelTitulo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
             this.SuspendLayout();
             // 
             // panelBarraClose
@@ -115,6 +115,99 @@ namespace CapaVistas
             this.panelBarraClose.Size = new System.Drawing.Size(1280, 35);
             this.panelBarraClose.TabIndex = 0;
             this.panelBarraClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelBarraClose_MouseDown);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, -3);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(39, 42);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblTittle2
+            // 
+            this.lblTittle2.AutoSize = true;
+            this.lblTittle2.BackColor = System.Drawing.Color.Transparent;
+            this.lblTittle2.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTittle2.ForeColor = System.Drawing.Color.DarkCyan;
+            this.lblTittle2.Location = new System.Drawing.Point(671, 2);
+            this.lblTittle2.Name = "lblTittle2";
+            this.lblTittle2.Size = new System.Drawing.Size(35, 33);
+            this.lblTittle2.TabIndex = 7;
+            this.lblTittle2.Text = "TE";
+            // 
+            // btnMaximize
+            // 
+            this.btnMaximize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMaximize.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximize.Image")));
+            this.btnMaximize.Location = new System.Drawing.Point(1215, 4);
+            this.btnMaximize.Margin = new System.Windows.Forms.Padding(2);
+            this.btnMaximize.Name = "btnMaximize";
+            this.btnMaximize.Size = new System.Drawing.Size(25, 25);
+            this.btnMaximize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnMaximize.TabIndex = 3;
+            this.btnMaximize.TabStop = false;
+            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
+            // 
+            // lblTittle
+            // 
+            this.lblTittle.AutoSize = true;
+            this.lblTittle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTittle.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTittle.ForeColor = System.Drawing.Color.SteelBlue;
+            this.lblTittle.Location = new System.Drawing.Point(540, 2);
+            this.lblTittle.Name = "lblTittle";
+            this.lblTittle.Size = new System.Drawing.Size(140, 33);
+            this.lblTittle.TabIndex = 6;
+            this.lblTittle.Text = "Acompañando";
+            // 
+            // btnCerrar
+            // 
+            this.btnCerrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrar.Image")));
+            this.btnCerrar.Location = new System.Drawing.Point(1244, 4);
+            this.btnCerrar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(25, 25);
+            this.btnCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCerrar.TabIndex = 0;
+            this.btnCerrar.TabStop = false;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
+            // 
+            // btnOcultar
+            // 
+            this.btnOcultar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOcultar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOcultar.Image = ((System.Drawing.Image)(resources.GetObject("btnOcultar.Image")));
+            this.btnOcultar.Location = new System.Drawing.Point(1186, 4);
+            this.btnOcultar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnOcultar.Name = "btnOcultar";
+            this.btnOcultar.Size = new System.Drawing.Size(25, 25);
+            this.btnOcultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnOcultar.TabIndex = 2;
+            this.btnOcultar.TabStop = false;
+            this.btnOcultar.Click += new System.EventHandler(this.btnOcultar_Click);
+            // 
+            // btnMinimize
+            // 
+            this.btnMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMinimize.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimize.Image")));
+            this.btnMinimize.Location = new System.Drawing.Point(1215, 4);
+            this.btnMinimize.Margin = new System.Windows.Forms.Padding(2);
+            this.btnMinimize.Name = "btnMinimize";
+            this.btnMinimize.Size = new System.Drawing.Size(25, 25);
+            this.btnMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnMinimize.TabIndex = 1;
+            this.btnMinimize.TabStop = false;
+            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
             // panelMenu
             // 
@@ -148,6 +241,19 @@ namespace CapaVistas
             this.panelMenu.Size = new System.Drawing.Size(217, 760);
             this.panelMenu.TabIndex = 3;
             // 
+            // btnLogOut
+            // 
+            this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
+            this.btnLogOut.Location = new System.Drawing.Point(169, 205);
+            this.btnLogOut.Name = "btnLogOut";
+            this.btnLogOut.Size = new System.Drawing.Size(45, 45);
+            this.btnLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnLogOut.TabIndex = 20;
+            this.btnLogOut.TabStop = false;
+            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
+            // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
@@ -175,6 +281,20 @@ namespace CapaVistas
             this.btnUserLog.Text = "User";
             this.btnUserLog.UseVisualStyleBackColor = false;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox2.Enabled = false;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(1, 648);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(40, 40);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 26;
+            this.pictureBox2.TabStop = false;
+            // 
             // btnUsuarios
             // 
             this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
@@ -201,6 +321,76 @@ namespace CapaVistas
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(10, 40);
             this.panel7.TabIndex = 24;
+            // 
+            // picReportes
+            // 
+            this.picReportes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picReportes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picReportes.Enabled = false;
+            this.picReportes.Image = ((System.Drawing.Image)(resources.GetObject("picReportes.Image")));
+            this.picReportes.Location = new System.Drawing.Point(2, 575);
+            this.picReportes.Margin = new System.Windows.Forms.Padding(2);
+            this.picReportes.Name = "picReportes";
+            this.picReportes.Size = new System.Drawing.Size(40, 40);
+            this.picReportes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picReportes.TabIndex = 18;
+            this.picReportes.TabStop = false;
+            // 
+            // picFacturas
+            // 
+            this.picFacturas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picFacturas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picFacturas.Enabled = false;
+            this.picFacturas.Image = global::CapaVistas.Properties.Resources.Calendario1;
+            this.picFacturas.Location = new System.Drawing.Point(2, 500);
+            this.picFacturas.Margin = new System.Windows.Forms.Padding(2);
+            this.picFacturas.Name = "picFacturas";
+            this.picFacturas.Size = new System.Drawing.Size(40, 40);
+            this.picFacturas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picFacturas.TabIndex = 17;
+            this.picFacturas.TabStop = false;
+            // 
+            // picClientes
+            // 
+            this.picClientes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picClientes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picClientes.Enabled = false;
+            this.picClientes.Image = ((System.Drawing.Image)(resources.GetObject("picClientes.Image")));
+            this.picClientes.Location = new System.Drawing.Point(2, 426);
+            this.picClientes.Margin = new System.Windows.Forms.Padding(2);
+            this.picClientes.Name = "picClientes";
+            this.picClientes.Size = new System.Drawing.Size(40, 40);
+            this.picClientes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picClientes.TabIndex = 16;
+            this.picClientes.TabStop = false;
+            // 
+            // picVentas
+            // 
+            this.picVentas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picVentas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picVentas.Enabled = false;
+            this.picVentas.Image = global::CapaVistas.Properties.Resources.AT;
+            this.picVentas.Location = new System.Drawing.Point(2, 354);
+            this.picVentas.Margin = new System.Windows.Forms.Padding(2);
+            this.picVentas.Name = "picVentas";
+            this.picVentas.Size = new System.Drawing.Size(40, 40);
+            this.picVentas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picVentas.TabIndex = 15;
+            this.picVentas.TabStop = false;
+            // 
+            // picProductos
+            // 
+            this.picProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picProductos.Enabled = false;
+            this.picProductos.Image = global::CapaVistas.Properties.Resources.Pacientes_jpg;
+            this.picProductos.Location = new System.Drawing.Point(2, 277);
+            this.picProductos.Margin = new System.Windows.Forms.Padding(2);
+            this.picProductos.Name = "picProductos";
+            this.picProductos.Size = new System.Drawing.Size(40, 40);
+            this.picProductos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picProductos.TabIndex = 4;
+            this.picProductos.TabStop = false;
             // 
             // btnReportes
             // 
@@ -333,6 +523,19 @@ namespace CapaVistas
             this.btnPacientes.Text = "Pacientes";
             this.btnPacientes.UseVisualStyleBackColor = false;
             // 
+            // logoMenu
+            // 
+            this.logoMenu.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.logoMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.logoMenu.Image = global::CapaVistas.Properties.Resources.AcompanandoTe_sin_texto;
+            this.logoMenu.Location = new System.Drawing.Point(0, 0);
+            this.logoMenu.Margin = new System.Windows.Forms.Padding(2);
+            this.logoMenu.Name = "logoMenu";
+            this.logoMenu.Size = new System.Drawing.Size(217, 201);
+            this.logoMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoMenu.TabIndex = 0;
+            this.logoMenu.TabStop = false;
+            // 
             // lblTitulo
             // 
             this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -360,6 +563,19 @@ namespace CapaVistas
             this.panelTitulo.Size = new System.Drawing.Size(1063, 60);
             this.panelTitulo.TabIndex = 3;
             // 
+            // btnConfigSist
+            // 
+            this.btnConfigSist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConfigSist.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnConfigSist.Image = ((System.Drawing.Image)(resources.GetObject("btnConfigSist.Image")));
+            this.btnConfigSist.Location = new System.Drawing.Point(944, 5);
+            this.btnConfigSist.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConfigSist.Name = "btnConfigSist";
+            this.btnConfigSist.Size = new System.Drawing.Size(36, 50);
+            this.btnConfigSist.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnConfigSist.TabIndex = 29;
+            this.btnConfigSist.TabStop = false;
+            // 
             // btnAdministrar
             // 
             this.btnAdministrar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
@@ -375,53 +591,6 @@ namespace CapaVistas
             this.btnAdministrar.UseVisualStyleBackColor = true;
             this.btnAdministrar.Click += new System.EventHandler(this.btnAdministrar_Click);
             // 
-            // panelChildFrm
-            // 
-            this.panelChildFrm.AutoScroll = true;
-            this.panelChildFrm.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
-            this.panelChildFrm.Name = "panelChildFrm";
-            this.panelChildFrm.Size = new System.Drawing.Size(1063, 700);
-            this.panelChildFrm.TabIndex = 4;
-            // 
-            // lblTittle
-            // 
-            this.lblTittle.AutoSize = true;
-            this.lblTittle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTittle.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTittle.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblTittle.Location = new System.Drawing.Point(540, 2);
-            this.lblTittle.Name = "lblTittle";
-            this.lblTittle.Size = new System.Drawing.Size(140, 33);
-            this.lblTittle.TabIndex = 6;
-            this.lblTittle.Text = "Acompañando";
-            // 
-            // lblTittle2
-            // 
-            this.lblTittle2.AutoSize = true;
-            this.lblTittle2.BackColor = System.Drawing.Color.Transparent;
-            this.lblTittle2.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTittle2.ForeColor = System.Drawing.Color.DarkCyan;
-            this.lblTittle2.Location = new System.Drawing.Point(671, 2);
-            this.lblTittle2.Name = "lblTittle2";
-            this.lblTittle2.Size = new System.Drawing.Size(35, 33);
-            this.lblTittle2.TabIndex = 7;
-            this.lblTittle2.Text = "TE";
-            // 
-            // btnConfigSist
-            // 
-            this.btnConfigSist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfigSist.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnConfigSist.Image = ((System.Drawing.Image)(resources.GetObject("btnConfigSist.Image")));
-            this.btnConfigSist.Location = new System.Drawing.Point(944, 5);
-            this.btnConfigSist.Margin = new System.Windows.Forms.Padding(2);
-            this.btnConfigSist.Name = "btnConfigSist";
-            this.btnConfigSist.Size = new System.Drawing.Size(36, 50);
-            this.btnConfigSist.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnConfigSist.TabIndex = 29;
-            this.btnConfigSist.TabStop = false;
-            // 
             // btnCerrarForm
             // 
             this.btnCerrarForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -436,184 +605,15 @@ namespace CapaVistas
             this.btnCerrarForm.Visible = false;
             this.btnCerrarForm.Click += new System.EventHandler(this.btnCerrarForm_Click);
             // 
-            // btnLogOut
+            // panelChildFrm
             // 
-            this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
-            this.btnLogOut.Location = new System.Drawing.Point(169, 205);
-            this.btnLogOut.Name = "btnLogOut";
-            this.btnLogOut.Size = new System.Drawing.Size(45, 45);
-            this.btnLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnLogOut.TabIndex = 20;
-            this.btnLogOut.TabStop = false;
-            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox2.Enabled = false;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1, 648);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 40);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 26;
-            this.pictureBox2.TabStop = false;
-            // 
-            // picReportes
-            // 
-            this.picReportes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picReportes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picReportes.Enabled = false;
-            this.picReportes.Image = ((System.Drawing.Image)(resources.GetObject("picReportes.Image")));
-            this.picReportes.Location = new System.Drawing.Point(2, 575);
-            this.picReportes.Margin = new System.Windows.Forms.Padding(2);
-            this.picReportes.Name = "picReportes";
-            this.picReportes.Size = new System.Drawing.Size(40, 40);
-            this.picReportes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picReportes.TabIndex = 18;
-            this.picReportes.TabStop = false;
-            // 
-            // picFacturas
-            // 
-            this.picFacturas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picFacturas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picFacturas.Enabled = false;
-            this.picFacturas.Image = global::CapaVistas.Properties.Resources.Calendario1;
-            this.picFacturas.Location = new System.Drawing.Point(2, 500);
-            this.picFacturas.Margin = new System.Windows.Forms.Padding(2);
-            this.picFacturas.Name = "picFacturas";
-            this.picFacturas.Size = new System.Drawing.Size(40, 40);
-            this.picFacturas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picFacturas.TabIndex = 17;
-            this.picFacturas.TabStop = false;
-            // 
-            // picClientes
-            // 
-            this.picClientes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picClientes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picClientes.Enabled = false;
-            this.picClientes.Image = ((System.Drawing.Image)(resources.GetObject("picClientes.Image")));
-            this.picClientes.Location = new System.Drawing.Point(2, 426);
-            this.picClientes.Margin = new System.Windows.Forms.Padding(2);
-            this.picClientes.Name = "picClientes";
-            this.picClientes.Size = new System.Drawing.Size(40, 40);
-            this.picClientes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picClientes.TabIndex = 16;
-            this.picClientes.TabStop = false;
-            // 
-            // picVentas
-            // 
-            this.picVentas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picVentas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picVentas.Enabled = false;
-            this.picVentas.Image = global::CapaVistas.Properties.Resources.AT;
-            this.picVentas.Location = new System.Drawing.Point(2, 354);
-            this.picVentas.Margin = new System.Windows.Forms.Padding(2);
-            this.picVentas.Name = "picVentas";
-            this.picVentas.Size = new System.Drawing.Size(40, 40);
-            this.picVentas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picVentas.TabIndex = 15;
-            this.picVentas.TabStop = false;
-            // 
-            // picProductos
-            // 
-            this.picProductos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picProductos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picProductos.Enabled = false;
-            this.picProductos.Image = global::CapaVistas.Properties.Resources.Pacientes_jpg;
-            this.picProductos.Location = new System.Drawing.Point(2, 277);
-            this.picProductos.Margin = new System.Windows.Forms.Padding(2);
-            this.picProductos.Name = "picProductos";
-            this.picProductos.Size = new System.Drawing.Size(40, 40);
-            this.picProductos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picProductos.TabIndex = 4;
-            this.picProductos.TabStop = false;
-            // 
-            // logoMenu
-            // 
-            this.logoMenu.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.logoMenu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.logoMenu.Image = global::CapaVistas.Properties.Resources.AcompanandoTe_sin_texto;
-            this.logoMenu.Location = new System.Drawing.Point(0, 0);
-            this.logoMenu.Margin = new System.Windows.Forms.Padding(2);
-            this.logoMenu.Name = "logoMenu";
-            this.logoMenu.Size = new System.Drawing.Size(217, 201);
-            this.logoMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logoMenu.TabIndex = 0;
-            this.logoMenu.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, -3);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(39, 42);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            // 
-            // btnMaximize
-            // 
-            this.btnMaximize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMaximize.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximize.Image")));
-            this.btnMaximize.Location = new System.Drawing.Point(1215, 4);
-            this.btnMaximize.Margin = new System.Windows.Forms.Padding(2);
-            this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(25, 25);
-            this.btnMaximize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMaximize.TabIndex = 3;
-            this.btnMaximize.TabStop = false;
-            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
-            // 
-            // btnCerrar
-            // 
-            this.btnCerrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrar.Image")));
-            this.btnCerrar.Location = new System.Drawing.Point(1244, 4);
-            this.btnCerrar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(25, 25);
-            this.btnCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCerrar.TabIndex = 0;
-            this.btnCerrar.TabStop = false;
-            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
-            // 
-            // btnOcultar
-            // 
-            this.btnOcultar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOcultar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOcultar.Image = ((System.Drawing.Image)(resources.GetObject("btnOcultar.Image")));
-            this.btnOcultar.Location = new System.Drawing.Point(1186, 4);
-            this.btnOcultar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnOcultar.Name = "btnOcultar";
-            this.btnOcultar.Size = new System.Drawing.Size(25, 25);
-            this.btnOcultar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnOcultar.TabIndex = 2;
-            this.btnOcultar.TabStop = false;
-            this.btnOcultar.Click += new System.EventHandler(this.btnOcultar_Click);
-            // 
-            // btnMinimize
-            // 
-            this.btnMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMinimize.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimize.Image")));
-            this.btnMinimize.Location = new System.Drawing.Point(1215, 4);
-            this.btnMinimize.Margin = new System.Windows.Forms.Padding(2);
-            this.btnMinimize.Name = "btnMinimize";
-            this.btnMinimize.Size = new System.Drawing.Size(25, 25);
-            this.btnMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMinimize.TabIndex = 1;
-            this.btnMinimize.TabStop = false;
-            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
+            this.panelChildFrm.AutoScroll = true;
+            this.panelChildFrm.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
+            this.panelChildFrm.Name = "panelChildFrm";
+            this.panelChildFrm.Size = new System.Drawing.Size(1063, 700);
+            this.panelChildFrm.TabIndex = 4;
             // 
             // frmMenu
             // 
@@ -632,11 +632,12 @@ namespace CapaVistas
             this.Text = "frmMenu";
             this.panelBarraClose.ResumeLayout(false);
             this.panelBarraClose.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).EndInit();
             this.panelMenu.ResumeLayout(false);
-            this.panelTitulo.ResumeLayout(false);
-            this.panelTitulo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).EndInit();
@@ -645,11 +646,10 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.picVentas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picProductos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoMenu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).EndInit();
+            this.panelTitulo.ResumeLayout(false);
+            this.panelTitulo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -686,12 +686,12 @@ namespace CapaVistas
         private Panel panel8;
         private Panel panelTitulo;
         private Label lblTitulo;
-        private Panel panelChildFrm;
         private PictureBox btnCerrarForm;
         private PictureBox btnConfigSist;
         private Button btnAdministrar;
         private Label lblTittle2;
         private Label lblTittle;
         private PictureBox pictureBox1;
+        private Panel panelChildFrm;
     }
 }
