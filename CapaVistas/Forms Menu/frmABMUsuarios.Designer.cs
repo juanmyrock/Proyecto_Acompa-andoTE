@@ -55,12 +55,12 @@
             this.label35 = new System.Windows.Forms.Label();
             this.cmbLocalidadModif = new System.Windows.Forms.ComboBox();
             this.cmbTipoDNIModif = new System.Windows.Forms.ComboBox();
-            this.dgvVerUser3 = new System.Windows.Forms.DataGridView();
-            this.btnCargarUser3 = new System.Windows.Forms.Button();
+            this.dgvVerUser = new System.Windows.Forms.DataGridView();
+            this.btnCargar = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
-            this.btnRefresh3 = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -312,33 +312,33 @@
             this.cmbTipoDNIModif.Size = new System.Drawing.Size(121, 22);
             this.cmbTipoDNIModif.TabIndex = 39;
             // 
-            // dgvVerUser3
+            // dgvVerUser
             // 
-            this.dgvVerUser3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerUser3.Location = new System.Drawing.Point(35, 45);
-            this.dgvVerUser3.MultiSelect = false;
-            this.dgvVerUser3.Name = "dgvVerUser3";
-            this.dgvVerUser3.ReadOnly = true;
-            this.dgvVerUser3.RowHeadersVisible = false;
-            this.dgvVerUser3.RowHeadersWidth = 47;
-            this.dgvVerUser3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVerUser3.Size = new System.Drawing.Size(952, 334);
-            this.dgvVerUser3.TabIndex = 46;
+            this.dgvVerUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVerUser.Location = new System.Drawing.Point(35, 45);
+            this.dgvVerUser.MultiSelect = false;
+            this.dgvVerUser.Name = "dgvVerUser";
+            this.dgvVerUser.ReadOnly = true;
+            this.dgvVerUser.RowHeadersVisible = false;
+            this.dgvVerUser.RowHeadersWidth = 47;
+            this.dgvVerUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvVerUser.Size = new System.Drawing.Size(952, 334);
+            this.dgvVerUser.TabIndex = 46;
             // 
-            // btnCargarUser3
+            // btnCargar
             // 
-            this.btnCargarUser3.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnCargarUser3.FlatAppearance.BorderSize = 3;
-            this.btnCargarUser3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCargarUser3.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCargarUser3.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCargarUser3.Location = new System.Drawing.Point(345, 385);
-            this.btnCargarUser3.Name = "btnCargarUser3";
-            this.btnCargarUser3.Size = new System.Drawing.Size(333, 50);
-            this.btnCargarUser3.TabIndex = 50;
-            this.btnCargarUser3.Text = "Cargar Lista";
-            this.btnCargarUser3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCargarUser3.UseVisualStyleBackColor = true;
+            this.btnCargar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnCargar.FlatAppearance.BorderSize = 3;
+            this.btnCargar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCargar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCargar.Location = new System.Drawing.Point(345, 385);
+            this.btnCargar.Name = "btnCargar";
+            this.btnCargar.Size = new System.Drawing.Size(333, 50);
+            this.btnCargar.TabIndex = 50;
+            this.btnCargar.Text = "Cargar Lista";
+            this.btnCargar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCargar.UseVisualStyleBackColor = true;
             // 
             // lblUsuario
             // 
@@ -347,23 +347,23 @@
             this.lblUsuario.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblUsuario.Location = new System.Drawing.Point(39, 13);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(80, 24);
+            this.lblUsuario.Size = new System.Drawing.Size(164, 24);
             this.lblUsuario.TabIndex = 47;
-            this.lblUsuario.Text = "Usuario";
+            this.lblUsuario.Text = "Lista de usuarios";
             // 
-            // btnRefresh3
+            // btnRefresh
             // 
-            this.btnRefresh3.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnRefresh3.FlatAppearance.BorderSize = 3;
-            this.btnRefresh3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh3.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnRefresh3.Location = new System.Drawing.Point(876, 3);
-            this.btnRefresh3.Name = "btnRefresh3";
-            this.btnRefresh3.Size = new System.Drawing.Size(111, 36);
-            this.btnRefresh3.TabIndex = 49;
-            this.btnRefresh3.Text = "Refrescar";
-            this.btnRefresh3.UseVisualStyleBackColor = true;
+            this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnRefresh.FlatAppearance.BorderSize = 3;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefresh.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnRefresh.Location = new System.Drawing.Point(876, 3);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(111, 36);
+            this.btnRefresh.TabIndex = 49;
+            this.btnRefresh.Text = "Refrescar";
+            this.btnRefresh.UseVisualStyleBackColor = true;
             // 
             // frmABMUsuarios
             // 
@@ -372,16 +372,16 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1022, 656);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.dgvVerUser3);
-            this.Controls.Add(this.btnCargarUser3);
+            this.Controls.Add(this.dgvVerUser);
+            this.Controls.Add(this.btnCargar);
             this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.btnRefresh3);
+            this.Controls.Add(this.btnRefresh);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmABMUsuarios";
-            this.Text = "frmABMUsuarios";
+            this.Text = "Usuarios";
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,9 +415,9 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox cmbLocalidadModif;
         private System.Windows.Forms.ComboBox cmbTipoDNIModif;
-        private System.Windows.Forms.DataGridView dgvVerUser3;
-        private System.Windows.Forms.Button btnCargarUser3;
+        private System.Windows.Forms.DataGridView dgvVerUser;
+        private System.Windows.Forms.Button btnCargar;
         private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.Button btnRefresh3;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
