@@ -218,33 +218,38 @@ namespace CapaVistas
             }
         }
 
-        private void GenerarHash_Click(object sender, EventArgs e)
+        private void buttonGenerarHash_Click(object sender, EventArgs e)
         {
-            // La contraseña que queremos hashear
-            string contraseñaDePrueba = "admin123";
+            // --- CAMBIO CLAVE: ---
+            // Ahora tomamos la contraseña DIRECTAMENTE del TextBox del formulario,
+            // que es la fuente de datos real.
+            string contraseñaDePrueba = txtPass.Text;
+
+            if (string.IsNullOrWhiteSpace(contraseñaDePrueba) || contraseñaDePrueba == "CONTRASEÑA")
+            {
+                MessageBox.Show("Por favor, escribe una contraseña en el campo correspondiente para generar su hash.");
+                return;
+            }
 
             // Usamos TU PROPIA clase de seguridad para generar el hash
             string hashGenerado = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaDePrueba);
 
             // Mostramos el hash en un cuadro de texto para poder copiarlo fácilmente
-            string mensaje = $"El hash SHA256 para '{contraseñaDePrueba}' es:\n\n{hashGenerado}\n\n(Copia este valor completo)";
-
-            // Usamos un TextBox en un MessageBox para facilitar la copia
-            TextBox txtCopiable = new TextBox { Text = hashGenerado, Multiline = true, ReadOnly = true, Height = 50, Width = 400 };
-            Form prompt = new Form()
+            using (Form prompt = new Form()
             {
                 Width = 450,
                 Height = 150,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = "Hash Generado por tu Aplicación",
                 StartPosition = FormStartPosition.CenterScreen
-            };
-            Label textLabel = new Label() { Left = 50, Top = 20, Text = $"Hash para '{contraseñaDePrueba}':" };
-            txtCopiable.Left = 50;
-            txtCopiable.Top = 50;
-            prompt.Controls.Add(textLabel);
-            prompt.Controls.Add(txtCopiable);
-            prompt.ShowDialog();
+            })
+            {
+                Label textLabel = new Label() { Left = 50, Top = 20, Text = $"Hash para '{contraseñaDePrueba}':", Width = 350 };
+                TextBox txtCopiable = new TextBox { Text = hashGenerado, Left = 50, Top = 50, Width = 350 };
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(txtCopiable);
+                prompt.ShowDialog();
+            }
         }
     }
 }
