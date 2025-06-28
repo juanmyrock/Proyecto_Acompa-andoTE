@@ -119,6 +119,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -150,6 +151,24 @@
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
       <Name>CapaSesion</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AcompanandoTe_sin_texto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pacientes.jpg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendario1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AcompanandoTe.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

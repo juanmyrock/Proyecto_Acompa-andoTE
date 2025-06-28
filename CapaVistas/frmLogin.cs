@@ -48,7 +48,7 @@ namespace CapaVistas
 
         private void btnCerrarLogin_Click(object sender, EventArgs e) //Evento de cierre al logo de Cerrar
         {
-            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit();
             }
