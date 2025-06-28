@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using CapaVistas.Forms_Menu;
 
 namespace CapaVistas
 {
@@ -36,7 +37,7 @@ namespace CapaVistas
         #region Botones de la Barra
         private void btnCerrar_Click(object sender, EventArgs e) //para cerrar la aplicación
         {
-            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit();
             }
@@ -63,22 +64,8 @@ namespace CapaVistas
         #endregion
 
         #region Config y Estilos Botones Menú
-        //private void btnSlide_Click(object sender, EventArgs e) //para minimizar el panel de menú y acomodar los íconos
-        //{
-        //    if (panelMenu.Width == 240)
-        //    {
-        //        panelMenu.Width = 72;
-        //        picLogOut.Location = new Point(12, 146);
 
-        //    }
-        //    else
-        //    {
-        //        panelMenu.Width = 240;
-        //        picLogOut.Location = new Point(195, 196);
-        //    }
-        //}
-
-        private void picLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
+        private void btnLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
         {
             // Preguntar al usuario para confirmar la acción
             var confirmacion = MessageBox.Show(
@@ -107,19 +94,6 @@ namespace CapaVistas
                     MessageBox.Show("Ocurrió un error al intentar cerrar la sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-        private void btnConfigSist_MouseHover(object sender, EventArgs e)
-        {
-            btnConfigSist.Width = 65;
-            btnConfigSist.Height = 65;
-            btnConfigSist.Location = new Point(181, 704);
-        }
-
-        private void btnConfigSist_MouseLeave(object sender, EventArgs e)
-        {
-            btnConfigSist.Width = 45;
-            btnConfigSist.Height = 45;
-            btnConfigSist.Location = new Point(190, 715);
         }
         #endregion
 
@@ -159,14 +133,18 @@ namespace CapaVistas
         }
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CapaVistas.Form_Menu.frmUsuarios(), sender);
+            OpenChildForm(new CapaVistas.Form_Menu.frmABMUsuarios(), sender);
         }
+
 
 
 
         #endregion
 
-
+        private void btnAdministrar_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new CapaVistas.Forms_Menu.frmAdminSyst(), sender);
+        }
     }
 
 

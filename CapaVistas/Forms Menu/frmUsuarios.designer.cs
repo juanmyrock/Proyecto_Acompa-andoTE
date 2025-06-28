@@ -146,6 +146,7 @@
             // 
             // tabVerUser
             // 
+            this.tabVerUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tabVerUser.Controls.Add(this.btnRefrescar);
             this.tabVerUser.Controls.Add(this.btnLimpiar);
             this.tabVerUser.Controls.Add(this.btnCargar);
@@ -157,13 +158,17 @@
             this.tabVerUser.Size = new System.Drawing.Size(1014, 630);
             this.tabVerUser.TabIndex = 2;
             this.tabVerUser.Text = "Ver";
-            this.tabVerUser.UseVisualStyleBackColor = true;
             // 
             // btnRefrescar
             // 
-            this.btnRefrescar.Location = new System.Drawing.Point(869, 70);
+            this.btnRefrescar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnRefrescar.FlatAppearance.BorderSize = 3;
+            this.btnRefrescar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefrescar.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRefrescar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnRefrescar.Location = new System.Drawing.Point(869, 63);
             this.btnRefrescar.Name = "btnRefrescar";
-            this.btnRefrescar.Size = new System.Drawing.Size(92, 23);
+            this.btnRefrescar.Size = new System.Drawing.Size(92, 30);
             this.btnRefrescar.TabIndex = 21;
             this.btnRefrescar.Text = "Refrescar";
             this.btnRefrescar.UseVisualStyleBackColor = true;
@@ -171,9 +176,14 @@
             // 
             // btnLimpiar
             // 
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnLimpiar.FlatAppearance.BorderSize = 3;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnLimpiar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnLimpiar.Location = new System.Drawing.Point(721, 583);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(92, 23);
+            this.btnLimpiar.Size = new System.Drawing.Size(92, 39);
             this.btnLimpiar.TabIndex = 20;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
@@ -181,9 +191,14 @@
             // 
             // btnCargar
             // 
+            this.btnCargar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnCargar.FlatAppearance.BorderSize = 3;
+            this.btnCargar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCargar.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnCargar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnCargar.Location = new System.Drawing.Point(869, 583);
             this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(92, 23);
+            this.btnCargar.Size = new System.Drawing.Size(92, 39);
             this.btnCargar.TabIndex = 19;
             this.btnCargar.Text = "Cargar";
             this.btnCargar.UseVisualStyleBackColor = true;
@@ -192,10 +207,11 @@
             // lblTitulo
             // 
             this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.Font = new System.Drawing.Font("Bahnschrift", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblTitulo.Location = new System.Drawing.Point(33, 63);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(198, 29);
+            this.lblTitulo.Size = new System.Drawing.Size(166, 24);
             this.lblTitulo.TabIndex = 16;
             this.lblTitulo.Text = "Lista de Usuarios";
             // 
@@ -509,7 +525,7 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(35, 17);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(172, 29);
+            this.label9.Size = new System.Drawing.Size(141, 25);
             this.label9.TabIndex = 15;
             this.label9.Text = "Nuevo Usuario";
             // 
@@ -823,7 +839,7 @@
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.Location = new System.Drawing.Point(35, 17);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(150, 29);
+            this.label27.Size = new System.Drawing.Size(123, 25);
             this.label27.TabIndex = 42;
             this.label27.Text = "Baja Usuario";
             // 
@@ -1137,7 +1153,7 @@
             this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.Location = new System.Drawing.Point(35, 17);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(201, 29);
+            this.label36.Size = new System.Drawing.Size(163, 25);
             this.label36.TabIndex = 42;
             this.label36.Text = "Modificar Usuario";
             // 
