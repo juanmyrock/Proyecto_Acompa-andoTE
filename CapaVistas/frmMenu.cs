@@ -78,7 +78,7 @@ namespace CapaVistas
         //    }
         //}
 
-        private void picLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
+        private void btnLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
         {
             // Preguntar al usuario para confirmar la acción
             var confirmacion = MessageBox.Show(
