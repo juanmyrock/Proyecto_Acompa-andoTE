@@ -30,7 +30,7 @@ namespace CapaLogica
 
         // --- CAMBIO #1: El método ahora devuelve 'ResultadoLoginDTO' en lugar de 'bool' ---
         // --- y acepta la IP del cliente como parámetro para el registro de sesión ---
-        public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente)
+        public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente, bool forzarCierre = false)
         {
             // 1. Verificar usuario
             cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(credenciales.Username);
@@ -69,9 +69,19 @@ namespace CapaLogica
             // 7. Verificar sesión única
             if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
             {
-                // Podrías mostrar un diálogo para forzar el cierre de la otra sesión
-                throw new Exception("El usuario ya tiene una sesión activa en otro dispositivo");
+                if (forzarCierre)
+                {
+                    // Si el usuario confirmó, cerramos la sesión vieja antes de continuar.
+                    _sesiones.CerrarSesion(usuario.IdUsuario);
+                }
+                else
+                {
+                    // Si no se está forzando, lanzamos una excepción genérica
+                    // con nuestro "string mágico" como mensaje.
+                    throw new Exception("SESION_ACTIVA");
+                }
             }
+            
 
             // 8. Registrar nueva sesión en BD
             _sesiones.RegistrarSesion(new cls_SesionActivaDTO
