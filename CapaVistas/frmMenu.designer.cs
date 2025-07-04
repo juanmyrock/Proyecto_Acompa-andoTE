@@ -56,7 +56,7 @@ namespace CapaVistas
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnEmpleados = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.picLogOut = new System.Windows.Forms.PictureBox();
+            this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.btnSlide = new System.Windows.Forms.PictureBox();
             this.picReportes = new System.Windows.Forms.PictureBox();
             this.picFacturas = new System.Windows.Forms.PictureBox();
@@ -88,7 +88,7 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogOut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSlide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFacturas)).BeginInit();
@@ -122,12 +122,12 @@ namespace CapaVistas
             this.labelTittle.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelTittle.AutoSize = true;
             this.labelTittle.Enabled = false;
-            this.labelTittle.Font = new System.Drawing.Font("Stencil", 20.29091F, System.Drawing.FontStyle.Bold);
+            this.labelTittle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.29091F, System.Drawing.FontStyle.Bold);
             this.labelTittle.ForeColor = System.Drawing.Color.Black;
             this.labelTittle.Location = new System.Drawing.Point(380, 1);
             this.labelTittle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTittle.Name = "labelTittle";
-            this.labelTittle.Size = new System.Drawing.Size(613, 38);
+            this.labelTittle.Size = new System.Drawing.Size(591, 32);
             this.labelTittle.TabIndex = 4;
             this.labelTittle.Text = "SISTEMA GESTOR DE VENTAS Y STOCK\r\n";
             this.labelTittle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -201,7 +201,7 @@ namespace CapaVistas
             this.panelMenu.Controls.Add(this.pictureBox1);
             this.panelMenu.Controls.Add(this.btnEmpleados);
             this.panelMenu.Controls.Add(this.panel6);
-            this.panelMenu.Controls.Add(this.picLogOut);
+            this.panelMenu.Controls.Add(this.btnLogOut);
             this.panelMenu.Controls.Add(this.btnSlide);
             this.panelMenu.Controls.Add(this.picReportes);
             this.panelMenu.Controls.Add(this.picFacturas);
@@ -364,18 +364,18 @@ namespace CapaVistas
             this.panel6.Size = new System.Drawing.Size(10, 40);
             this.panel6.TabIndex = 21;
             // 
-            // picLogOut
+            // btnLogOut
             // 
-            this.picLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picLogOut.Image = ((System.Drawing.Image)(resources.GetObject("picLogOut.Image")));
-            this.picLogOut.Location = new System.Drawing.Point(195, 205);
-            this.picLogOut.Name = "picLogOut";
-            this.picLogOut.Size = new System.Drawing.Size(45, 45);
-            this.picLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picLogOut.TabIndex = 20;
-            this.picLogOut.TabStop = false;
-            this.picLogOut.Click += new System.EventHandler(this.picLogOut_Click);
+            this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
+            this.btnLogOut.Location = new System.Drawing.Point(195, 205);
+            this.btnLogOut.Name = "btnLogOut";
+            this.btnLogOut.Size = new System.Drawing.Size(45, 45);
+            this.btnLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnLogOut.TabIndex = 20;
+            this.btnLogOut.TabStop = false;
+            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
             // btnSlide
             // 
@@ -614,7 +614,7 @@ namespace CapaVistas
             this.lblTitulo.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.lblTitulo.Location = new System.Drawing.Point(5, 13);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(97, 37);
+            this.lblTitulo.Size = new System.Drawing.Size(87, 32);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Inicio";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -680,7 +680,7 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogOut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSlide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFacturas)).EndInit();
@@ -721,7 +721,7 @@ namespace CapaVistas
         private Panel panel1;
         private Button btnProductos;
         private PictureBox logoMenu;
-        private PictureBox picLogOut;
+        private PictureBox btnLogOut;
         private PictureBox pictureBox2;
         private Button btnUsuarios;
         private Panel panel7;
