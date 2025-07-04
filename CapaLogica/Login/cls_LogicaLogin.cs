@@ -28,8 +28,8 @@ namespace CapaLogica
             intentosMaximosPermitidos = _userDatos.ObtenerCantidadIntentosMaximos();
         }
 
-        // --- CAMBIO #1: El método ahora devuelve 'ResultadoLoginDTO' en lugar de 'bool' ---
-        // --- y acepta la IP del cliente como parámetro para el registro de sesión ---
+        // El método ahora devuelve 'ResultadoLoginDTO' en lugar de 'bool' ---
+        // y acepta la IP del cliente como parámetro para el registro de sesión ---
         public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente, bool forzarCierre = false)
         {
             // 1. Verificar usuario
@@ -37,14 +37,14 @@ namespace CapaLogica
             if (usuario == null)
                 throw new Exception("Usuario no registrado");
 
-            // 2. Verificar si está activo
+            // 2. Verificar si está bloqueado
+            if ((usuario.FechaBloqueo.HasValue))
+                throw new Exception("Usuario está bloqueado, contacte al administrador");
+
+            // 3. Verificar si está activo
             if (usuario.EsActivo != true || usuario.FechaBaja.HasValue)
                 throw new Exception("Usuario inactivo o dado de baja");
-
-            // 3. Verificar si está bloqueado
-            if ((usuario.FechaBloqueo.HasValue) && usuario.EsActivo != true)
-                throw new Exception("El usuario está bloqueado");
-
+            
             // 4. Obtener contraseña activa
             cls_ContraseñaDTO contraseña = _passDatos.ObtenerContraseñaActiva(usuario.IdUsuario);
             if (contraseña == null)
@@ -65,7 +65,6 @@ namespace CapaLogica
                 throw new Exception("Contraseña expirada. Debe cambiarla");
             }
 
-
             // 7. Verificar sesión única
             if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
             {
@@ -77,12 +76,11 @@ namespace CapaLogica
                 else
                 {
                     // Si no se está forzando, lanzamos una excepción genérica
-                    // con nuestro "string mágico" como mensaje.
+                    // con nuestro este string como mensaje.
                     throw new Exception("SESION_ACTIVA");
                 }
             }
             
-
             // 8. Registrar nueva sesión en BD
             _sesiones.RegistrarSesion(new cls_SesionActivaDTO
             {
@@ -102,7 +100,7 @@ namespace CapaLogica
             // 11. Iniciar sesión local (Singleton)
             SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
-            // --- CAMBIO #3: Devolver el objeto DTO con el resultado completo ---
+            // Devolver el objeto DTO con el resultado completo ---
             return new ResultadoLoginDTO
             {
                 Exitoso = true,

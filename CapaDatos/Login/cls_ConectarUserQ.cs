@@ -65,13 +65,18 @@ namespace CapaDatos
         public void RegistrarIntentoFallido(int idUsuario, int intentosMaximosPermitidos)
         {
             string sql = @"
-                UPDATE Usuarios
-                SET intentos_fallidos = intentos_fallidos + 1,
-                    fecha_bloqueo = CASE 
-                        WHEN intentos_fallidos + 1 >= @maxIntentos THEN GETDATE() 
-                        ELSE fecha_bloqueo 
-                    END
-                WHERE id_usuario = @idUsuario";
+                        UPDATE Usuarios
+                        SET
+                            intentos_fallidos = intentos_fallidos + 1,
+                            fecha_bloqueo = CASE
+                                WHEN intentos_fallidos +1 >= @maxIntentos THEN GETDATE()
+                                ELSE fecha_bloqueo
+                            END,
+                            es_activo = CASE
+                                WHEN intentos_fallidos +1 >= @maxIntentos THEN 0
+                                ELSE es_activo
+                            END
+                        WHERE id_usuario = @idUsuario";
 
             var parametros = new List<SqlParameter>
             {
