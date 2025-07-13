@@ -32,9 +32,9 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblLogin = new System.Windows.Forms.Label();
-            this.lblPregunta1 = new System.Windows.Forms.Label();
+            this.lblPregunta = new System.Windows.Forms.Label();
             this.txtRespuesta = new System.Windows.Forms.TextBox();
-            this.lblPregunta2 = new System.Windows.Forms.Label();
+            this.lblRespuesta = new System.Windows.Forms.Label();
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             this.picError = new System.Windows.Forms.PictureBox();
             this.lblErrorMsg = new System.Windows.Forms.Label();
@@ -89,17 +89,17 @@
             this.lblLogin.TabIndex = 27;
             this.lblLogin.Text = "Preguntas de Seguridad";
             // 
-            // lblPregunta1
+            // lblPregunta
             // 
-            this.lblPregunta1.AutoSize = true;
-            this.lblPregunta1.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPregunta1.ForeColor = System.Drawing.Color.Silver;
-            this.lblPregunta1.Location = new System.Drawing.Point(129, 127);
-            this.lblPregunta1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPregunta1.Name = "lblPregunta1";
-            this.lblPregunta1.Size = new System.Drawing.Size(122, 28);
-            this.lblPregunta1.TabIndex = 25;
-            this.lblPregunta1.Text = "Pregunta:";
+            this.lblPregunta.AutoSize = true;
+            this.lblPregunta.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPregunta.ForeColor = System.Drawing.Color.Silver;
+            this.lblPregunta.Location = new System.Drawing.Point(129, 127);
+            this.lblPregunta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPregunta.Name = "lblPregunta";
+            this.lblPregunta.Size = new System.Drawing.Size(122, 28);
+            this.lblPregunta.TabIndex = 25;
+            this.lblPregunta.Text = "Pregunta:";
             // 
             // txtRespuesta
             // 
@@ -113,17 +113,17 @@
             this.txtRespuesta.Size = new System.Drawing.Size(434, 31);
             this.txtRespuesta.TabIndex = 2;
             // 
-            // lblPregunta2
+            // lblRespuesta
             // 
-            this.lblPregunta2.AutoSize = true;
-            this.lblPregunta2.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPregunta2.ForeColor = System.Drawing.Color.Silver;
-            this.lblPregunta2.Location = new System.Drawing.Point(129, 217);
-            this.lblPregunta2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPregunta2.Name = "lblPregunta2";
-            this.lblPregunta2.Size = new System.Drawing.Size(138, 28);
-            this.lblPregunta2.TabIndex = 30;
-            this.lblPregunta2.Text = "Respuesta:";
+            this.lblRespuesta.AutoSize = true;
+            this.lblRespuesta.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRespuesta.ForeColor = System.Drawing.Color.Silver;
+            this.lblRespuesta.Location = new System.Drawing.Point(129, 217);
+            this.lblRespuesta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRespuesta.Name = "lblRespuesta";
+            this.lblRespuesta.Size = new System.Drawing.Size(138, 28);
+            this.lblRespuesta.TabIndex = 30;
+            this.lblRespuesta.Text = "Respuesta:";
             // 
             // btnCerrar
             // 
@@ -142,7 +142,7 @@
             // picError
             // 
             this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
-            this.picError.Location = new System.Drawing.Point(64, 340);
+            this.picError.Location = new System.Drawing.Point(12, 340);
             this.picError.Name = "picError";
             this.picError.Size = new System.Drawing.Size(24, 27);
             this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -155,7 +155,7 @@
             this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrorMsg.Location = new System.Drawing.Point(90, 340);
+            this.lblErrorMsg.Location = new System.Drawing.Point(42, 340);
             this.lblErrorMsg.Name = "lblErrorMsg";
             this.lblErrorMsg.Size = new System.Drawing.Size(121, 27);
             this.lblErrorMsg.TabIndex = 35;
@@ -187,11 +187,11 @@
             this.Controls.Add(this.lblErrorMsg);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.txtRespuesta);
-            this.Controls.Add(this.lblPregunta2);
+            this.Controls.Add(this.lblRespuesta);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.lblLogin);
-            this.Controls.Add(this.lblPregunta1);
+            this.Controls.Add(this.lblPregunta);
             this.Font = new System.Drawing.Font("Century Gothic", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
@@ -210,9 +210,9 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label lblLogin;
-        private System.Windows.Forms.Label lblPregunta1;
+        private System.Windows.Forms.Label lblPregunta;
         private System.Windows.Forms.TextBox txtRespuesta;
-        private System.Windows.Forms.Label lblPregunta2;
+        private System.Windows.Forms.Label lblRespuesta;
         private System.Windows.Forms.PictureBox btnCerrar;
         private System.Windows.Forms.PictureBox picError;
         private System.Windows.Forms.Label lblErrorMsg;

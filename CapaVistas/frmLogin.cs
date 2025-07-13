@@ -275,38 +275,5 @@ namespace CapaVistas
             this.Close();
         }
 
-        private void buttonGenerarHash_Click(object sender, EventArgs e)
-        {
-            // --- CAMBIO CLAVE: ---
-            // Ahora tomamos la contraseña DIRECTAMENTE del TextBox del formulario,
-            // que es la fuente de datos real.
-            string contraseñaDePrueba = txtPass.Text;
-
-            if (string.IsNullOrWhiteSpace(contraseñaDePrueba) || contraseñaDePrueba == "CONTRASEÑA")
-            {
-                MessageBox.Show("Por favor, escribe una contraseña en el campo correspondiente para generar su hash.");
-                return;
-            }
-
-            // Usamos TU PROPIA clase de seguridad para generar el hash
-            string hashGenerado = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaDePrueba);
-
-            // Mostramos el hash en un cuadro de texto para poder copiarlo fácilmente
-            using (Form prompt = new Form()
-            {
-                Width = 450,
-                Height = 150,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                Text = "Hash Generado por tu Aplicación",
-                StartPosition = FormStartPosition.CenterScreen
-            })
-            {
-                Label textLabel = new Label() { Left = 50, Top = 20, Text = $"Hash para '{contraseñaDePrueba}':", Width = 350 };
-                TextBox txtCopiable = new TextBox { Text = hashGenerado, Left = 50, Top = 50, Width = 350 };
-                prompt.Controls.Add(textLabel);
-                prompt.Controls.Add(txtCopiable);
-                prompt.ShowDialog();
-            }
-        }
     }
 }

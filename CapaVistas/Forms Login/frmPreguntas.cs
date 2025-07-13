@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CapaLogica;
 using CapaDTO;
@@ -11,15 +12,20 @@ namespace CapaVistas.Forms_Login
     {
         private readonly int _idUsuario;
         private readonly string _modo;
+        private int _preguntasRequeridas;
+        private int _preguntaActualNro = 1;
 
-        // El constructor tiene la lógica de inicialización.
+        // Lista maestra de preguntas desde la BD
+        private List<cls_PreguntaDTO> _listaMaestraPreguntas;
+
+        // Diccionario para guardar temporalmente las respuestas del usuario
+        private Dictionary<int, string> _respuestasTemporales = new Dictionary<int, string>();
+
         public frmPreguntas(int idUsuario, string modo)
         {
             InitializeComponent();
             _idUsuario = idUsuario;
             _modo = modo;
-
-            // --- CAMBIO CLAVE: La lógica del evento Load se mueve aquí ---
 
             // Ocultamos el mensaje de error al inicio
             lblErrorMsg.Visible = false;
@@ -28,92 +34,116 @@ namespace CapaVistas.Forms_Login
             // Adaptamos la UI según el modo de operación
             if (_modo == "CONFIGURAR")
             {
-                this.Text = "Configurar Pregunta de Seguridad";
-                lblLogin.Text = "Configurar Pregunta";
-                lblPregunta1.Text = "Seleccione una pregunta:";
-                lblPregunta2.Text = "Escriba su respuesta:";
-
-                cmbPregunta.Visible = true;
-                CargarPreguntasDisponibles(); // Llamamos al método que carga el ComboBox
+                InicializarModoConfigurar();
             }
             else if (_modo == "RESPONDER")
             {
+                // La lógica para este modo se implementará más adelante
                 this.Text = "Responder Pregunta de Seguridad";
-                lblLogin.Text = "Verificación de Seguridad";
-                cmbPregunta.Visible = false;
-
-                // TODO: Implementar la lógica para obtener una pregunta al azar
-                lblPregunta1.Text = "¿Cuál era el nombre de su primera mascota?"; // Ejemplo
-                lblPregunta2.Text = "Escriba su respuesta:";
+                // ...
             }
         }
 
-        // Llama a la capa de lógica para obtener las preguntas disponibles
-        // y usa el helper para cargar el ComboBox.
-        private void CargarPreguntasDisponibles()
+        private void InicializarModoConfigurar()
         {
+            lblLogin.Text = "Configurar Preguntas de Seguridad";
+            var logica = new cls_LogicaPreguntas();
+
             try
             {
-                var logica = new cls_LogicaPreguntas();
-                List<cls_PreguntaDTO> preguntas = logica.ObtenerPreguntasDisponibles();
+                // Obtenemos la configuración una sola vez
+                _preguntasRequeridas = logica.ObtenerCantidadPreguntasRequeridas();
+                _listaMaestraPreguntas = logica.ObtenerPreguntasDisponibles();
 
-                // --- LÍNEA DE DEPURACIÓN TEMPORAL ---
-                // Esta línea nos dirá exactamente cuántas preguntas está recibiendo el formulario.
-                MessageBox.Show($"Se encontraron {preguntas.Count} preguntas en la base de datos.");
-
-                cls_LlenarCombos.Cargar(cmbPregunta, preguntas, "TextoPregunta", "IdPregunta");
+                // Preparamos la UI para la primera pregunta
+                CargarSiguientePregunta();
             }
             catch (Exception ex)
             {
-                MsgError("Error al cargar las preguntas: " + ex.Message);
-                cmbPregunta.Enabled = false;
+                MsgError("Error al inicializar: " + ex.Message);
+                btnAceptar.Enabled = false;
+            }
+        }
+
+        // Actualiza la UI para mostrar la pregunta actual.
+        private void CargarSiguientePregunta()
+        {
+            // Actualizamos el título y las etiquetas para guiar al usuario
+            lblLogin.Text = $"Pregunta {_preguntaActualNro} de {_preguntasRequeridas}";
+            lblPregunta.Text = "Seleccione una pregunta:";
+            lblRespuesta.Text = "Escriba su respuesta:";
+
+            // Filtramos la lista maestra, quitando las preguntas que ya fueron seleccionadas
+            var preguntasParaMostrar = _listaMaestraPreguntas
+                .Where(p => !_respuestasTemporales.ContainsKey(p.IdPregunta))
+                .ToList();
+
+            // cargar el ComboBox con las preguntas restantes
+            cls_LlenarCombos.Cargar(cmbPregunta, preguntasParaMostrar, "TextoPregunta", "IdPregunta");
+
+            // Limpiamos la respuesta anterior
+            txtRespuesta.Clear();
+            txtRespuesta.Focus();
+
+            // Cambiamos el texto del botón si es la última pregunta
+            if (_preguntaActualNro == _preguntasRequeridas)
+            {
+                btnAceptar.Text = "FINALIZAR";
+            }
+            else
+            {
+                btnAceptar.Text = "SIGUIENTE";
             }
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            lblErrorMsg.Visible = false;
+            if (_modo != "CONFIGURAR") return;
 
-            if (_modo == "CONFIGURAR")
+            // 1. Validar la entrada actual
+            if (cmbPregunta.SelectedValue == null || string.IsNullOrWhiteSpace(txtRespuesta.Text))
             {
-                if (cmbPregunta.SelectedValue == null)
-                {
-                    MsgError("Debe seleccionar una pregunta de la lista.");
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(txtRespuesta.Text))
-                {
-                    MsgError("La respuesta no puede estar vacía.");
-                    return;
-                }
+                MsgError("Debe seleccionar una pregunta y escribir una respuesta.");
+                return;
+            }
 
+            // 2. Guardar la respuesta actual en la memoria temporal
+            int idPregunta = (int)cmbPregunta.SelectedValue;
+            string respuesta = txtRespuesta.Text;
+            _respuestasTemporales[idPregunta] = respuesta;
+
+            // 3. Comprobar si hemos terminado
+            if (_preguntaActualNro < _preguntasRequeridas)
+            {
+                // Si no hemos terminado, pasamos a la siguiente pregunta
+                _preguntaActualNro++;
+                CargarSiguientePregunta();
+            }
+            else
+            {
+                // Si era la última pregunta, guardamos todo en la BD
                 try
                 {
-                    int idPreguntaSeleccionada = Convert.ToInt32(cmbPregunta.SelectedValue);
-                    string respuestaUsuario = txtRespuesta.Text;
-
                     var logica = new cls_LogicaPreguntas();
-                    logica.GuardarRespuestaDeSeguridad(_idUsuario, idPreguntaSeleccionada, respuestaUsuario);
+                    logica.GuardarMultiplesRespuestas(_idUsuario, _respuestasTemporales);
 
-                    MessageBox.Show("Pregunta de seguridad configurada con éxito.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    MessageBox.Show("Preguntas de seguridad configuradas con éxito.", "Proceso Completado");
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MsgError("Ocurrió un error al guardar: " + ex.Message);
+                    MsgError("Error al guardar las preguntas: " + ex.Message);
                 }
             }
-            // ... (la lógica para el modo RESPONDER se mantiene igual)
         }
 
-        // --- Métodos de UI y Navegación (sin cambios) ---
+        // --- Métodos de UI y Navegación ---
         private void MsgError(string msg)
         {
-            lblErrorMsg.Text = "      " + msg;
             lblErrorMsg.Visible = true;
             picError.Visible = true;
+            lblErrorMsg.Text = "      " + msg;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -127,7 +157,5 @@ namespace CapaVistas.Forms_Login
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
-        
     }
 }

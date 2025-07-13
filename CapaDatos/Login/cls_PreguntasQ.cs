@@ -48,5 +48,34 @@ namespace CapaDatos.Login
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
+        public int ObtenerCantidadPreguntasRequeridas()
+        {
+            // Usamos TOP 1 porque sabemos que solo hay una fila de configuración
+            string sql = "SELECT TOP 1 cantidad_preguntas_seguridad FROM Parametros_Contraseña";
+            DataTable tabla = _ejecutar.ConsultaRead(sql, null);
+
+            if (tabla.Rows.Count == 0 || tabla.Rows[0]["cantidad_preguntas_seguridad"] == DBNull.Value)
+            {
+                // Si no hay configuración, devolvemos un valor por defecto seguro (ej: 1).
+                return 1;
+            }
+
+            return Convert.ToInt32(tabla.Rows[0]["cantidad_preguntas_seguridad"]);
+        }
+
+        // Elimina todas las respuestas de seguridad existentes para un usuario específico.
+        // Es útil para limpiar antes de guardar una nueva configuración de preguntas.
+        // <param name="idUsuario">El ID del usuario cuyas respuestas se borrarán.</param>
+        public void BorrarRespuestasDeUsuario(int idUsuario)
+        {
+            string sql = "DELETE FROM Respuestas WHERE id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter>
+    {
+        new SqlParameter("@idUsuario", idUsuario)
+    };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
     }
 }
