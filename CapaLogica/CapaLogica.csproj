@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ABM\cls_Empleados.cs" />
     <Compile Include="ABM\cls_Usuarios.cs" />
+    <Compile Include="Login\cls_LogicaContraseña.cs" />
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Login\cls_LogicaPreguntas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

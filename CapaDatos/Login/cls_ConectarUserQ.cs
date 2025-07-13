@@ -116,5 +116,27 @@ namespace CapaDatos
 
             _ejecutar.ConsultaWrite(sql, parametros);
         }
+
+        // Actualiza el estado de un usuario después de que completa su configuración inicial.
+        // Marca los flags de primer ingreso y contraseña random como falsos.
+        // <param name="idUsuario">El ID del usuario que se va a actualizar.</param>
+        public void FinalizarConfiguracionInicial(int idUsuario)
+        {
+            string sql = @"UPDATE Usuarios 
+                   SET es_primer_ingreso = 0, es_random_pass = 0
+                   WHERE id_usuario = @idUsuario";
+
+            var parametros = new System.Collections.Generic.List<System.Data.SqlClient.SqlParameter>
+            {
+               new System.Data.SqlClient.SqlParameter("@idUsuario", idUsuario)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
+
+
+
     }
+
+
 }

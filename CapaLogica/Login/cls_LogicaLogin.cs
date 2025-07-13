@@ -152,53 +152,15 @@ namespace CapaLogica
             return usuario;
         }
 
-        /// <summary>
-        /// Valida la respuesta a una pregunta de seguridad.
-        /// (Necesitarás crear un método en CapaDatos para esto)
-        /// </summary>
-        public bool ValidarRespuestaDeSeguridad(int idUsuario, int idPregunta, string respuesta)
+
+        // Llama a la capa de datos para marcar la configuración inicial de un usuario como completada.
+        // <param name="idUsuario">El ID del usuario a actualizar.</param>
+        public void FinalizarConfiguracionInicial(int idUsuario)
         {
-            // TODO: Debes crear un método en tu CapaDatos que:
-            // 1. Obtenga la respuesta correcta (hasheada) de la base de datos.
-            // 2. Compare el hash de la 'respuesta' proporcionada con el hash de la BD.
-            // Ejemplo: return _userDatos.ValidarRespuesta(idUsuario, idPregunta, respuesta);
-
-            // Por ahora, simulamos que la validación es exitosa para poder avanzar.
-            Console.WriteLine($"Simulando validación para Usuario: {idUsuario}, Pregunta: {idPregunta}, Respuesta: {respuesta}");
-            return true;
+            // Simplemente pasa la llamada a la capa de datos.
+            // Aquí podrías añadir lógica de negocio adicional si fuera necesario en el futuro.
+            _userDatos.FinalizarConfiguracionInicial(idUsuario);
         }
-
-        /// <summary>
-        /// Establece la nueva contraseña para un usuario.
-        /// (Necesitarás un método en CapaDatos que desactive la vieja y cree la nueva)
-        /// </summary>
-        public void RestablecerContraseña(int idUsuario, string nuevaContraseña)
-        {
-            // 1. Hashear la nueva contraseña
-            string hash = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(nuevaContraseña);
-
-            // 2. Desactivar las contraseñas anteriores para ese usuario
-            _passDatos.DesactivarContraseñasAnteriores(idUsuario);
-
-            // 3. Crear el nuevo DTO de contraseña
-            var passDTO = new cls_ContraseñaDTO
-            {
-                IdUsuario = idUsuario,
-                HashContraseña = hash,
-                EsActiva = true,
-                FechaExpiracion = null // O establecer una nueva fecha de expiración según tus reglas
-            };
-
-            // 4. Insertar la nueva contraseña en la base de datos
-            _passDatos.InsertarNuevaContraseña(passDTO);
-
-            // 5. IMPORTANTE: Actualizar el estado del usuario en la BD para que ya no tenga
-            // una contraseña random y no sea su primer ingreso.
-            // TODO: Debes crear este método en tu CapaDatos.
-            // _userDatos.ActualizarEstadoPostConfiguracion(idUsuario);
-            Console.WriteLine($"Contraseña restablecida para el usuario {idUsuario}.");
-        }
-
 
     }
 }
