@@ -159,7 +159,7 @@ namespace CapaVistas
             }
         }
 
-        // -MÉTODO PRINCIPAL DEL BOTÓN ACCEDER
+        // MÉTODO PRINCIPAL DEL BOTÓN ACCEDER
         private void btnAcceder_Click(object sender, EventArgs e)
         {
             lblErrorMsg.Visible = false;
@@ -228,35 +228,51 @@ namespace CapaVistas
         //  Procesa el resultado de un login exitoso
         private void ProcesarLoginExitoso(ResultadoLoginDTO resultado)
         {
-            if (resultado.Exitoso)
+            if (!resultado.Exitoso) return; // Doble chequeo por seguridad
+
+            // Verifica si se requiere alguna configuración inicial
+            if (resultado.RequiereConfigurarPreguntas || resultado.RequiereCambioContraseña)
             {
-                // Esta es la lógica original para el primer ingreso
-                if (resultado.RequiereCambioContraseña || resultado.RequiereConfigurarPreguntas)
+                this.Hide(); // Ocultamos el login para mostrar los formularios de configuración
+                int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
+
+                // --- Flujo de Configuración de Preguntas ---
+                if (resultado.RequiereConfigurarPreguntas)
                 {
-                    this.Hide();
-                    int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
-
-                    if (resultado.RequiereConfigurarPreguntas)
+                    using (var formPreguntas = new Forms_Login.frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
                     {
-                        using (var formPreguntas = new Forms_Login.frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
+                        // Si el usuario no hace clic en "Aceptar", el resultado no será OK.
+                        if (formPreguntas.ShowDialog() != DialogResult.OK)
                         {
-                            formPreguntas.ShowDialog();
-                        }
-                    }
-
-                    if (resultado.RequiereCambioContraseña)
-                    {
-                        using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
-                        {
-                            formNuevaPass.ShowDialog();
+                            MessageBox.Show("La configuración de preguntas es obligatoria.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión en la BD y el Singleton
+                            this.Show(); // Vuelve a mostrar el formulario de login
+                            return; // Detiene el flujo y no continúa al menú
                         }
                     }
                 }
 
-                // Indica a Program.cs que el login fue exitoso y puede continuar al menú.
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                // --- Flujo de Cambio de Contraseña ---
+                if (resultado.RequiereCambioContraseña)
+                {
+                    using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
+                    {
+                        // Verificamos también el resultado de este diálogo.
+                        if (formNuevaPass.ShowDialog() != DialogResult.OK)
+                        {
+                            MessageBox.Show("El cambio de contraseña es obligatorio. La aplicación se cerrará.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión
+                            this.Show(); // Vuelve a mostrar el formulario de login
+                            return; // Detiene el flujo
+                        }
+                    }
+                }
             }
+
+            // Si llegamos hasta acá, significa que el login fue exitoso y que toda la
+            // configuración requerida se completó correctamente. Le indica a Program.cs que puede continuar al menu.
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void buttonGenerarHash_Click(object sender, EventArgs e)
