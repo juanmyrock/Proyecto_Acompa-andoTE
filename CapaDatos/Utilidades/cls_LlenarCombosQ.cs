@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 
-namespace CapaDatos.LlenarCombos
+namespace CapaDatos.Utilidades
 {
     public class cls_LlenarCombosQ : cls_EjecutarQ
     {

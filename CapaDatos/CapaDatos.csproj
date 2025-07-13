@@ -47,11 +47,12 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
-    <Compile Include="LlenarCombos\cls_LlenarCombosQ.cs" />
+    <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />
     <Compile Include="Login\cls_ParamContraseñaQ.cs" />
     <Compile Include="Login\cls_PermisosQ.cs" />
+    <Compile Include="Login\cls_PreguntasQ.cs" />
     <Compile Include="Login\cls_RolQ.cs" />
     <Compile Include="Login\cls_SesionActivaQ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

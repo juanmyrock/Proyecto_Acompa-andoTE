@@ -6,31 +6,36 @@ namespace CapaVistas.Forms_Login
 {
     public partial class frmPreguntas : Form
     {
-        private readonly int _idUsuario;
-        private readonly string _modo; // "CONFIGURAR" o "RESPONDER"
+        private readonly int idUser;
+        private readonly string modoForm; // "CONFIGURAR" o "RESPONDER"
 
         // El constructor ahora recibe el ID del usuario y el modo de operación.
         public frmPreguntas(int idUsuario, string modo)
         {
             InitializeComponent();
-            _idUsuario = idUsuario;
-            _modo = modo;
+            idUser = idUsuario;
+            modoForm = modo;
         }
+
+        private void MsgError(string msg) //Mensaje de error de validación de campos
+        {
+            lblErrorMsg.Text = msg;
+            lblErrorMsg.Visible = true;
+            picError.Visible = true;
+        }
+
 
         private void frmPreguntas_Load(object sender, EventArgs e)
         {
             // Adaptar la UI según el modo
-            if (_modo == "CONFIGURAR")
+            if (modoForm == "CONFIGURAR")
             {
                 this.Text = "Configurar Preguntas de Seguridad";
-                // TODO: Implementar la lógica para mostrar N controles para
-                // que el usuario seleccione sus preguntas y escriba las respuestas.
-                // Por ejemplo, hacer visibles varios paneles.
+                
                 lblPregunta1.Text = "Pregunta 1 a configurar:";
-                // lblPregunta2.Visible = true;
-                // txtRespuesta2.Visible = true;
+                
             }
-            else if (_modo == "RESPONDER")
+            else if (modoForm == "RESPONDER")
             {
                 this.Text = "Responder Pregunta de Seguridad";
                 // TODO: Obtener una pregunta al azar de la BD para este usuario
@@ -49,20 +54,20 @@ namespace CapaVistas.Forms_Login
         {
             var logica = new cls_LogicaLogin();
 
-            if (_modo == "CONFIGURAR")
+            if (modoForm == "CONFIGURAR")
             {
                 // TODO: Implementar lógica para guardar las preguntas y respuestas.
                 // Deberás recolectar los datos de tus ComboBox y TextBox.
                 // logica.GuardarPreguntasDeSeguridad(_idUsuario, listaDePreguntasYRespuestas);
                 MessageBox.Show("Preguntas configuradas con éxito.", "Éxito");
             }
-            else if (_modo == "RESPONDER")
+            else if (modoForm == "RESPONDER")
             {
                 // TODO: Necesitas el ID de la pregunta que se mostró al usuario.
                 int idPreguntaMostrada = 1; // Ejemplo
 
                 // Validar la respuesta
-                bool esCorrecta = logica.ValidarRespuestaDeSeguridad(_idUsuario, idPreguntaMostrada, txtRespuesta.Text);
+                bool esCorrecta = logica.ValidarRespuestaDeSeguridad(idUser, idPreguntaMostrada, txtRespuesta.Text);
 
                 if (!esCorrecta)
                 {
@@ -88,5 +93,6 @@ namespace CapaVistas.Forms_Login
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
     }
 }

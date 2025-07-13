@@ -151,7 +151,7 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // -- Dispara el FLUJO B: RECUPERACIÓN DE CONTRASEÑA --
+            // abre el form para RECUPERACIÓN DE CONTRASEÑA
             using (var formValidar = new frmValidarUser())
             {
                 // Abrimos el primer paso del flujo de recuperación
@@ -159,7 +159,7 @@ namespace CapaVistas
             }
         }
 
-        // --- MÉTODO PRINCIPAL DEL BOTÓN ACCEDER (COMBINA TODA LA LÓGICA) ---
+        // -MÉTODO PRINCIPAL DEL BOTÓN ACCEDER
         private void btnAcceder_Click(object sender, EventArgs e)
         {
             lblErrorMsg.Visible = false;
@@ -212,25 +212,25 @@ namespace CapaVistas
             }
         }
 
-        // --- MÉTODO AUXILIAR 1: Llama a la capa de lógica ---
+        // Llama a la capa de lógica
         private void RealizarIntentoDeLogin(cls_CredencialesLoginDTO credenciales, bool forzarCierre)
         {
             var logicaLogin = new cls_LogicaLogin();
             string ipCliente = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
 
-            // Llama a la lógica y obtiene el resultado
+            // Llama a la lógica y obtiene el resultado, además en forzarCierre se ve si ya existe una sesion activa o huérfana
             ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente, forzarCierre);
 
             // Pasa el resultado al siguiente método para procesarlo
             ProcesarLoginExitoso(resultado);
         }
 
-        // --- MÉTODO AUXILIAR 2: Procesa el resultado de un login exitoso ---
+        //  Procesa el resultado de un login exitoso
         private void ProcesarLoginExitoso(ResultadoLoginDTO resultado)
         {
             if (resultado.Exitoso)
             {
-                // Esta es TU lógica original para el primer ingreso.
+                // Esta es la lógica original para el primer ingreso
                 if (resultado.RequiereCambioContraseña || resultado.RequiereConfigurarPreguntas)
                 {
                     this.Hide();
