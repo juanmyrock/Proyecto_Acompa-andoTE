@@ -21,12 +21,20 @@ namespace CapaVistas.Forms_Login
         // Diccionario para guardar temporalmente las respuestas del usuario
         private Dictionary<int, string> _respuestasTemporales = new Dictionary<int, string>();
 
+        // Variable para el Modo Recuperación (RESPONDER)
+        private cls_PreguntaDTO _preguntaParaResponder;
+
         public frmPreguntas(int idUsuario, string modo)
         {
             InitializeComponent();
             _idUsuario = idUsuario;
             _modo = modo;
 
+            this.Load += new System.EventHandler(this.frmPreguntas_Load);
+        }
+
+        private void frmPreguntas_Load(object sender, EventArgs e)
+        {
             // Ocultamos el mensaje de error al inicio
             lblErrorMsg.Visible = false;
             picError.Visible = false;
@@ -38,12 +46,11 @@ namespace CapaVistas.Forms_Login
             }
             else if (_modo == "RESPONDER")
             {
-                // La lógica para este modo se implementará más adelante
-                this.Text = "Responder Pregunta de Seguridad";
-                // ...
+                InicializarModoResponder();
             }
         }
 
+        #region MODO CONFIGURACION
         private void InicializarModoConfigurar()
         {
             lblLogin.Text = "Configurar Preguntas de Seguridad";
@@ -95,45 +102,98 @@ namespace CapaVistas.Forms_Login
                 btnAceptar.Text = "SIGUIENTE";
             }
         }
+        #endregion 
+
+        #region MODO RESPONDER
+        private void InicializarModoResponder()
+        {
+            this.Text = "Responder Pregunta de Seguridad";
+            lblLogin.Text = "Verificación de Seguridad";
+            cmbPregunta.Visible = false; // No necesitamos el ComboBox aquí
+
+            try
+            {
+                var logica = new cls_LogicaPreguntas();
+                // Obtenemos una pregunta al azar y la guardamos en la variable de la clase
+                _preguntaParaResponder = logica.ObtenerPreguntaRandomParaUsuario(_idUsuario);
+
+                // Mostramos la pregunta obtenida en el Label
+                lblPregunta.Text = _preguntaParaResponder.TextoPregunta;
+                lblRespuesta.Text = "Escriba su respuesta:";
+                btnAceptar.Text = "VERIFICAR";
+            }
+            catch (Exception ex)
+            {
+                MsgError(ex.Message);
+                btnAceptar.Enabled = false; // Deshabilitamos el botón si no hay preguntas
+            }
+        }
+        #endregion
+
+
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (_modo != "CONFIGURAR") return;
+            lblErrorMsg.Visible = false;
 
-            // 1. Validar la entrada actual
-            if (cmbPregunta.SelectedValue == null || string.IsNullOrWhiteSpace(txtRespuesta.Text))
+            if (_modo == "CONFIGURAR")
             {
-                MsgError("Debe seleccionar una pregunta y escribir una respuesta.");
-                return;
+                // ... (Lógica para el modo configurar que ya funciona)
+                if (cmbPregunta.SelectedValue == null || string.IsNullOrWhiteSpace(txtRespuesta.Text))
+                {
+                    MsgError("Debe seleccionar una pregunta y escribir una respuesta.");
+                    return;
+                }
+                int idPregunta = (int)cmbPregunta.SelectedValue;
+                _respuestasTemporales[idPregunta] = txtRespuesta.Text;
+
+                if (_preguntaActualNro < _preguntasRequeridas)
+                {
+                    _preguntaActualNro++;
+                    CargarSiguientePregunta();
+                }
+                else
+                {
+                    try
+                    {
+                        var logica = new cls_LogicaPreguntas();
+                        logica.GuardarMultiplesRespuestas(_idUsuario, _respuestasTemporales);
+                        MessageBox.Show("Preguntas de seguridad configuradas con éxito.", "Proceso Completado");
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    catch (Exception ex) { MsgError("Error al guardar: " + ex.Message); }
+                }
             }
-
-            // 2. Guardar la respuesta actual en la memoria temporal
-            int idPregunta = (int)cmbPregunta.SelectedValue;
-            string respuesta = txtRespuesta.Text;
-            _respuestasTemporales[idPregunta] = respuesta;
-
-            // 3. Comprobar si hemos terminado
-            if (_preguntaActualNro < _preguntasRequeridas)
+            else if (_modo == "RESPONDER")
             {
-                // Si no hemos terminado, pasamos a la siguiente pregunta
-                _preguntaActualNro++;
-                CargarSiguientePregunta();
-            }
-            else
-            {
-                // Si era la última pregunta, guardamos todo en la BD
+                if (string.IsNullOrWhiteSpace(txtRespuesta.Text))
+                {
+                    MsgError("Debe ingresar una respuesta.");
+                    return;
+                }
+
                 try
                 {
                     var logica = new cls_LogicaPreguntas();
-                    logica.GuardarMultiplesRespuestas(_idUsuario, _respuestasTemporales);
+                    // Usamos la pregunta que guardamos al cargar el formulario
+                    bool esCorrecta = logica.ValidarRespuesta(_idUsuario, _preguntaParaResponder.IdPregunta, txtRespuesta.Text);
 
-                    MessageBox.Show("Preguntas de seguridad configuradas con éxito.", "Proceso Completado");
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    if (esCorrecta)
+                    {
+                        // Si la respuesta es correcta, cerramos con éxito
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MsgError("La respuesta proporcionada es incorrecta.");
+                        // Opcional: podrías añadir un contador de intentos aquí también
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MsgError("Error al guardar las preguntas: " + ex.Message);
+                    MsgError("Ocurrió un error al validar: " + ex.Message);
                 }
             }
         }
@@ -157,5 +217,9 @@ namespace CapaVistas.Forms_Login
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        
+
+
     }
 }

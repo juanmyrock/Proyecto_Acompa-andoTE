@@ -142,9 +142,9 @@
             // picError
             // 
             this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
-            this.picError.Location = new System.Drawing.Point(12, 340);
+            this.picError.Location = new System.Drawing.Point(67, 302);
             this.picError.Name = "picError";
-            this.picError.Size = new System.Drawing.Size(24, 27);
+            this.picError.Size = new System.Drawing.Size(37, 35);
             this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picError.TabIndex = 36;
             this.picError.TabStop = false;
@@ -152,12 +152,12 @@
             // 
             // lblErrorMsg
             // 
-            this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrorMsg.Location = new System.Drawing.Point(42, 340);
+            this.lblErrorMsg.Location = new System.Drawing.Point(63, 340);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(121, 27);
+            this.lblErrorMsg.Size = new System.Drawing.Size(610, 27);
             this.lblErrorMsg.TabIndex = 35;
             this.lblErrorMsg.Text = "Message";
             this.lblErrorMsg.Visible = false;
@@ -198,6 +198,7 @@
             this.Name = "frmPreguntas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmPreguntas";
+            this.Load += new System.EventHandler(this.frmPreguntas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picError)).EndInit();
             this.ResumeLayout(false);

@@ -65,17 +65,68 @@ namespace CapaDatos.Login
 
         // Elimina todas las respuestas de seguridad existentes para un usuario específico.
         // Es útil para limpiar antes de guardar una nueva configuración de preguntas.
-        // <param name="idUsuario">El ID del usuario cuyas respuestas se borrarán.</param>
         public void BorrarRespuestasDeUsuario(int idUsuario)
         {
             string sql = "DELETE FROM Respuestas WHERE id_usuario = @idUsuario";
 
             var parametros = new List<SqlParameter>
-    {
-        new SqlParameter("@idUsuario", idUsuario)
-    };
+            {
+                new SqlParameter("@idUsuario", idUsuario)
+            };
 
             _ejecutar.ConsultaWrite(sql, parametros);
         }
+
+        // Obtiene una pregunta de seguridad al azar para un usuario específico.
+        // <returns>Un objeto cls_PreguntaDTO con los datos, o null si no tiene preguntas.</returns>
+        /// Obtiene TODAS las preguntas de seguridad que un usuario ha configurado.
+        /// </summary>
+        /// <returns>Una lista de DTOs con todas las preguntas del usuario.</returns>
+        public List<cls_PreguntaDTO> ObtenerPreguntasConfiguradasPorUsuario(int idUsuario)
+        {
+            string sql = @"SELECT P.id_pregunta, P.pregunta
+                   FROM Respuestas R
+                   INNER JOIN Preguntas P ON R.id_pregunta = P.id_pregunta
+                   WHERE R.id_usuario = @idUsuario;";
+
+            var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            var listaPreguntas = new List<cls_PreguntaDTO>();
+            foreach (DataRow row in tabla.Rows)
+            {
+                listaPreguntas.Add(new cls_PreguntaDTO
+                {
+                    IdPregunta = Convert.ToInt32(row["id_pregunta"]),
+                    TextoPregunta = row["pregunta"].ToString()
+                });
+            }
+            return listaPreguntas;
+
+        }
+
+        // Obtiene el hash de la respuesta de seguridad que está guardado en la BD.
+        // <returns>Un string con el hash guardado, o null si no se encuentra.</returns>
+        public string ObtenerHashRespuestaGuardada(int idUsuario, int idPregunta)
+        {
+            string sql = "SELECT respuesta FROM Respuestas WHERE id_usuario = @idUsuario AND id_pregunta = @idPregunta";
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idUsuario", idUsuario),
+                new SqlParameter("@idPregunta", idPregunta)
+            };
+
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            if (tabla.Rows.Count == 0)
+            {
+                return null; // No hay respuesta guardada para esa pregunta.
+            }
+
+            return tabla.Rows[0]["respuesta"].ToString();
+        }
+
+
     }
 }
+
