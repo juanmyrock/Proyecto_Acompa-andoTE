@@ -30,66 +30,64 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmABMUsuarios));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtCelularModif = new System.Windows.Forms.TextBox();
+            this.txtCelular = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.chkEstadoModif = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbCargoModif = new System.Windows.Forms.ComboBox();
-            this.txtNumCalleModif = new System.Windows.Forms.TextBox();
+            this.txtNumCalle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtCalleModif = new System.Windows.Forms.TextBox();
+            this.txtCalle = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtEmailModif = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.dateNacimientoModif = new System.Windows.Forms.DateTimePicker();
+            this.dateNacimiento = new System.Windows.Forms.DateTimePicker();
             this.label29 = new System.Windows.Forms.Label();
-            this.txtDNIModif = new System.Windows.Forms.TextBox();
+            this.txtDNI = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.cmbSexoModif = new System.Windows.Forms.ComboBox();
-            this.txtApellidoModif = new System.Windows.Forms.TextBox();
+            this.cmbSexo = new System.Windows.Forms.ComboBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
-            this.txtNombreModif = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.cmbLocalidadModif = new System.Windows.Forms.ComboBox();
-            this.cmbTipoDNIModif = new System.Windows.Forms.ComboBox();
+            this.cmbLocalidad = new System.Windows.Forms.ComboBox();
+            this.cmbTipoDNI = new System.Windows.Forms.ComboBox();
             this.dgvVerUser = new System.Windows.Forms.DataGridView();
             this.btnCargar = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.txtCelularModif);
+            this.groupBox2.Controls.Add(this.txtCelular);
             this.groupBox2.Controls.Add(this.label39);
             this.groupBox2.Controls.Add(this.chkEstadoModif);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.cmbCargoModif);
-            this.groupBox2.Controls.Add(this.txtNumCalleModif);
+            this.groupBox2.Controls.Add(this.txtNumCalle);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.txtCalleModif);
+            this.groupBox2.Controls.Add(this.txtCalle);
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.txtEmailModif);
+            this.groupBox2.Controls.Add(this.txtEmail);
             this.groupBox2.Controls.Add(this.label28);
-            this.groupBox2.Controls.Add(this.dateNacimientoModif);
+            this.groupBox2.Controls.Add(this.dateNacimiento);
             this.groupBox2.Controls.Add(this.label29);
-            this.groupBox2.Controls.Add(this.txtDNIModif);
+            this.groupBox2.Controls.Add(this.txtDNI);
             this.groupBox2.Controls.Add(this.label30);
             this.groupBox2.Controls.Add(this.label31);
-            this.groupBox2.Controls.Add(this.cmbSexoModif);
-            this.groupBox2.Controls.Add(this.txtApellidoModif);
+            this.groupBox2.Controls.Add(this.cmbSexo);
+            this.groupBox2.Controls.Add(this.txtApellido);
             this.groupBox2.Controls.Add(this.label32);
-            this.groupBox2.Controls.Add(this.txtNombreModif);
+            this.groupBox2.Controls.Add(this.txtNombre);
             this.groupBox2.Controls.Add(this.label33);
             this.groupBox2.Controls.Add(this.label34);
             this.groupBox2.Controls.Add(this.label35);
-            this.groupBox2.Controls.Add(this.cmbLocalidadModif);
-            this.groupBox2.Controls.Add(this.cmbTipoDNIModif);
+            this.groupBox2.Controls.Add(this.cmbLocalidad);
+            this.groupBox2.Controls.Add(this.cmbTipoDNI);
             this.groupBox2.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
             this.groupBox2.Location = new System.Drawing.Point(35, 441);
@@ -99,17 +97,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Empleado";
             // 
-            // txtCelularModif
+            // txtCelular
             // 
-            this.txtCelularModif.Location = new System.Drawing.Point(779, 88);
-            this.txtCelularModif.Name = "txtCelularModif";
-            this.txtCelularModif.Size = new System.Drawing.Size(151, 22);
-            this.txtCelularModif.TabIndex = 65;
+            this.txtCelular.Location = new System.Drawing.Point(768, 101);
+            this.txtCelular.Name = "txtCelular";
+            this.txtCelular.Size = new System.Drawing.Size(151, 22);
+            this.txtCelular.TabIndex = 65;
             // 
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(731, 91);
+            this.label39.Location = new System.Drawing.Point(720, 104);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(46, 14);
             this.label39.TabIndex = 64;
@@ -128,29 +126,12 @@
             this.chkEstadoModif.Text = "Estado: ";
             this.chkEstadoModif.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // txtNumCalle
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(735, 121);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 14);
-            this.label5.TabIndex = 60;
-            this.label5.Text = "Cargo:";
-            // 
-            // cmbCargoModif
-            // 
-            this.cmbCargoModif.FormattingEnabled = true;
-            this.cmbCargoModif.Location = new System.Drawing.Point(779, 118);
-            this.cmbCargoModif.Name = "cmbCargoModif";
-            this.cmbCargoModif.Size = new System.Drawing.Size(151, 22);
-            this.cmbCargoModif.TabIndex = 59;
-            // 
-            // txtNumCalleModif
-            // 
-            this.txtNumCalleModif.Location = new System.Drawing.Point(562, 118);
-            this.txtNumCalleModif.Name = "txtNumCalleModif";
-            this.txtNumCalleModif.Size = new System.Drawing.Size(134, 22);
-            this.txtNumCalleModif.TabIndex = 58;
+            this.txtNumCalle.Location = new System.Drawing.Point(562, 118);
+            this.txtNumCalle.Name = "txtNumCalle";
+            this.txtNumCalle.Size = new System.Drawing.Size(134, 22);
+            this.txtNumCalle.TabIndex = 58;
             // 
             // label6
             // 
@@ -161,12 +142,12 @@
             this.label6.TabIndex = 57;
             this.label6.Text = "Número:";
             // 
-            // txtCalleModif
+            // txtCalle
             // 
-            this.txtCalleModif.Location = new System.Drawing.Point(346, 118);
-            this.txtCalleModif.Name = "txtCalleModif";
-            this.txtCalleModif.Size = new System.Drawing.Size(121, 22);
-            this.txtCalleModif.TabIndex = 56;
+            this.txtCalle.Location = new System.Drawing.Point(346, 118);
+            this.txtCalle.Name = "txtCalle";
+            this.txtCalle.Size = new System.Drawing.Size(121, 22);
+            this.txtCalle.TabIndex = 56;
             // 
             // label14
             // 
@@ -177,32 +158,32 @@
             this.label14.TabIndex = 55;
             this.label14.Text = "Calle:";
             // 
-            // txtEmailModif
+            // txtEmail
             // 
-            this.txtEmailModif.Location = new System.Drawing.Point(779, 60);
-            this.txtEmailModif.Name = "txtEmailModif";
-            this.txtEmailModif.Size = new System.Drawing.Size(151, 22);
-            this.txtEmailModif.TabIndex = 54;
+            this.txtEmail.Location = new System.Drawing.Point(768, 73);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(151, 22);
+            this.txtEmail.TabIndex = 54;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(744, 62);
+            this.label28.Location = new System.Drawing.Point(733, 75);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(31, 14);
             this.label28.TabIndex = 53;
             this.label28.Text = "Mail:";
             // 
-            // dateNacimientoModif
+            // dateNacimiento
             // 
-            this.dateNacimientoModif.CustomFormat = "00/00/0000";
-            this.dateNacimientoModif.Location = new System.Drawing.Point(563, 88);
-            this.dateNacimientoModif.MaxDate = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
-            this.dateNacimientoModif.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
-            this.dateNacimientoModif.Name = "dateNacimientoModif";
-            this.dateNacimientoModif.Size = new System.Drawing.Size(133, 22);
-            this.dateNacimientoModif.TabIndex = 52;
-            this.dateNacimientoModif.Value = new System.DateTime(2024, 6, 24, 0, 0, 0, 0);
+            this.dateNacimiento.CustomFormat = "00/00/0000";
+            this.dateNacimiento.Location = new System.Drawing.Point(563, 88);
+            this.dateNacimiento.MaxDate = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
+            this.dateNacimiento.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
+            this.dateNacimiento.Name = "dateNacimiento";
+            this.dateNacimiento.Size = new System.Drawing.Size(133, 22);
+            this.dateNacimiento.TabIndex = 52;
+            this.dateNacimiento.Value = new System.DateTime(2024, 6, 24, 0, 0, 0, 0);
             // 
             // label29
             // 
@@ -213,12 +194,12 @@
             this.label29.TabIndex = 51;
             this.label29.Text = "Fecha de Nac.:";
             // 
-            // txtDNIModif
+            // txtDNI
             // 
-            this.txtDNIModif.Location = new System.Drawing.Point(346, 88);
-            this.txtDNIModif.Name = "txtDNIModif";
-            this.txtDNIModif.Size = new System.Drawing.Size(121, 22);
-            this.txtDNIModif.TabIndex = 50;
+            this.txtDNI.Location = new System.Drawing.Point(346, 88);
+            this.txtDNI.Name = "txtDNI";
+            this.txtDNI.Size = new System.Drawing.Size(121, 22);
+            this.txtDNI.TabIndex = 50;
             // 
             // label30
             // 
@@ -238,20 +219,20 @@
             this.label31.TabIndex = 48;
             this.label31.Text = "Sexo:";
             // 
-            // cmbSexoModif
+            // cmbSexo
             // 
-            this.cmbSexoModif.FormattingEnabled = true;
-            this.cmbSexoModif.Location = new System.Drawing.Point(563, 59);
-            this.cmbSexoModif.Name = "cmbSexoModif";
-            this.cmbSexoModif.Size = new System.Drawing.Size(133, 22);
-            this.cmbSexoModif.TabIndex = 47;
+            this.cmbSexo.FormattingEnabled = true;
+            this.cmbSexo.Location = new System.Drawing.Point(563, 59);
+            this.cmbSexo.Name = "cmbSexo";
+            this.cmbSexo.Size = new System.Drawing.Size(133, 22);
+            this.cmbSexo.TabIndex = 47;
             // 
-            // txtApellidoModif
+            // txtApellido
             // 
-            this.txtApellidoModif.Location = new System.Drawing.Point(346, 60);
-            this.txtApellidoModif.Name = "txtApellidoModif";
-            this.txtApellidoModif.Size = new System.Drawing.Size(121, 22);
-            this.txtApellidoModif.TabIndex = 46;
+            this.txtApellido.Location = new System.Drawing.Point(346, 60);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(121, 22);
+            this.txtApellido.TabIndex = 46;
             // 
             // label32
             // 
@@ -262,12 +243,12 @@
             this.label32.TabIndex = 45;
             this.label32.Text = "Apellido:";
             // 
-            // txtNombreModif
+            // txtNombre
             // 
-            this.txtNombreModif.Location = new System.Drawing.Point(134, 60);
-            this.txtNombreModif.Name = "txtNombreModif";
-            this.txtNombreModif.Size = new System.Drawing.Size(121, 22);
-            this.txtNombreModif.TabIndex = 44;
+            this.txtNombre.Location = new System.Drawing.Point(134, 60);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(121, 22);
+            this.txtNombre.TabIndex = 44;
             // 
             // label33
             // 
@@ -290,27 +271,27 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(31, 91);
+            this.label35.Location = new System.Drawing.Point(25, 91);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(107, 14);
             this.label35.TabIndex = 41;
             this.label35.Text = "Tipo Identificación:";
             // 
-            // cmbLocalidadModif
+            // cmbLocalidad
             // 
-            this.cmbLocalidadModif.FormattingEnabled = true;
-            this.cmbLocalidadModif.Location = new System.Drawing.Point(134, 118);
-            this.cmbLocalidadModif.Name = "cmbLocalidadModif";
-            this.cmbLocalidadModif.Size = new System.Drawing.Size(121, 22);
-            this.cmbLocalidadModif.TabIndex = 40;
+            this.cmbLocalidad.FormattingEnabled = true;
+            this.cmbLocalidad.Location = new System.Drawing.Point(134, 118);
+            this.cmbLocalidad.Name = "cmbLocalidad";
+            this.cmbLocalidad.Size = new System.Drawing.Size(121, 22);
+            this.cmbLocalidad.TabIndex = 40;
             // 
-            // cmbTipoDNIModif
+            // cmbTipoDNI
             // 
-            this.cmbTipoDNIModif.FormattingEnabled = true;
-            this.cmbTipoDNIModif.Location = new System.Drawing.Point(134, 88);
-            this.cmbTipoDNIModif.Name = "cmbTipoDNIModif";
-            this.cmbTipoDNIModif.Size = new System.Drawing.Size(121, 22);
-            this.cmbTipoDNIModif.TabIndex = 39;
+            this.cmbTipoDNI.FormattingEnabled = true;
+            this.cmbTipoDNI.Location = new System.Drawing.Point(134, 88);
+            this.cmbTipoDNI.Name = "cmbTipoDNI";
+            this.cmbTipoDNI.Size = new System.Drawing.Size(121, 22);
+            this.cmbTipoDNI.TabIndex = 39;
             // 
             // dgvVerUser
             // 
@@ -324,6 +305,7 @@
             this.dgvVerUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVerUser.Size = new System.Drawing.Size(952, 334);
             this.dgvVerUser.TabIndex = 46;
+            this.dgvVerUser.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_CellClick);
             // 
             // btnCargar
             // 
@@ -332,9 +314,9 @@
             this.btnCargar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCargar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCargar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCargar.Location = new System.Drawing.Point(345, 385);
+            this.btnCargar.Location = new System.Drawing.Point(35, 385);
             this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(333, 50);
+            this.btnCargar.Size = new System.Drawing.Size(168, 50);
             this.btnCargar.TabIndex = 50;
             this.btnCargar.Text = "Cargar Lista";
             this.btnCargar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -365,6 +347,36 @@
             this.btnRefresh.Text = "Refrescar";
             this.btnRefresh.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.button1.FlatAppearance.BorderSize = 3;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.button1.Location = new System.Drawing.Point(317, 385);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(168, 50);
+            this.button1.TabIndex = 50;
+            this.button1.Text = "Cargar Lista";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.button2.FlatAppearance.BorderSize = 3;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.button2.Location = new System.Drawing.Point(618, 385);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(168, 50);
+            this.button2.TabIndex = 50;
+            this.button2.Text = "Cargar Lista";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmABMUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,12 +385,15 @@
             this.ClientSize = new System.Drawing.Size(1022, 656);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvVerUser);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCargar);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnRefresh);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmABMUsuarios";
             this.Text = "Usuarios";
+            this.Load += new System.EventHandler(this.frmABMUsuarios_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).EndInit();
@@ -390,34 +405,34 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtCelularModif;
+        private System.Windows.Forms.TextBox txtCelular;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.CheckBox chkEstadoModif;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbCargoModif;
-        private System.Windows.Forms.TextBox txtNumCalleModif;
+        private System.Windows.Forms.TextBox txtNumCalle;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtCalleModif;
+        private System.Windows.Forms.TextBox txtCalle;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtEmailModif;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.DateTimePicker dateNacimientoModif;
+        private System.Windows.Forms.DateTimePicker dateNacimiento;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox txtDNIModif;
+        private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.ComboBox cmbSexoModif;
-        private System.Windows.Forms.TextBox txtApellidoModif;
+        private System.Windows.Forms.ComboBox cmbSexo;
+        private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.TextBox txtNombreModif;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox cmbLocalidadModif;
-        private System.Windows.Forms.ComboBox cmbTipoDNIModif;
+        private System.Windows.Forms.ComboBox cmbLocalidad;
+        private System.Windows.Forms.ComboBox cmbTipoDNI;
         private System.Windows.Forms.DataGridView dgvVerUser;
         private System.Windows.Forms.Button btnCargar;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

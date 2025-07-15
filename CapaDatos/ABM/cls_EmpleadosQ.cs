@@ -2,161 +2,134 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using CapaDTO.SistemaDTO;
 
-namespace CapaDatos.Entidades
+namespace CapaDatos
 {
-    public class cls_EmpleadosQ : cls_EjecutarQ
+    public class cls_EmpleadosQ // Anteriormente cls_EmpleadosQ
     {
-        // Propiedades del empleado
-        public int Id_Empleado { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public int Id_Sexo { get; set; }
-        public int Id_Tipodni { get; set; }
-        public int Dni { get; set; }
-        public DateTime Fecha_Nac { get; set; }
-        public string Email { get; set; }
-        public int Telefono { get; set; }
-        public int Id_Localidad { get; set; }
-        public string Calle { get; set; }
-        public int Numero_Calle { get; set; }
-        public int Id_Cargo { get; set; }
-        public bool Estado { get; set; }
+        // Instancia de cls_EjecutarQ para manejar las operaciones de DB
+        private cls_EjecutarQ _ejecutor;
 
-        // Métodos CRUD
-        public DataTable ObtenerEmpleados(string datos)
+        public cls_EmpleadosQ()
         {
-            DataTable resultado = null;
+            _ejecutor = new cls_EjecutarQ(); // Inicializa el ejecutor de consultas
+        }
+
+        public bool InsertarEmpleado(cls_EmpleadoDTO empleado)
+        {
+            string query = "INSERT INTO Empleados (puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono) " +
+                           "VALUES (@puesto, @nombre, @apellido, @id_sexo, @id_tipo_dni, @dni, @fecha_nac, @id_localidad, @domicilio, @num_domicilio, @carga_hs, @email, @telefono); " +
+                           "SELECT SCOPE_IDENTITY();";
+
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@puesto", empleado.puesto),
+                new SqlParameter("@nombre", empleado.nombre),
+                new SqlParameter("@apellido", empleado.apellido),
+                new SqlParameter("@id_sexo", empleado.id_sexo),
+                new SqlParameter("@id_tipo_dni", empleado.id_tipo_dni),
+                new SqlParameter("@dni", empleado.dni),
+                new SqlParameter("@fecha_nac", empleado.fecha_nac),
+                new SqlParameter("@id_localidad", empleado.id_localidad),
+                new SqlParameter("@domicilio", empleado.domicilio),
+                new SqlParameter("@num_domicilio", empleado.num_domicilio),
+                new SqlParameter("@carga_hs", empleado.carga_hs),
+                new SqlParameter("@email", empleado.email),
+                new SqlParameter("@telefono", empleado.telefono)
+            };
+
             try
             {
-                string sSQL;
-                List<SqlParameter> listaParametros = new List<SqlParameter>();
-                if (string.IsNullOrEmpty(datos))
-                {
-                    sSQL = "SELECT * FROM Empleados";
-                }
-                else
-                {
-                    sSQL = "SELECT * FROM Empleados WHERE nombre + apellido LIKE @datos";
-                    listaParametros.Add(new SqlParameter("@datos", "%" + datos.Trim() + "%"));
-                }
-                resultado = ConsultaRead(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al buscar empleados", ex);
+                // Usamos ConsultaWrite de cls_EjecutarQ
+                // Sin embargo, ConsultaWrite no devuelve el SCOPE_IDENTITY().
+                // Si necesitas el ID, tendrías que modificar ConsultaWrite en cls_EjecutarQ
+                // para que devuelva un object (para ExecuteScalar) o un int.
+                // Por ahora, asumiremos que Insertar es solo para ejecutar y no necesita el ID de retorno aquí.
+                // Si el ID es crucial, considera modificar ConsultaWrite o crear un nuevo método en cls_EjecutarQ.
+                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
+                // Como no obtenemos SCOPE_IDENTITY() directamente desde ConsultaWrite,
+                // si la inserción fue exitosa, asumimos true.
+                return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al buscar empleados", ex);
+                Console.WriteLine($"Error al insertar empleado usando cls_EjecutarQ: {ex.Message}");
+                return false;
             }
-            return resultado;
         }
 
-        public void AgregarEmp()
+        public DataTable ObtenerEmpleados()
         {
+            string query = "SELECT id_empleado, puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono FROM Empleados";
+
             try
             {
-                string sSQL = "INSERT INTO Empleados (nombre, apellido, id_sexo, id_tipodni, dni, fecha_nac, email, telefono, id_localidad, calle, numero_calle, id_cargo, estado) " +
-                              "VALUES (@nombre, @apellido, @id_sexo, @id_tipodni, @dni, @fecha_nac, @correo, @telefono, @id_localidad, @calle, @numero_calle, @id_cargo, @estado)";
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-                {
-                    new SqlParameter("@nombre", Nombre),
-                    new SqlParameter("@apellido", Apellido),
-                    new SqlParameter("@id_sexo", Id_Sexo),
-                    new SqlParameter("@id_tipodni", Id_Tipodni),
-                    new SqlParameter("@dni", Dni),
-                    new SqlParameter("@fecha_nac", Fecha_Nac),
-                    new SqlParameter("@correo", Email),
-                    new SqlParameter("@telefono", Telefono),
-                    new SqlParameter("@id_localidad", Id_Localidad),
-                    new SqlParameter("@calle", Calle),
-                    new SqlParameter("@numero_calle", Numero_Calle),
-                    new SqlParameter("@id_cargo", Id_Cargo),
-                    new SqlParameter("@estado", Estado)
-                };
-                ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al agregar empleado", ex);
+                // Usa el método ConsultaRead de cls_EjecutarQ
+                return _ejecutor.ConsultaRead(query);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al agregar empleado", ex);
+                Console.WriteLine($"Error al obtener empleados usando cls_EjecutarQ: {ex.Message}");
+                return new DataTable(); // Devuelve un DataTable vacío en caso de error
             }
         }
-        public void ModificarEmp()
+
+        public bool ActualizarEmpleado(cls_EmpleadoDTO empleado)
         {
+            string query = "UPDATE Empleados SET puesto = @puesto, nombre = @nombre, apellido = @apellido, " +
+                           "id_sexo = @id_sexo, id_tipo_dni = @id_tipo_dni, dni = @dni, fecha_nac = @fecha_nac, " +
+                           "id_localidad = @id_localidad, domicilio = @domicilio, num_domicilio = @num_domicilio, " +
+                           "carga_hs = @carga_hs, email = @email, telefono = @telefono WHERE id_empleado = @id_empleado";
+
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@puesto", empleado.puesto),
+                new SqlParameter("@nombre", empleado.nombre),
+                new SqlParameter("@apellido", empleado.apellido),
+                new SqlParameter("@id_sexo", empleado.id_sexo),
+                new SqlParameter("@id_tipo_dni", empleado.id_tipo_dni),
+                new SqlParameter("@dni", empleado.dni),
+                new SqlParameter("@fecha_nac", empleado.fecha_nac),
+                new SqlParameter("@id_localidad", empleado.id_localidad),
+                new SqlParameter("@domicilio", empleado.domicilio),
+                new SqlParameter("@num_domicilio", empleado.num_domicilio),
+                new SqlParameter("@carga_hs", empleado.carga_hs),
+                new SqlParameter("@email", empleado.email),
+                new SqlParameter("@telefono", empleado.telefono),
+                new SqlParameter("@id_empleado", empleado.id_empleado)
+            };
+
             try
             {
-                string sSQL = "UPDATE Empleados SET nombre = @nombre, apellido = @apellido, " +
-                              "id_sexo = @id_sexo, id_tipodni = @id_tipodni, dni = @dni, " +
-                              "fecha_nac = @fecha_nac, email = @correo, telefono = @telefono, id_localidad = @id_localidad, " +
-                              "calle = @calle, numero_calle = @numero_calle, id_cargo = @id_cargo, estado = @estado " +
-                              "WHERE id_empleado = @id_empleado";
-
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-                {
-                    new SqlParameter("@id_empleado", Id_Empleado),
-                    new SqlParameter("@nombre", Nombre),
-                    new SqlParameter("@apellido", Apellido),
-                    new SqlParameter("@id_sexo", Id_Sexo),
-                    new SqlParameter("@id_tipodni", Id_Tipodni),
-                    new SqlParameter("@dni", Dni),
-                    new SqlParameter("@fecha_nac", Fecha_Nac),
-                    new SqlParameter("@correo", Email),
-                    new SqlParameter("@telefono", Telefono),
-                    new SqlParameter("@id_localidad", Id_Localidad),
-                    new SqlParameter("@calle", Calle),
-                    new SqlParameter("@numero_calle", Numero_Calle),
-                    new SqlParameter("@id_cargo", Id_Cargo),
-                    new SqlParameter("@estado", Estado)
-                };
-
-                    ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al modificar empleado", ex);
+                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
+                return true; // Asumimos éxito si no hay excepción
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al modificar empleado", ex);
+                Console.WriteLine($"Error al actualizar empleado usando cls_EjecutarQ: {ex.Message}");
+                return false;
             }
         }
 
-        public void EliminarEmp(int idEmpleado)
+        public bool EliminarEmpleado(int id_empleado)
         {
+            string query = "DELETE FROM Empleados WHERE id_empleado = @id_empleado";
+            List<SqlParameter> parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@id_empleado", id_empleado)
+            };
+
             try
             {
-                string sSQL = "DELETE FROM Empleados WHERE id_empleado = @id_empleado";
-
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-        {
-            new SqlParameter("@id_empleado", idEmpleado)
-        };
-
-                ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al eliminar empleado", ex);
+                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
+                return true; // Asumimos éxito si no hay excepción
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al eliminar empleado", ex);
+                Console.WriteLine($"Error al eliminar empleado usando cls_EjecutarQ: {ex.Message}");
+                return false;
             }
         }
-
-
     }
 }

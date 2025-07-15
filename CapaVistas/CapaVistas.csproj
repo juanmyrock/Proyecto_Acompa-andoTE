@@ -76,9 +76,7 @@
     <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms Menu\frmEmpleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms Menu\frmEmpleados.cs" />
     <Compile Include="Forms Menu\frmEmpleados.designer.cs">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
     </Compile>

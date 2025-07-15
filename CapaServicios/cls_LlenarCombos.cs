@@ -1,34 +1,36 @@
-﻿using CapaDatos.LlenarCombos;
-using System.Data;
-using System;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace CapaServicios.Llenar_Combos
+namespace CapaUtilidades
 {
-    public class cls_LlenarCombos
+    public static class cls_LlenarCombos
     {
-        private cls_LlenarCombosQ llenar = new cls_LlenarCombosQ();
+        // Carga un control ComboBox con una lista de datos (DTOs).
 
-        public cls_LlenarCombos(ComboBox CMB, string NombreTabla, string CampoID, string CampoDescrip, string Condicion = "")
+        // <typeparam name="T">El tipo de los objetos en la lista (ej: cls_PreguntaDTO).</typeparam>
+        // <param name="cmb">El control ComboBox que se va a llenar.</param>
+        // <param name="dataSource">La lista de datos (DTOs) para cargar.</param>
+        // <param name="displayMember">El nombre de la propiedad del DTO que se mostrará al usuario.</param>
+        // <param name="valueMember">El nombre de la propiedad del DTO que se usará como valor interno (el ID).</param>
+        public static void Cargar<T>(ComboBox cmb, List<T> dataSource, string displayMember, string valueMember)
         {
-            llenar.Tabla = NombreTabla;
-            llenar.CampoId = CampoID;
-            llenar.CampoDescrip = CampoDescrip;
-            llenar.Condicion = Condicion;
-
-            DataTable datos = llenar.CargarCMB(); // Obtener datos del método CargarCMB de cls_LlenarCombosQ
-
-            if (datos != null && datos.Rows.Count > 0)
+            if (dataSource != null && dataSource.Count > 0)
             {
-                CMB.DataSource = datos;
-                CMB.DisplayMember = CampoDescrip;
-                CMB.ValueMember = CampoID;
-                CMB.SelectedIndex = -1;
+                cmb.DataSource = dataSource;
+                cmb.DisplayMember = displayMember;
+                cmb.ValueMember = valueMember;
+
+                // Deselecciona cualquier item por defecto para que el usuario deba elegir.
+                cmb.SelectedIndex = -1;
+                // Opcional: si quieres que aparezca un texto por defecto
+                cmb.Text = "Seleccione una opción...";
             }
             else
             {
-                // Manejo de caso en que no se obtienen datos
-                Console.WriteLine("No se encontraron datos para llenar el ComboBox.");
+                // Si no hay datos, limpia el ComboBox para evitar que muestre datos viejos.
+                cmb.DataSource = null;
+                cmb.Items.Clear();
+                cmb.Text = "No hay opciones disponibles";
             }
         }
     }
