@@ -1,7 +1,6 @@
-﻿using CapaLogica;
-using CapaServicios;
+﻿using CapaLogica.Login;
+using CapaLogica;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace CapaVistas.Forms_Login
@@ -10,8 +9,6 @@ namespace CapaVistas.Forms_Login
     {
         private readonly int _idUsuario;
 
-        // El constructor ahora recibe el ID del usuario al que se le cambiará la contraseña.
-        // He eliminado el campo txtUsuario que parecía ser de otro formulario.
         public frmNuevaContraseña(int idUsuario)
         {
             InitializeComponent();
@@ -22,32 +19,38 @@ namespace CapaVistas.Forms_Login
         {
             lblErrorMsg.Visible = false;
 
-            // 1. Validar campos
-            if (!ValidarCampos())
+            if (!ValidarCamposBasicos())
             {
                 return;
             }
 
-            // 2. Llamar a la capa de lógica para restablecer la contraseña
             try
             {
-                var logica = new cls_LogicaLogin();
-                // Usamos el ID de usuario que recibimos en el constructor.
-                logica.RestablecerContraseña(_idUsuario, txtNuevaContraseña.Text); // Asumo que el textbox se llama así
+                // --- CAMBIO CLAVE: Usamos la nueva clase de lógica de contraseñas ---
+                var logicaContraseña = new cls_LogicaContraseña();
 
+                // Este método ahora contiene toda la validación (complejidad, historial)
+                // y la lógica de guardado.
+                logicaContraseña.EstablecerNuevaContraseña(_idUsuario, txtNuevaContraseña.Text);
+
+                // Después de establecer la contraseña, finalizamos la configuración del usuario.
+                // Esta llamada sigue perteneciendo a la lógica de login.
+                var logicaLogin = new cls_LogicaLogin();
+                logicaLogin.FinalizarConfiguracionInicial(_idUsuario);
+
+                MessageBox.Show("Contraseña actualizada y cuenta configurada con éxito.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MsgError("Error al guardar la contraseña: " + ex.Message);
+                // El nuevo método nos dará errores de validación muy específicos y claros.
+                MsgError(ex.Message);
             }
         }
 
-        // --- Métodos de UI y Navegación ---
-        private bool ValidarCampos()
+        private bool ValidarCamposBasicos()
         {
-            // Asumo que tienes dos TextBox: txtNuevaContraseña y txtRepetirContraseña
             if (string.IsNullOrWhiteSpace(txtNuevaContraseña.Text))
             {
                 MsgError("La contraseña no puede estar vacía.");
@@ -58,8 +61,6 @@ namespace CapaVistas.Forms_Login
                 MsgError("Las contraseñas no coinciden.");
                 return false;
             }
-            // TODO: Aquí podrías añadir validaciones de complejidad de la contraseña
-            // (ej: debe tener al menos 8 caracteres, una mayúscula, etc.)
             return true;
         }
 
@@ -67,7 +68,7 @@ namespace CapaVistas.Forms_Login
         {
             lblErrorMsg.Text = "      " + msg;
             lblErrorMsg.Visible = true;
-            // picError.Visible = true;
+            // picError.Visible = true; // Descomentar si tienes este control
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using CapaLogica.Entidades;
-using CapaServicios.Llenar_Combos;
+using CapaUtilidades;
 
 namespace CapaVistas.Form_Menu
 {

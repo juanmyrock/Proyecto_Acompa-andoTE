@@ -2,8 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using CapaLogica.Entidades;
-using CapaServicios;
-using CapaServicios.Llenar_Combos;
+using CapaUtilidades;
 
 namespace CapaVistas.Form_Menu
 {
@@ -21,27 +20,27 @@ namespace CapaVistas.Form_Menu
 
         private void LlenarCombos()  //Método que llena los combos de Empleados
         {
-            // Llenar ComboBox de Sexos
-            cls_LlenarCombos CMBSexo = new cls_LlenarCombos(cmbSexo, "Sexos", "id_sexos", "sexo");
+            //// Llenar ComboBox de Sexos
+            //cls_LlenarCombos CMBSexo = new cls_LlenarCombos(cmbSexo, "Sexos", "id_sexos", "sexo");
 
-            // Llenar ComboBox de Tipos de DNI
-            cls_LlenarCombos CMBTipoDNI = new cls_LlenarCombos(cmbTipoDNI, "TiposDocumentos", "id_tipodni", "tipodni");
+            //// Llenar ComboBox de Tipos de DNI
+            //cls_LlenarCombos CMBTipoDNI = new cls_LlenarCombos(cmbTipoDNI, "TiposDocumentos", "id_tipodni", "tipodni");
 
-            // Llenar ComboBox de Localidades
-            cls_LlenarCombos CMBLocalidad = new cls_LlenarCombos(cmbLocalidad, "Localidades", "id_localidad", "localidad");
+            //// Llenar ComboBox de Localidades
+            //cls_LlenarCombos CMBLocalidad = new cls_LlenarCombos(cmbLocalidad, "Localidades", "id_localidad", "localidad");
 
-            // Llenar ComboBox de Cargos
-            cls_LlenarCombos CMBCargo = new cls_LlenarCombos(cmbCargo, "Cargos", "id_cargos", "cargos");
+            //// Llenar ComboBox de Cargos
+            //cls_LlenarCombos CMBCargo = new cls_LlenarCombos(cmbCargo, "Cargos", "id_cargos", "cargos");
 
-            cls_LlenarCombos CMBSexoModif = new cls_LlenarCombos(cmbSexoModif, "Sexos", "id_sexos", "sexo");
-            cls_LlenarCombos CMBTipoDNIModif = new cls_LlenarCombos(cmbTipoDNIModif, "TiposDocumentos", "id_tipodni", "tipodni");
-            cls_LlenarCombos CMBLocalidadModif = new cls_LlenarCombos(cmbLocalidadModif, "Localidades", "id_localidad", "localidad");
-            cls_LlenarCombos CMBCargoModif = new cls_LlenarCombos(cmbCargoModif, "Cargos", "id_cargos", "cargos");
+            //cls_LlenarCombos CMBSexoModif = new cls_LlenarCombos(cmbSexoModif, "Sexos", "id_sexos", "sexo");
+            //cls_LlenarCombos CMBTipoDNIModif = new cls_LlenarCombos(cmbTipoDNIModif, "TiposDocumentos", "id_tipodni", "tipodni");
+            //cls_LlenarCombos CMBLocalidadModif = new cls_LlenarCombos(cmbLocalidadModif, "Localidades", "id_localidad", "localidad");
+            //cls_LlenarCombos CMBCargoModif = new cls_LlenarCombos(cmbCargoModif, "Cargos", "id_cargos", "cargos");
 
-            cls_LlenarCombos CMBSexoBaja = new cls_LlenarCombos(cmbSexoBaja, "Sexos", "id_sexos", "sexo");
-            cls_LlenarCombos CMBTipoDNIBaja = new cls_LlenarCombos(cmbTipoDNIBaja, "TiposDocumentos", "id_tipodni", "tipodni");
-            cls_LlenarCombos CMBLocalidadBaja = new cls_LlenarCombos(cmbLocalidadBaja, "Localidades", "id_localidad", "localidad");
-            cls_LlenarCombos CMBCargoBaja = new cls_LlenarCombos(cmbCargoBaja, "Cargos", "id_cargos", "cargos");
+            //cls_LlenarCombos CMBSexoBaja = new cls_LlenarCombos(cmbSexoBaja, "Sexos", "id_sexos", "sexo");
+            //cls_LlenarCombos CMBTipoDNIBaja = new cls_LlenarCombos(cmbTipoDNIBaja, "TiposDocumentos", "id_tipodni", "tipodni");
+            //cls_LlenarCombos CMBLocalidadBaja = new cls_LlenarCombos(cmbLocalidadBaja, "Localidades", "id_localidad", "localidad");
+            //cls_LlenarCombos CMBCargoBaja = new cls_LlenarCombos(cmbCargoBaja, "Cargos", "id_cargos", "cargos");
         }
 
 

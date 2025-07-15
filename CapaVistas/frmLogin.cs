@@ -151,7 +151,7 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // -- Dispara el FLUJO B: RECUPERACIÓN DE CONTRASEÑA --
+            // abre el form para RECUPERACIÓN DE CONTRASEÑA
             using (var formValidar = new frmValidarUser())
             {
                 // Abrimos el primer paso del flujo de recuperación
@@ -159,7 +159,7 @@ namespace CapaVistas
             }
         }
 
-        // --- MÉTODO PRINCIPAL DEL BOTÓN ACCEDER (COMBINA TODA LA LÓGICA) ---
+        // MÉTODO PRINCIPAL DEL BOTÓN ACCEDER
         private void btnAcceder_Click(object sender, EventArgs e)
         {
             lblErrorMsg.Visible = false;
@@ -212,85 +212,68 @@ namespace CapaVistas
             }
         }
 
-        // --- MÉTODO AUXILIAR 1: Llama a la capa de lógica ---
+        // Llama a la capa de lógica
         private void RealizarIntentoDeLogin(cls_CredencialesLoginDTO credenciales, bool forzarCierre)
         {
             var logicaLogin = new cls_LogicaLogin();
             string ipCliente = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
 
-            // Llama a la lógica y obtiene el resultado
+            // Llama a la lógica y obtiene el resultado, además en forzarCierre se ve si ya existe una sesion activa o huérfana
             ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente, forzarCierre);
 
             // Pasa el resultado al siguiente método para procesarlo
             ProcesarLoginExitoso(resultado);
         }
 
-        // --- MÉTODO AUXILIAR 2: Procesa el resultado de un login exitoso ---
+        //  Procesa el resultado de un login exitoso
         private void ProcesarLoginExitoso(ResultadoLoginDTO resultado)
         {
-            if (resultado.Exitoso)
+            if (!resultado.Exitoso) return; // Doble chequeo por seguridad
+
+            // Verifica si se requiere alguna configuración inicial
+            if (resultado.RequiereConfigurarPreguntas || resultado.RequiereCambioContraseña)
             {
-                // Esta es TU lógica original para el primer ingreso.
-                if (resultado.RequiereCambioContraseña || resultado.RequiereConfigurarPreguntas)
+                this.Hide(); // Ocultamos el login para mostrar los formularios de configuración
+                int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
+
+                // --- Flujo de Configuración de Preguntas ---
+                if (resultado.RequiereConfigurarPreguntas)
                 {
-                    this.Hide();
-                    int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
-
-                    if (resultado.RequiereConfigurarPreguntas)
+                    using (var formPreguntas = new Forms_Login.frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
                     {
-                        using (var formPreguntas = new Forms_Login.frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
+                        // Si el usuario no hace clic en "Aceptar", el resultado no será OK.
+                        if (formPreguntas.ShowDialog() != DialogResult.OK)
                         {
-                            formPreguntas.ShowDialog();
-                        }
-                    }
-
-                    if (resultado.RequiereCambioContraseña)
-                    {
-                        using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
-                        {
-                            formNuevaPass.ShowDialog();
+                            MessageBox.Show("La configuración de preguntas es obligatoria.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión en la BD y el Singleton
+                            this.Show(); // Vuelve a mostrar el formulario de login
+                            return; // Detiene el flujo y no continúa al menú
                         }
                     }
                 }
 
-                // Indica a Program.cs que el login fue exitoso y puede continuar al menú.
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                // --- Flujo de Cambio de Contraseña ---
+                if (resultado.RequiereCambioContraseña)
+                {
+                    using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
+                    {
+                        // Verificamos también el resultado de este diálogo.
+                        if (formNuevaPass.ShowDialog() != DialogResult.OK)
+                        {
+                            MessageBox.Show("El cambio de contraseña es obligatorio. La aplicación se cerrará.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión
+                            this.Show(); // Vuelve a mostrar el formulario de login
+                            return; // Detiene el flujo
+                        }
+                    }
+                }
             }
+
+            // Si llegamos hasta acá, significa que el login fue exitoso y que toda la
+            // configuración requerida se completó correctamente. Le indica a Program.cs que puede continuar al menu.
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
-        private void buttonGenerarHash_Click(object sender, EventArgs e)
-        {
-            // --- CAMBIO CLAVE: ---
-            // Ahora tomamos la contraseña DIRECTAMENTE del TextBox del formulario,
-            // que es la fuente de datos real.
-            string contraseñaDePrueba = txtPass.Text;
-
-            if (string.IsNullOrWhiteSpace(contraseñaDePrueba) || contraseñaDePrueba == "CONTRASEÑA")
-            {
-                MessageBox.Show("Por favor, escribe una contraseña en el campo correspondiente para generar su hash.");
-                return;
-            }
-
-            // Usamos TU PROPIA clase de seguridad para generar el hash
-            string hashGenerado = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaDePrueba);
-
-            // Mostramos el hash en un cuadro de texto para poder copiarlo fácilmente
-            using (Form prompt = new Form()
-            {
-                Width = 450,
-                Height = 150,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                Text = "Hash Generado por tu Aplicación",
-                StartPosition = FormStartPosition.CenterScreen
-            })
-            {
-                Label textLabel = new Label() { Left = 50, Top = 20, Text = $"Hash para '{contraseñaDePrueba}':", Width = 350 };
-                TextBox txtCopiable = new TextBox { Text = hashGenerado, Left = 50, Top = 50, Width = 350 };
-                prompt.Controls.Add(textLabel);
-                prompt.Controls.Add(txtCopiable);
-                prompt.ShowDialog();
-            }
-        }
     }
 }
