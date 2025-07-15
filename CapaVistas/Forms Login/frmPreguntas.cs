@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using CapaLogica;
 using CapaDTO;
 using CapaUtilidades;
+using CapaLogica.Login;
 
 namespace CapaVistas.Forms_Login
 {
@@ -109,15 +110,13 @@ namespace CapaVistas.Forms_Login
         {
             this.Text = "Responder Pregunta de Seguridad";
             lblLogin.Text = "Verificación de Seguridad";
-            cmbPregunta.Visible = false; // No necesitamos el ComboBox aquí
+            cmbPregunta.Visible = false;
 
             try
             {
                 var logica = new cls_LogicaPreguntas();
-                // Obtenemos una pregunta al azar y la guardamos en la variable de la clase
                 _preguntaParaResponder = logica.ObtenerPreguntaRandomParaUsuario(_idUsuario);
 
-                // Mostramos la pregunta obtenida en el Label
                 lblPregunta.Text = _preguntaParaResponder.TextoPregunta;
                 lblRespuesta.Text = "Escriba su respuesta:";
                 btnAceptar.Text = "VERIFICAR";
@@ -125,7 +124,7 @@ namespace CapaVistas.Forms_Login
             catch (Exception ex)
             {
                 MsgError(ex.Message);
-                btnAceptar.Enabled = false; // Deshabilitamos el botón si no hay preguntas
+                btnAceptar.Enabled = false;
             }
         }
         #endregion
@@ -138,7 +137,6 @@ namespace CapaVistas.Forms_Login
 
             if (_modo == "CONFIGURAR")
             {
-                // ... (Lógica para el modo configurar que ya funciona)
                 if (cmbPregunta.SelectedValue == null || string.IsNullOrWhiteSpace(txtRespuesta.Text))
                 {
                     MsgError("Debe seleccionar una pregunta y escribir una respuesta.");
@@ -175,28 +173,36 @@ namespace CapaVistas.Forms_Login
 
                 try
                 {
-                    var logica = new cls_LogicaPreguntas();
-                    // Usamos la pregunta que guardamos al cargar el formulario
-                    bool esCorrecta = logica.ValidarRespuesta(_idUsuario, _preguntaParaResponder.IdPregunta, txtRespuesta.Text);
+                    var logicaPreguntas = new cls_LogicaPreguntas();
+                    bool esCorrecta = logicaPreguntas.ValidarRespuesta(_idUsuario, _preguntaParaResponder.IdPregunta, txtRespuesta.Text);
 
                     if (esCorrecta)
                     {
-                        // Si la respuesta es correcta, cerramos con éxito
+                        // ¡Respuesta correcta! Ahora orquestamos el envío del email.
+                        var logicaLogin = new cls_LogicaLogin();
+                        var logicaContraseña = new cls_LogicaContraseña();
+
+                        // Obtenemos los datos del usuario para el email
+                        cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacionPorId(_idUsuario); // Necesitarás añadir este método
+
+                        // Llamamos al método que genera, guarda y envía la contraseña temporal
+                        logicaContraseña.GenerarYEnviarContraseñaTemporal(usuario.IdUsuario, usuario.Email, usuario.Username); // Necesitarás el email en tu DTO
+
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                     else
                     {
                         MsgError("La respuesta proporcionada es incorrecta.");
-                        // Opcional: podrías añadir un contador de intentos aquí también
                     }
                 }
                 catch (Exception ex)
                 {
-                    MsgError("Ocurrió un error al validar: " + ex.Message);
+                    MsgError("Ocurrió un error en el proceso: " + ex.Message);
                 }
             }
         }
+        
 
         // --- Métodos de UI y Navegación ---
         private void MsgError(string msg)

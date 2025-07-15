@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using CapaLogica;
+using CapaLogica; // Usaremos cls_LogicaLogin para validar
 using CapaDTO;
-using CapaVistas.Forms_Login;
 
 namespace CapaVistas.Forms_Login
 {
@@ -13,40 +12,35 @@ namespace CapaVistas.Forms_Login
             InitializeComponent();
         }
 
-        // --- Evento principal para el botón Aceptar/Continuar ---
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             lblErrorMsg.Visible = false;
 
-            if (!ValidarCampos())
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "USUARIO")
             {
+                MsgError("Por favor, complete el campo Usuario.");
                 return;
             }
 
             try
             {
-                var logica = new cls_LogicaLogin();
-                // Llama al nuevo método en la capa de lógica para verificar el usuario.
-                cls_UsuarioDTO usuario = logica.ObtenerDatosParaRecuperacion(txtUsuario.Text);
+                var logicaLogin = new cls_LogicaLogin();
+                // 1. Verificamos que el usuario existe y está activo.
+                cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacion(txtUsuario.Text);
 
-                // Si el usuario es válido, se abre el siguiente paso del flujo.
+                // 2. Si existe, abrimos el formulario de preguntas en modo "RESPONDER".
                 this.Hide();
                 using (var formPreguntas = new frmPreguntas(usuario.IdUsuario, "RESPONDER"))
                 {
-                    // Si el usuario responde correctamente las preguntas...
+                    // 3. Esperamos el resultado.
                     if (formPreguntas.ShowDialog() == DialogResult.OK)
                     {
-                        // ...abrimos el formulario para establecer la nueva contraseña.
-                        using (var formNuevaPass = new frmNuevaContraseña(usuario.IdUsuario))
-                        {
-                            if (formNuevaPass.ShowDialog() == DialogResult.OK)
-                            {
-                                MessageBox.Show("Contraseña restablecida con éxito.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
+                        // Si el usuario respondió correctamente, el flujo de envío de email ya se ejecutó.
+                        // Simplemente cerramos todo y el usuario puede ir a revisar su correo.
+                        MessageBox.Show("Se ha enviado una contraseña temporal a su correo electrónico.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    // Si el usuario cancela, no hacemos nada y simplemente cerramos.
                 }
-                // Una vez terminado todo el flujo, se cierra este formulario.
                 this.Close();
             }
             catch (Exception ex)
@@ -55,25 +49,13 @@ namespace CapaVistas.Forms_Login
             }
         }
 
-        // --- Métodos de UI y Navegación ---
-        private bool ValidarCampos()
-        {
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "USUARIO")
-            {
-                MsgError("Por favor, complete el campo Usuario.");
-                return false;
-            }
-            return true;
-        }
-
         private void MsgError(string msg)
         {
             lblErrorMsg.Text = "      " + msg;
             lblErrorMsg.Visible = true;
-            picError.Visible = true; // Asumo que tienes un PictureBox llamado picError
+            picError.Visible = true; 
         }
 
-        // Cierra este formulario para volver a la pantalla de Login
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();

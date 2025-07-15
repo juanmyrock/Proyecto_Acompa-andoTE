@@ -135,18 +135,17 @@
             // 
             // lblErrorMsg
             // 
-            this.lblErrorMsg.AutoSize = true;
             this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblErrorMsg.Location = new System.Drawing.Point(59, 217);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(109, 18);
+            this.lblErrorMsg.Size = new System.Drawing.Size(397, 18);
             this.lblErrorMsg.TabIndex = 26;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
             // 
-            // frmRecuperarContraseña
+            // frmValidarUser
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,7 +162,7 @@
             this.Controls.Add(this.lblUsuario);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "frmRecuperarContraseña";
+            this.Name = "frmValidarUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRecuperarContraseña";
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
