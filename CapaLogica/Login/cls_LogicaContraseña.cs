@@ -11,10 +11,9 @@ namespace CapaLogica.Login
     {
         private readonly cls_ContraseñasQ _contraseñasDatos = new cls_ContraseñasQ();
         private readonly cls_ParamContraseñaQ _paramDatos = new cls_ParamContraseñaQ();
+        private readonly cls_ConectarUserQ _userDatos = new cls_ConectarUserQ();
 
-        /// <summary>
-        /// Obtiene las políticas de contraseña actuales desde la base de datos.
-        /// </summary>
+        // Obtiene las políticas de contraseña actuales desde la base de datos.
         public cls_ParamContraseñaDTO ObtenerPoliticaContraseña()
         {
             var politica = _paramDatos.ObtenerParametro();
@@ -26,10 +25,8 @@ namespace CapaLogica.Login
             return politica;
         }
 
-        /// <summary>
-        /// Valida una contraseña contra las políticas de seguridad actuales.
-        /// </summary>
-        /// <returns>Una lista de mensajes de error. Si la lista está vacía, la contraseña es válida.</returns>
+        // Valida una contraseña contra las políticas de seguridad actuales.
+        // <returns>Una lista de mensajes de error. Si la lista está vacía, la contraseña es válida.</returns>
         public List<string> ValidarComplejidad(string contraseña, cls_ParamContraseñaDTO politica)
         {
             var errores = new List<string>();
@@ -48,9 +45,7 @@ namespace CapaLogica.Login
             return errores;
         }
 
-        /// <summary>
-        /// Establece una nueva contraseña para un usuario, realizando todas las validaciones.
-        /// </summary>
+        // Establece una nueva contraseña para un usuario, realizando todas las validaciones.
         public void EstablecerNuevaContraseña(int idUsuario, string nuevaContraseña)
         {
             // 1. Obtener las políticas actuales
@@ -89,5 +84,28 @@ namespace CapaLogica.Login
                     : null
             });
         }
+
+        public void GenerarYEnviarContraseñaTemporal(int idUsuario, string emailDestino, string nombreUsuario)
+        {
+            // 1. Generar una contraseña aleatoria simple.
+            string contraseñaTemporal = new Random().Next(10000000, 99999999).ToString(); // Contraseña de 8 dígitos
+
+            // 2. Hashear la contraseña temporal.
+            string hashTemporal = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);
+
+            // 3. Actualizar la contraseña activa en la BD con el nuevo hash.
+            // Esto NO añade al historial, solo reemplaza la activa.
+            _contraseñasDatos.ActualizarContraseñaActiva(idUsuario, hashTemporal);
+
+            // 4. Marcar al usuario para que deba cambiar la contraseña.
+            _userDatos.MarcarContraseñaComoRandom(idUsuario);
+
+            // 5. Enviar el correo electrónico con la contraseña en texto plano.
+            var servicioEmail = new cls_ServicioEmail();
+            servicioEmail.EnviarContraseñaTemporal(emailDestino, nombreUsuario, contraseñaTemporal);
+        }
+
+
+
     }
 }

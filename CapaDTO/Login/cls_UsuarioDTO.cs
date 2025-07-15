@@ -19,5 +19,6 @@ namespace CapaDTO
         // Datos del empleado asociados
         public string NombreEmpleado { get; set; }
         public string ApellidoEmpleado { get; set; }
+        public string Email { get; set; }
     }
 }

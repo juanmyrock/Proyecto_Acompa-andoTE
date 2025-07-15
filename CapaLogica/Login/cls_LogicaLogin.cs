@@ -110,9 +110,7 @@ namespace CapaLogica
 
         }
 
-        /// <summary>
-        /// Cierra la sesión activa, tanto en la base de datos como en la sesión local.
-        /// </summary>
+        // Cierra la sesión activa, tanto en la base de datos como en la sesión local.
         public void CerrarSesion()
         {
             if (SesionUsuario.Instancia.EstaSesionIniciada)
@@ -133,10 +131,8 @@ namespace CapaLogica
             }
         }
 
-        /// <summary>
-        /// Verifica si un nombre de usuario existe y devuelve sus datos básicos si es así.
-        /// Usado en el primer paso de "Olvidé mi contraseña".
-        /// </summary>
+        // Verifica si un nombre de usuario existe y devuelve sus datos básicos si es así.
+        // Usado en el primer paso de "Olvidé mi contraseña".
         public cls_UsuarioDTO ObtenerDatosParaRecuperacion(string username)
         {
             cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(username);
@@ -160,6 +156,16 @@ namespace CapaLogica
             // Simplemente pasa la llamada a la capa de datos.
             // Aquí podrías añadir lógica de negocio adicional si fuera necesario en el futuro.
             _userDatos.FinalizarConfiguracionInicial(idUsuario);
+        }
+
+        public cls_UsuarioDTO ObtenerDatosParaRecuperacionPorId(int idUsuario)
+        {
+            var usuario = _userDatos.ObtenerUsuarioEmpleadoPorId(idUsuario);
+            if (usuario == null)
+            {
+                throw new Exception("No se pudieron encontrar los datos del usuario para enviar el correo.");
+            }
+            return usuario;
         }
 
     }
