@@ -76,16 +76,6 @@
     <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms Menu\frmEmpleados.cs" />
-    <Compile Include="Forms Menu\frmEmpleados.designer.cs">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms Menu\frmUsuarios.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms Menu\frmUsuarios.designer.cs">
-      <DependentUpon>frmUsuarios.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,12 +104,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms Menu\frmUsuarios.resx">
-      <DependentUpon>frmUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

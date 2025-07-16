@@ -92,8 +92,7 @@ namespace CapaDatos
             return hashes;
         }
 
-        // Actualiza el hash de la contraseña activa actual de un usuario.
-        // No añade un nuevo registro al historial.
+        // Actualiza el hash de la contraseña activa actual de un usuario. Usado solo para contraseña Random
         public void ActualizarContraseñaActiva(int idUsuario, string nuevoHash)
         {
             string sql = @"INSERT INTO Contraseñas (id_usuario, hash_contraseña, fecha_expiracion, es_activa)
