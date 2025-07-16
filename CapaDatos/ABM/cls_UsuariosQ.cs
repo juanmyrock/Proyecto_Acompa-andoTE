@@ -6,17 +6,13 @@ using CapaDTO;
 
 namespace CapaDatos.ABM
 {
-    /// <summary>
     /// Clase de acceso a datos para todas las operaciones de gestión
     /// y administración de la tabla Usuarios.
-    /// </summary>
     public class cls_UsuariosQ
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        /// <summary>
         /// Obtiene los datos específicos para la gestión de un usuario.
-        /// </summary>
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
             string sql = @"
@@ -49,9 +45,7 @@ namespace CapaDatos.ABM
             };
         }
 
-        /// <summary>
         /// Desbloquea a un usuario, reseteando sus intentos fallidos y reactivándolo.
-        /// </summary>
         public void DesbloquearUsuario(int idUsuario)
         {
             string sql = @"
@@ -66,9 +60,7 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// <summary>
         /// Cambia el estado de un usuario (activo/inactivo).
-        /// </summary>
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
@@ -86,9 +78,7 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// <summary>
         /// Actualiza el rol de un usuario específico.
-        /// </summary>
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";
@@ -97,6 +87,33 @@ namespace CapaDatos.ABM
                 new SqlParameter("@idUsuario", idUsuario),
                 new SqlParameter("@idRol", idRol)
             };
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
+
+        /// Verifica si ya existe un registro en la tabla Usuarios para un id_usuario específico.
+        /// <returns>True si el usuario existe, de lo contrario False.</returns>
+        public bool ExisteUsuario(int idUsuario)
+        {
+            string sql = "SELECT COUNT(1) FROM Usuarios WHERE id_usuario = @idUsuario";
+            var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            return Convert.ToInt32(tabla.Rows[0][0]) > 0;
+        }
+
+        /// Crea un nuevo registro de Usuario asociado a un Empleado existente.
+        public void CrearNuevoUsuario(int idUsuario, string username, int idRol)
+        {
+            // Al crear un usuario, siempre lo marcamos para que configure su cuenta en el primer login.
+            string sql = @"
+        INSERT INTO Usuarios (id_usuario, username, id_rol, es_activo, es_primer_ingreso, es_random_pass, fecha_alta) 
+        VALUES (@idUsuario, @username, @idRol, 1, 1, 1, GETDATE())";
+
+            var parametros = new List<SqlParameter>
+    {
+        new SqlParameter("@idUsuario", idUsuario),
+        new SqlParameter("@username", username),
+        new SqlParameter("@idRol", idRol)
+    };
             _ejecutar.ConsultaWrite(sql, parametros);
         }
     }

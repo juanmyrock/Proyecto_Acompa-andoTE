@@ -1,18 +1,20 @@
 ﻿// CapaVistas/Forms_Menu/frmABMUsuarios.cs
+using CapaDTO;
+using CapaDTO.SistemaDTO;
+using CapaLogica;
+using CapaLogica.ABM;
+using CapaLogica.SistemaLogica;
+using CapaUtilidades; // Si utilizas alguna utilidad aquí
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using CapaDTO.SistemaDTO;
-using CapaLogica;
-using CapaLogica.SistemaLogica;
-using CapaUtilidades; // Si utilizas alguna utilidad aquí
 
 
 namespace CapaVistas.Forms_Menu
 {
     public partial class frmABMUsuarios : Form
     {
-        private cls_Empleado _logicaEmpleado;
+        private cls_LogicaGestionEmpleados _logicaEmpleado;
         private cls_TipoDNILogica _logicaTipoDNI;
         private cls_LocalidadLogica _logicaLocalidad;
         private cls_SexoLogica _logicaSexo;
@@ -20,7 +22,7 @@ namespace CapaVistas.Forms_Menu
         public frmABMUsuarios()
         {
             InitializeComponent();
-            _logicaEmpleado = new cls_Empleado();
+            _logicaEmpleado = new cls_LogicaGestionEmpleados();
             _logicaTipoDNI = new cls_TipoDNILogica();
             _logicaLocalidad = new cls_LocalidadLogica();
             _logicaSexo = new cls_SexoLogica();
@@ -485,31 +487,44 @@ namespace CapaVistas.Forms_Menu
 
         private void btnGestionarUser_Click(object sender, EventArgs e)
         {
-            // 1. Verificamos que haya un empleado seleccionado en la grilla
             if (dgvVerUser.CurrentRow == null)
             {
-                MessageBox.Show("Por favor, seleccione un empleado de la lista.", "Selección Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione un empleado de la lista.", "Selección Requerida");
                 return;
             }
 
-            // 2. Obtenemos el ID del empleado seleccionado
-            // Tu variable _idEmpleadoSeleccionado ya se carga en el evento RowEnter, ¡perfecto!
-            if (_idEmpleadoSeleccionado == -1)
-            {
-                MessageBox.Show("No se pudo obtener el ID del empleado seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            // Obtenemos los datos del empleado seleccionado
+            var empleadoSeleccionado = (cls_EmpleadoDTO)dgvVerUser.CurrentRow.DataBoundItem;
 
-            // 3. Abrimos el formulario de gestión de usuario, pasándole el ID.
-            // Usamos ShowDialog() para que el formulario padre espere hasta que el hijo se cierre.
-            using (var formGestion = new frmGestionarUsuario(_idEmpleadoSeleccionado))
+            try
             {
-                formGestion.ShowDialog();
-            }
+                var logicaGestion = new cls_LogicaGestionarUsuarios();
+                // 1. Verificamos si el usuario ya existe
+                bool usuarioExiste = logicaGestion.VerificarSiUsuarioExiste(empleadoSeleccionado.id_empleado);
 
-            // 4. (Opcional pero recomendado) Recargamos la grilla principal por si
-            // el estado del usuario cambió (ej: de Activo a Bloqueado).
-            CargarEmpleadosEnDataGridView();
+                // 2. Creamos el DTO con toda la información necesaria para el formulario hijo
+                var datosParaGestion = new cls_DatosParaGestionUsuarioDTO
+                {
+                    IdEmpleado = empleadoSeleccionado.id_empleado,
+                    NombreCompletoEmpleado = $"{empleadoSeleccionado.nombre} {empleadoSeleccionado.apellido}",
+                    UsuarioYaExiste = usuarioExiste
+                };
+
+                // 3. Abrimos el formulario de gestión, pasándole el DTO
+                using (var formGestion = new frmGestionarUsuario(datosParaGestion))
+                {
+                    formGestion.ShowDialog();
+                }
+
+                // Recargamos la grilla por si hubo cambios
+                CargarEmpleadosEnDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al preparar la gestión de usuario: " + ex.Message, "Error");
+            }
         }
+
+
     }   
 }
