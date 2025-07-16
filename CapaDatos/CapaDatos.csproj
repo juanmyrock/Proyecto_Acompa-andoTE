@@ -47,7 +47,14 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
+<<<<<<< HEAD
     <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
+=======
+    <Compile Include="LlenarCombos\cls_LlenarCombosQ.cs" />
+    <Compile Include="LlenarCombos\cls_LocalidadQ.cs" />
+    <Compile Include="LlenarCombos\cls_SexoQ.cs" />
+    <Compile Include="LlenarCombos\cls_TipoDNISQ.cs" />
+>>>>>>> origin/SebaRama
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />
     <Compile Include="Login\cls_ParamContraseñaQ.cs" />

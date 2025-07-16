@@ -4,20 +4,26 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using CapaDTO;
+using CapaDTO.SistemaDTO;
 using CapaLogica.Login;
 using CapaVistas.Forms_Menu;
+using CapaSesion.Login;
 
 namespace CapaVistas
 {
     public partial class frmMenu : Form
     {
         private Form activeForm = null;
-        
+
+
 
         public frmMenu()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            lblUserLog.Text = CapaSesion.Login.SesionUsuario.Instancia.NombreEmpleado + " " + CapaSesion.Login.SesionUsuario.Instancia.ApellidoEmpleado;
+
         }
 
         #region MoverVentana  | Métodos para poder mover la ventana |
@@ -166,6 +172,13 @@ namespace CapaVistas
 
         private void btnAdministrar_Click(object sender, EventArgs e)
         {
+            var frmAdminSyst = new frmAdminSyst();
+            
+            frmAdminSyst.ShowDialog();
+                
+            
+                
+
             //try
             //{
             //    cls_ParamContraseñaDTO parametrosContra = new cls_ParamContraseñaDTO();
@@ -179,7 +192,7 @@ namespace CapaVistas
             //{
             
             //}
-            OpenChildForm(new CapaVistas.Forms_Menu.frmAdminSyst(), sender);
+           
         }
     }
 
