@@ -38,5 +38,18 @@ namespace CapaDatos
                 DiasValidezPassword = row["dias_validez_password"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["dias_validez_password"])
             };
         }
+
+        // Obtiene la cantidad de contraseñas anteriores que se deben verificar.
+        public int ObtenerCantidadHistorial()
+        {
+            string sql = "SELECT TOP 1 cantidad_historial_password FROM Parametros_Contraseña";
+            DataTable tabla = _ejecutar.ConsultaRead(sql);
+
+            // Si no hay configuración, por defecto no se verifica el historial (0).
+            if (tabla.Rows.Count == 0 || tabla.Rows[0]["cantidad_historial_password"] == DBNull.Value)
+                return 0;
+
+            return Convert.ToInt32(tabla.Rows[0]["cantidad_historial_password"]);
+        }
     }
 }

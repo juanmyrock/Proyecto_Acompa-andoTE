@@ -160,24 +160,6 @@
             this.panelLogin.TabIndex = 12;
             this.panelLogin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelLogin_MouseDown);
             // 
-            // buttonGenerarHash
-            // 
-            this.buttonGenerarHash.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonGenerarHash.BackColor = System.Drawing.Color.Navy;
-            this.buttonGenerarHash.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonGenerarHash.FlatAppearance.BorderSize = 0;
-            this.buttonGenerarHash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonGenerarHash.Font = new System.Drawing.Font("Century Gothic", 13.74545F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonGenerarHash.ForeColor = System.Drawing.Color.White;
-            this.buttonGenerarHash.Location = new System.Drawing.Point(60, 3);
-            this.buttonGenerarHash.Margin = new System.Windows.Forms.Padding(0);
-            this.buttonGenerarHash.Name = "buttonGenerarHash";
-            this.buttonGenerarHash.Size = new System.Drawing.Size(291, 50);
-            this.buttonGenerarHash.TabIndex = 14;
-            this.buttonGenerarHash.Text = "Generar Hash";
-            this.buttonGenerarHash.UseVisualStyleBackColor = false;
-            this.buttonGenerarHash.Click += new System.EventHandler(this.buttonGenerarHash_Click);
-            // 
             // picHidePass
             // 
             this.picHidePass.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -279,6 +261,5 @@
         private System.Windows.Forms.Panel panelLogin;
         private System.Windows.Forms.PictureBox picHidePass;
         private System.Windows.Forms.PictureBox picShowPass;
-        private System.Windows.Forms.Button buttonGenerarHash;
     }
 }

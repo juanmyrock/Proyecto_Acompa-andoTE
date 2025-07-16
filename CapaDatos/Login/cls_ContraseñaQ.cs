@@ -69,5 +69,46 @@ namespace CapaDatos
 
             _ejecutar.ConsultaWrite(sql, parametros);
         }
+
+        public List<string> ObtenerHashesAnteriores(int idUsuario, int cantidad)
+        {
+            // Si la cantidad a verificar es 0 o menos, no hay nada que hacer.
+            if (cantidad <= 0) return new List<string>();
+
+            string sql = $@"
+                         SELECT TOP {cantidad} hash_contraseña 
+                         FROM Contraseñas 
+                         WHERE id_usuario = @idUsuario 
+                         ORDER BY fecha_creacion DESC";
+
+            var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            var hashes = new List<string>();
+            foreach (DataRow row in tabla.Rows)
+            {
+                hashes.Add(row["hash_contraseña"].ToString());
+            }
+            return hashes;
+        }
+
+        // Actualiza el hash de la contraseña activa actual de un usuario.
+        // No añade un nuevo registro al historial.
+        public void ActualizarContraseñaActiva(int idUsuario, string nuevoHash)
+        {
+            string sql = @"UPDATE Contraseñas 
+                   SET hash_contraseña = @nuevoHash, fecha_creacion = GETDATE()
+                   WHERE id_usuario = @idUsuario AND es_activa = 1";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idUsuario", idUsuario),
+                new SqlParameter("@nuevoHash", nuevoHash)
+            };
+            _ejecutar.ConsultaWrite(sql, parametros);
+        }
+
+
+
     }
 }
