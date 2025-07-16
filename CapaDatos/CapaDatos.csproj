@@ -48,6 +48,9 @@
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
     <Compile Include="LlenarCombos\cls_LlenarCombosQ.cs" />
+    <Compile Include="LlenarCombos\cls_LocalidadQ.cs" />
+    <Compile Include="LlenarCombos\cls_SexoQ.cs" />
+    <Compile Include="LlenarCombos\cls_TipoDNISQ.cs" />
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />
     <Compile Include="Login\cls_ParamContraseñaQ.cs" />

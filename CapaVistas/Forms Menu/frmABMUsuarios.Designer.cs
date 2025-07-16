@@ -54,11 +54,11 @@
             this.cmbLocalidad = new System.Windows.Forms.ComboBox();
             this.cmbTipoDNI = new System.Windows.Forms.ComboBox();
             this.dgvVerUser = new System.Windows.Forms.DataGridView();
-            this.btnCargar = new System.Windows.Forms.Button();
+            this.btnCrear = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnModificar = new System.Windows.Forms.Button();
+            this.btnEliminar = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             this.SuspendLayout();
@@ -307,20 +307,20 @@
             this.dgvVerUser.TabIndex = 46;
             this.dgvVerUser.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_CellClick);
             // 
-            // btnCargar
+            // btnCrear
             // 
-            this.btnCargar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnCargar.FlatAppearance.BorderSize = 3;
-            this.btnCargar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCargar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCargar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCargar.Location = new System.Drawing.Point(35, 385);
-            this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(168, 50);
-            this.btnCargar.TabIndex = 50;
-            this.btnCargar.Text = "Cargar Lista";
-            this.btnCargar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCargar.UseVisualStyleBackColor = true;
+            this.btnCrear.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnCrear.FlatAppearance.BorderSize = 3;
+            this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnCrear.Location = new System.Drawing.Point(110, 385);
+            this.btnCrear.Name = "btnCrear";
+            this.btnCrear.Size = new System.Drawing.Size(168, 50);
+            this.btnCrear.TabIndex = 50;
+            this.btnCrear.Text = "Crear Usuario";
+            this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCrear.UseVisualStyleBackColor = true;
             // 
             // lblUsuario
             // 
@@ -347,35 +347,35 @@
             this.btnRefresh.Text = "Refrescar";
             this.btnRefresh.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnModificar
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.button1.FlatAppearance.BorderSize = 3;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.button1.Location = new System.Drawing.Point(317, 385);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(168, 50);
-            this.button1.TabIndex = 50;
-            this.button1.Text = "Cargar Lista";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnModificar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnModificar.FlatAppearance.BorderSize = 3;
+            this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnModificar.Location = new System.Drawing.Point(438, 385);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(168, 50);
+            this.btnModificar.TabIndex = 50;
+            this.btnModificar.Text = "Modificar Usuario";
+            this.btnModificar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnModificar.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnEliminar
             // 
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.button2.FlatAppearance.BorderSize = 3;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.button2.Location = new System.Drawing.Point(618, 385);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(168, 50);
-            this.button2.TabIndex = 50;
-            this.button2.Text = "Cargar Lista";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnEliminar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnEliminar.FlatAppearance.BorderSize = 3;
+            this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnEliminar.Location = new System.Drawing.Point(758, 385);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(168, 50);
+            this.btnEliminar.TabIndex = 50;
+            this.btnEliminar.Text = "Eliminar Usuario";
+            this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnEliminar.UseVisualStyleBackColor = true;
             // 
             // frmABMUsuarios
             // 
@@ -385,9 +385,9 @@
             this.ClientSize = new System.Drawing.Size(1022, 656);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvVerUser);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnCargar);
+            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.btnModificar);
+            this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnRefresh);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -429,10 +429,10 @@
         private System.Windows.Forms.ComboBox cmbLocalidad;
         private System.Windows.Forms.ComboBox cmbTipoDNI;
         private System.Windows.Forms.DataGridView dgvVerUser;
-        private System.Windows.Forms.Button btnCargar;
+        private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnModificar;
+        private System.Windows.Forms.Button btnEliminar;
     }
 }

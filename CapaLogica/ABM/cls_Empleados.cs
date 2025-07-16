@@ -74,13 +74,12 @@ namespace CapaLogica.SistemaLogica
                 {
                     listaEmpleados.Add(new cls_EmpleadoDTO
                     {
-                        // Asegúrate de que los nombres de las columnas ("...") coincidan EXACTAMENTE con las columnas de tu DB
                         id_empleado = Convert.ToInt32(row["id_empleado"]),
                         puesto = row["puesto"].ToString(),
                         nombre = row["nombre"].ToString(),
                         apellido = row["apellido"].ToString(),
                         id_sexo = Convert.ToInt32(row["id_sexo"]),
-                        id_tipo_dni = Convert.ToInt32(row["id_tipo_dni"]), // <<--- ¡MUY IMPORTANTE! VERIFICA ESTE NOMBRE
+                        id_tipo_dni = Convert.ToInt32(row["id_tipo_dni"]),
                         dni = Convert.ToInt32(row["dni"]),
                         fecha_nac = Convert.ToDateTime(row["fecha_nac"]),
                         id_localidad = Convert.ToInt32(row["id_localidad"]),
@@ -95,9 +94,6 @@ namespace CapaLogica.SistemaLogica
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la capa lógica al mapear empleados: {ex.Message}");
-                // Puedes añadir un MessageBox.Show para depurar visualmente
-                //MessageBox.Show("Error en la lógica al cargar empleados: " + ex.Message, "Error Lógica", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Si ocurre un error, devuelve una lista vacía para evitar que el DGV se caiga.
                 return new List<cls_EmpleadoDTO>();
             }
             return listaEmpleados;

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CapaDTO.SistemaDTO;
-using CapaLogica.Entidades; // Si tienes alguna entidad aquí
+using CapaLogica;
 using CapaLogica.SistemaLogica;
 using CapaUtilidades; // Si utilizas alguna utilidad aquí
 
@@ -13,10 +13,17 @@ namespace CapaVistas.Forms_Menu
     public partial class frmABMUsuarios : Form
     {
         private cls_Empleado _logicaEmpleado;
+        private cls_TipoDNILogica _logicaTipoDNI;
+        private cls_LocalidadLogica _logicaLocalidad;
+        private cls_SexoLogica _logicaSexo;
         public frmABMUsuarios()
         {
             InitializeComponent();
             _logicaEmpleado = new cls_Empleado();
+            _logicaEmpleado = new cls_Empleado();
+            _logicaTipoDNI = new cls_TipoDNILogica();
+            _logicaLocalidad = new cls_LocalidadLogica();
+            _logicaSexo = new cls_SexoLogica();
         }
         
 
@@ -46,30 +53,37 @@ namespace CapaVistas.Forms_Menu
 
         private void CargarCombos()
         {
-            // Implementa esto cuando tengas la lógica para cargar tus ComboBoxes
-            // Por ejemplo:
-            // try
-            // {
-            //     // Suponiendo que tienes una lógica para localidades en cls_LocalidadLogica
-            //     cls_LocalidadLogica logicaLocalidad = new cls_LocalidadLogica();
-            //     List<cls_LocalidadDTO> localidades = logicaLocalidad.ObtenerLocalidades();
-            //     cmbLocalidad.DataSource = localidades;
-            //     cmbLocalidad.DisplayMember = "NombreLocalidad"; // O la propiedad que quieras mostrar
-            //     cmbLocalidad.ValueMember = "IdLocalidad"; // O la propiedad que sea el ID
+            try
+            {
+                // Cargar cmbTipoDNI
+                List<cls_TipoDNIDTO> tiposDni = _logicaTipoDNI.ObtenerTiposDNI();
+                cmbTipoDNI.DataSource = tiposDni;
+                cmbTipoDNI.DisplayMember = "descripcion"; // Propiedad del DTO a mostrar en el ComboBox
+                cmbTipoDNI.ValueMember = "id_tipo_dni";   // Propiedad del DTO que será el valor real
 
-            //     // Similar para Sexo, TipoDNI, etc.
-            // }
-            // catch (Exception ex)
-            // {
-            //     MessageBox.Show("Error al cargar combos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            // }
+                // Cargar cmbLocalidad
+                List<cls_LocalidadDTO> localidades = _logicaLocalidad.ObtenerLocalidades();
+                cmbLocalidad.DataSource = localidades;
+                cmbLocalidad.DisplayMember = "nombre_localidad"; // Propiedad del DTO a mostrar
+                cmbLocalidad.ValueMember = "id_localidad";       // Propiedad del DTO que será el valor real
+
+                // Cargar cmbSexo
+                List<cls_SexoDTO> sexos = _logicaSexo.ObtenerSexos();
+                cmbSexo.DataSource = sexos;
+                cmbSexo.DisplayMember = "descripcion"; // Propiedad del DTO a mostrar
+                cmbSexo.ValueMember = "id_sexo";       // Propiedad del DTO que será el valor real
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void frmABMUsuarios_Load(object sender, EventArgs e)
         {
-            CargarEmpleadosEnDataGridView(); // Se llama al cargar el formulario
+            CargarEmpleadosEnDataGridView(); 
             CargarCombos();
-            cls_LlenarCombos.Cargar(cmbLocalidad, )
+  
 
         }
 
@@ -88,8 +102,7 @@ namespace CapaVistas.Forms_Menu
                     txtCalle.Text = empleadoSeleccionado.domicilio;
                     txtEmail.Text = empleadoSeleccionado.email;
                     txtCelular.Text = empleadoSeleccionado.telefono;
-
-                    // Si los combos están cargados, esto debería funcionar
+                    txtNumCalle.Text = empleadoSeleccionado.num_domicilio.ToString();
                     cmbTipoDNI.SelectedValue = empleadoSeleccionado.id_tipo_dni;
                     cmbLocalidad.SelectedValue = empleadoSeleccionado.id_localidad;
                     cmbSexo.SelectedValue = empleadoSeleccionado.id_sexo;
@@ -101,6 +114,5 @@ namespace CapaVistas.Forms_Menu
                 }
             }
         }
-        // ... otros métodos de tu formulario
     }
 }
