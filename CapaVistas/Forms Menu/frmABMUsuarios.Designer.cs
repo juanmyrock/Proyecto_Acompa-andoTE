@@ -66,6 +66,7 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnGestionarUser = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -474,12 +475,29 @@
             this.pictureBox1.TabIndex = 52;
             this.pictureBox1.TabStop = false;
             // 
+            // btnGestionarUser
+            // 
+            this.btnGestionarUser.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGestionarUser.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnGestionarUser.FlatAppearance.BorderSize = 3;
+            this.btnGestionarUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionarUser.Font = new System.Drawing.Font("Sans Serif Collection", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGestionarUser.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnGestionarUser.Location = new System.Drawing.Point(411, 5);
+            this.btnGestionarUser.Name = "btnGestionarUser";
+            this.btnGestionarUser.Size = new System.Drawing.Size(204, 36);
+            this.btnGestionarUser.TabIndex = 53;
+            this.btnGestionarUser.Text = "Gestionar Usuario";
+            this.btnGestionarUser.UseVisualStyleBackColor = true;
+            this.btnGestionarUser.Click += new System.EventHandler(this.btnGestionarUser_Click);
+            // 
             // frmABMUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1022, 672);
+            this.Controls.Add(this.btnGestionarUser);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -545,5 +563,6 @@
         private System.Windows.Forms.Label lblCargahs;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button btnGestionarUser;
     }
 }

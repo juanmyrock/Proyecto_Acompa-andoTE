@@ -76,15 +76,11 @@
     <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms Menu\frmEmpleados.cs" />
-    <Compile Include="Forms Menu\frmEmpleados.designer.cs">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms Menu\frmUsuarios.cs">
+    <Compile Include="Forms Menu\frmGestionarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms Menu\frmUsuarios.designer.cs">
-      <DependentUpon>frmUsuarios.cs</DependentUpon>
+    <Compile Include="Forms Menu\frmGestionarUsuario.Designer.cs">
+      <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -115,11 +111,8 @@
     <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
-      <DependentUpon>frmEmpleados.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms Menu\frmUsuarios.resx">
-      <DependentUpon>frmUsuarios.cs</DependentUpon>
+    <EmbeddedResource Include="Forms Menu\frmGestionarUsuario.resx">
+      <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
