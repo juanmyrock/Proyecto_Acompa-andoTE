@@ -17,12 +17,11 @@ namespace CapaDatos
         }
 
         public bool InsertarEmpleado(cls_EmpleadoDTO empleado)
-        {
-            string query = "INSERT INTO Empleados (puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono) " +
-                           "VALUES (@puesto, @nombre, @apellido, @id_sexo, @id_tipo_dni, @dni, @fecha_nac, @id_localidad, @domicilio, @num_domicilio, @carga_hs, @email, @telefono); " +
-                           "SELECT SCOPE_IDENTITY();";
+        { 
+        string query = "INSERT INTO Empleados (puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono) " +
+                           "VALUES (@puesto, @nombre, @apellido, @id_sexo, @id_tipo_dni, @dni, @fecha_nac, @id_localidad, @domicilio, @num_domicilio, @carga_hs, @email, @telefono)";
 
-            List<SqlParameter> parametros = new List<SqlParameter>
+        List<SqlParameter> parametros = new List<SqlParameter>
             {
                 new SqlParameter("@puesto", empleado.puesto),
                 new SqlParameter("@nombre", empleado.nombre),
@@ -41,21 +40,13 @@ namespace CapaDatos
 
             try
             {
-                // Usamos ConsultaWrite de cls_EjecutarQ
-                // Sin embargo, ConsultaWrite no devuelve el SCOPE_IDENTITY().
-                // Si necesitas el ID, tendrías que modificar ConsultaWrite en cls_EjecutarQ
-                // para que devuelva un object (para ExecuteScalar) o un int.
-                // Por ahora, asumiremos que Insertar es solo para ejecutar y no necesita el ID de retorno aquí.
-                // Si el ID es crucial, considera modificar ConsultaWrite o crear un nuevo método en cls_EjecutarQ.
-                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
-                // Como no obtenemos SCOPE_IDENTITY() directamente desde ConsultaWrite,
-                // si la inserción fue exitosa, asumimos true.
-                return true;
+                _ejecutor.ConsultaWrite(query, parametros);
+                return true; // Si no hay excepción, la inserción fue exitosa
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al insertar empleado usando cls_EjecutarQ: {ex.Message}");
-                return false;
+                Console.WriteLine($"Error al insertar empleado en cls_EmpleadosQ: {ex.Message}");
+                throw; // *** CAMBIO CLAVE: Re-lanza la excepción para que llegue a la capa lógica y luego a la UI ***
             }
         }
 

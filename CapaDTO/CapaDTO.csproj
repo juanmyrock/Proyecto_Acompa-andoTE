@@ -50,6 +50,9 @@
     <Compile Include="Login\cls_RolDTO.cs" />
     <Compile Include="Login\cls_SesionActivaDTO.cs" />
     <Compile Include="Login\cls_UsuarioDTO.cs" />
+    <Compile Include="cls_LocalidadDTO.cs" />
+    <Compile Include="cls_SexoDTO.cs" />
+    <Compile Include="cls_TipoDNIDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SistemaDTO\cls_EmpleadoDTO.cs" />
     <Compile Include="SistemaDTO\cls_PacienteDTO.cs" />

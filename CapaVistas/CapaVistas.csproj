@@ -186,5 +186,17 @@
   <ItemGroup>
     <None Include="Resources\AcompanandoTe.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo editar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eliminar logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eliminar logo1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

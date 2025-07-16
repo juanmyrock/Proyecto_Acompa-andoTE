@@ -45,6 +45,9 @@
     <Compile Include="ABM\cls_Empleados.cs" />
     <Compile Include="ABM\cls_Usuarios.cs" />
     <Compile Include="Login\cls_LogicaContraseña.cs" />
+    <Compile Include="LlenarCombos\cls_LocalidadLogica.cs" />
+    <Compile Include="LlenarCombos\cls_SexoLogica.cs" />
+    <Compile Include="LlenarCombos\cls_TipoDNILogica.cs" />
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Login\cls_ParametrosContraseña.cs" />
     <Compile Include="Login\cls_LogicaPreguntas.cs" />

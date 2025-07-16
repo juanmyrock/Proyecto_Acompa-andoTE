@@ -10,10 +10,40 @@ namespace CapaLogica.Login
 {
     public class cls_ParametrosContraseña
     {
-        cls_ParamContraseñaQ parametrosContra = new cls_ParamContraseñaQ();
-        //public cls_ParamContraseñaDTO TraerParametros() 
-        //{
-        //    return cls_ParamContraseñaDTO;
-        //}
+        
+            private cls_ParamContraseñaQ parametrosContraQ;
+
+            public cls_ParametrosContraseña()
+            {
+                parametrosContraQ = new cls_ParamContraseñaQ();
+             
+            }
+
+            public cls_ParamContraseñaDTO ObtenerParametros()
+            {
+                try
+                {
+                    return parametrosContraQ.ObtenerParametro();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en la capa lógica al obtener parámetros: {ex.Message}");
+                    return null;
+                }
+            }
+
+            public bool ModificarParametros(cls_ParamContraseñaDTO parametros) // Cambiado a bool
+        {
+            try
+            {
+                // Llama al método de la capa de datos para realizar la actualización
+                return parametrosContraQ.ModificarParametros(parametros);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al modificar parámetros de contraseña: {ex.Message}");
+                return false; 
+            }
+        }
     }
 }
