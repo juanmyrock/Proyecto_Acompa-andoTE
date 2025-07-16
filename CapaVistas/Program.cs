@@ -11,14 +11,13 @@ namespace CapaVistas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new frmMenu());
 
 
             using (var loginForm = new frmLogin())
             {
-                // Muestra el formulario de login como modal
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Validar que la sesión esté inicializada correctamente
                     if (SesionUsuario.Instancia.EstaSesionIniciada)
                     {
                         Application.Run(new frmMenu());

@@ -15,7 +15,7 @@ namespace CapaDatos
 
         public DataTable ObtenerLocalidades()
         {
-            string query = "SELECT id_localidad, localidad FROM Localidades"; // *** Ajusta "Localidades" y los nombres de las columnas a tu DB ***
+            string query = "SELECT id_localidad, localidad FROM Localidades ORDER BY localidad ASC"; // *** Ajusta "Localidades" y los nombres de las columnas a tu DB ***
             try
             {
                 return _ejecutor.ConsultaRead(query);

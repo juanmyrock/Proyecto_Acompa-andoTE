@@ -48,9 +48,9 @@ namespace CapaVistas
             this.btnOcultar = new System.Windows.Forms.PictureBox();
             this.btnMinimize = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.lblUserLog = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.btnUserLog = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -212,9 +212,9 @@ namespace CapaVistas
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.panelMenu.Controls.Add(this.lblUserLog);
             this.panelMenu.Controls.Add(this.btnLogOut);
             this.panelMenu.Controls.Add(this.panel8);
-            this.panelMenu.Controls.Add(this.btnUserLog);
             this.panelMenu.Controls.Add(this.pictureBox2);
             this.panelMenu.Controls.Add(this.btnUsuarios);
             this.panelMenu.Controls.Add(this.panel7);
@@ -241,6 +241,16 @@ namespace CapaVistas
             this.panelMenu.Size = new System.Drawing.Size(217, 760);
             this.panelMenu.TabIndex = 3;
             // 
+            // lblUserLog
+            // 
+            this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblUserLog.Location = new System.Drawing.Point(15, 215);
+            this.lblUserLog.Name = "lblUserLog";
+            this.lblUserLog.Size = new System.Drawing.Size(148, 29);
+            this.lblUserLog.TabIndex = 0;
+            this.lblUserLog.Text = "Don Pepito";
+            // 
             // btnLogOut
             // 
             this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -262,24 +272,6 @@ namespace CapaVistas
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(10, 45);
             this.panel8.TabIndex = 3;
-            // 
-            // btnUserLog
-            // 
-            this.btnUserLog.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnUserLog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnUserLog.FlatAppearance.BorderSize = 0;
-            this.btnUserLog.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.btnUserLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUserLog.ForeColor = System.Drawing.Color.White;
-            this.btnUserLog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUserLog.Location = new System.Drawing.Point(2, 205);
-            this.btnUserLog.Margin = new System.Windows.Forms.Padding(2);
-            this.btnUserLog.Name = "btnUserLog";
-            this.btnUserLog.Size = new System.Drawing.Size(188, 45);
-            this.btnUserLog.TabIndex = 27;
-            this.btnUserLog.Text = "User";
-            this.btnUserLog.UseVisualStyleBackColor = false;
             // 
             // pictureBox2
             // 
@@ -682,7 +674,6 @@ namespace CapaVistas
         private PictureBox pictureBox2;
         private Button btnUsuarios;
         private Panel panel7;
-        private Button btnUserLog;
         private Panel panel8;
         private Panel panelTitulo;
         private Label lblTitulo;
@@ -693,5 +684,6 @@ namespace CapaVistas
         private Label lblTittle;
         private PictureBox pictureBox1;
         private Panel panelChildFrm;
+        private Label lblUserLog;
     }
 }

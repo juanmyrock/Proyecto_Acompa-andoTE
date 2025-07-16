@@ -30,9 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmABMUsuarios));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblPuesto = new System.Windows.Forms.Label();
+            this.txtPuesto = new System.Windows.Forms.TextBox();
+            this.txtCargaHS = new System.Windows.Forms.TextBox();
             this.txtCelular = new System.Windows.Forms.TextBox();
+            this.lblCargahs = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.chkEstadoModif = new System.Windows.Forms.CheckBox();
             this.txtNumCalle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtCalle = new System.Windows.Forms.TextBox();
@@ -59,15 +62,25 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblPuesto);
+            this.groupBox2.Controls.Add(this.txtPuesto);
+            this.groupBox2.Controls.Add(this.txtCargaHS);
             this.groupBox2.Controls.Add(this.txtCelular);
+            this.groupBox2.Controls.Add(this.lblCargahs);
             this.groupBox2.Controls.Add(this.label39);
-            this.groupBox2.Controls.Add(this.chkEstadoModif);
             this.groupBox2.Controls.Add(this.txtNumCalle);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.txtCalle);
@@ -93,45 +106,64 @@
             this.groupBox2.Location = new System.Drawing.Point(35, 441);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(952, 174);
-            this.groupBox2.TabIndex = 48;
+            this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Empleado";
             // 
+            // lblPuesto
+            // 
+            this.lblPuesto.AutoSize = true;
+            this.lblPuesto.Location = new System.Drawing.Point(361, 24);
+            this.lblPuesto.Name = "lblPuesto";
+            this.lblPuesto.Size = new System.Drawing.Size(47, 14);
+            this.lblPuesto.TabIndex = 66;
+            this.lblPuesto.Text = "Puesto:";
+            // 
+            // txtPuesto
+            // 
+            this.txtPuesto.Location = new System.Drawing.Point(411, 21);
+            this.txtPuesto.Name = "txtPuesto";
+            this.txtPuesto.Size = new System.Drawing.Size(151, 22);
+            this.txtPuesto.TabIndex = 5;
+            // 
+            // txtCargaHS
+            // 
+            this.txtCargaHS.Location = new System.Drawing.Point(768, 120);
+            this.txtCargaHS.Name = "txtCargaHS";
+            this.txtCargaHS.Size = new System.Drawing.Size(151, 22);
+            this.txtCargaHS.TabIndex = 17;
+            // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(768, 101);
+            this.txtCelular.Location = new System.Drawing.Point(768, 90);
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(151, 22);
-            this.txtCelular.TabIndex = 65;
+            this.txtCelular.TabIndex = 13;
+            // 
+            // lblCargahs
+            // 
+            this.lblCargahs.AutoSize = true;
+            this.lblCargahs.Location = new System.Drawing.Point(712, 121);
+            this.lblCargahs.Name = "lblCargahs";
+            this.lblCargahs.Size = new System.Drawing.Size(54, 14);
+            this.lblCargahs.TabIndex = 64;
+            this.lblCargahs.Text = "Carga Hs";
             // 
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(720, 104);
+            this.label39.Location = new System.Drawing.Point(720, 91);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(46, 14);
             this.label39.TabIndex = 64;
             this.label39.Text = "Celular:";
-            // 
-            // chkEstadoModif
-            // 
-            this.chkEstadoModif.AutoSize = true;
-            this.chkEstadoModif.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkEstadoModif.Checked = true;
-            this.chkEstadoModif.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.chkEstadoModif.Location = new System.Drawing.Point(865, 28);
-            this.chkEstadoModif.Name = "chkEstadoModif";
-            this.chkEstadoModif.Size = new System.Drawing.Size(68, 18);
-            this.chkEstadoModif.TabIndex = 63;
-            this.chkEstadoModif.Text = "Estado: ";
-            this.chkEstadoModif.UseVisualStyleBackColor = true;
             // 
             // txtNumCalle
             // 
             this.txtNumCalle.Location = new System.Drawing.Point(562, 118);
             this.txtNumCalle.Name = "txtNumCalle";
             this.txtNumCalle.Size = new System.Drawing.Size(134, 22);
-            this.txtNumCalle.TabIndex = 58;
+            this.txtNumCalle.TabIndex = 16;
             // 
             // label6
             // 
@@ -147,7 +179,7 @@
             this.txtCalle.Location = new System.Drawing.Point(346, 118);
             this.txtCalle.Name = "txtCalle";
             this.txtCalle.Size = new System.Drawing.Size(121, 22);
-            this.txtCalle.TabIndex = 56;
+            this.txtCalle.TabIndex = 15;
             // 
             // label14
             // 
@@ -160,15 +192,15 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(768, 73);
+            this.txtEmail.Location = new System.Drawing.Point(768, 60);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(151, 22);
-            this.txtEmail.TabIndex = 54;
+            this.txtEmail.TabIndex = 9;
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(733, 75);
+            this.label28.Location = new System.Drawing.Point(733, 62);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(31, 14);
             this.label28.TabIndex = 53;
@@ -178,11 +210,11 @@
             // 
             this.dateNacimiento.CustomFormat = "00/00/0000";
             this.dateNacimiento.Location = new System.Drawing.Point(563, 88);
-            this.dateNacimiento.MaxDate = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
+            this.dateNacimiento.MaxDate = new System.DateTime(2025, 12, 31, 0, 0, 0, 0);
             this.dateNacimiento.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.dateNacimiento.Name = "dateNacimiento";
             this.dateNacimiento.Size = new System.Drawing.Size(133, 22);
-            this.dateNacimiento.TabIndex = 52;
+            this.dateNacimiento.TabIndex = 12;
             this.dateNacimiento.Value = new System.DateTime(2024, 6, 24, 0, 0, 0, 0);
             // 
             // label29
@@ -199,7 +231,7 @@
             this.txtDNI.Location = new System.Drawing.Point(346, 88);
             this.txtDNI.Name = "txtDNI";
             this.txtDNI.Size = new System.Drawing.Size(121, 22);
-            this.txtDNI.TabIndex = 50;
+            this.txtDNI.TabIndex = 11;
             // 
             // label30
             // 
@@ -221,18 +253,20 @@
             // 
             // cmbSexo
             // 
+            this.cmbSexo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbSexo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbSexo.FormattingEnabled = true;
             this.cmbSexo.Location = new System.Drawing.Point(563, 59);
             this.cmbSexo.Name = "cmbSexo";
             this.cmbSexo.Size = new System.Drawing.Size(133, 22);
-            this.cmbSexo.TabIndex = 47;
+            this.cmbSexo.TabIndex = 8;
             // 
             // txtApellido
             // 
             this.txtApellido.Location = new System.Drawing.Point(346, 60);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(121, 22);
-            this.txtApellido.TabIndex = 46;
+            this.txtApellido.TabIndex = 7;
             // 
             // label32
             // 
@@ -248,7 +282,7 @@
             this.txtNombre.Location = new System.Drawing.Point(134, 60);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(121, 22);
-            this.txtNombre.TabIndex = 44;
+            this.txtNombre.TabIndex = 6;
             // 
             // label33
             // 
@@ -279,19 +313,23 @@
             // 
             // cmbLocalidad
             // 
+            this.cmbLocalidad.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbLocalidad.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbLocalidad.FormattingEnabled = true;
             this.cmbLocalidad.Location = new System.Drawing.Point(134, 118);
             this.cmbLocalidad.Name = "cmbLocalidad";
             this.cmbLocalidad.Size = new System.Drawing.Size(121, 22);
-            this.cmbLocalidad.TabIndex = 40;
+            this.cmbLocalidad.TabIndex = 13;
             // 
             // cmbTipoDNI
             // 
+            this.cmbTipoDNI.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbTipoDNI.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbTipoDNI.FormattingEnabled = true;
             this.cmbTipoDNI.Location = new System.Drawing.Point(134, 88);
             this.cmbTipoDNI.Name = "cmbTipoDNI";
             this.cmbTipoDNI.Size = new System.Drawing.Size(121, 22);
-            this.cmbTipoDNI.TabIndex = 39;
+            this.cmbTipoDNI.TabIndex = 10;
             // 
             // dgvVerUser
             // 
@@ -304,23 +342,27 @@
             this.dgvVerUser.RowHeadersWidth = 47;
             this.dgvVerUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvVerUser.Size = new System.Drawing.Size(952, 334);
-            this.dgvVerUser.TabIndex = 46;
+            this.dgvVerUser.TabIndex = 19;
             this.dgvVerUser.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_CellClick);
+            this.dgvVerUser.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_RowEnter);
+            this.dgvVerUser.SelectionChanged += new System.EventHandler(this.dgvVerUser_SelectionChanged);
             // 
             // btnCrear
             // 
+            this.btnCrear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCrear.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnCrear.FlatAppearance.BorderSize = 3;
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(110, 385);
+            this.btnCrear.Location = new System.Drawing.Point(113, 385);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(168, 50);
-            this.btnCrear.TabIndex = 50;
-            this.btnCrear.Text = "Crear Usuario";
+            this.btnCrear.TabIndex = 2;
+            this.btnCrear.Text = "Crear Empleado";
             this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // lblUsuario
             // 
@@ -335,6 +377,7 @@
             // 
             // btnRefresh
             // 
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnRefresh.FlatAppearance.BorderSize = 3;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -343,46 +386,104 @@
             this.btnRefresh.Location = new System.Drawing.Point(876, 3);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(111, 36);
-            this.btnRefresh.TabIndex = 49;
+            this.btnRefresh.TabIndex = 0;
             this.btnRefresh.Text = "Refrescar";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnModificar
             // 
+            this.btnModificar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModificar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnModificar.FlatAppearance.BorderSize = 3;
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(438, 385);
+            this.btnModificar.Location = new System.Drawing.Point(446, 385);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(168, 50);
-            this.btnModificar.TabIndex = 50;
-            this.btnModificar.Text = "Modificar Usuario";
+            this.btnModificar.Size = new System.Drawing.Size(169, 50);
+            this.btnModificar.TabIndex = 3;
+            this.btnModificar.Text = "Modificar Empleado";
             this.btnModificar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnEliminar
             // 
+            this.btnEliminar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnEliminar.FlatAppearance.BorderSize = 3;
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(758, 385);
+            this.btnEliminar.Location = new System.Drawing.Point(803, 385);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(168, 50);
-            this.btnEliminar.TabIndex = 50;
-            this.btnEliminar.Text = "Eliminar Usuario";
+            this.btnEliminar.TabIndex = 4;
+            this.btnEliminar.Text = "Eliminar Empleado";
             this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnLimpiar.FlatAppearance.BorderSize = 3;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnLimpiar.Location = new System.Drawing.Point(819, 621);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(135, 38);
+            this.btnLimpiar.TabIndex = 18;
+            this.btnLimpiar.Text = "Limpiar Campos";
+            this.btnLimpiar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
+            this.pictureBox3.ImageLocation = "";
+            this.pictureBox3.Location = new System.Drawing.Point(750, 385);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 52;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
+            this.pictureBox2.ImageLocation = "";
+            this.pictureBox2.Location = new System.Drawing.Point(393, 385);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 52;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
+            this.pictureBox1.ImageLocation = "";
+            this.pictureBox1.Location = new System.Drawing.Point(60, 385);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 52;
+            this.pictureBox1.TabStop = false;
             // 
             // frmABMUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1022, 656);
+            this.ClientSize = new System.Drawing.Size(1022, 672);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvVerUser);
             this.Controls.Add(this.btnEliminar);
@@ -397,6 +498,9 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -407,7 +511,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtCelular;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.CheckBox chkEstadoModif;
         private System.Windows.Forms.TextBox txtNumCalle;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtCalle;
@@ -434,5 +537,13 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblPuesto;
+        private System.Windows.Forms.TextBox txtPuesto;
+        private System.Windows.Forms.TextBox txtCargaHS;
+        private System.Windows.Forms.Label lblCargahs;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
