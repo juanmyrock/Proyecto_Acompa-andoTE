@@ -2,147 +2,102 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using CapaDTO;
 
-namespace CapaDatos.Entidades
+namespace CapaDatos.ABM
 {
-    public class cls_UsuariosQ : cls_EjecutarQ
+    /// <summary>
+    /// Clase de acceso a datos para todas las operaciones de gestión
+    /// y administración de la tabla Usuarios.
+    /// </summary>
+    public class cls_UsuariosQ
     {
-        // Propiedades del usuario
-        public int Id_Usuario { get; set; }
-        public int Id_Empleado { get; set; }
-        public DateTime Fecha_Alta { get; set; }
-        public DateTime Fecha_Baja { get; set; }
-        public bool Estado { get; set; }
-        public string Usuario { get; set; }
-        public string Contraseña_Actual { get; set; }
-        public DateTime Fecha_Ult_Ingreso { get; set; }
-        public string Contraseña_Aleatoria { get; set; }
-        public int Id_Pregunta { get; set; }
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        // Métodos CRUD
-        public DataTable ReadUser(string datos)
+        /// <summary>
+        /// Obtiene los datos específicos para la gestión de un usuario.
+        /// </summary>
+        public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
-            DataTable resultado = null;
-            try
+            string sql = @"
+                SELECT 
+                    u.id_usuario, u.username, u.id_rol, u.es_activo, u.fecha_bloqueo,
+                    r.nombre_rol,
+                    e.nombre + ' ' + e.apellido AS nombre_completo,
+                    e.email
+                FROM Usuarios u
+                LEFT JOIN Roles r ON u.id_rol = r.id_rol
+                INNER JOIN Empleados e ON u.id_usuario = e.id_empleado
+                WHERE u.id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            if (tabla.Rows.Count == 0) return null;
+
+            DataRow row = tabla.Rows[0];
+            return new cls_UsuarioGestionDTO
             {
-                string sSQL;
-                List<SqlParameter> listaParametros = new List<SqlParameter>();
-                if (string.IsNullOrEmpty(datos))
-                {
-                    sSQL = "SELECT * FROM Usuarios";
-                }
-                else
-                {
-                    sSQL = "SELECT * FROM Usuarios WHERE usuario LIKE @datos";
-                    listaParametros.Add(new SqlParameter("@datos", "%" + datos.Trim() + "%"));
-                }
-                resultado = ConsultaRead(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al buscar usuarios", ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al buscar usuarios", ex);
-            }
-            return resultado;
+                IdUsuario = Convert.ToInt32(row["id_usuario"]),
+                Username = row["username"].ToString(),
+                IdRol = row["id_rol"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["id_rol"]),
+                NombreRol = row["nombre_rol"]?.ToString(), // Usar '?' por si el rol es NULL
+                EsActivo = Convert.ToBoolean(row["es_activo"]),
+                EstaBloqueado = row["fecha_bloqueo"] != DBNull.Value,
+                NombreCompletoEmpleado = row["nombre_completo"].ToString(),
+                Email = row["email"].ToString()
+            };
         }
 
-        public void CreateUser()
+        /// <summary>
+        /// Desbloquea a un usuario, reseteando sus intentos fallidos y reactivándolo.
+        /// </summary>
+        public void DesbloquearUsuario(int idUsuario)
         {
-            try
-            {
-                string sSQL = "INSERT INTO Usuarios (id_empleado, fecha_alta, fecha_baja, estado, usuario, contraseña_actual, fecha_ult_ingreso, contraseña_aleatoria, id_pregunta) " +
-                              "VALUES (@id_empleado, @fecha_alta, @fecha_baja, @estado, @usuario, @contraseña_actual, @fecha_ult_ingreso, @contraseña_aleatoria, @id_pregunta)";
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-                {
-                    new SqlParameter("@id_empleado", Id_Empleado),
-                    new SqlParameter("@fecha_alta", Fecha_Alta),
-                    new SqlParameter("@fecha_baja", Fecha_Baja),
-                    new SqlParameter("@estado", Estado),
-                    new SqlParameter("@usuario", Usuario),
-                    new SqlParameter("@contraseña_actual", Contraseña_Actual),
-                    new SqlParameter("@fecha_ult_ingreso", Fecha_Ult_Ingreso),
-                    new SqlParameter("@contraseña_aleatoria", Contraseña_Aleatoria),
-                    new SqlParameter("@id_pregunta", Id_Pregunta)
-                };
-                ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al agregar usuario", ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al agregar usuario", ex);
-            }
+            string sql = @"
+                UPDATE Usuarios 
+                SET 
+                    intentos_fallidos = 0, 
+                    fecha_bloqueo = NULL,
+                    es_activo = 1
+                WHERE id_usuario = @idUsuario";
+
+            var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        public void UpdateUser()
+        /// <summary>
+        /// Cambia el estado de un usuario (activo/inactivo).
+        /// </summary>
+        public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
-            try
-            {
-                string sSQL = "UPDATE Usuarios SET id_empleado = @id_empleado, fecha_alta = @fecha_alta, fecha_baja = @fecha_baja, " +
-                              "estado = @estado, usuario = @usuario, contraseña_actual = @contraseña_actual, " +
-                              "fecha_ult_ingreso = @fecha_ult_ingreso, contraseña_aleatoria = @contraseña_aleatoria, id_pregunta = @id_pregunta " +
-                              "WHERE id_usuario = @id_usuario";
+            // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
+            string sql = @"
+                UPDATE Usuarios 
+                SET es_activo = @esActivo,
+                    fecha_baja = CASE WHEN @esActivo = 0 THEN GETDATE() ELSE NULL END
+                WHERE id_usuario = @idUsuario";
 
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-                {
-                    new SqlParameter("@id_usuario", Id_Usuario),
-                    new SqlParameter("@id_empleado", Id_Empleado),
-                    new SqlParameter("@fecha_alta", Fecha_Alta),
-                    new SqlParameter("@fecha_baja", Fecha_Baja),
-                    new SqlParameter("@estado", Estado),
-                    new SqlParameter("@usuario", Usuario),
-                    new SqlParameter("@contraseña_actual", Contraseña_Actual),
-                    new SqlParameter("@fecha_ult_ingreso", Fecha_Ult_Ingreso),
-                    new SqlParameter("@contraseña_aleatoria", Contraseña_Aleatoria),
-                    new SqlParameter("@id_pregunta", Id_Pregunta)
-                };
-
-                ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
+            var parametros = new List<SqlParameter>
             {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al modificar usuario", ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al modificar usuario", ex);
-            }
+                new SqlParameter("@idUsuario", idUsuario),
+                new SqlParameter("@esActivo", nuevoEstado)
+            };
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        public void DeleteUser(int idUsuario)
+        /// <summary>
+        /// Actualiza el rol de un usuario específico.
+        /// </summary>
+        public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
-            try
+            string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";
+            var parametros = new List<SqlParameter>
             {
-                string sSQL = "DELETE FROM Usuarios WHERE id_usuario = @id_usuario";
-
-                List<SqlParameter> listaParametros = new List<SqlParameter>
-                {
-                    new SqlParameter("@id_usuario", idUsuario)
-                };
-
-                ConsultaWrite(sSQL, listaParametros);
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                throw new Exception("Error al eliminar usuario", ex);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                throw new Exception("Error general al eliminar usuario", ex);
-            }
+                new SqlParameter("@idUsuario", idUsuario),
+                new SqlParameter("@idRol", idRol)
+            };
+            _ejecutar.ConsultaWrite(sql, parametros);
         }
     }
 }

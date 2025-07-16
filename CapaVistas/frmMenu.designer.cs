@@ -74,6 +74,7 @@ namespace CapaVistas
             this.btnAdministrar = new System.Windows.Forms.Button();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             this.panelChildFrm = new System.Windows.Forms.Panel();
+            this.btnRoles = new System.Windows.Forms.Button();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -511,6 +512,7 @@ namespace CapaVistas
             // panelTitulo
             // 
             this.panelTitulo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.panelTitulo.Controls.Add(this.btnRoles);
             this.panelTitulo.Controls.Add(this.btnConfigSist);
             this.panelTitulo.Controls.Add(this.btnAdministrar);
             this.panelTitulo.Controls.Add(this.btnCerrarForm);
@@ -572,6 +574,20 @@ namespace CapaVistas
             this.panelChildFrm.Name = "panelChildFrm";
             this.panelChildFrm.Size = new System.Drawing.Size(1063, 700);
             this.panelChildFrm.TabIndex = 4;
+            // 
+            // btnRoles
+            // 
+            this.btnRoles.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnRoles.FlatAppearance.BorderSize = 2;
+            this.btnRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRoles.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRoles.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnRoles.Location = new System.Drawing.Point(653, 5);
+            this.btnRoles.Name = "btnRoles";
+            this.btnRoles.Size = new System.Drawing.Size(104, 49);
+            this.btnRoles.TabIndex = 31;
+            this.btnRoles.Text = "Administrar Roles";
+            this.btnRoles.UseVisualStyleBackColor = true;
             // 
             // frmMenu
             // 
@@ -647,5 +663,6 @@ namespace CapaVistas
         private PictureBox pictureBox1;
         private Panel panelChildFrm;
         private Label lblUserLog;
+        private Button btnRoles;
     }
 }

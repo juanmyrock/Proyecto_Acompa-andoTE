@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SistemaDTO\cls_EmpleadoDTO.cs" />
     <Compile Include="SistemaDTO\cls_PacienteDTO.cs" />
+    <Compile Include="SistemaDTO\cls_UsuarioGestionDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

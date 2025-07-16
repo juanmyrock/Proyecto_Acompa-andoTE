@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CapaDatos; // Necesitamos acceso a las clases Q
+using CapaDatos;
 using CapaDTO;
 using CapaUtilidades;
 
@@ -26,7 +26,6 @@ namespace CapaLogica.Login
         }
 
         // Valida una contraseña contra las políticas de seguridad actuales.
-        // <returns>Una lista de mensajes de error. Si la lista está vacía, la contraseña es válida.</returns>
         public List<string> ValidarComplejidad(string contraseña, cls_ParamContraseñaDTO politica)
         {
             var errores = new List<string>();
@@ -87,20 +86,28 @@ namespace CapaLogica.Login
 
         public void GenerarYEnviarContraseñaTemporal(int idUsuario, string emailDestino, string nombreUsuario)
         {
-            // 1. Generar una contraseña aleatoria simple.
-            string contraseñaTemporal = new Random().Next(10000000, 99999999).ToString(); // Contraseña de 8 dígitos
+            // 1. Generar una contraseña aleatoria.
+            string contraseñaTemporal = new Random().Next(1000000, 9999999).ToString();
 
             // 2. Hashear la contraseña temporal.
             string hashTemporal = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);
 
-            // 3. Actualizar la contraseña activa en la BD con el nuevo hash.
-            // Esto NO añade al historial, solo reemplaza la activa.
-            _contraseñasDatos.ActualizarContraseñaActiva(idUsuario, hashTemporal);
+            // 3. Desactivar la contraseña activa anterior del usuario.
+            _contraseñasDatos.DesactivarContraseñasAnteriores(idUsuario);
 
-            // 4. Marcar al usuario para que deba cambiar la contraseña.
+            // 4. Insertar la nueva contraseña temporal como un NUEVO registro activo.
+            _contraseñasDatos.InsertarNuevaContraseña(new cls_ContraseñaDTO
+            {
+                IdUsuario = idUsuario,
+                HashContraseña = hashTemporal,
+                EsActiva = true,
+                FechaExpiracion = null // Las contraseñas temporales no expiran.
+            });
+
+            // 5. Marcar al usuario para que deba cambiar la contraseña en el próximo login.
             _userDatos.MarcarContraseñaComoRandom(idUsuario);
 
-            // 5. Enviar el correo electrónico con la contraseña en texto plano.
+            // 6. Enviar el correo electrónico.
             var servicioEmail = new cls_ServicioEmail();
             servicioEmail.EnviarContraseñaTemporal(emailDestino, nombreUsuario, contraseñaTemporal);
         }

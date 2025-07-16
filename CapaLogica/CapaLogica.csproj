@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ABM\cls_Empleados.cs" />
-    <Compile Include="ABM\cls_Usuarios.cs" />
+    <Compile Include="ABM\cls_LogicaGestionarUsuarios.cs" />
     <Compile Include="Login\cls_LogicaContraseña.cs" />
     <Compile Include="LlenarCombos\cls_LocalidadLogica.cs" />
     <Compile Include="LlenarCombos\cls_SexoLogica.cs" />

@@ -482,5 +482,34 @@ namespace CapaVistas.Forms_Menu
         {
             CargarEmpleadosEnDataGridView();
         }
+
+        private void btnGestionarUser_Click(object sender, EventArgs e)
+        {
+            // 1. Verificamos que haya un empleado seleccionado en la grilla
+            if (dgvVerUser.CurrentRow == null)
+            {
+                MessageBox.Show("Por favor, seleccione un empleado de la lista.", "Selección Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Obtenemos el ID del empleado seleccionado
+            // Tu variable _idEmpleadoSeleccionado ya se carga en el evento RowEnter, ¡perfecto!
+            if (_idEmpleadoSeleccionado == -1)
+            {
+                MessageBox.Show("No se pudo obtener el ID del empleado seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 3. Abrimos el formulario de gestión de usuario, pasándole el ID.
+            // Usamos ShowDialog() para que el formulario padre espere hasta que el hijo se cierre.
+            using (var formGestion = new frmGestionarUsuario(_idEmpleadoSeleccionado))
+            {
+                formGestion.ShowDialog();
+            }
+
+            // 4. (Opcional pero recomendado) Recargamos la grilla principal por si
+            // el estado del usuario cambió (ej: de Activo a Bloqueado).
+            CargarEmpleadosEnDataGridView();
+        }
     }   
 }
