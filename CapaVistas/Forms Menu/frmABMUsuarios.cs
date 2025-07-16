@@ -69,7 +69,7 @@ namespace CapaVistas.Forms_Menu
         {
             CargarEmpleadosEnDataGridView(); // Se llama al cargar el formulario
             CargarCombos();
-            cls_LlenarCombos.Cargar(cmbLocalidad, )
+            //cls_LlenarCombos.Cargar(cmbLocalidad, );
 
         }
 
