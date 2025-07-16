@@ -9,8 +9,7 @@ namespace CapaDatos
                                                   //solo puede ser establecido adentro del constructor de la clase en este caso.
         public cls_ConexionBD()
         {
-            conexion = @"Server=SEBASTIANGONFLO; Database=ProyectoAT; User Id=SEBASTIANGONFLO\sebas; Integrated Security=True;"; // Si no usamos Integrated Security (por defecto de Windows)
-                                                                                                                                // y sí autenticación SQL, hay que incluir Password.
+            conexion = @"Server=NTBK014\SQLEXPRESS; Database=ProyectoAT; User Id=NTBK014\Usuario; Integrated Security=True;"; // Si no usamos Integrated Security (por defecto de Windows)                                                                                                                                // y sí autenticación SQL, hay que incluir Password.
         }
 
         protected SqlConnection GetConexion()  //Property que devuelve la conexion

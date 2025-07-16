@@ -18,7 +18,6 @@ namespace CapaVistas
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
         #region MoverVentana  | Métodos para poder mover la ventana |
@@ -33,8 +32,6 @@ namespace CapaVistas
         }
         private void panelBarraClose_MouseDown(object sender, MouseEventArgs e)
         {
-            btnMinimize.Visible = false;
-            btnMaximize.Visible = true;
             MoverForm();
         }
         #endregion
@@ -72,8 +69,8 @@ namespace CapaVistas
         private void btnMinimize_Click(object sender, EventArgs e) //para minimizar a modo ventana
         {
             this.WindowState = FormWindowState.Normal;
-            btnMinimize.Visible = false;
-            btnMaximize.Visible = true;
+            //btnMinimize.Visible = false;
+            //btnMaximize.Visible = true;
         }
 
         private void btnOcultar_Click(object sender, EventArgs e) //para ocultar/minimizar la aplicación
@@ -84,8 +81,8 @@ namespace CapaVistas
         private void btnMaximize_Click(object sender, EventArgs e) //para maximizar la ventana a pantalla completa
         {
             this.WindowState = FormWindowState.Maximized;
-            btnMinimize.Visible = true;
-            btnMaximize.Visible = false;
+            //btnMinimize.Visible = true;
+            //btnMaximize.Visible = false;
         }
         #endregion
 

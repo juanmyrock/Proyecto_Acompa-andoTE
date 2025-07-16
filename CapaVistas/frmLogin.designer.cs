@@ -36,7 +36,6 @@
             this.lblForgotPass = new System.Windows.Forms.LinkLabel();
             this.lblErrorMsg = new System.Windows.Forms.Label();
             this.panelLogin = new System.Windows.Forms.Panel();
-            this.buttonGenerarHash = new System.Windows.Forms.Button();
             this.picHidePass = new System.Windows.Forms.PictureBox();
             this.picShowPass = new System.Windows.Forms.PictureBox();
             this.btnCerrarLogin = new System.Windows.Forms.PictureBox();
@@ -142,7 +141,6 @@
             // panelLogin
             // 
             this.panelLogin.BackColor = System.Drawing.Color.Teal;
-            this.panelLogin.Controls.Add(this.buttonGenerarHash);
             this.panelLogin.Controls.Add(this.picHidePass);
             this.panelLogin.Controls.Add(this.picShowPass);
             this.panelLogin.Controls.Add(this.btnCerrarLogin);

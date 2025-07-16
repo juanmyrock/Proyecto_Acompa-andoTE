@@ -42,11 +42,9 @@ namespace CapaVistas
             this.panelBarraClose = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTittle2 = new System.Windows.Forms.Label();
-            this.btnMaximize = new System.Windows.Forms.PictureBox();
             this.lblTittle = new System.Windows.Forms.Label();
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             this.btnOcultar = new System.Windows.Forms.PictureBox();
-            this.btnMinimize = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -78,10 +76,8 @@ namespace CapaVistas
             this.panelChildFrm = new System.Windows.Forms.Panel();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).BeginInit();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -101,11 +97,9 @@ namespace CapaVistas
             this.panelBarraClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelBarraClose.Controls.Add(this.pictureBox1);
             this.panelBarraClose.Controls.Add(this.lblTittle2);
-            this.panelBarraClose.Controls.Add(this.btnMaximize);
             this.panelBarraClose.Controls.Add(this.lblTittle);
             this.panelBarraClose.Controls.Add(this.btnCerrar);
             this.panelBarraClose.Controls.Add(this.btnOcultar);
-            this.panelBarraClose.Controls.Add(this.btnMinimize);
             this.panelBarraClose.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.panelBarraClose.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelBarraClose.ForeColor = System.Drawing.SystemColors.MenuHighlight;
@@ -118,13 +112,13 @@ namespace CapaVistas
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, -3);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(39, 42);
+            this.pictureBox1.Size = new System.Drawing.Size(39, 35);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
@@ -135,25 +129,11 @@ namespace CapaVistas
             this.lblTittle2.BackColor = System.Drawing.Color.Transparent;
             this.lblTittle2.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTittle2.ForeColor = System.Drawing.Color.DarkCyan;
-            this.lblTittle2.Location = new System.Drawing.Point(671, 2);
+            this.lblTittle2.Location = new System.Drawing.Point(671, 1);
             this.lblTittle2.Name = "lblTittle2";
             this.lblTittle2.Size = new System.Drawing.Size(35, 33);
             this.lblTittle2.TabIndex = 7;
             this.lblTittle2.Text = "TE";
-            // 
-            // btnMaximize
-            // 
-            this.btnMaximize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMaximize.Image = ((System.Drawing.Image)(resources.GetObject("btnMaximize.Image")));
-            this.btnMaximize.Location = new System.Drawing.Point(1215, 4);
-            this.btnMaximize.Margin = new System.Windows.Forms.Padding(2);
-            this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(25, 25);
-            this.btnMaximize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMaximize.TabIndex = 3;
-            this.btnMaximize.TabStop = false;
-            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
             // 
             // lblTittle
             // 
@@ -161,7 +141,7 @@ namespace CapaVistas
             this.lblTittle.BackColor = System.Drawing.Color.Transparent;
             this.lblTittle.Font = new System.Drawing.Font("Bahnschrift Condensed", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTittle.ForeColor = System.Drawing.Color.SteelBlue;
-            this.lblTittle.Location = new System.Drawing.Point(540, 2);
+            this.lblTittle.Location = new System.Drawing.Point(540, 1);
             this.lblTittle.Name = "lblTittle";
             this.lblTittle.Size = new System.Drawing.Size(140, 33);
             this.lblTittle.TabIndex = 6;
@@ -186,7 +166,7 @@ namespace CapaVistas
             this.btnOcultar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOcultar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnOcultar.Image = ((System.Drawing.Image)(resources.GetObject("btnOcultar.Image")));
-            this.btnOcultar.Location = new System.Drawing.Point(1186, 4);
+            this.btnOcultar.Location = new System.Drawing.Point(1211, 4);
             this.btnOcultar.Margin = new System.Windows.Forms.Padding(2);
             this.btnOcultar.Name = "btnOcultar";
             this.btnOcultar.Size = new System.Drawing.Size(25, 25);
@@ -194,20 +174,6 @@ namespace CapaVistas
             this.btnOcultar.TabIndex = 2;
             this.btnOcultar.TabStop = false;
             this.btnOcultar.Click += new System.EventHandler(this.btnOcultar_Click);
-            // 
-            // btnMinimize
-            // 
-            this.btnMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMinimize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMinimize.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimize.Image")));
-            this.btnMinimize.Location = new System.Drawing.Point(1215, 4);
-            this.btnMinimize.Margin = new System.Windows.Forms.Padding(2);
-            this.btnMinimize.Name = "btnMinimize";
-            this.btnMinimize.Size = new System.Drawing.Size(25, 25);
-            this.btnMinimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnMinimize.TabIndex = 1;
-            this.btnMinimize.TabStop = false;
-            this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
             // panelMenu
             // 
@@ -633,10 +599,8 @@ namespace CapaVistas
             this.panelBarraClose.ResumeLayout(false);
             this.panelBarraClose.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMaximize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnMinimize)).EndInit();
             this.panelMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -657,9 +621,7 @@ namespace CapaVistas
         #endregion
 
         private Panel panelBarraClose;
-        private PictureBox btnMaximize;
         private PictureBox btnOcultar;
-        private PictureBox btnMinimize;
         private PictureBox btnCerrar;
         private Panel panelMenu;
         private PictureBox picReportes;
