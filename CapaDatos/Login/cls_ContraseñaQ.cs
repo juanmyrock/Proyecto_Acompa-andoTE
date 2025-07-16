@@ -96,9 +96,8 @@ namespace CapaDatos
         // No añade un nuevo registro al historial.
         public void ActualizarContraseñaActiva(int idUsuario, string nuevoHash)
         {
-            string sql = @"UPDATE Contraseñas 
-                   SET hash_contraseña = @nuevoHash, fecha_creacion = GETDATE()
-                   WHERE id_usuario = @idUsuario AND es_activa = 1";
+            string sql = @"INSERT INTO Contraseñas (id_usuario, hash_contraseña, fecha_expiracion, es_activa)
+                           VALUES (@idUsuario, @nuevoHash, @expiracion, @activa)";
 
             var parametros = new List<SqlParameter>
             {

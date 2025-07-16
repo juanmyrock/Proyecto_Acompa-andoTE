@@ -64,9 +64,19 @@
     <Compile Include="Forms Login\frmValidarUser.designer.cs">
       <DependentUpon>frmValidarUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms Menu\frmEmpleados.cs">
+    <Compile Include="Forms Menu\frmABMUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms Menu\frmABMUsuarios.Designer.cs">
+      <DependentUpon>frmABMUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdminSyst.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
+      <DependentUpon>frmAdminSyst.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmEmpleados.cs" />
     <Compile Include="Forms Menu\frmEmpleados.designer.cs">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
     </Compile>
@@ -99,6 +109,12 @@
     <EmbeddedResource Include="Forms Login\frmValidarUser.resx">
       <DependentUpon>frmValidarUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmABMUsuarios.resx">
+      <DependentUpon>frmABMUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
+      <DependentUpon>frmAdminSyst.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmEmpleados.resx">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +135,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -150,6 +167,24 @@
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
       <Name>CapaSesion</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AcompanandoTe_sin_texto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pacientes.jpg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendario1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AcompanandoTe.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

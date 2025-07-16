@@ -1,18 +1,23 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+using CapaDTO;
+using CapaLogica.Login;
+using CapaVistas.Forms_Menu;
 
 namespace CapaVistas
 {
     public partial class frmMenu : Form
     {
         private Form activeForm = null;
+        
 
         public frmMenu()
         {
             InitializeComponent();
-            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         #region MoverVentana  | Métodos para poder mover la ventana |
@@ -27,8 +32,6 @@ namespace CapaVistas
         }
         private void panelBarraClose_MouseDown(object sender, MouseEventArgs e)
         {
-            btnMinimize.Visible = false;
-            btnMaximize.Visible = true;
             MoverForm();
         }
         #endregion
@@ -36,17 +39,38 @@ namespace CapaVistas
         #region Botones de la Barra
         private void btnCerrar_Click(object sender, EventArgs e) //para cerrar la aplicación
         {
-            if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            var confirmacion = MessageBox.Show(
+                "¿Está seguro que desea salir?", "¡Alerta!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
             {
-                Application.Exit();
+                try
+                {
+                    // 1. Instanciar la capa de lógica
+                    var logicaLogin = new CapaLogica.cls_LogicaLogin();
+
+                    // 2. Llamar al método que cierra la sesión en la BD y en el Singleton
+                    logicaLogin.CerrarSesion();
+
+                    // 
+                    // 2. Application.Exit() cierra la instancia actual.
+                    // Es la forma más segura de garantizar que no queden datos en memoria.
+                    Application.Exit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocurrió un error al intentar cerrar la sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         
         private void btnMinimize_Click(object sender, EventArgs e) //para minimizar a modo ventana
         {
             this.WindowState = FormWindowState.Normal;
-            btnMinimize.Visible = false;
-            btnMaximize.Visible = true;
+            //btnMinimize.Visible = false;
+            //btnMaximize.Visible = true;
         }
 
         private void btnOcultar_Click(object sender, EventArgs e) //para ocultar/minimizar la aplicación
@@ -57,26 +81,12 @@ namespace CapaVistas
         private void btnMaximize_Click(object sender, EventArgs e) //para maximizar la ventana a pantalla completa
         {
             this.WindowState = FormWindowState.Maximized;
-            btnMinimize.Visible = true;
-            btnMaximize.Visible = false;
+            //btnMinimize.Visible = true;
+            //btnMaximize.Visible = false;
         }
         #endregion
 
         #region Config y Estilos Botones Menú
-        //private void btnSlide_Click(object sender, EventArgs e) //para minimizar el panel de menú y acomodar los íconos
-        //{
-        //    if (panelMenu.Width == 240)
-        //    {
-        //        panelMenu.Width = 72;
-        //        picLogOut.Location = new Point(12, 146);
-
-        //    }
-        //    else
-        //    {
-        //        panelMenu.Width = 240;
-        //        picLogOut.Location = new Point(195, 196);
-        //    }
-        //}
 
         private void btnLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
         {
@@ -107,19 +117,6 @@ namespace CapaVistas
                     MessageBox.Show("Ocurrió un error al intentar cerrar la sesión: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-        private void btnConfigSist_MouseHover(object sender, EventArgs e)
-        {
-            btnConfigSist.Width = 65;
-            btnConfigSist.Height = 65;
-            btnConfigSist.Location = new Point(181, 704);
-        }
-
-        private void btnConfigSist_MouseLeave(object sender, EventArgs e)
-        {
-            btnConfigSist.Width = 45;
-            btnConfigSist.Height = 45;
-            btnConfigSist.Location = new Point(190, 715);
         }
         #endregion
 
@@ -155,18 +152,35 @@ namespace CapaVistas
 
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CapaVistas.Form_Menu.frmEmpleados(), sender);
+            //OpenChildForm(new CapaVistas.Form_Menu.frmEmpleados(), sender);
         }
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CapaVistas.Form_Menu.frmUsuarios(), sender);
+            OpenChildForm(new CapaVistas.Forms_Menu.frmABMUsuarios(), sender);
         }
+
 
 
 
         #endregion
 
-
+        private void btnAdministrar_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    cls_ParamContraseñaDTO parametrosContra = new cls_ParamContraseñaDTO();
+            //    parametrosContra.CantidadPreguntasSeguridad = 
+            //    cls_ParamContraseñaDTO TraerDatos()
+            //    {
+                    
+            //    }
+            //}
+            //catch 
+            //{
+            
+            //}
+            OpenChildForm(new CapaVistas.Forms_Menu.frmAdminSyst(), sender);
+        }
     }
 
 

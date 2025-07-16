@@ -11,5 +11,6 @@
         public int? CantidadPreguntasSeguridad { get; set; }
         public int? DiasValidezPassword { get; set; }
         public int? Cantidad_Intentos { get; set; }
+        public int? Contras_Anteriores { get; set; }
     }
 }

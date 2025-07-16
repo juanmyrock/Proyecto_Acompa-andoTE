@@ -29,52 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
-            this.picLogin = new System.Windows.Forms.PictureBox();
-            this.btnCerrarLogin = new System.Windows.Forms.PictureBox();
             this.lblLogin = new System.Windows.Forms.Label();
             this.txtUsers = new System.Windows.Forms.TextBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.btnAcceder = new System.Windows.Forms.Button();
             this.lblForgotPass = new System.Windows.Forms.LinkLabel();
             this.lblErrorMsg = new System.Windows.Forms.Label();
-            this.picError = new System.Windows.Forms.PictureBox();
             this.panelLogin = new System.Windows.Forms.Panel();
             this.picHidePass = new System.Windows.Forms.PictureBox();
             this.picShowPass = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarLogin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picError)).BeginInit();
+            this.btnCerrarLogin = new System.Windows.Forms.PictureBox();
+            this.picError = new System.Windows.Forms.PictureBox();
+            this.picLogin = new System.Windows.Forms.PictureBox();
             this.panelLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picHidePass)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picShowPass)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarLogin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
-            // 
-            // picLogin
-            // 
-            this.picLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.picLogin.Dock = System.Windows.Forms.DockStyle.Left;
-            this.picLogin.Image = ((System.Drawing.Image)(resources.GetObject("picLogin.Image")));
-            this.picLogin.Location = new System.Drawing.Point(0, 0);
-            this.picLogin.Name = "picLogin";
-            this.picLogin.Size = new System.Drawing.Size(368, 350);
-            this.picLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLogin.TabIndex = 0;
-            this.picLogin.TabStop = false;
-            this.picLogin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoxLogin_MouseDown);
-            // 
-            // btnCerrarLogin
-            // 
-            this.btnCerrarLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCerrarLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCerrarLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarLogin.Image")));
-            this.btnCerrarLogin.Location = new System.Drawing.Point(366, 11);
-            this.btnCerrarLogin.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCerrarLogin.Name = "btnCerrarLogin";
-            this.btnCerrarLogin.Size = new System.Drawing.Size(35, 35);
-            this.btnCerrarLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCerrarLogin.TabIndex = 7;
-            this.btnCerrarLogin.TabStop = false;
-            this.btnCerrarLogin.Click += new System.EventHandler(this.btnCerrarLogin_Click);
             // 
             // lblLogin
             // 
@@ -90,7 +63,7 @@
             // 
             // txtUsers
             // 
-            this.txtUsers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtUsers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtUsers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUsers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txtUsers.Font = new System.Drawing.Font("Century Gothic", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -105,7 +78,7 @@
             // 
             // txtPass
             // 
-            this.txtPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.txtPass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txtPass.Font = new System.Drawing.Font("Century Gothic", 11.78182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -121,7 +94,7 @@
             // btnAcceder
             // 
             this.btnAcceder.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAcceder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnAcceder.BackColor = System.Drawing.Color.Navy;
             this.btnAcceder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAcceder.FlatAppearance.BorderSize = 0;
             this.btnAcceder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -143,13 +116,13 @@
             this.lblForgotPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblForgotPass.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblForgotPass.ForeColor = System.Drawing.Color.White;
-            this.lblForgotPass.LinkColor = System.Drawing.Color.DarkGray;
-            this.lblForgotPass.Location = new System.Drawing.Point(137, 313);
+            this.lblForgotPass.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.lblForgotPass.Location = new System.Drawing.Point(126, 322);
             this.lblForgotPass.Name = "lblForgotPass";
-            this.lblForgotPass.Size = new System.Drawing.Size(118, 19);
+            this.lblForgotPass.Size = new System.Drawing.Size(163, 19);
             this.lblForgotPass.TabIndex = 1;
             this.lblForgotPass.TabStop = true;
-            this.lblForgotPass.Text = "Forgot Password?";
+            this.lblForgotPass.Text = "¿Olvidaste la contraseña?";
             this.lblForgotPass.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblForgotPass_LinkClicked);
             // 
             // lblErrorMsg
@@ -165,20 +138,9 @@
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
             // 
-            // picError
-            // 
-            this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
-            this.picError.Location = new System.Drawing.Point(5, 189);
-            this.picError.Name = "picError";
-            this.picError.Size = new System.Drawing.Size(24, 27);
-            this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picError.TabIndex = 11;
-            this.picError.TabStop = false;
-            this.picError.Visible = false;
-            // 
             // panelLogin
             // 
-            this.panelLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(118)))));
+            this.panelLogin.BackColor = System.Drawing.Color.Teal;
             this.panelLogin.Controls.Add(this.picHidePass);
             this.panelLogin.Controls.Add(this.picShowPass);
             this.panelLogin.Controls.Add(this.btnCerrarLogin);
@@ -220,6 +182,44 @@
             this.picShowPass.TabStop = false;
             this.picShowPass.Click += new System.EventHandler(this.picShowPass_Click);
             // 
+            // btnCerrarLogin
+            // 
+            this.btnCerrarLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrarLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarLogin.Image")));
+            this.btnCerrarLogin.Location = new System.Drawing.Point(366, 11);
+            this.btnCerrarLogin.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCerrarLogin.Name = "btnCerrarLogin";
+            this.btnCerrarLogin.Size = new System.Drawing.Size(35, 35);
+            this.btnCerrarLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCerrarLogin.TabIndex = 7;
+            this.btnCerrarLogin.TabStop = false;
+            this.btnCerrarLogin.Click += new System.EventHandler(this.btnCerrarLogin_Click);
+            // 
+            // picError
+            // 
+            this.picError.Image = ((System.Drawing.Image)(resources.GetObject("picError.Image")));
+            this.picError.Location = new System.Drawing.Point(5, 189);
+            this.picError.Name = "picError";
+            this.picError.Size = new System.Drawing.Size(24, 27);
+            this.picError.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picError.TabIndex = 11;
+            this.picError.TabStop = false;
+            this.picError.Visible = false;
+            // 
+            // picLogin
+            // 
+            this.picLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.picLogin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picLogin.Image = ((System.Drawing.Image)(resources.GetObject("picLogin.Image")));
+            this.picLogin.Location = new System.Drawing.Point(0, 0);
+            this.picLogin.Name = "picLogin";
+            this.picLogin.Size = new System.Drawing.Size(368, 350);
+            this.picLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogin.TabIndex = 0;
+            this.picLogin.TabStop = false;
+            this.picLogin.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoxLogin_MouseDown);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -234,13 +234,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ejemplo ADO.Net en N-Capas";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_Login_MouseDown);
-            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarLogin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picError)).EndInit();
             this.panelLogin.ResumeLayout(false);
             this.panelLogin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picHidePass)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picShowPass)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarLogin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
             this.ResumeLayout(false);
 
         }

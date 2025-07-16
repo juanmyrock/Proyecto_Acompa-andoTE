@@ -26,7 +26,6 @@ namespace CapaVistas.Forms_Login
 
             try
             {
-                // --- CAMBIO CLAVE: Usamos la nueva clase de lógica de contraseñas ---
                 var logicaContraseña = new cls_LogicaContraseña();
 
                 // Este método ahora contiene toda la validación (complejidad, historial)
