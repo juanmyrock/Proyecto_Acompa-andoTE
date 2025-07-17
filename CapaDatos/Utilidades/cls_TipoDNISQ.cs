@@ -15,7 +15,7 @@ namespace CapaDatos
 
         public DataTable ObtenerTiposDNI()
         {
-            string query = "SELECT id_tipo_dni, descripcion FROM Tipos_Dni"; // *** Ajusta "TiposDNI" y los nombres de las columnas a tu DB ***
+            string query = "SELECT id_tipo_dni, descripcion FROM Tipos_Dni";
             try
             {
                 return _ejecutor.ConsultaRead(query);
@@ -23,7 +23,6 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en cls_TipoDNISQ al obtener tipos de DNI: {ex.Message}");
-                // MessageBox.Show($"Error en CapaDatos (TiposDNI): {ex.Message}", "Error DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable();
             }
         }

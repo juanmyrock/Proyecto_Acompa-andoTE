@@ -15,7 +15,7 @@ namespace CapaDatos
 
         public DataTable ObtenerLocalidades()
         {
-            string query = "SELECT id_localidad, localidad FROM Localidades ORDER BY localidad ASC"; // *** Ajusta "Localidades" y los nombres de las columnas a tu DB ***
+            string query = "SELECT id_localidad, localidad FROM Localidades ORDER BY localidad ASC"; 
             try
             {
                 return _ejecutor.ConsultaRead(query);
@@ -23,7 +23,6 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en cls_LocalidadQ al obtener localidades: {ex.Message}");
-                // MessageBox.Show($"Error en CapaDatos (Localidades): {ex.Message}", "Error DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable();
             }
         }

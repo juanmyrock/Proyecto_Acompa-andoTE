@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using CapaDatos; // Necesario para cls_LocalidadQ
-using CapaDTO.SistemaDTO; // Necesario para cls_LocalidadDTO
+using CapaDatos;
+using CapaDTO.SistemaDTO;
 
 namespace CapaLogica.SistemaLogica
 {
@@ -27,14 +27,13 @@ namespace CapaLogica.SistemaLogica
                     listaLocalidades.Add(new cls_LocalidadDTO
                     {
                         id_localidad = Convert.ToInt32(row["id_localidad"]),
-                        nombre_localidad = row["localidad"].ToString() // *** Ajusta este nombre de columna ***
+                        nombre_localidad = row["localidad"].ToString()
                     });
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la lógica al mapear localidades: {ex.Message}");
-                // MessageBox.Show("Error en la lógica al cargar localidades: " + ex.Message, "Error Lógica", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new List<cls_LocalidadDTO>();
             }
             return listaLocalidades;

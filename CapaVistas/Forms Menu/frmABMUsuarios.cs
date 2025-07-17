@@ -1,11 +1,10 @@
-﻿// CapaVistas/Forms_Menu/frmABMUsuarios.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CapaDTO.SistemaDTO;
 using CapaLogica;
 using CapaLogica.SistemaLogica;
-using CapaUtilidades; // Si utilizas alguna utilidad aquí
+using CapaUtilidades;
 
 
 namespace CapaVistas.Forms_Menu
@@ -16,7 +15,7 @@ namespace CapaVistas.Forms_Menu
         private cls_TipoDNILogica _logicaTipoDNI;
         private cls_LocalidadLogica _logicaLocalidad;
         private cls_SexoLogica _logicaSexo;
-        private int _idEmpleadoSeleccionado = -1; // Variable para guardar el ID del empleado seleccionado
+        private int _idEmpleadoSeleccionado = -1;
         public frmABMUsuarios()
         {
             InitializeComponent();
@@ -32,8 +31,8 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                List<cls_EmpleadoDTO> listaEmpleados = _logicaEmpleado.ObtenerEmpleados(); // Obtiene la lista.
-                dgvVerUser.DataSource = listaEmpleados; // Asigna al DataGridView.
+                List<cls_EmpleadoDTO> listaEmpleados = _logicaEmpleado.ObtenerEmpleados();
+                dgvVerUser.DataSource = listaEmpleados;
 
                 dgvVerUser.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dgvVerUser.ReadOnly = true;
@@ -55,8 +54,8 @@ namespace CapaVistas.Forms_Menu
             {
                 List<cls_TipoDNIDTO> tiposDni = _logicaTipoDNI.ObtenerTiposDNI();
                 cmbTipoDNI.DataSource = tiposDni;
-                cmbTipoDNI.DisplayMember = "descripcion"; // propiedad del DTO que se muestra en el ComboBox
-                cmbTipoDNI.ValueMember = "id_tipo_dni";   // propiedad del DTO que va a ser el valor real
+                cmbTipoDNI.DisplayMember = "descripcion"; 
+                cmbTipoDNI.ValueMember = "id_tipo_dni";  
 
                 List<cls_LocalidadDTO> localidades = _logicaLocalidad.ObtenerLocalidades();
                 cmbLocalidad.DataSource = localidades;
@@ -103,8 +102,6 @@ namespace CapaVistas.Forms_Menu
                     cmbSexo.SelectedValue = empleadoSeleccionado.id_sexo;
                     txtPuesto.Text = empleadoSeleccionado.puesto;
                     txtCargaHS.Text = empleadoSeleccionado.carga_hs.ToString();
-                    // DateTimePicker
-                    // Verifica si la fecha está dentro del rango permitido del DateTimePicker
                     if (empleadoSeleccionado.fecha_nac >= dateNacimiento.MinDate &&
                         empleadoSeleccionado.fecha_nac <= dateNacimiento.MaxDate)
                     {
@@ -112,7 +109,6 @@ namespace CapaVistas.Forms_Menu
                     }
                     else
                     {
-                        // Si la fecha está fuera de rango, asigna una fecha válida, por ejemplo, la fecha actual
                         dateNacimiento.Value = DateTime.Now;
                         MessageBox.Show("La fecha de nacimiento del empleado está fuera del rango permitido y se ha establecido a la fecha actual.", "Advertencia de Fecha", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
@@ -168,7 +164,7 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // Validaciones de formato (ej. DNI, NumCalle, CargaHs deben ser números)
+
             if (!int.TryParse(txtDNI.Text, out int dni) || dni <= 0)
             {
                 MessageBox.Show("El DNI debe ser un número válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -493,7 +489,6 @@ namespace CapaVistas.Forms_Menu
             }
 
             // 2. Obtenemos el ID del empleado seleccionado
-            // Tu variable _idEmpleadoSeleccionado ya se carga en el evento RowEnter, ¡perfecto!
             if (_idEmpleadoSeleccionado == -1)
             {
                 MessageBox.Show("No se pudo obtener el ID del empleado seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -501,14 +496,11 @@ namespace CapaVistas.Forms_Menu
             }
 
             // 3. Abrimos el formulario de gestión de usuario, pasándole el ID.
-            // Usamos ShowDialog() para que el formulario padre espere hasta que el hijo se cierre.
             using (var formGestion = new frmGestionarUsuario(_idEmpleadoSeleccionado))
             {
                 formGestion.ShowDialog();
             }
 
-            // 4. (Opcional pero recomendado) Recargamos la grilla principal por si
-            // el estado del usuario cambió (ej: de Activo a Bloqueado).
             CargarEmpleadosEnDataGridView();
         }
     }   

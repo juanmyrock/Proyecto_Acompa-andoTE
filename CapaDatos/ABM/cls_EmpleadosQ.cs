@@ -46,7 +46,7 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al insertar empleado en cls_EmpleadosQ: {ex.Message}");
-                throw; // *** CAMBIO CLAVE: Re-lanza la excepción para que llegue a la capa lógica y luego a la UI ***
+                throw;
             }
         }
 
@@ -93,8 +93,8 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
-                return true; // Asumimos éxito si no hay excepción
+                _ejecutor.ConsultaWrite(query, parametros); 
+                return true; 
             }
             catch (Exception ex)
             {
@@ -113,8 +113,8 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
-                return true; // Asumimos éxito si no hay excepción
+                _ejecutor.ConsultaWrite(query, parametros); 
+                return true;
             }
             catch (Exception ex)
             {

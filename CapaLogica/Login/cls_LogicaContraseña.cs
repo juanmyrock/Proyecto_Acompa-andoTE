@@ -13,13 +13,11 @@ namespace CapaLogica.Login
         private readonly cls_ParamContraseñaQ _paramDatos = new cls_ParamContraseñaQ();
         private readonly cls_ConectarUserQ _userDatos = new cls_ConectarUserQ();
 
-        // Obtiene las políticas de contraseña actuales desde la base de datos.
         public cls_ParamContraseñaDTO ObtenerPoliticaContraseña()
         {
             var politica = _paramDatos.ObtenerParametro();
             if (politica == null)
             {
-                // Si no hay políticas en la BD, devuelve un objeto por defecto para no romper la aplicación.
                 throw new Exception("No se encontró la configuración de políticas de contraseña.");
             }
             return politica;
@@ -44,7 +42,6 @@ namespace CapaLogica.Login
             return errores;
         }
 
-        // Establece una nueva contraseña para un usuario, realizando todas las validaciones.
         public void EstablecerNuevaContraseña(int idUsuario, string nuevaContraseña)
         {
             // 1. Obtener las políticas actuales
@@ -101,7 +98,7 @@ namespace CapaLogica.Login
                 IdUsuario = idUsuario,
                 HashContraseña = hashTemporal,
                 EsActiva = true,
-                FechaExpiracion = null // Las contraseñas temporales no expiran.
+                FechaExpiracion = null
             });
 
             // 5. Marcar al usuario para que deba cambiar la contraseña en el próximo login.

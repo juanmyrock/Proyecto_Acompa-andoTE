@@ -15,7 +15,7 @@ namespace CapaVistas
         public frmLogin()
         {
             InitializeComponent();
-            picShowPass.BringToFront(); //que inicie con el logo para habilitar la contraseña Show (que se vea)
+            picShowPass.BringToFront(); 
         }
 
 
@@ -30,7 +30,7 @@ namespace CapaVistas
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
-        private void Form_Login_MouseDown(object sender, MouseEventArgs e) //Evento al mantener el click izquierdo del mouse y moverlo
+        private void Form_Login_MouseDown(object sender, MouseEventArgs e) 
         {
             MoverForm();
         }
@@ -38,7 +38,7 @@ namespace CapaVistas
         {
             MoverForm();
         }
-        private void picBoxLogin_MouseDown(object sender, MouseEventArgs e) //Evento al mantener el click izquierdo del mouse y moverlo
+        private void picBoxLogin_MouseDown(object sender, MouseEventArgs e)
         {
             MoverForm();
         }
@@ -46,7 +46,7 @@ namespace CapaVistas
 
 
 
-        private void btnCerrarLogin_Click(object sender, EventArgs e) //Evento de cierre al logo de Cerrar
+        private void btnCerrarLogin_Click(object sender, EventArgs e) 
         {
             if (MessageBox.Show("¿Está seguro que desea salir?", "¡Alerta!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -144,17 +144,13 @@ namespace CapaVistas
         }
 
 
-        //private void btnAcceder_Click(object sender, EventArgs e) //para saltear las validaciones del login mientras diseñamos los forms
-        //{
-        //    this.DialogResult = DialogResult.OK;
-        //}
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // abre el form para RECUPERACIÓN DE CONTRASEÑA
             using (var formValidar = new frmValidarUser())
             {
-                // Abrimos el primer paso del flujo de recuperación
+
                 formValidar.ShowDialog();
             }
         }
@@ -194,12 +190,11 @@ namespace CapaVistas
                         try
                         {
                             // 3. SEGUNDO INTENTO: Si el usuario confirma, vuelve a llamar a la lógica,
-                            // pero esta vez forzando el cierre de la sesión anterior.
+                            // y fuerza el ciere de la anterior
                             RealizarIntentoDeLogin(credenciales, true);
                         }
                         catch (Exception exFinal)
                         {
-                            // Maneja cualquier otro error que pudiera ocurrir en el segundo intento.
                             MsgError(exFinal.Message);
                         }
                     }
@@ -228,26 +223,25 @@ namespace CapaVistas
         //  Procesa el resultado de un login exitoso
         private void ProcesarLoginExitoso(ResultadoLoginDTO resultado)
         {
-            if (!resultado.Exitoso) return; // Doble chequeo por seguridad
+            if (!resultado.Exitoso) return; // doble check pa mas security
 
             // Verifica si se requiere alguna configuración inicial
             if (resultado.RequiereConfigurarPreguntas || resultado.RequiereCambioContraseña)
             {
-                this.Hide(); // Ocultamos el login para mostrar los formularios de configuración
+                this.Hide();
                 int idUsuarioLogueado = CapaSesion.Login.SesionUsuario.Instancia.IdUsuario;
 
-                // --- Flujo de Configuración de Preguntas ---
                 if (resultado.RequiereConfigurarPreguntas)
                 {
                     using (var formPreguntas = new Forms_Login.frmPreguntas(idUsuarioLogueado, "CONFIGURAR"))
                     {
-                        // Si el usuario no hace clic en "Aceptar", el resultado no será OK.
+ 
                         if (formPreguntas.ShowDialog() != DialogResult.OK)
                         {
                             MessageBox.Show("La configuración de preguntas es obligatoria.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión en la BD y el Singleton
-                            this.Show(); // Vuelve a mostrar el formulario de login
-                            return; // Detiene el flujo y no continúa al menú
+                            new cls_LogicaLogin().CerrarSesion();
+                            this.Show();
+                            return; 
                         }
                     }
                 }
@@ -257,19 +251,18 @@ namespace CapaVistas
                 {
                     using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
                     {
-                        // Verificamos también el resultado de este diálogo.
                         if (formNuevaPass.ShowDialog() != DialogResult.OK)
                         {
                             MessageBox.Show("El cambio de contraseña es obligatorio. La aplicación se cerrará.", "Proceso Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            new cls_LogicaLogin().CerrarSesion(); // Cierra la sesión
-                            this.Show(); // Vuelve a mostrar el formulario de login
-                            return; // Detiene el flujo
+                            new cls_LogicaLogin().CerrarSesion();
+                            this.Show();
+                            return; 
                         }
                     }
                 }
             }
 
-            // Si llegamos hasta acá, significa que el login fue exitoso y que toda la
+            // si llegamos hasta acá, significa que el login fue exitoso y que toda la
             // configuración requerida se completó correctamente. Le indica a Program.cs que puede continuar al menu.
             this.DialogResult = DialogResult.OK;
             this.Close();

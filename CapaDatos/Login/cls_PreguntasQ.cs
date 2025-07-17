@@ -17,8 +17,6 @@ namespace CapaDatos.Login
 
             var listaPreguntas = new List<cls_PreguntaDTO>();
 
-            // Convertimos cada fila del DataTable en un objeto DTO y lo añadimos a la lista.
-            // Esto desacopla el resto de la aplicación de la estructura de la base de datos.
             foreach (DataRow row in tabla.Rows)
             {
                 listaPreguntas.Add(new cls_PreguntaDTO
@@ -31,7 +29,6 @@ namespace CapaDatos.Login
             return listaPreguntas;
         }
 
-        // Guarda el HASH de una respuesta de seguridad en la base de datos.
         // Este método espera recibir el hash ya procesado desde la capa de lógica.
         public void GuardarRespuestaDeSeguridad(int idUsuario, int idPregunta, string respuestaHash)
         {
@@ -56,15 +53,13 @@ namespace CapaDatos.Login
 
             if (tabla.Rows.Count == 0 || tabla.Rows[0]["cantidad_preguntas_seguridad"] == DBNull.Value)
             {
-                // Si no hay configuración, devolvemos un valor por defecto seguro (ej: 1).
                 return 1;
             }
 
             return Convert.ToInt32(tabla.Rows[0]["cantidad_preguntas_seguridad"]);
         }
 
-        // Elimina todas las respuestas de seguridad existentes para un usuario específico.
-        // Es útil para limpiar antes de guardar una nueva configuración de preguntas.
+
         public void BorrarRespuestasDeUsuario(int idUsuario)
         {
             string sql = "DELETE FROM Respuestas WHERE id_usuario = @idUsuario";
@@ -77,11 +72,6 @@ namespace CapaDatos.Login
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        // Obtiene una pregunta de seguridad al azar para un usuario específico.
-        // <returns>Un objeto cls_PreguntaDTO con los datos, o null si no tiene preguntas.</returns>
-        /// Obtiene TODAS las preguntas de seguridad que un usuario ha configurado.
-        /// </summary>
-        /// <returns>Una lista de DTOs con todas las preguntas del usuario.</returns>
         public List<cls_PreguntaDTO> ObtenerPreguntasConfiguradasPorUsuario(int idUsuario)
         {
             string sql = @"SELECT P.id_pregunta, P.pregunta
@@ -106,7 +96,6 @@ namespace CapaDatos.Login
         }
 
         // Obtiene el hash de la respuesta de seguridad que está guardado en la BD.
-        // <returns>Un string con el hash guardado, o null si no se encuentra.</returns>
         public string ObtenerHashRespuestaGuardada(int idUsuario, int idPregunta)
         {
             string sql = "SELECT respuesta FROM Respuestas WHERE id_usuario = @idUsuario AND id_pregunta = @idPregunta";
@@ -120,7 +109,7 @@ namespace CapaDatos.Login
 
             if (tabla.Rows.Count == 0)
             {
-                return null; // No hay respuesta guardada para esa pregunta.
+                return null;
             }
 
             return tabla.Rows[0]["respuesta"].ToString();

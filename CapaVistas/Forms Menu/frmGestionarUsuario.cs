@@ -76,7 +76,7 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // TODO: Necesitarás crear una cls_LogicaRoles y un método ObtenerTodos()
+                // Tenemos que crear una cls_LogicaRoles y un método ObtenerTodos()
                 // que devuelva una List<cls_RolDTO>.
                 // var roles = new cls_LogicaRoles().ObtenerTodos();
                 // CapaUtilidades.cls_ComboBoxHelper.Cargar(cmbRoles, roles, "NombreRol", "IdRol");

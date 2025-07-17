@@ -10,9 +10,6 @@ namespace CapaDatos.Login
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        /// <summary>
-        /// Verifica si el usuario ya tiene una sesión activa.
-        /// </summary>
         public bool TieneSesionActiva(int usuarioId)
         {
             string sql = @"
@@ -34,9 +31,6 @@ namespace CapaDatos.Login
             return cantidad > 0;
         }
 
-        /// <summary>
-        /// Registra una nueva sesión activa.
-        /// </summary>
         public void RegistrarSesion(cls_SesionActivaDTO sesion)
         {
             string sql = @"
@@ -53,9 +47,7 @@ namespace CapaDatos.Login
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// <summary>
-        /// Elimina la sesión activa del usuario indicado.
-        /// </summary>
+
         public void CerrarSesion(int usuarioId)
         {
             string sql = @"
@@ -70,9 +62,6 @@ namespace CapaDatos.Login
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// <summary>
-        /// Obtiene la sesión activa de un usuario, si existe.
-        /// </summary>
         public cls_SesionActivaDTO ObtenerSesionActiva(int usuarioId)
         {
             string sql = @"

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using CapaLogica; // Usaremos cls_LogicaLogin para validar
+using CapaLogica;
 using CapaDTO;
 
 namespace CapaVistas.Forms_Login

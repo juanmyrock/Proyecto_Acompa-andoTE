@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using CapaDatos; // Necesario para cls_TipoDNISQ
-using CapaDTO.SistemaDTO; // Necesario para cls_TipoDNIDTO
+using CapaDatos;
+using CapaDTO.SistemaDTO;
 
 namespace CapaLogica.SistemaLogica
 {
@@ -34,7 +34,6 @@ namespace CapaLogica.SistemaLogica
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la lógica al mapear tipos de DNI: {ex.Message}");
-                // MessageBox.Show("Error en la lógica al cargar tipos de DNI: " + ex.Message, "Error Lógica", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new List<cls_TipoDNIDTO>();
             }
             return listaTiposDNI;

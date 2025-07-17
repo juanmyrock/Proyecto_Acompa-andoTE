@@ -7,14 +7,13 @@ namespace CapaLogica
     {
         public void EnviarContraseñaTemporal(string emailDestino, string nombreUsuario, string contraseñaTemporal)
         {
-            // --- ¡IMPORTANTE! ---
             // La configuración del servidor SMTP (servidor, puerto, usuario, contraseña)
-            // debe estar en tu archivo App.config, no escrita directamente en el código.
+            // tiene que estar en archivo App.config, no en el codigo
 
             var fromAddress = new MailAddress("no-responder@vincularazul.com", "Sistema VincularAzul");
             var toAddress = new MailAddress(emailDestino);
 
-            // Aquí irían los datos de tu servidor de correo
+            // datos servidor de correo
             string fromPassword = "TuContraseñaDeEmail";
             string subject = "Restablecimiento de Contraseña - VincularAzul";
             string body = $"Hola {nombreUsuario},\n\nSe ha solicitado un restablecimiento de contraseña para su cuenta." +
@@ -25,7 +24,7 @@ namespace CapaLogica
 
             var smtp = new SmtpClient
             {
-                Host = "smtp.tuproveedor.com", // ej: smtp.gmail.com
+                Host = "smtp.tuproveedor.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -39,10 +38,10 @@ namespace CapaLogica
                 Body = body
             })
             {
-                // En un sistema real, descomentarías la siguiente línea.
-                // smtp.Send(message); 
 
-                // Para pruebas, podemos mostrarlo en un MessageBox.
+                //smtp.Send(message); descomentar cuando funque c:
+
+
                 System.Windows.Forms.MessageBox.Show($"Simulando envío de email a: {emailDestino}\n\nContraseña: {contraseñaTemporal}", "Simulador de Email");
             }
         }

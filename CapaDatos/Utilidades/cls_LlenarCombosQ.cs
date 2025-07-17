@@ -48,14 +48,13 @@ namespace CapaDatos.Utilidades
 
             try
             {
-                List<SqlParameter> parametros = new List<SqlParameter>(); // Lista para los parámetros de consulta (si es necesario)
-                return ConsultaRead(sSql, parametros); // Llama al método ConsultaRead de cls_EjecutarQ
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                return ConsultaRead(sSql, parametros); 
             }
             catch (Exception ex)
             {
-                // Manejo de errores específico de esta consulta
                 Console.WriteLine($"Error al cargar ComboBox: {ex.Message}");
-                return null; // Devuelve null en caso de error
+                return null;
             }
         }
     }

@@ -15,7 +15,7 @@ namespace CapaDatos
 
         public DataTable ObtenerSexos()
         {
-            string query = "SELECT id_sexo, descripcion FROM Sexos"; // *** Ajusta "Sexos" y los nombres de las columnas a tu DB ***
+            string query = "SELECT id_sexo, descripcion FROM Sexos";
             try
             {
                 return _ejecutor.ConsultaRead(query);
@@ -23,7 +23,6 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en cls_SexoQ al obtener sexos: {ex.Message}");
-                // MessageBox.Show($"Error en CapaDatos (Sexos): {ex.Message}", "Error DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return new DataTable();
             }
         }

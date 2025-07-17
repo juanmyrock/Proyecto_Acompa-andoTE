@@ -86,6 +86,8 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
+        
+
         /// <summary>
         /// Actualiza el rol de un usuario específico.
         /// </summary>

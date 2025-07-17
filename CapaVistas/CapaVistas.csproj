@@ -70,6 +70,12 @@
     <Compile Include="Forms Menu\frmABMUsuarios.Designer.cs">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmAdministrarRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdministrarRoles.Designer.cs">
+      <DependentUpon>frmAdministrarRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmAdminSyst.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmABMUsuarios.resx">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmAdministrarRoles.resx">
+      <DependentUpon>frmAdministrarRoles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
