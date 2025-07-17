@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using CapaDTO;
 using CapaDTO.SistemaDTO;
-using CapaLogica;
+using CapaLogica.LlenarCombos;
 using CapaLogica.SistemaLogica;
-using CapaUtilidades;
 
 
 namespace CapaVistas.Forms_Menu
@@ -12,17 +12,13 @@ namespace CapaVistas.Forms_Menu
     public partial class frmABMUsuarios : Form
     {
         private cls_Empleado _logicaEmpleado;
-        private cls_TipoDNILogica _logicaTipoDNI;
-        private cls_LocalidadLogica _logicaLocalidad;
-        private cls_SexoLogica _logicaSexo;
         private int _idEmpleadoSeleccionado = -1;
+        private cls_LlenarCombos _rellenador;
         public frmABMUsuarios()
         {
             InitializeComponent();
             _logicaEmpleado = new cls_Empleado();
-            _logicaTipoDNI = new cls_TipoDNILogica();
-            _logicaLocalidad = new cls_LocalidadLogica();
-            _logicaSexo = new cls_SexoLogica();
+            _rellenador = new cls_LlenarCombos();
         }
         
 
@@ -50,22 +46,16 @@ namespace CapaVistas.Forms_Menu
 
         private void CargarCombos()
         {
+            var cargaLocalidades = _rellenador.ObtenerLocalidades();
+            var cargaSexos = _rellenador.ObtenerSexos();
+            var cargaTiposDocumento = _rellenador.ObtenerTiposDocumento();
             try
             {
-                List<cls_TipoDNIDTO> tiposDni = _logicaTipoDNI.ObtenerTiposDNI();
-                cmbTipoDNI.DataSource = tiposDni;
-                cmbTipoDNI.DisplayMember = "descripcion"; 
-                cmbTipoDNI.ValueMember = "id_tipo_dni";  
-
-                List<cls_LocalidadDTO> localidades = _logicaLocalidad.ObtenerLocalidades();
-                cmbLocalidad.DataSource = localidades;
-                cmbLocalidad.DisplayMember = "nombre_localidad"; 
-                cmbLocalidad.ValueMember = "id_localidad";     
-
-                List<cls_SexoDTO> sexos = _logicaSexo.ObtenerSexos();
-                cmbSexo.DataSource = sexos;
-                cmbSexo.DisplayMember = "descripcion"; 
-                cmbSexo.ValueMember = "id_sexo";      
+                
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbTipoDNI, cargaTiposDocumento.TiposDocumento, "descripcion", "id_tipo_documento");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbLocalidad, cargaLocalidades.Localidades, "nombre_localidad", "id_localidad");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbSexo, cargaSexos.Sexos, "descripcion", "id_sexo");
+                    
             }
             catch (Exception ex)
             {
@@ -319,8 +309,8 @@ namespace CapaVistas.Forms_Menu
                     txtPuesto.Text = empleadoSeleccionado.puesto;
                     txtCargaHS.Text = empleadoSeleccionado.carga_hs.ToString();
 
-                    if (cmbTipoDNI.DataSource is List<cls_TipoDNIDTO> tiposDniList &&
-                        tiposDniList.Exists(t => t.id_tipo_dni == empleadoSeleccionado.id_tipo_dni))
+                    if (cmbTipoDNI.DataSource is List<cls_TipoDocumentoDTO> tiposDniList &&
+                        tiposDniList.Exists(t => t.id_tipo_documento == empleadoSeleccionado.id_tipo_dni))
                     {
                         cmbTipoDNI.SelectedValue = empleadoSeleccionado.id_tipo_dni;
                     }

@@ -48,10 +48,6 @@ namespace CapaDatos.ABM
                 Email = row["email"].ToString()
             };
         }
-
-        /// <summary>
-        /// Desbloquea a un usuario, reseteando sus intentos fallidos y reactivándolo.
-        /// </summary>
         public void DesbloquearUsuario(int idUsuario)
         {
             string sql = @"
@@ -65,10 +61,6 @@ namespace CapaDatos.ABM
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
             _ejecutar.ConsultaWrite(sql, parametros);
         }
-
-        /// <summary>
-        /// Cambia el estado de un usuario (activo/inactivo).
-        /// </summary>
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
@@ -85,12 +77,6 @@ namespace CapaDatos.ABM
             };
             _ejecutar.ConsultaWrite(sql, parametros);
         }
-
-        
-
-        /// <summary>
-        /// Actualiza el rol de un usuario específico.
-        /// </summary>
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";
