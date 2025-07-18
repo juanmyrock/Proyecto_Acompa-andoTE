@@ -1,7 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using CapaDTO;
 using CapaLogica;
-using CapaDTO;
+using CapaLogica.Login;
+using CapaSesion;
+using System;
+using System.Windows.Forms;
 
 namespace CapaVistas.Forms_Login
 {
@@ -10,10 +12,13 @@ namespace CapaVistas.Forms_Login
         public frmValidarUser()
         {
             InitializeComponent();
+           
+
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            
             lblErrorMsg.Visible = false;
 
             if (string.IsNullOrWhiteSpace(txtUsuario.Text) || txtUsuario.Text == "USUARIO")
@@ -24,6 +29,10 @@ namespace CapaVistas.Forms_Login
 
             try
             {
+                var logicaContraseña = new cls_LogicaContraseña();
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
                 var logicaLogin = new cls_LogicaLogin();
                 // 1. Verificamos que el usuario existe y está activo.
                 cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacion(txtUsuario.Text);
@@ -35,9 +44,12 @@ namespace CapaVistas.Forms_Login
                     // 3. Esperamos el resultado.
                     if (formPreguntas.ShowDialog() == DialogResult.OK)
                     {
-                        // Si el usuario respondió correctamente, el flujo de envío de email ya se ejecutó.
-                        // Simplemente cerramos todo y el usuario puede ir a revisar su correo.
                         MessageBox.Show("Se ha enviado una contraseña temporal a su correo electrónico.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Si el usuario no respondió correctamente, mostramos un mensaje de error.
+                        MsgError("Respuesta incorrecta. Por favor, inténtelo nuevamente.");
                     }
                     // Si el usuario cancela, no hacemos nada y simplemente cerramos.
                 }

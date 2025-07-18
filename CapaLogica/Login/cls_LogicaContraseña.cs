@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CapaDatos;
 using CapaDTO;
+using CapaSesion;
 using CapaUtilidades;
 
 namespace CapaLogica.Login
@@ -104,9 +105,7 @@ namespace CapaLogica.Login
             // 5. Marcar al usuario para que deba cambiar la contraseña en el próximo login.
             _userDatos.MarcarContraseñaComoRandom(idUsuario);
 
-            // 6. Enviar el correo electrónico.
-            var servicioEmail = new cls_ServicioEmail();
-            servicioEmail.EnviarContraseñaTemporal(emailDestino, nombreUsuario, contraseñaTemporal);
+            ArmarMail.Preparar(emailDestino, contraseñaTemporal, nombreUsuario);
         }
 
 
