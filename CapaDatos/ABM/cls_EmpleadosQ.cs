@@ -6,16 +6,15 @@ using CapaDTO.SistemaDTO;
 
 namespace CapaDatos
 {
-    public class cls_EmpleadosQ // Anteriormente cls_EmpleadosQ
+    public class cls_EmpleadosQ
     {
-        // Instancia de cls_EjecutarQ para manejar las operaciones de DB
         private cls_EjecutarQ _ejecutor;
 
         public cls_EmpleadosQ()
         {
-            _ejecutor = new cls_EjecutarQ(); // Inicializa el ejecutor de consultas
+            _ejecutor = new cls_EjecutarQ();
         }
-
+        #region InsertarEmpleado
         public bool InsertarEmpleado(cls_EmpleadoDTO empleado)
         { 
         string query = "INSERT INTO Empleados (puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono) " +
@@ -49,20 +48,19 @@ namespace CapaDatos
                 throw;
             }
         }
-
+        #endregion
         public DataTable ObtenerEmpleados()
         {
             string query = "SELECT id_empleado, puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono FROM Empleados";
 
             try
             {
-                // Usa el método ConsultaRead de cls_EjecutarQ
                 return _ejecutor.ConsultaRead(query);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al obtener empleados usando cls_EjecutarQ: {ex.Message}");
-                return new DataTable(); // Devuelve un DataTable vacío en caso de error
+                return new DataTable();
             }
         }
 

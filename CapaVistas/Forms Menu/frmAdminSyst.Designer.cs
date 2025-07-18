@@ -402,7 +402,7 @@
             this.Controls.Add(this.lblPassCharVerification);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmAdminSyst";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Administrar Sistema";
             this.Load += new System.EventHandler(this.frmAdminSyst_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numCaracteres)).EndInit();
