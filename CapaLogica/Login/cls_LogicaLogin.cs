@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CapaDatos;
 using CapaDatos.Login;
 using CapaDTO;
@@ -153,6 +154,24 @@ namespace CapaLogica
             }
             return usuario;
         }
+        #region Validar Credenciales
+        public string ValidarCredenciales(string usuario, string contrasena)
+        {
 
+            if (string.IsNullOrWhiteSpace(usuario) && string.IsNullOrWhiteSpace(contrasena))
+            {
+                return "Complete los campos Usuario y Contraseña";
+            }
+            else if (string.IsNullOrWhiteSpace(usuario))
+            {
+                return "Complete el campo Usuario";
+            }
+            else if (string.IsNullOrWhiteSpace(contrasena))
+            {
+                return "Complete el campo Contraseña";
+            }
+            return null;
+        }
+        #endregion
     }
 }

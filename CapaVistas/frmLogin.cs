@@ -12,6 +12,7 @@ namespace CapaVistas
 {
     public partial class frmLogin : Form
     {
+        private cls_LogicaLogin _logicaLogin;
         public frmLogin()
         {
             InitializeComponent();
@@ -112,30 +113,44 @@ namespace CapaVistas
         }
         #endregion
 
-
-        private bool ValidarCampos() //Método para validar los campos del Login
+        private bool CamposValidados()
         {
-            string usuario = txtUsers.Text;
-            string contraseña = txtPass.Text;
+            _logicaLogin = new cls_LogicaLogin();
+            lblErrorMsg.Visible = false;
+            picError.Visible = false;
 
-            if (txtUsers.Text == "USUARIO" && txtPass.Text == "CONTRASEÑA")
-            {
-                MsgError("Complete los campos Usuario y Contraseña");
-                return false;
-            }
-            else if (txtUsers.Text == "USUARIO")
-            {
-                MsgError("Complete el campo Usuario");
-                return false;
-            }
-            else if (txtPass.Text == "CONTRASEÑA")
-            {
-                MsgError("Complete el campo Contraseña");
-                return false;
-            }
+            string mensajeError = _logicaLogin.ValidarCredenciales(txtUsers.Text, txtPass.Text);
 
+            if (!string.IsNullOrEmpty(mensajeError))
+            {
+                MsgError(mensajeError);
+                return false;
+            }
             return true;
         }
+        //private bool ValidarCampos() //Método para validar los campos del Login
+        //{
+        //    string usuario = txtUsers.Text;
+        //    string contraseña = txtPass.Text;
+
+        //    if (txtUsers.Text == "USUARIO" && txtPass.Text == "CONTRASEÑA")
+        //    {
+        //        MsgError("Complete los campos Usuario y Contraseña");
+        //        return false;
+        //    }
+        //    else if (txtUsers.Text == "USUARIO")
+        //    {
+        //        MsgError("Complete el campo Usuario");
+        //        return false;
+        //    }
+        //    else if (txtPass.Text == "CONTRASEÑA")
+        //    {
+        //        MsgError("Complete el campo Contraseña");
+        //        return false;
+        //    }
+
+        //    return true;
+        //}
         private void MsgError(string msg) //Mensaje de error de validación de campos
         {
             lblErrorMsg.Text = msg;
@@ -147,7 +162,6 @@ namespace CapaVistas
 
         private void lblForgotPass_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // abre el form para RECUPERACIÓN DE CONTRASEÑA
             using (var formValidar = new frmValidarUser())
             {
 
@@ -161,7 +175,7 @@ namespace CapaVistas
             lblErrorMsg.Visible = false;
             picError.Visible = false;
 
-            if (!ValidarCampos()) return;
+            if (!CamposValidados()) return;
 
             var credenciales = new cls_CredencialesLoginDTO
             {
