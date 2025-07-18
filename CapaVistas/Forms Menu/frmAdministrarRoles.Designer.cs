@@ -29,13 +29,11 @@
         private void InitializeComponent()
         {
             this.lblNombreRol = new System.Windows.Forms.Label();
-            this.lblIdRol = new System.Windows.Forms.Label();
             this.dgvVerRoles = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCrear = new System.Windows.Forms.Button();
-            this.txtIdRol = new System.Windows.Forms.TextBox();
             this.txtNombreRol = new System.Windows.Forms.TextBox();
             this.txtDescripcionRol = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,22 +45,11 @@
             this.lblNombreRol.AutoSize = true;
             this.lblNombreRol.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombreRol.ForeColor = System.Drawing.Color.White;
-            this.lblNombreRol.Location = new System.Drawing.Point(62, 361);
+            this.lblNombreRol.Location = new System.Drawing.Point(256, 340);
             this.lblNombreRol.Name = "lblNombreRol";
             this.lblNombreRol.Size = new System.Drawing.Size(104, 21);
             this.lblNombreRol.TabIndex = 8;
             this.lblNombreRol.Text = "Nombre Rol:";
-            // 
-            // lblIdRol
-            // 
-            this.lblIdRol.AutoSize = true;
-            this.lblIdRol.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIdRol.ForeColor = System.Drawing.Color.White;
-            this.lblIdRol.Location = new System.Drawing.Point(62, 328);
-            this.lblIdRol.Name = "lblIdRol";
-            this.lblIdRol.Size = new System.Drawing.Size(58, 21);
-            this.lblIdRol.TabIndex = 6;
-            this.lblIdRol.Text = "ID Rol:";
             // 
             // dgvVerRoles
             // 
@@ -130,26 +117,21 @@
             this.btnCrear.Text = "Crear Rol";
             this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCrear.UseVisualStyleBackColor = true;
-            // 
-            // txtIdRol
-            // 
-            this.txtIdRol.Location = new System.Drawing.Point(131, 328);
-            this.txtIdRol.Name = "txtIdRol";
-            this.txtIdRol.Size = new System.Drawing.Size(157, 20);
-            this.txtIdRol.TabIndex = 14;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // txtNombreRol
             // 
-            this.txtNombreRol.Location = new System.Drawing.Point(172, 364);
+            this.txtNombreRol.Location = new System.Drawing.Point(235, 364);
             this.txtNombreRol.Name = "txtNombreRol";
             this.txtNombreRol.Size = new System.Drawing.Size(157, 20);
             this.txtNombreRol.TabIndex = 14;
             // 
             // txtDescripcionRol
             // 
-            this.txtDescripcionRol.Location = new System.Drawing.Point(231, 400);
+            this.txtDescripcionRol.Location = new System.Drawing.Point(49, 437);
+            this.txtDescripcionRol.Multiline = true;
             this.txtDescripcionRol.Name = "txtDescripcionRol";
-            this.txtDescripcionRol.Size = new System.Drawing.Size(157, 20);
+            this.txtDescripcionRol.Size = new System.Drawing.Size(527, 102);
             this.txtDescripcionRol.TabIndex = 14;
             // 
             // label2
@@ -157,7 +139,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(62, 400);
+            this.label2.Location = new System.Drawing.Point(233, 402);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(159, 21);
             this.label2.TabIndex = 8;
@@ -168,10 +150,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.ClientSize = new System.Drawing.Size(617, 452);
+            this.ClientSize = new System.Drawing.Size(617, 562);
             this.Controls.Add(this.txtDescripcionRol);
             this.Controls.Add(this.txtNombreRol);
-            this.Controls.Add(this.txtIdRol);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCrear);
@@ -179,7 +160,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblNombreRol);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lblIdRol);
             this.Name = "frmAdministrarRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Administrar Roles";
@@ -192,13 +172,11 @@
 
         #endregion
         private System.Windows.Forms.Label lblNombreRol;
-        private System.Windows.Forms.Label lblIdRol;
         private System.Windows.Forms.DataGridView dgvVerRoles;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnCrear;
-        private System.Windows.Forms.TextBox txtIdRol;
         private System.Windows.Forms.TextBox txtNombreRol;
         private System.Windows.Forms.TextBox txtDescripcionRol;
         private System.Windows.Forms.Label label2;

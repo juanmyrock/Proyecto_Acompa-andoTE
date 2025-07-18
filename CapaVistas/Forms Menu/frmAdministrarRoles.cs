@@ -1,6 +1,7 @@
 ﻿using CapaDTO;
 using System;
 using System.Collections.Generic;
+using CapaLogica.ABM;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -13,27 +14,27 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmAdministrarRoles : Form
     {
-        cls_RolDTO rol;
+       
+        cls_Rol _rol;
         public frmAdministrarRoles()
         {
             InitializeComponent();
-            rol= new cls_RolDTO();
+            _rol= new cls_Rol();
         }
 
         private void CargarRolesEnDataGridView()
         {
             try
             {
-                //List<cls_RolDTO> listaEmpleados = _logicaEmpleado.ObtenerEmpleados();
-                //dgvVerUser.DataSource = listaEmpleados;
+                List<cls_RolDTO> listaRoles = _rol.;
+                dgvVerRoles.DataSource = listaRoles;
 
-                //dgvVerUser.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                //dgvVerUser.ReadOnly = true;
-                //dgvVerUser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                //dgvVerUser.AllowUserToAddRows = false;
-                //dgvVerUser.Columns["id_sexo"].Visible = false;
-                //dgvVerUser.Columns["id_tipo_dni"].Visible = false;
-                //dgvVerUser.Columns["id_localidad"].Visible = false;
+                dgvVerRoles.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dgvVerRoles.ReadOnly = true;
+                dgvVerRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvVerRoles.AllowUserToAddRows = false;
+                dgvVerRoles.Columns["id_rol"].Visible = false;
+
             }
             catch (Exception ex)
             {
@@ -42,6 +43,11 @@ namespace CapaVistas.Forms_Menu
         }
 
         private void frmAdministrarRoles_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCrear_Click(object sender, EventArgs e)
         {
 
         }

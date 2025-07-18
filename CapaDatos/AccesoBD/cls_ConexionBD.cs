@@ -7,7 +7,7 @@ namespace CapaDatos
         private readonly string conexion;         
         public cls_ConexionBD()
         {
-            conexion = @"Server=DESKTOP-BS1413A; Database=ProyectoAT; User Id=DESKTOP-BS1413A\sebas; Integrated Security=True;";
+            conexion = @"Server=SEBASTIANGONFLO; Database=ProyectoAT; User Id=SEBASTIANGONFLO\Sebas; Integrated Security=True;";
         }
 
         protected SqlConnection GetConexion() 
