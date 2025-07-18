@@ -65,7 +65,7 @@
             this.dgvVerRoles.Location = new System.Drawing.Point(33, 48);
             this.dgvVerRoles.Name = "dgvVerRoles";
             this.dgvVerRoles.Size = new System.Drawing.Size(652, 205);
-            this.dgvVerRoles.TabIndex = 10;
+            this.dgvVerRoles.TabIndex = 5;
             this.dgvVerRoles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerRoles_CellClick);
             this.dgvVerRoles.SelectionChanged += new System.EventHandler(this.dgvVerRoles_SelectionChanged);
             // 
@@ -91,7 +91,7 @@
             this.btnEliminar.Location = new System.Drawing.Point(571, 257);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(114, 50);
-            this.btnEliminar.TabIndex = 13;
+            this.btnEliminar.TabIndex = 2;
             this.btnEliminar.Text = "Eliminar Rol";
             this.btnEliminar.UseVisualStyleBackColor = true;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
@@ -107,7 +107,7 @@
             this.btnModificar.Location = new System.Drawing.Point(326, 259);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(129, 50);
-            this.btnModificar.TabIndex = 12;
+            this.btnModificar.TabIndex = 1;
             this.btnModificar.Text = "Modificar Rol";
             this.btnModificar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnModificar.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             this.btnCrear.Location = new System.Drawing.Point(86, 259);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(103, 50);
-            this.btnCrear.TabIndex = 11;
+            this.btnCrear.TabIndex = 0;
             this.btnCrear.Text = "Crear Rol";
             this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCrear.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@
             this.txtNombreRol.Location = new System.Drawing.Point(248, 370);
             this.txtNombreRol.Name = "txtNombreRol";
             this.txtNombreRol.Size = new System.Drawing.Size(237, 27);
-            this.txtNombreRol.TabIndex = 14;
+            this.txtNombreRol.TabIndex = 3;
             this.txtNombreRol.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtDescripcionRol
@@ -146,7 +146,7 @@
             this.txtDescripcionRol.Multiline = true;
             this.txtDescripcionRol.Name = "txtDescripcionRol";
             this.txtDescripcionRol.Size = new System.Drawing.Size(550, 53);
-            this.txtDescripcionRol.TabIndex = 14;
+            this.txtDescripcionRol.TabIndex = 4;
             // 
             // label2
             // 

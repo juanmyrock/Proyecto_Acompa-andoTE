@@ -105,7 +105,7 @@ namespace CapaLogica.Login
             // 5. Marcar al usuario para que deba cambiar la contraseña en el próximo login.
             _userDatos.MarcarContraseñaComoRandom(idUsuario);
 
-            ArmarMail.Preparar(emailDestino, contraseñaTemporal, nombreUsuario);
+            ArmarMail.Preparar(emailDestino,"Contraseña Temporal", contraseñaTemporal, nombreUsuario);
         }
 
 

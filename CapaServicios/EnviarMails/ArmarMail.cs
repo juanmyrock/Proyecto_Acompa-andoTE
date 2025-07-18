@@ -10,7 +10,7 @@ namespace CapaSesion
         public static string NuevaContraseña { get; set; }
         public static string body { get; set; }
 
-        public static void Preparar(string DireccionCorreo, string NuevaContraseña, string usuario)
+        public static void Preparar(string DireccionCorreo, string asunto, string NuevaContraseña, string usuario)
         {
             body = @"<style>
                             h1{color:dodgerblue;}
@@ -21,7 +21,7 @@ namespace CapaSesion
                             <h1> Contraseña de ingreso: </h1>
                             <h2> " + NuevaContraseña + "</h2>" + 
                             "<h2>Por favor, inicie sesión con esta contraseña.<br>Se le pedirá que establezca una nueva contraseña definitiva.<br>Si usted no solicitó este cambio, por favor contacte a un administrador.<br>Saludos, el equipo de VincularAzul. </h2>";
-            EnviarMail.sendMail(DireccionCorreo, Asunto, body);
+            EnviarMail.sendMail(DireccionCorreo, asunto, body);
         }
     }
 }

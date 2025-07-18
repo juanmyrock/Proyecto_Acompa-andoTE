@@ -44,7 +44,7 @@ namespace CapaVistas.Forms_Login
                     // 3. Esperamos el resultado.
                     if (formPreguntas.ShowDialog() == DialogResult.OK)
                     {
-                        MessageBox.Show("Se ha enviado una contraseña temporal a su correo electrónico.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Se ha enviado una contraseña temporal a su correo electrónico.\nRevise sus correos y proceda con la contraseña otorgada.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
