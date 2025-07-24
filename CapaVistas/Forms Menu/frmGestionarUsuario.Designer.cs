@@ -29,6 +29,7 @@
             this.btnActivarDesactivar = new System.Windows.Forms.Button();
             this.btnDesbloquear = new System.Windows.Forms.Button();
             this.btnResetearPass = new System.Windows.Forms.Button();
+            this.btnGestionPermisos = new System.Windows.Forms.Button();
             this.groupAccionesAdmin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,12 +166,23 @@
             this.btnResetearPass.UseVisualStyleBackColor = false;
             this.btnResetearPass.Click += new System.EventHandler(this.btnResetearPass_Click);
             // 
+            // btnGestionPermisos
+            // 
+            this.btnGestionPermisos.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGestionPermisos.Location = new System.Drawing.Point(28, 168);
+            this.btnGestionPermisos.Name = "btnGestionPermisos";
+            this.btnGestionPermisos.Size = new System.Drawing.Size(180, 35);
+            this.btnGestionPermisos.TabIndex = 8;
+            this.btnGestionPermisos.Text = "Gestionar Permisos";
+            this.btnGestionPermisos.UseVisualStyleBackColor = true;
+            // 
             // frmGestionarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
             this.ClientSize = new System.Drawing.Size(474, 436);
+            this.Controls.Add(this.btnGestionPermisos);
             this.Controls.Add(this.groupAccionesAdmin);
             this.Controls.Add(this.btnGuardarRol);
             this.Controls.Add(this.cmbRoles);
@@ -205,5 +217,6 @@
         private System.Windows.Forms.Button btnDesbloquear;
         private System.Windows.Forms.Button btnResetearPass;
         private System.Windows.Forms.Label lblEstadoActual;
+        private System.Windows.Forms.Button btnGestionPermisos;
     }
 }

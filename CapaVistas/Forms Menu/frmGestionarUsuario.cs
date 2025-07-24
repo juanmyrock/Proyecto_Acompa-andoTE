@@ -114,13 +114,9 @@ namespace CapaVistas.Forms_Menu
                 var logicaRoles = new CapaLogica.ABM.cls_LogicaRoles();
                 List<cls_RolDTO> listaDeRoles = logicaRoles.ObtenerTodos();
 
+
                 // 2. Usamos nuestro helper reutilizable para cargar el ComboBox.
-                CapaUtilidades.cls_LlenarCombos.Cargar(
-                    cmbRoles,
-                    listaDeRoles,
-                    "NombreRol", // La propiedad del DTO que se mostrará
-                    "IdRol"      // La propiedad del DTO que será el valor interno
-                );
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbRoles, listaDeRoles,"NombreRol", "IdRol");
 
                 // 3. Volvemos a establecer el valor que tenía el usuario, si es que lo tenía.
                 if (_usuarioActual != null)

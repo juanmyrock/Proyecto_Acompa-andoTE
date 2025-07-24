@@ -1,5 +1,4 @@
 ﻿using CapaDatos;
-using CapaDatos.ABM; // O el namespace donde tengas cls_RolQ
 using CapaDTO;
 using System.Collections.Generic;
 

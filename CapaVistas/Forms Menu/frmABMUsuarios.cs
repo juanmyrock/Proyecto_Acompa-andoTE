@@ -493,30 +493,30 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // Obtenemos los datos del empleado seleccionado
+            // 1. Obtenemos el DTO completo del empleado seleccionado
             var empleadoSeleccionado = (cls_EmpleadoDTO)dgvVerUser.CurrentRow.DataBoundItem;
 
             try
             {
                 var logicaGestion = new cls_LogicaGestionarUsuarios();
-                // 1. Verificamos si el usuario ya existe
                 bool usuarioExiste = logicaGestion.VerificarSiUsuarioExiste(empleadoSeleccionado.id_empleado);
 
-                // 2. Creamos el DTO con toda la información necesaria para el formulario hijo
+                // 2. Creamos el DTO para el formulario hijo y nos aseguramos de pasarle el email.
                 var datosParaGestion = new cls_DatosParaGestionUsuarioDTO
                 {
                     IdEmpleado = empleadoSeleccionado.id_empleado,
                     NombreCompletoEmpleado = $"{empleadoSeleccionado.nombre} {empleadoSeleccionado.apellido}",
-                    UsuarioYaExiste = usuarioExiste
+                    UsuarioYaExiste = usuarioExiste,
+                    Email = empleadoSeleccionado.email
                 };
 
-                // 3. Abrimos el formulario de gestión, pasándole el DTO
+                // 3. Abrimos el formulario de gestión, pasándole el DTO completo
                 using (var formGestion = new frmGestionarUsuario(datosParaGestion))
                 {
                     formGestion.ShowDialog();
                 }
 
-                // Recargamos la grilla por si hubo cambios
+                // 4. Recargamos la grilla por si hubo cambios
                 CargarEmpleadosEnDataGridView();
             }
             catch (Exception ex)
