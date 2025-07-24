@@ -109,6 +109,38 @@ namespace CapaDatos.Utilidades
             }
         }
         #endregion
+
+        #region Tabla Roles
+        public LlenarCombosResponseDTO ObtenerRoles()
+        {
+            var response = new LlenarCombosResponseDTO();
+            string query = "SELECT id_rol, nombre_rol, descripcion FROM Roles";
+            try
+            {
+                DataTable tablaRoles = _ejecutar.ConsultaRead(query);
+                if (tablaRoles.Rows.Count > 0)
+                {
+                    response.Roles = new List<cls_RolDTO>();
+                    foreach (DataRow row in tablaRoles.Rows)
+                    {
+                        response.Roles.Add(new cls_RolDTO 
+                        {
+                            IdRol = Convert.ToInt32(row["id_rol"]),
+                            NombreRol = row["nombre_rol"].ToString(),
+                            Descripcion = row["descripcion"].ToString()
+                        });
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en cls_RolQ al obtener roles: {ex.Message}");
+                return null;
+            }
+        }
+
+        #endregion
     }
 }
 

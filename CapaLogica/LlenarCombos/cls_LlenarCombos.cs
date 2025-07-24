@@ -56,5 +56,18 @@ namespace CapaLogica.LlenarCombos
                 return null;
             }
         }
+
+        public LlenarCombosResponseDTO ObtenerRoles()
+        {
+            try
+            {
+                return _llenador.ObtenerRoles();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener roles: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

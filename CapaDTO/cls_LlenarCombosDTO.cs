@@ -12,7 +12,7 @@ namespace CapaDTO
             public string nombre_localidad { get; set; }
         }
 
-        public class cls_SexoDTO
+    public class cls_SexoDTO
         {
             public int id_sexo { get; set; }
             public string descripcion { get; set; }
@@ -28,6 +28,7 @@ namespace CapaDTO
             public List<cls_LocalidadDTO> Localidades { get; set; }
             public List<cls_SexoDTO> Sexos { get; set; }
             public List<cls_TipoDocumentoDTO> TiposDocumento { get; set; }
+            public List<cls_RolDTO> Roles { get; set; }
         }
 
 }

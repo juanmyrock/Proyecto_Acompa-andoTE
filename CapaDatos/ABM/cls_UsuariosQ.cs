@@ -6,17 +6,11 @@ using CapaDTO;
 
 namespace CapaDatos.ABM
 {
-    /// <summary>
-    /// Clase de acceso a datos para todas las operaciones de gestión
-    /// y administración de la tabla Usuarios.
-    /// </summary>
     public class cls_UsuariosQ
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        /// <summary>
-        /// Obtiene los datos específicos para la gestión de un usuario.
-        /// </summary>
+
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
             string sql = @"

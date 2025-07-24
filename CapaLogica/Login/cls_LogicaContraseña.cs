@@ -85,7 +85,7 @@ namespace CapaLogica.Login
         public void GenerarYEnviarContraseñaTemporal(int idUsuario, string emailDestino, string nombreUsuario)
         {
             // 1. Generar una contraseña aleatoria.
-            string contraseñaTemporal = new Random().Next(1000000, 9999999).ToString();
+            string contraseñaTemporal = new Random().Next(100000, 999999).ToString();
 
             // 2. Hashear la contraseña temporal.
             string hashTemporal = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);

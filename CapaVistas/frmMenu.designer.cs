@@ -212,9 +212,9 @@ namespace CapaVistas
             // 
             this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUserLog.Location = new System.Drawing.Point(15, 215);
+            this.lblUserLog.Location = new System.Drawing.Point(31, 203);
             this.lblUserLog.Name = "lblUserLog";
-            this.lblUserLog.Size = new System.Drawing.Size(148, 29);
+            this.lblUserLog.Size = new System.Drawing.Size(132, 60);
             this.lblUserLog.TabIndex = 0;
             this.lblUserLog.Text = "Don Pepito";
             // 

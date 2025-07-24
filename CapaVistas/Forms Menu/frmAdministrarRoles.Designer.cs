@@ -41,6 +41,14 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.btnAsignarTodos = new System.Windows.Forms.Button();
+            this.btnAsignarPermiso = new System.Windows.Forms.Button();
+            this.btnQuitarTodos = new System.Windows.Forms.Button();
+            this.btnQuitarPermiso = new System.Windows.Forms.Button();
+            this.ltvPermisosDisp = new System.Windows.Forms.ListView();
+            this.ltvPermisosAsignados = new System.Windows.Forms.ListView();
+            this.cmbRol = new System.Windows.Forms.ComboBox();
+            this.lblRol = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerRoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -203,12 +211,102 @@
             this.pictureBox4.TabIndex = 56;
             this.pictureBox4.TabStop = false;
             // 
+            // btnAsignarTodos
+            // 
+            this.btnAsignarTodos.Location = new System.Drawing.Point(1084, 460);
+            this.btnAsignarTodos.Name = "btnAsignarTodos";
+            this.btnAsignarTodos.Size = new System.Drawing.Size(75, 23);
+            this.btnAsignarTodos.TabIndex = 59;
+            this.btnAsignarTodos.Text = "<<<<<<";
+            this.btnAsignarTodos.UseVisualStyleBackColor = true;
+            this.btnAsignarTodos.Click += new System.EventHandler(this.btnAsignarTodos_Click);
+            // 
+            // btnAsignarPermiso
+            // 
+            this.btnAsignarPermiso.Location = new System.Drawing.Point(1084, 528);
+            this.btnAsignarPermiso.Name = "btnAsignarPermiso";
+            this.btnAsignarPermiso.Size = new System.Drawing.Size(75, 23);
+            this.btnAsignarPermiso.TabIndex = 60;
+            this.btnAsignarPermiso.Text = "<--";
+            this.btnAsignarPermiso.UseVisualStyleBackColor = true;
+            this.btnAsignarPermiso.Click += new System.EventHandler(this.btnAsignarPermiso_Click);
+            // 
+            // btnQuitarTodos
+            // 
+            this.btnQuitarTodos.Location = new System.Drawing.Point(1084, 205);
+            this.btnQuitarTodos.Name = "btnQuitarTodos";
+            this.btnQuitarTodos.Size = new System.Drawing.Size(75, 23);
+            this.btnQuitarTodos.TabIndex = 61;
+            this.btnQuitarTodos.Text = ">>>>>>";
+            this.btnQuitarTodos.UseVisualStyleBackColor = true;
+            this.btnQuitarTodos.Click += new System.EventHandler(this.btnQuitarTodos_Click);
+            // 
+            // btnQuitarPermiso
+            // 
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(1084, 144);
+            this.btnQuitarPermiso.Name = "btnQuitarPermiso";
+            this.btnQuitarPermiso.Size = new System.Drawing.Size(75, 23);
+            this.btnQuitarPermiso.TabIndex = 62;
+            this.btnQuitarPermiso.Text = "-->";
+            this.btnQuitarPermiso.UseVisualStyleBackColor = true;
+            this.btnQuitarPermiso.Click += new System.EventHandler(this.btnQuitarPermiso_Click);
+            // 
+            // ltvPermisosDisp
+            // 
+            this.ltvPermisosDisp.GridLines = true;
+            this.ltvPermisosDisp.HideSelection = false;
+            this.ltvPermisosDisp.Location = new System.Drawing.Point(1235, 144);
+            this.ltvPermisosDisp.Name = "ltvPermisosDisp";
+            this.ltvPermisosDisp.Size = new System.Drawing.Size(234, 407);
+            this.ltvPermisosDisp.TabIndex = 57;
+            this.ltvPermisosDisp.UseCompatibleStateImageBehavior = false;
+            this.ltvPermisosDisp.View = System.Windows.Forms.View.Details;
+            // 
+            // ltvPermisosAsignados
+            // 
+            this.ltvPermisosAsignados.GridLines = true;
+            this.ltvPermisosAsignados.HideSelection = false;
+            this.ltvPermisosAsignados.Location = new System.Drawing.Point(769, 144);
+            this.ltvPermisosAsignados.Name = "ltvPermisosAsignados";
+            this.ltvPermisosAsignados.Size = new System.Drawing.Size(234, 407);
+            this.ltvPermisosAsignados.TabIndex = 58;
+            this.ltvPermisosAsignados.UseCompatibleStateImageBehavior = false;
+            this.ltvPermisosAsignados.View = System.Windows.Forms.View.Details;
+            // 
+            // cmbRol
+            // 
+            this.cmbRol.FormattingEnabled = true;
+            this.cmbRol.Location = new System.Drawing.Point(769, 105);
+            this.cmbRol.Name = "cmbRol";
+            this.cmbRol.Size = new System.Drawing.Size(121, 21);
+            this.cmbRol.TabIndex = 63;
+            this.cmbRol.SelectedIndexChanged += new System.EventHandler(this.cmbRol_SelectedIndexChanged);
+            // 
+            // lblRol
+            // 
+            this.lblRol.AutoSize = true;
+            this.lblRol.Font = new System.Drawing.Font("Century Gothic", 12F);
+            this.lblRol.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblRol.Location = new System.Drawing.Point(765, 81);
+            this.lblRol.Name = "lblRol";
+            this.lblRol.Size = new System.Drawing.Size(37, 21);
+            this.lblRol.TabIndex = 64;
+            this.lblRol.Text = "Rol:";
+            // 
             // frmAdministrarRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.ClientSize = new System.Drawing.Size(718, 508);
+            this.ClientSize = new System.Drawing.Size(1575, 583);
+            this.Controls.Add(this.lblRol);
+            this.Controls.Add(this.cmbRol);
+            this.Controls.Add(this.btnAsignarTodos);
+            this.Controls.Add(this.btnAsignarPermiso);
+            this.Controls.Add(this.btnQuitarTodos);
+            this.Controls.Add(this.btnQuitarPermiso);
+            this.Controls.Add(this.ltvPermisosDisp);
+            this.Controls.Add(this.ltvPermisosAsignados);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -250,5 +348,13 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Button btnAsignarTodos;
+        private System.Windows.Forms.Button btnAsignarPermiso;
+        private System.Windows.Forms.Button btnQuitarTodos;
+        private System.Windows.Forms.Button btnQuitarPermiso;
+        private System.Windows.Forms.ListView ltvPermisosDisp;
+        private System.Windows.Forms.ListView ltvPermisosAsignados;
+        private System.Windows.Forms.ComboBox cmbRol;
+        private System.Windows.Forms.Label lblRol;
     }
 }
