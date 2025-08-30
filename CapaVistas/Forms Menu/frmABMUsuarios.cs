@@ -14,21 +14,12 @@ namespace CapaVistas.Forms_Menu
     public partial class frmABMUsuarios : Form
     {
         private cls_LogicaGestionEmpleados _logicaEmpleado;
-        private cls_TipoDNILogica _logicaTipoDNI;
-        private cls_LocalidadLogica _logicaLocalidad;
-        private cls_SexoLogica _logicaSexo;
-        private int _idEmpleadoSeleccionado = -1; // Variable para guardar el ID del empleado seleccionado
-        private cls_Empleado _logicaEmpleado;
         private int _idEmpleadoSeleccionado = -1;
         private cls_LlenarCombos _rellenador;
         public frmABMUsuarios()
         {
             InitializeComponent();
             _logicaEmpleado = new cls_LogicaGestionEmpleados();
-            _logicaTipoDNI = new cls_TipoDNILogica();
-            _logicaLocalidad = new cls_LocalidadLogica();
-            _logicaSexo = new cls_SexoLogica();
-            _logicaEmpleado = new cls_Empleado();
             _rellenador = new cls_LlenarCombos();
         }
         
@@ -397,10 +388,7 @@ namespace CapaVistas.Forms_Menu
                     _idEmpleadoSeleccionado = -1;
                 }
             }
-            else
-            {
-                _idEmpleadoSeleccionado = -1;
-            }
+
         }
 
         private void dgvVerUser_RowEnter(object sender, DataGridViewCellEventArgs e)

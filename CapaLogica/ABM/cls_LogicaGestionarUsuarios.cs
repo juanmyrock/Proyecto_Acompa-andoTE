@@ -13,8 +13,6 @@ namespace CapaLogica.ABM
         private readonly cls_ConectarUserQ conectarUser = new cls_ConectarUserQ();
         private readonly cls_UsuariosQ _userDatos = new cls_UsuariosQ();
         private readonly cls_ContraseñasQ _contraseñasDatos = new cls_ContraseñasQ();
-        // El servicio de email ahora se crea solo cuando se necesita
-        private readonly cls_ServicioEmail _servicioEmail = new cls_ServicioEmail();
 
         //obtiene los datos de un usuario para mostrarlos en el formulario de gestión
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
@@ -98,7 +96,7 @@ namespace CapaLogica.ABM
             // Si esto falla, el usuario ya está creado en la BD, pero es un error menos crítico.
             try
             {
-                _servicioEmail.EnviarContraseñaTemporal(email, nombreCompleto, contraseñaTemporal);
+                //_servicioEmail.EnviarContraseñaTemporal(email, nombreCompleto, contraseñaTemporal);
             }
             catch (Exception ex)
             {

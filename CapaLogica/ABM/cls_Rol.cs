@@ -41,7 +41,7 @@ namespace CapaLogica.ABM
                     
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

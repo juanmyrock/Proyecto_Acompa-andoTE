@@ -9,7 +9,6 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionarUsuario : Form
     {
-        // --- Variables de Clase ---
         // DTO con los datos iniciales que recibe del formulario padre
         private readonly cls_DatosParaGestionUsuarioDTO _datosIniciales;
 
@@ -111,12 +110,11 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 // 1. Llamamos a nuestra nueva capa de lógica para obtener los roles.
-                var logicaRoles = new CapaLogica.ABM.cls_LogicaRoles();
-                List<cls_RolDTO> listaDeRoles = logicaRoles.ObtenerTodos();
-
+                var logicaRoles = new CapaLogica.ABM.cls_Rol();
+                List<cls_RolDTO> listaDeRoles = logicaRoles.ObtenerRoles();
 
                 // 2. Usamos nuestro helper reutilizable para cargar el ComboBox.
-                CapaUtilidades.cls_LlenarCombos.Cargar(cmbRoles, listaDeRoles,"NombreRol", "IdRol");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbRoles, listaDeRoles, "NombreRol", "IdRol");
 
                 // 3. Volvemos a establecer el valor que tenía el usuario, si es que lo tenía.
                 if (_usuarioActual != null)
