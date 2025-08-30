@@ -58,7 +58,7 @@
             this.cmbTipoDNI = new System.Windows.Forms.ComboBox();
             this.dgvVerUser = new System.Windows.Forms.DataGridView();
             this.btnCrear = new System.Windows.Forms.Button();
-            this.lblUsuario = new System.Windows.Forms.Label();
+            this.lblPanel = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -365,16 +365,16 @@
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
-            // lblUsuario
+            // lblPanel
             // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Bahnschrift", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblUsuario.Location = new System.Drawing.Point(39, 13);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(164, 24);
-            this.lblUsuario.TabIndex = 47;
-            this.lblUsuario.Text = "Lista de usuarios";
+            this.lblPanel.AutoSize = true;
+            this.lblPanel.Font = new System.Drawing.Font("Bahnschrift", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPanel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblPanel.Location = new System.Drawing.Point(39, 13);
+            this.lblPanel.Name = "lblPanel";
+            this.lblPanel.Size = new System.Drawing.Size(164, 24);
+            this.lblPanel.TabIndex = 47;
+            this.lblPanel.Text = "Lista de usuarios";
             // 
             // btnRefresh
             // 
@@ -507,7 +507,7 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCrear);
-            this.Controls.Add(this.lblUsuario);
+            this.Controls.Add(this.lblPanel);
             this.Controls.Add(this.btnRefresh);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmABMUsuarios";
@@ -552,7 +552,7 @@
         private System.Windows.Forms.ComboBox cmbTipoDNI;
         private System.Windows.Forms.DataGridView dgvVerUser;
         private System.Windows.Forms.Button btnCrear;
-        private System.Windows.Forms.Label lblUsuario;
+        private System.Windows.Forms.Label lblPanel;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminar;
