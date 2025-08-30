@@ -50,19 +50,46 @@ namespace CapaDatos
             }
         }
 
-        public DataTable ObtenerEmpleados()
+        public List<cls_EmpleadoDTO> ObtenerEmpleados()
         {
-            string query = "SELECT id_empleado, puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono FROM Empleados";
+            string query = "SELECT id_empleado, puesto, nombre, apellido, " +
+                "id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad," +
+                " domicilio, num_domicilio, carga_hs, email, telefono" +
+                " FROM Empleados ORDER BY id_empleado ASC";
 
             try
             {
-                // Usa el método ConsultaRead de cls_EjecutarQ
-                return _ejecutor.ConsultaRead(query);
+                DataTable tabla = _ejecutor.ConsultaRead(query);
+                var listaEmpleados = new List<cls_EmpleadoDTO>();
+
+                // Convertimos cada fila del DataTable en un objeto DTO, asegurándonos de mapear TODOS los campos
+                foreach (DataRow row in tabla.Rows)
+                {
+                    listaEmpleados.Add(new cls_EmpleadoDTO
+                    {
+                        id_empleado = Convert.ToInt32(row["id_empleado"]),
+                        puesto = row["puesto"].ToString(),
+                        nombre = row["nombre"].ToString(),
+                        apellido = row["apellido"].ToString(),
+                        id_sexo = Convert.ToInt32(row["id_sexo"]),
+                        id_tipo_dni = Convert.ToInt32(row["id_tipo_dni"]),
+                        dni = Convert.ToInt32(row["dni"]),
+                        fecha_nac = Convert.ToDateTime(row["fecha_nac"]),
+                        id_localidad = Convert.ToInt32(row["id_localidad"]),
+                        domicilio = row["domicilio"].ToString(),
+                        num_domicilio = Convert.ToInt32(row["num_domicilio"]),
+                        carga_hs = Convert.ToDecimal(row["carga_hs"]),
+                        email = row["email"].ToString(), // Mapeo del email
+                        telefono = row["telefono"].ToString()
+                    });
+                }
+
+                return listaEmpleados;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener empleados usando cls_EjecutarQ: {ex.Message}");
-                return new DataTable(); // Devuelve un DataTable vacío en caso de error
+                Console.WriteLine($"Error al obtener y mapear empleados: {ex.Message}");
+                throw; // Re-lanzamos la excepción para que la capa de lógica la maneje.
             }
         }
 

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM\cls_Empleados.cs" />
+    <Compile Include="ABM\cls_LogicaGestionEmpleados.cs" />
     <Compile Include="ABM\cls_LogicaGestionarUsuarios.cs" />
+    <Compile Include="ABM\cls_LogicaRoles.cs" />
     <Compile Include="Login\cls_LogicaContraseña.cs" />
     <Compile Include="LlenarCombos\cls_LocalidadLogica.cs" />
     <Compile Include="LlenarCombos\cls_SexoLogica.cs" />
