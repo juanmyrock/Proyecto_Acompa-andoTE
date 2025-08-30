@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cls_SeguridadPass.cs" />
-    <Compile Include="cls_EnvioMail.cs" />
     <Compile Include="cls_LlenarCombos.cs" />
+    <Compile Include="EnviarMails\ArmarMail.cs" />
+    <Compile Include="EnviarMails\EnviarMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,9 @@
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>
       <Name>CapaDatos</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EnviarMails\desktop.ini" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -205,16 +205,16 @@ namespace CapaVistas
             this.panelMenu.Location = new System.Drawing.Point(0, 35);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(2);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(217, 753);
+            this.panelMenu.Size = new System.Drawing.Size(217, 760);
             this.panelMenu.TabIndex = 3;
             // 
             // lblUserLog
             // 
             this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUserLog.Location = new System.Drawing.Point(10, 215);
+            this.lblUserLog.Location = new System.Drawing.Point(31, 203);
             this.lblUserLog.Name = "lblUserLog";
-            this.lblUserLog.Size = new System.Drawing.Size(202, 29);
+            this.lblUserLog.Size = new System.Drawing.Size(132, 60);
             this.lblUserLog.TabIndex = 0;
             this.lblUserLog.Text = "Don Pepito";
             // 
@@ -223,7 +223,7 @@ namespace CapaVistas
             this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
-            this.btnLogOut.Location = new System.Drawing.Point(170, 205);
+            this.btnLogOut.Location = new System.Drawing.Point(169, 205);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(45, 45);
             this.btnLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -530,12 +530,13 @@ namespace CapaVistas
             this.btnRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRoles.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRoles.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnRoles.Location = new System.Drawing.Point(653, 5);
+            this.btnRoles.Location = new System.Drawing.Point(710, 5);
             this.btnRoles.Name = "btnRoles";
             this.btnRoles.Size = new System.Drawing.Size(104, 49);
             this.btnRoles.TabIndex = 31;
-            this.btnRoles.Text = "Administrar Roles";
+            this.btnRoles.Text = "Roles";
             this.btnRoles.UseVisualStyleBackColor = true;
+            this.btnRoles.Click += new System.EventHandler(this.btnRoles_Click);
             // 
             // btnConfigSist
             // 
@@ -561,7 +562,7 @@ namespace CapaVistas
             this.btnAdministrar.Name = "btnAdministrar";
             this.btnAdministrar.Size = new System.Drawing.Size(104, 49);
             this.btnAdministrar.TabIndex = 30;
-            this.btnAdministrar.Text = "Administrar Sistema";
+            this.btnAdministrar.Text = "Parametros Contraseña";
             this.btnAdministrar.UseVisualStyleBackColor = true;
             this.btnAdministrar.Click += new System.EventHandler(this.btnAdministrar_Click);
             // 
@@ -586,7 +587,7 @@ namespace CapaVistas
             this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
             this.panelChildFrm.Name = "panelChildFrm";
-            this.panelChildFrm.Size = new System.Drawing.Size(1063, 693);
+            this.panelChildFrm.Size = new System.Drawing.Size(1063, 700);
             this.panelChildFrm.TabIndex = 4;
             // 
             // frmMenu
@@ -595,7 +596,7 @@ namespace CapaVistas
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(1280, 788);
+            this.ClientSize = new System.Drawing.Size(1280, 795);
             this.Controls.Add(this.panelChildFrm);
             this.Controls.Add(this.panelTitulo);
             this.Controls.Add(this.panelMenu);

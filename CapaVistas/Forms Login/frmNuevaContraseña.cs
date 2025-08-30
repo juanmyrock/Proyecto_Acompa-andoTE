@@ -28,12 +28,9 @@ namespace CapaVistas.Forms_Login
             {
                 var logicaContraseña = new cls_LogicaContraseña();
 
-                // Este método ahora contiene toda la validación (complejidad, historial)
-                // y la lógica de guardado.
                 logicaContraseña.EstablecerNuevaContraseña(_idUsuario, txtNuevaContraseña.Text);
 
-                // Después de establecer la contraseña, finalizamos la configuración del usuario.
-                // Esta llamada sigue perteneciendo a la lógica de login.
+
                 var logicaLogin = new cls_LogicaLogin();
                 logicaLogin.FinalizarConfiguracionInicial(_idUsuario);
 
@@ -43,7 +40,6 @@ namespace CapaVistas.Forms_Login
             }
             catch (Exception ex)
             {
-                // El nuevo método nos dará errores de validación muy específicos y claros.
                 MsgError(ex.Message);
             }
         }
@@ -67,7 +63,6 @@ namespace CapaVistas.Forms_Login
         {
             lblErrorMsg.Text = "      " + msg;
             lblErrorMsg.Visible = true;
-            // picError.Visible = true; // Descomentar si tienes este control
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

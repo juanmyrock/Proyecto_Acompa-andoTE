@@ -1,13 +1,12 @@
-﻿// CapaVistas/Forms_Menu/frmABMUsuarios.cs
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using CapaDTO;
 using CapaDTO.SistemaDTO;
 using CapaLogica;
 using CapaLogica.ABM;
+using CapaLogica.LlenarCombos;
 using CapaLogica.SistemaLogica;
-using CapaUtilidades; // Si utilizas alguna utilidad aquí
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 
 namespace CapaVistas.Forms_Menu
@@ -19,6 +18,9 @@ namespace CapaVistas.Forms_Menu
         private cls_LocalidadLogica _logicaLocalidad;
         private cls_SexoLogica _logicaSexo;
         private int _idEmpleadoSeleccionado = -1; // Variable para guardar el ID del empleado seleccionado
+        private cls_Empleado _logicaEmpleado;
+        private int _idEmpleadoSeleccionado = -1;
+        private cls_LlenarCombos _rellenador;
         public frmABMUsuarios()
         {
             InitializeComponent();
@@ -26,6 +28,8 @@ namespace CapaVistas.Forms_Menu
             _logicaTipoDNI = new cls_TipoDNILogica();
             _logicaLocalidad = new cls_LocalidadLogica();
             _logicaSexo = new cls_SexoLogica();
+            _logicaEmpleado = new cls_Empleado();
+            _rellenador = new cls_LlenarCombos();
         }
         
 
@@ -34,8 +38,8 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                List<cls_EmpleadoDTO> listaEmpleados = _logicaEmpleado.ObtenerEmpleados(); // Obtiene la lista.
-                dgvVerUser.DataSource = listaEmpleados; // Asigna al DataGridView.
+                List<cls_EmpleadoDTO> listaEmpleados = _logicaEmpleado.ObtenerEmpleados();
+                dgvVerUser.DataSource = listaEmpleados;
 
                 dgvVerUser.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dgvVerUser.ReadOnly = true;
@@ -53,22 +57,16 @@ namespace CapaVistas.Forms_Menu
 
         private void CargarCombos()
         {
+            var cargaLocalidades = _rellenador.ObtenerLocalidades();
+            var cargaSexos = _rellenador.ObtenerSexos();
+            var cargaTiposDocumento = _rellenador.ObtenerTiposDocumento();
             try
             {
-                List<cls_TipoDNIDTO> tiposDni = _logicaTipoDNI.ObtenerTiposDNI();
-                cmbTipoDNI.DataSource = tiposDni;
-                cmbTipoDNI.DisplayMember = "descripcion"; // propiedad del DTO que se muestra en el ComboBox
-                cmbTipoDNI.ValueMember = "id_tipo_dni";   // propiedad del DTO que va a ser el valor real
-
-                List<cls_LocalidadDTO> localidades = _logicaLocalidad.ObtenerLocalidades();
-                cmbLocalidad.DataSource = localidades;
-                cmbLocalidad.DisplayMember = "nombre_localidad"; 
-                cmbLocalidad.ValueMember = "id_localidad";     
-
-                List<cls_SexoDTO> sexos = _logicaSexo.ObtenerSexos();
-                cmbSexo.DataSource = sexos;
-                cmbSexo.DisplayMember = "descripcion"; 
-                cmbSexo.ValueMember = "id_sexo";      
+                
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbTipoDNI, cargaTiposDocumento.TiposDocumento, "descripcion", "id_tipo_documento");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbLocalidad, cargaLocalidades.Localidades, "nombre_localidad", "id_localidad");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbSexo, cargaSexos.Sexos, "descripcion", "id_sexo");
+                    
             }
             catch (Exception ex)
             {
@@ -86,7 +84,7 @@ namespace CapaVistas.Forms_Menu
 
         private void dgvVerUser_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= -1)
             {
                 try
                 {
@@ -149,7 +147,7 @@ namespace CapaVistas.Forms_Menu
             }     
             
         }
-
+        #region Creación de Empleado
         private void btnCrear_Click(object sender, EventArgs e)
         {
             // 1. Validar los campos de entrada
@@ -170,7 +168,7 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // Validaciones de formato (ej. DNI, NumCalle, CargaHs deben ser números)
+
             if (!int.TryParse(txtDNI.Text, out int dni) || dni <= 0)
             {
                 MessageBox.Show("El DNI debe ser un número válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -233,12 +231,12 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Ocurrió un error inesperado al intentar crear el empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        #endregion
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
         }
-
+        #region Eliminar Empleado
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             // 1. Verificar si hay un empleado seleccionado
@@ -278,7 +276,110 @@ namespace CapaVistas.Forms_Menu
                 }
             }
         }
+        #endregion
+        #region Modificar Empleado
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            // 1. Verificar si hay un empleado seleccionado para modificar
+            if (_idEmpleadoSeleccionado == -1)
+            {
+                MessageBox.Show("Por favor, seleccione un empleado de la lista para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // 2. Validar los campos de entrada
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtDNI.Text) ||
+                string.IsNullOrWhiteSpace(txtCalle.Text) ||
+                string.IsNullOrWhiteSpace(txtNumCalle.Text) ||
+                string.IsNullOrWhiteSpace(txtEmail.Text) ||
+                string.IsNullOrWhiteSpace(txtCelular.Text) ||
+                string.IsNullOrWhiteSpace(txtPuesto.Text) ||
+                string.IsNullOrWhiteSpace(txtCargaHS.Text) ||
+                cmbTipoDNI.SelectedValue == null ||
+                cmbLocalidad.SelectedValue == null ||
+                cmbSexo.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtDNI.Text, out int dni) || dni <= 0)
+            {
+                MessageBox.Show("El DNI debe ser un número válido y positivo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!int.TryParse(txtNumCalle.Text, out int numDomicilio) || numDomicilio <= 0)
+            {
+                MessageBox.Show("El número de domicilio debe ser un número válido y positivo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!decimal.TryParse(txtCargaHS.Text, out decimal cargaHs))
+            {
+                MessageBox.Show("La carga horaria debe ser un número válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cargaHs <= 0)
+            {
+                MessageBox.Show("La carga horaria debe ser mayor a 0.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DialogResult confirmacion = MessageBox.Show(
+            "El ID del empleado seleccionado es: " + _idEmpleadoSeleccionado + "\n¿Seguro que desea modificarlo?", "Confirmar Modificación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            if (confirmacion == DialogResult.No)
+            {
+                return;
+            }
+
+            // 3. Crear un objeto DTO con los datos actualizados del formulario
+            try
+            {
+                cls_EmpleadoDTO empleadoModificado = new cls_EmpleadoDTO
+                {
+                    id_empleado = _idEmpleadoSeleccionado,
+                    puesto = txtPuesto.Text,
+                    nombre = txtNombre.Text,
+                    apellido = txtApellido.Text,
+                    id_sexo = Convert.ToInt32(cmbSexo.SelectedValue),
+                    id_tipo_dni = Convert.ToInt32(cmbTipoDNI.SelectedValue),
+                    dni = Convert.ToInt32(txtDNI.Text),
+                    fecha_nac = dateNacimiento.Value,
+                    id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
+                    domicilio = txtCalle.Text,
+                    num_domicilio = Convert.ToInt32(txtNumCalle.Text),
+                    carga_hs = cargaHs,
+                    email = txtEmail.Text,
+                    telefono = txtCelular.Text
+                };
+
+                // 4. Llamar al método de actualización de la capa lógica
+                bool actualizado = _logicaEmpleado.ActualizarEmpleado(empleadoModificado);
+
+                if (actualizado)
+                {
+                    MessageBox.Show("Empleado modificado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
+                    CargarEmpleadosEnDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo modificar el empleado. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                MessageBox.Show("Error de formato en los datos ingresados. Por favor, asegúrese de que todos los campos numéricos y de fecha son correctos: " + ex.Message, "Error de Conversión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado al intentar modificar el empleado: " + ex.Message, "Error General", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
         private void dgvVerUser_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvVerUser.CurrentRow != null && dgvVerUser.CurrentRow.Index >= 0)
@@ -325,8 +426,8 @@ namespace CapaVistas.Forms_Menu
                     txtPuesto.Text = empleadoSeleccionado.puesto;
                     txtCargaHS.Text = empleadoSeleccionado.carga_hs.ToString();
 
-                    if (cmbTipoDNI.DataSource is List<cls_TipoDNIDTO> tiposDniList &&
-                        tiposDniList.Exists(t => t.id_tipo_dni == empleadoSeleccionado.id_tipo_dni))
+                    if (cmbTipoDNI.DataSource is List<cls_TipoDocumentoDTO> tiposDniList &&
+                        tiposDniList.Exists(t => t.id_tipo_documento == empleadoSeleccionado.id_tipo_dni))
                     {
                         cmbTipoDNI.SelectedValue = empleadoSeleccionado.id_tipo_dni;
                     }
@@ -377,109 +478,6 @@ namespace CapaVistas.Forms_Menu
                 _idEmpleadoSeleccionado = -1;
             }
         }
-
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            // 1. Verificar si hay un empleado seleccionado para modificar
-            if (_idEmpleadoSeleccionado == -1)
-            {
-                MessageBox.Show("Por favor, seleccione un empleado de la lista para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // 2. Validar los campos de entrada
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                string.IsNullOrWhiteSpace(txtDNI.Text) ||
-                string.IsNullOrWhiteSpace(txtCalle.Text) ||
-                string.IsNullOrWhiteSpace(txtNumCalle.Text) ||
-                string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtCelular.Text) ||
-                string.IsNullOrWhiteSpace(txtPuesto.Text) ||
-                string.IsNullOrWhiteSpace(txtCargaHS.Text) ||
-                cmbTipoDNI.SelectedValue == null ||
-                cmbLocalidad.SelectedValue == null ||
-                cmbSexo.SelectedValue == null)
-            {
-                MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!int.TryParse(txtDNI.Text, out int dni) || dni <= 0)
-            {
-                MessageBox.Show("El DNI debe ser un número válido y positivo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!int.TryParse(txtNumCalle.Text, out int numDomicilio) || numDomicilio <= 0)
-            {
-                MessageBox.Show("El número de domicilio debe ser un número válido y positivo.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!decimal.TryParse(txtCargaHS.Text, out decimal cargaHs))
-            {
-                MessageBox.Show("La carga horaria debe ser un número válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (cargaHs <= 0)
-            {
-                MessageBox.Show("La carga horaria debe ser mayor a 0.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-                DialogResult confirmacion = MessageBox.Show(
-                "El ID del empleado seleccionado es: " + _idEmpleadoSeleccionado + "\n¿Seguro que desea modificarlo?","Confirmar Modificación",MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            
-            if (confirmacion == DialogResult.No)
-            {
-                return;
-            }
-
-            // 3. Crear un objeto DTO con los datos actualizados del formulario
-            try
-            {
-                cls_EmpleadoDTO empleadoModificado = new cls_EmpleadoDTO
-                {
-                    id_empleado = _idEmpleadoSeleccionado,
-                    puesto = txtPuesto.Text,
-                    nombre = txtNombre.Text,
-                    apellido = txtApellido.Text,
-                    id_sexo = Convert.ToInt32(cmbSexo.SelectedValue),
-                    id_tipo_dni = Convert.ToInt32(cmbTipoDNI.SelectedValue),
-                    dni = Convert.ToInt32(txtDNI.Text),
-                    fecha_nac = dateNacimiento.Value,
-                    id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
-                    domicilio = txtCalle.Text,
-                    num_domicilio = Convert.ToInt32(txtNumCalle.Text),
-                    carga_hs = cargaHs,
-                    email = txtEmail.Text,
-                    telefono = txtCelular.Text
-                };
-
-                // 4. Llamar al método de actualización de la capa lógica
-                bool actualizado = _logicaEmpleado.ActualizarEmpleado(empleadoModificado);
-
-                if (actualizado)
-                {
-                    MessageBox.Show("Empleado modificado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarCampos(); 
-                    CargarEmpleadosEnDataGridView(); 
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo modificar el empleado. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (InvalidCastException ex)
-            {
-                MessageBox.Show("Error de formato en los datos ingresados. Por favor, asegúrese de que todos los campos numéricos y de fecha son correctos: " + ex.Message, "Error de Conversión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocurrió un error inesperado al intentar modificar el empleado: " + ex.Message, "Error General", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             CargarEmpleadosEnDataGridView();

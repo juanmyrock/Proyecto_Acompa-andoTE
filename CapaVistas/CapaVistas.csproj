@@ -70,6 +70,12 @@
     <Compile Include="Forms Menu\frmABMUsuarios.Designer.cs">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmAdministrarRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmAdministrarRoles.Designer.cs">
+      <DependentUpon>frmAdministrarRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmAdminSyst.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,12 @@
     </Compile>
     <Compile Include="Forms Menu\frmGestionarUsuario.Designer.cs">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmPermisos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmPermisos.Designer.cs">
+      <DependentUpon>frmPermisos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
@@ -108,11 +120,17 @@
     <EmbeddedResource Include="Forms Menu\frmABMUsuarios.resx">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmAdministrarRoles.resx">
+      <DependentUpon>frmAdministrarRoles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmGestionarUsuario.resx">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmPermisos.resx">
+      <DependentUpon>frmPermisos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

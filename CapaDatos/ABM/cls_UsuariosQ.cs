@@ -6,8 +6,6 @@ using CapaDTO;
 
 namespace CapaDatos.ABM
 {
-    /// Clase de acceso a datos para todas las operaciones de gestión
-    /// y administración de la tabla Usuarios.
     public class cls_UsuariosQ
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
@@ -59,8 +57,8 @@ namespace CapaDatos.ABM
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
             _ejecutar.ConsultaWrite(sql, parametros);
         }
-
         /// Cambia el estado de un usuario (activo/inactivo).
+        /// </summary>
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
@@ -75,10 +73,10 @@ namespace CapaDatos.ABM
                 new SqlParameter("@idUsuario", idUsuario),
                 new SqlParameter("@esActivo", nuevoEstado)
             };
-            _ejecutar.ConsultaWrite(sql, parametros);
-        }
 
         /// Actualiza el rol de un usuario específico.
+        /// Actualiza el rol de un usuario específico.
+        /// </summary>
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";

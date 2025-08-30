@@ -32,11 +32,10 @@ namespace CapaLogica.Login
                 }
             }
 
-            public bool ModificarParametros(cls_ParamContraseñaDTO parametros) // Cambiado a bool
+            public bool ModificarParametros(cls_ParamContraseñaDTO parametros)
         {
             try
             {
-                // Llama al método de la capa de datos para realizar la actualización
                 return parametrosContraQ.ModificarParametros(parametros);
             }
             catch (Exception ex)

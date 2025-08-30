@@ -118,9 +118,6 @@ namespace CapaDatos
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        // Actualiza el estado de un usuario después de que completa su configuración inicial.
-        // Marca los flags de primer ingreso y contraseña random como falsos.
-        // <param name="idUsuario">El ID del usuario que se va a actualizar.</param>
         public void FinalizarConfiguracionInicial(int idUsuario)
         {
             string sql = @"UPDATE Usuarios 
@@ -144,8 +141,7 @@ namespace CapaDatos
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// Obtiene los datos de un usuario a partir de su ID.
-        /// </summary>
+   
         public cls_UsuarioDTO ObtenerUsuarioEmpleadoPorId(int idUsuario)
         {
             // Es la misma consulta, pero buscando por id_usuario

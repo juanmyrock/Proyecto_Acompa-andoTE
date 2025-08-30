@@ -12,6 +12,7 @@ namespace CapaDatos
 
         public List<cls_PermisoDTO> ObtenerPermisosEfectivosPorUsuario(int idUsuario)
         {
+            // ... (tu código existente para este método)
             string sql = @"
                 -- Permisos por ROL
                 SELECT p.id_permiso, p.nombre_permiso, p.descripcion, 'Rol' AS origen
@@ -52,6 +53,76 @@ namespace CapaDatos
             }
 
             return lista;
+        }
+
+        public List<cls_PermisoDTO> ObtenerTodosLosPermisos()
+        {
+            string sql = @"
+                SELECT id_permiso, nombre_permiso, descripcion
+                FROM Permisos";
+
+            DataTable tabla = _ejecutar.ConsultaRead(sql, new List<SqlParameter>());
+
+            var lista = new List<cls_PermisoDTO>();
+            foreach (DataRow row in tabla.Rows)
+            {
+                lista.Add(new cls_PermisoDTO
+                {
+                    IdPermiso = Convert.ToInt32(row["id_permiso"]),
+                    NombrePermiso = row["nombre_permiso"].ToString(),
+                    Descripcion = row["descripcion"]?.ToString()
+                });
+            }
+            return lista;
+        }
+
+        public List<cls_PermisoDTO> ObtenerPermisosPorRol(int idRol)
+        {
+            string sql = @"
+                SELECT p.id_permiso, p.nombre_permiso, p.descripcion
+                FROM Rol_Permiso rp
+                INNER JOIN Permisos p ON rp.id_permiso = p.id_permiso
+                WHERE rp.id_rol = @idRol";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idRol", idRol)
+            };
+
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            var lista = new List<cls_PermisoDTO>();
+            foreach (DataRow row in tabla.Rows)
+            {
+                lista.Add(new cls_PermisoDTO
+                {
+                    IdPermiso = Convert.ToInt32(row["id_permiso"]),
+                    NombrePermiso = row["nombre_permiso"].ToString(),
+                    Descripcion = row["descripcion"]?.ToString()
+                });
+            }
+            return lista;
+        }
+
+        public void AsignarPermisoARol(int idRol, int idPermiso)
+        {
+            string sql = "INSERT INTO Rol_Permiso (id_rol, id_permiso) VALUES (@idRol, @idPermiso)";
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idRol", idRol),
+                new SqlParameter("@idPermiso", idPermiso)
+            };
+            _ejecutar.ConsultaCUD(sql, parametros);
+        }
+        public void DesasignarPermisoDeRol(int idRol, int idPermiso)
+        {
+            string sql = "DELETE FROM Rol_Permiso WHERE id_rol = @idRol AND id_permiso = @idPermiso";
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@idRol", idRol),
+                new SqlParameter("@idPermiso", idPermiso)
+            };
+            _ejecutar.ConsultaCUD(sql, parametros);
         }
     }
 }
