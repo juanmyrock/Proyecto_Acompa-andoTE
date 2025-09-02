@@ -1,6 +1,6 @@
 ﻿namespace CapaVistas.Forms_Menu
 {
-    partial class frmAT
+    partial class frmPacientes  
     {
         /// <summary>
         /// Required designer variable.

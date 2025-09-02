@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CapaVistas.Forms_Menu
 {
-    public partial class frmAT : Form
+    public partial class frmPacientes : Form
     {
-        public frmAT()
+        public frmPacientes()
         {
             InitializeComponent();
         }

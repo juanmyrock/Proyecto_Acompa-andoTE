@@ -46,8 +46,8 @@ namespace CapaVistas
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             this.btnOcultar = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.lblUserLog = new System.Windows.Forms.Label();
             this.btnLogOut = new System.Windows.Forms.PictureBox();
+            this.lblUserLog = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnUsuarios = new System.Windows.Forms.Button();
@@ -205,18 +205,8 @@ namespace CapaVistas
             this.panelMenu.Location = new System.Drawing.Point(0, 35);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(2);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(217, 760);
+            this.panelMenu.Size = new System.Drawing.Size(217, 753);
             this.panelMenu.TabIndex = 3;
-            // 
-            // lblUserLog
-            // 
-            this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUserLog.Location = new System.Drawing.Point(31, 203);
-            this.lblUserLog.Name = "lblUserLog";
-            this.lblUserLog.Size = new System.Drawing.Size(132, 60);
-            this.lblUserLog.TabIndex = 0;
-            this.lblUserLog.Text = "Don Pepito";
             // 
             // btnLogOut
             // 
@@ -230,6 +220,16 @@ namespace CapaVistas
             this.btnLogOut.TabIndex = 20;
             this.btnLogOut.TabStop = false;
             this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
+            // 
+            // lblUserLog
+            // 
+            this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblUserLog.Location = new System.Drawing.Point(31, 203);
+            this.lblUserLog.Name = "lblUserLog";
+            this.lblUserLog.Size = new System.Drawing.Size(132, 60);
+            this.lblUserLog.TabIndex = 0;
+            this.lblUserLog.Text = "Don Pepito";
             // 
             // panel8
             // 
@@ -481,6 +481,7 @@ namespace CapaVistas
             this.btnPacientes.TabIndex = 1;
             this.btnPacientes.Text = "Pacientes";
             this.btnPacientes.UseVisualStyleBackColor = false;
+            this.btnPacientes.Click += new System.EventHandler(this.btnPacientes_Click);
             // 
             // logoMenu
             // 
@@ -587,7 +588,7 @@ namespace CapaVistas
             this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
             this.panelChildFrm.Name = "panelChildFrm";
-            this.panelChildFrm.Size = new System.Drawing.Size(1063, 700);
+            this.panelChildFrm.Size = new System.Drawing.Size(1063, 693);
             this.panelChildFrm.TabIndex = 4;
             // 
             // frmMenu
@@ -596,7 +597,7 @@ namespace CapaVistas
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(1280, 795);
+            this.ClientSize = new System.Drawing.Size(1280, 788);
             this.Controls.Add(this.panelChildFrm);
             this.Controls.Add(this.panelTitulo);
             this.Controls.Add(this.panelMenu);

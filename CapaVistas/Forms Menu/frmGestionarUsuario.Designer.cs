@@ -175,6 +175,7 @@
             this.btnGestionPermisos.TabIndex = 8;
             this.btnGestionPermisos.Text = "Gestionar Permisos";
             this.btnGestionPermisos.UseVisualStyleBackColor = true;
+            this.btnGestionPermisos.Click += new System.EventHandler(this.btnGestionPermisos_Click);
             // 
             // frmGestionarUsuario
             // 

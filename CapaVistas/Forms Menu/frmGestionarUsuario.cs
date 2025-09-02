@@ -225,5 +225,11 @@ namespace CapaVistas.Forms_Menu
                 }
             }
         }
+
+        private void btnGestionPermisos_Click(object sender, EventArgs e)
+        {
+            var frmPermisos = new frmPermisos();
+            frmPermisos.ShowDialog();
+        }
     }
 }
