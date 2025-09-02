@@ -88,6 +88,12 @@
     <Compile Include="Forms Menu\frmGestionarUsuario.Designer.cs">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmPacientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmPacientes.Designer.cs">
+      <DependentUpon>frmPacientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmPermisos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmGestionarUsuario.resx">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmPacientes.resx">
+      <DependentUpon>frmPacientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmPermisos.resx">
       <DependentUpon>frmPermisos.cs</DependentUpon>
