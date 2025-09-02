@@ -6,14 +6,13 @@ using CapaDTO.SistemaDTO;
 
 namespace CapaDatos
 {
-    public class cls_EmpleadosQ // Anteriormente cls_EmpleadosQ
+    public class cls_EmpleadosQ
     {
-        // Instancia de cls_EjecutarQ para manejar las operaciones de DB
         private cls_EjecutarQ _ejecutor;
 
         public cls_EmpleadosQ()
         {
-            _ejecutor = new cls_EjecutarQ(); // Inicializa el ejecutor de consultas
+            _ejecutor = new cls_EjecutarQ();
         }
 
         public bool InsertarEmpleado(cls_EmpleadoDTO empleado)
@@ -120,8 +119,8 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
-                return true; // Asumimos éxito si no hay excepción
+                _ejecutor.ConsultaWrite(query, parametros); 
+                return true; 
             }
             catch (Exception ex)
             {
@@ -140,8 +139,8 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); // Llama a ConsultaWrite de cls_EjecutarQ
-                return true; // Asumimos éxito si no hay excepción
+                _ejecutor.ConsultaWrite(query, parametros); 
+                return true;
             }
             catch (Exception ex)
             {

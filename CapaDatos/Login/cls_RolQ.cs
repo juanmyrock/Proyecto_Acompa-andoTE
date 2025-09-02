@@ -8,27 +8,27 @@ namespace CapaDatos
 {
     public class cls_RolQ
     {
-        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
+        private cls_EjecutarQ _ejecutar;
 
-        public List<cls_RolDTO> ObtenerTodosLosRoles()
+        public cls_RolQ()
         {
-            string sql = "SELECT id_rol, nombre_rol, descripcion FROM Roles";
-            DataTable tabla = _ejecutar.ConsultaRead(sql);
-
-            var lista = new List<cls_RolDTO>();
-            foreach (DataRow row in tabla.Rows)
-            {
-                lista.Add(new cls_RolDTO
-                {
-                    IdRol = Convert.ToInt32(row["id_rol"]),
-                    NombreRol = row["nombre_rol"].ToString(),
-                    Descripcion = row["descripcion"]?.ToString()
-                });
-            }
-
-            return lista;
+            _ejecutar = new cls_EjecutarQ();
         }
-
+        #region ObtenerTodosLosRoles
+        public DataTable ObtenerTodosLosRoles()
+        {
+            string query = "SELECT id_rol, nombre_rol, descripcion FROM Roles";
+            try
+            {
+                return _ejecutar.ConsultaRead(query);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener roles: {ex.Message}");
+                return new DataTable();
+            }
+        }
+        #endregion
         public cls_RolDTO ObtenerRolPorId(int idRol)
         {
             string sql = "SELECT id_rol, nombre_rol, descripcion FROM Roles WHERE id_rol = @idRol";
@@ -64,7 +64,7 @@ namespace CapaDatos
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        public void ActualizarRol(cls_RolDTO rol)
+        public bool ActualizarRol(cls_RolDTO rol)
         {
             string sql = @"
                 UPDATE Roles
@@ -78,8 +78,16 @@ namespace CapaDatos
                 new SqlParameter("@nombre", rol.NombreRol),
                 new SqlParameter("@descripcion", (object)rol.Descripcion ?? DBNull.Value)
             };
-
-            _ejecutar.ConsultaWrite(sql, parametros);
+            try 
+            { 
+                _ejecutar.ConsultaWrite(sql, parametros);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al actualizar el rol: " + ex.Message);
+                return false;
+            }
         }
 
         public void EliminarRol(int idRol)

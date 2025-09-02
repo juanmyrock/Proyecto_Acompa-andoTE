@@ -16,13 +16,10 @@ namespace CapaVistas.Forms_Login
         private int _preguntasRequeridas;
         private int _preguntaActualNro = 1;
 
-        // Lista maestra de preguntas desde la BD
         private List<cls_PreguntaDTO> _listaMaestraPreguntas;
 
-        // Diccionario para guardar temporalmente las respuestas del usuario
         private Dictionary<int, string> _respuestasTemporales = new Dictionary<int, string>();
 
-        // Variable para el Modo Recuperación (RESPONDER)
         private cls_PreguntaDTO _preguntaParaResponder;
 
         public frmPreguntas(int idUsuario, string modo)
@@ -36,7 +33,6 @@ namespace CapaVistas.Forms_Login
 
         private void frmPreguntas_Load(object sender, EventArgs e)
         {
-            // Ocultamos el mensaje de error al inicio
             lblErrorMsg.Visible = false;
             picError.Visible = false;
 
@@ -59,11 +55,9 @@ namespace CapaVistas.Forms_Login
 
             try
             {
-                // Obtenemos la configuración una sola vez
                 _preguntasRequeridas = logica.ObtenerCantidadPreguntasRequeridas();
                 _listaMaestraPreguntas = logica.ObtenerPreguntasDisponibles();
 
-                // Preparamos la UI para la primera pregunta
                 CargarSiguientePregunta();
             }
             catch (Exception ex)
@@ -73,20 +67,16 @@ namespace CapaVistas.Forms_Login
             }
         }
 
-        // Actualiza la UI para mostrar la pregunta actual.
         private void CargarSiguientePregunta()
         {
-            // Actualizamos el título y las etiquetas para guiar al usuario
             lblLogin.Text = $"Pregunta {_preguntaActualNro} de {_preguntasRequeridas}";
             lblPregunta.Text = "Seleccione una pregunta:";
             lblRespuesta.Text = "Escriba su respuesta:";
 
-            // Filtramos la lista maestra, quitando las preguntas que ya fueron seleccionadas
+            // Filtramos la lista maestra, sacando las preguntas que ya fueron seleccionadas
             var preguntasParaMostrar = _listaMaestraPreguntas
                 .Where(p => !_respuestasTemporales.ContainsKey(p.IdPregunta))
                 .ToList();
-
-            // cargar el ComboBox con las preguntas restantes
             cls_LlenarCombos.Cargar(cmbPregunta, preguntasParaMostrar, "TextoPregunta", "IdPregunta");
 
             // Limpiamos la respuesta anterior
@@ -178,15 +168,12 @@ namespace CapaVistas.Forms_Login
 
                     if (esCorrecta)
                     {
-                        // ¡Respuesta correcta! Ahora orquestamos el envío del email.
                         var logicaLogin = new cls_LogicaLogin();
                         var logicaContraseña = new cls_LogicaContraseña();
 
-                        // Obtenemos los datos del usuario para el email
-                        cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacionPorId(_idUsuario); // Necesitarás añadir este método
+                        cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacionPorId(_idUsuario);
 
-                        // Llamamos al método que genera, guarda y envía la contraseña temporal
-                        logicaContraseña.GenerarYEnviarContraseñaTemporal(usuario.IdUsuario, usuario.Email, usuario.Username); // Necesitarás el email en tu DTO
+                        logicaContraseña.GenerarYEnviarContraseñaTemporal(usuario.IdUsuario, usuario.Email, usuario.Username); // 
 
                         this.DialogResult = DialogResult.OK;
                         this.Close();

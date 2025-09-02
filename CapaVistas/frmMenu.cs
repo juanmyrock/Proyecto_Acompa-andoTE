@@ -43,7 +43,7 @@ namespace CapaVistas
         #endregion
 
         #region Botones de la Barra
-        private void btnCerrar_Click(object sender, EventArgs e) //para cerrar la aplicación
+        private void btnCerrar_Click(object sender, EventArgs e)
         {
             var confirmacion = MessageBox.Show(
                 "¿Está seguro que desea salir?", "¡Alerta!",
@@ -60,9 +60,6 @@ namespace CapaVistas
                     // 2. Llamar al método que cierra la sesión en la BD y en el Singleton
                     logicaLogin.CerrarSesion();
 
-                    // 
-                    // 2. Application.Exit() cierra la instancia actual.
-                    // Es la forma más segura de garantizar que no queden datos en memoria.
                     Application.Exit();
                 }
                 catch (Exception ex)
@@ -72,19 +69,19 @@ namespace CapaVistas
             }
         }
         
-        private void btnMinimize_Click(object sender, EventArgs e) //para minimizar a modo ventana
+        private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
             //btnMinimize.Visible = false;
             //btnMaximize.Visible = true;
         }
 
-        private void btnOcultar_Click(object sender, EventArgs e) //para ocultar/minimizar la aplicación
+        private void btnOcultar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnMaximize_Click(object sender, EventArgs e) //para maximizar la ventana a pantalla completa
+        private void btnMaximize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
             //btnMinimize.Visible = true;
@@ -94,9 +91,9 @@ namespace CapaVistas
 
         #region Config y Estilos Botones Menú
 
-        private void btnLogOut_Click(object sender, EventArgs e) //Botón de deslogueo
+        private void btnLogOut_Click(object sender, EventArgs e)
         {
-            // Preguntar al usuario para confirmar la acción
+   
             var confirmacion = MessageBox.Show(
                 "¿Está seguro de que desea cerrar la sesión?",
                 "Confirmar Cierre de Sesión",
@@ -114,8 +111,6 @@ namespace CapaVistas
                     logicaLogin.CerrarSesion();
 
                     // 3. Reiniciar la aplicación para volver a la pantalla de login de forma limpia
-                    // Application.Restart() cierra la instancia actual y lanza una nueva.
-                    // Es la forma más segura de garantizar que no queden datos en memoria.
                     Application.Restart();
                 }
                 catch (Exception ex)
@@ -156,13 +151,13 @@ namespace CapaVistas
 
         #region Botones del Menú y sus Forms
 
-        private void btnEmpleados_Click(object sender, EventArgs e)
-        {
-            //OpenChildForm(new CapaVistas.Form_Menu.frmEmpleados(), sender);
-        }
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
             OpenChildForm(new CapaVistas.Forms_Menu.frmABMUsuarios(), sender);
+        }
+        private void btnPacientes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new CapaVistas.Forms_Menu.frmPacientes(), sender);
         }
 
 
@@ -174,29 +169,16 @@ namespace CapaVistas
         {
             var frmAdminSyst = new frmAdminSyst();
             
-            frmAdminSyst.ShowDialog();
-                
-            
-                
-
-            //try
-            //{
-            //    cls_ParamContraseñaDTO parametrosContra = new cls_ParamContraseñaDTO();
-            //    parametrosContra.CantidadPreguntasSeguridad = 
-            //    cls_ParamContraseñaDTO TraerDatos()
-            //    {
-                    
-            //    }
-            //}
-            //catch 
-            //{
-            
-            //}
-           
+            frmAdminSyst.ShowDialog(); 
         }
+
+        private void btnRoles_Click(object sender, EventArgs e)
+        {
+            frmAdministrarRoles administrarRoles = new frmAdministrarRoles();
+            administrarRoles.ShowDialog();
+            
+        }
+
+       
     }
-
-
-
-
 }

@@ -49,11 +49,11 @@
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelar.Font = new System.Drawing.Font("Century Gothic", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.ForeColor = System.Drawing.Color.LightGray;
-            this.btnCancelar.Location = new System.Drawing.Point(64, 349);
+            this.btnCancelar.Location = new System.Drawing.Point(255, 349);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(136, 44);
-            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.TabIndex = 4;
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -61,11 +61,11 @@
             // lblLogin
             // 
             this.lblLogin.AutoSize = true;
-            this.lblLogin.Font = new System.Drawing.Font("Century Gothic", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogin.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLogin.ForeColor = System.Drawing.Color.White;
             this.lblLogin.Location = new System.Drawing.Point(12, 11);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(432, 44);
+            this.lblLogin.Size = new System.Drawing.Size(398, 41);
             this.lblLogin.TabIndex = 22;
             this.lblLogin.Text = "Recuperar Contraseña";
             // 
@@ -99,11 +99,11 @@
             this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAceptar.Font = new System.Drawing.Font("Century Gothic", 13.74545F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.ForeColor = System.Drawing.Color.LightGray;
-            this.btnAceptar.Location = new System.Drawing.Point(248, 349);
+            this.btnAceptar.Location = new System.Drawing.Point(45, 349);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(0);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(123, 44);
-            this.btnAceptar.TabIndex = 4;
+            this.btnAceptar.TabIndex = 3;
             this.btnAceptar.Text = "ACEPTAR";
             this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -126,7 +126,7 @@
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblErrorMsg.Location = new System.Drawing.Point(12, 240);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(413, 28);
+            this.lblErrorMsg.Size = new System.Drawing.Size(398, 95);
             this.lblErrorMsg.TabIndex = 26;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;
@@ -159,7 +159,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.ClientSize = new System.Drawing.Size(448, 402);
+            this.ClientSize = new System.Drawing.Size(419, 402);
             this.Controls.Add(this.txtRepetirContraseña);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.picError);

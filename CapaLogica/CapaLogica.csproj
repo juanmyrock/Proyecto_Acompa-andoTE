@@ -45,11 +45,10 @@
   <ItemGroup>
     <Compile Include="ABM\cls_LogicaGestionEmpleados.cs" />
     <Compile Include="ABM\cls_LogicaGestionarUsuarios.cs" />
-    <Compile Include="ABM\cls_LogicaRoles.cs" />
+    <Compile Include="ABM\cls_Permisos.cs" />
+    <Compile Include="ABM\cls_Rol.cs" />
+    <Compile Include="LlenarCombos\cls_LlenarCombos.cs" />
     <Compile Include="Login\cls_LogicaContraseña.cs" />
-    <Compile Include="LlenarCombos\cls_LocalidadLogica.cs" />
-    <Compile Include="LlenarCombos\cls_SexoLogica.cs" />
-    <Compile Include="LlenarCombos\cls_TipoDNILogica.cs" />
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Login\cls_ParametrosContraseña.cs" />
     <Compile Include="Login\cls_LogicaPreguntas.cs" />

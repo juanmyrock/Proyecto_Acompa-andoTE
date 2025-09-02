@@ -8,17 +8,13 @@ using System.Transactions;
 
 namespace CapaLogica.ABM
 {
-    /// Contiene toda la lógica de negocio para la administración de usuarios
-    /// (desbloquear, cambiar estado, actualizar rol, etc.).
     public class cls_LogicaGestionarUsuarios
     {
         private readonly cls_ConectarUserQ conectarUser = new cls_ConectarUserQ();
         private readonly cls_UsuariosQ _userDatos = new cls_UsuariosQ();
         private readonly cls_ContraseñasQ _contraseñasDatos = new cls_ContraseñasQ();
-        // El servicio de email ahora se crea solo cuando se necesita
-        private readonly cls_ServicioEmail _servicioEmail = new cls_ServicioEmail();
 
-        /// Obtiene los datos de un usuario para mostrarlos en el formulario de gestión.
+        //obtiene los datos de un usuario para mostrarlos en el formulario de gestión
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
             var usuario = _userDatos.ObtenerUsuarioParaGestion(idUsuario);
@@ -29,19 +25,19 @@ namespace CapaLogica.ABM
             return usuario;
         }
 
-        /// Llama a la capa de datos para desbloquear a un usuario.
+        //llama a la capa de datos para desbloquear a un usuario
         public void DesbloquearUsuario(int idUsuario)
         {
             _userDatos.DesbloquearUsuario(idUsuario);
         }
 
-        /// Llama a la capa de datos para cambiar el estado (activo/inactivo) de un usuario.
+        //llama a la capa de datos para cambiar el estado (activo/inactivo) de un usuario
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             _userDatos.CambiarEstadoUsuario(idUsuario, nuevoEstado);
         }
 
-        /// Llama a la capa de datos para actualizar el rol de un usuario.
+        //llama a la capa de datos para actualizar el rol de un usuario
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             _userDatos.ActualizarRolUsuario(idUsuario, idRol);
@@ -100,7 +96,7 @@ namespace CapaLogica.ABM
             // Si esto falla, el usuario ya está creado en la BD, pero es un error menos crítico.
             try
             {
-                _servicioEmail.EnviarContraseñaTemporal(email, nombreCompleto, contraseñaTemporal);
+                //_servicioEmail.EnviarContraseñaTemporal(email, nombreCompleto, contraseñaTemporal);
             }
             catch (Exception ex)
             {

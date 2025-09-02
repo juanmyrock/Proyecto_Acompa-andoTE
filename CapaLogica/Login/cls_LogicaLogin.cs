@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CapaDatos;
 using CapaDatos.Login;
 using CapaDTO;
@@ -27,9 +28,6 @@ namespace CapaLogica
             _sesiones = new cls_SesionActivaQ();
             intentosMaximosPermitidos = _userDatos.ObtenerCantidadIntentosMaximos();
         }
-
-        // El método ahora devuelve 'ResultadoLoginDTO' en lugar de 'bool' ---
-        // y acepta la IP del cliente como parámetro para el registro de sesión ---
         public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente, bool forzarCierre = false)
         {
             // 1. Verificar usuario
@@ -70,13 +68,10 @@ namespace CapaLogica
             {
                 if (forzarCierre)
                 {
-                    // Si el usuario confirmó, cerramos la sesión vieja antes de continuar.
                     _sesiones.CerrarSesion(usuario.IdUsuario);
                 }
                 else
                 {
-                    // Si no se está forzando, lanzamos una excepción genérica
-                    // con nuestro este string como mensaje.
                     throw new Exception("SESION_ACTIVA");
                 }
             }
@@ -100,7 +95,6 @@ namespace CapaLogica
             // 11. Iniciar sesión local (Singleton)
             SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
-            // Devolver el objeto DTO con el resultado completo ---
             return new ResultadoLoginDTO
             {
                 Exitoso = true,
@@ -117,7 +111,6 @@ namespace CapaLogica
             {
                 try
                 {
-                    // Cerrar sesión en BD
                     _sesiones.CerrarSesion(SesionUsuario.Instancia.IdUsuario);
 
                     // Registrar en bitácora
@@ -130,9 +123,6 @@ namespace CapaLogica
                 }
             }
         }
-
-        // Verifica si un nombre de usuario existe y devuelve sus datos básicos si es así.
-        // Usado en el primer paso de "Olvidé mi contraseña".
         public cls_UsuarioDTO ObtenerDatosParaRecuperacion(string username)
         {
             cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(username);
@@ -144,17 +134,14 @@ namespace CapaLogica
             {
                 throw new Exception("El usuario no se encuentra activo.");
             }
-            // Si todo está bien, devuelve los datos del usuario.
             return usuario;
         }
 
 
-        // Llama a la capa de datos para marcar la configuración inicial de un usuario como completada.
-        // <param name="idUsuario">El ID del usuario a actualizar.</param>
+
         public void FinalizarConfiguracionInicial(int idUsuario)
         {
-            // Simplemente pasa la llamada a la capa de datos.
-            // Aquí podrías añadir lógica de negocio adicional si fuera necesario en el futuro.
+
             _userDatos.FinalizarConfiguracionInicial(idUsuario);
         }
 
@@ -167,6 +154,24 @@ namespace CapaLogica
             }
             return usuario;
         }
+        #region Validar Credenciales
+        public string ValidarCredenciales(string usuario, string contrasena)
+        {
 
+            if (string.IsNullOrWhiteSpace(usuario) && string.IsNullOrWhiteSpace(contrasena))
+            {
+                return "Complete los campos Usuario y Contraseña";
+            }
+            else if (string.IsNullOrWhiteSpace(usuario))
+            {
+                return "Complete el campo Usuario";
+            }
+            else if (string.IsNullOrWhiteSpace(contrasena))
+            {
+                return "Complete el campo Contraseña";
+            }
+            return null;
+        }
+        #endregion
     }
 }

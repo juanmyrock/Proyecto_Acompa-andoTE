@@ -16,7 +16,7 @@ namespace CapaDTO
         public int? IntentosFallidos { get; set; }
         public int? IdRol { get; set; }
 
-        // Datos del empleado asociados
+        // datos del empleado asociados
         public string NombreEmpleado { get; set; }
         public string ApellidoEmpleado { get; set; }
         public string Email { get; set; }

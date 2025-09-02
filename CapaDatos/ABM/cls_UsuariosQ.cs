@@ -6,8 +6,6 @@ using CapaDTO;
 
 namespace CapaDatos.ABM
 {
-    /// Clase de acceso a datos para todas las operaciones de gestión
-    /// y administración de la tabla Usuarios.
     public class cls_UsuariosQ
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
@@ -59,8 +57,7 @@ namespace CapaDatos.ABM
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
             _ejecutar.ConsultaWrite(sql, parametros);
         }
-
-        /// Cambia el estado de un usuario (activo/inactivo).
+        // Cambia el estado de un usuario (activo/inactivo).
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
@@ -78,7 +75,7 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// Actualiza el rol de un usuario específico.
+        // Actualiza el rol de un usuario específico.
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";
@@ -90,8 +87,8 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        /// Verifica si ya existe un registro en la tabla Usuarios para un id_usuario específico.
-        /// <returns>True si el usuario existe, de lo contrario False.</returns>
+        // Verifica si ya existe un registro en la tabla Usuarios para un id_usuario específico.
+        // True si el usuario existe, de lo contrario False.
         public bool ExisteUsuario(int idUsuario)
         {
             string sql = "SELECT COUNT(1) FROM Usuarios WHERE id_usuario = @idUsuario";
@@ -100,7 +97,7 @@ namespace CapaDatos.ABM
             return Convert.ToInt32(tabla.Rows[0][0]) > 0;
         }
 
-        /// Crea un nuevo registro de Usuario asociado a un Empleado existente.
+        // Crea un nuevo registro de Usuario asociado a un Empleado existente.
         public void CrearNuevoUsuario(int idUsuario, string username, int idRol)
         {
             // Al crear un usuario, siempre lo marcamos para que configure su cuenta en el primer login.

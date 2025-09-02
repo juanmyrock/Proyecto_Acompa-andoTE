@@ -47,9 +47,7 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
-    <Compile Include="Utilidades\cls_LocalidadQ.cs" />
-    <Compile Include="Utilidades\cls_SexoQ.cs" />
-    <Compile Include="Utilidades\cls_TipoDNISQ.cs" />
+    <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />
     <Compile Include="Login\cls_ParamContraseñaQ.cs" />

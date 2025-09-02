@@ -69,5 +69,38 @@ namespace CapaDatos
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
+        public int ConsultaCUD(string sql, List<SqlParameter> parametros)
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                using (SqlConnection connection = GetConexion())
+                {
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        if (parametros != null)
+                        {
+                            // Agrega los parámetros a la colección de parámetros del comando
+                            command.Parameters.AddRange(parametros.ToArray());
+                        }
+
+                        connection.Open(); // Abre la conexión a la base de datos
+                        filasAfectadas = command.ExecuteNonQuery(); // Ejecuta la consulta y devuelve el número de filas afectadas
+                    }
+                }
+                return filasAfectadas;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Error de SQL: {ex.Message}");
+                return -1; // Indica un error en la ejecución
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return -1; // Indica un error en la ejecución
+            }
+        }
     }
 }

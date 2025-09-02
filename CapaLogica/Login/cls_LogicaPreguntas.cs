@@ -33,34 +33,24 @@ namespace CapaLogica
         {
             return _preguntasDatos.ObtenerCantidadPreguntasRequeridas();
         }
-
-        // Recibe un diccionario con todas las preguntas y respuestas configuradas por el usuario
-        // y las guarda en la base de datos una por una.
-        // <param name="idUsuario">El ID del usuario que está guardando las preguntas.</param>
-        // <param name="preguntasYRespuestas">Un diccionario donde la Key es el id_pregunta y el Value es la respuesta en texto plano.</param>
         public void GuardarMultiplesRespuestas(int idUsuario, Dictionary<int, string> preguntasYRespuestas)
         {
             _preguntasDatos.BorrarRespuestasDeUsuario(idUsuario);
 
-            // Iteramos sobre cada par de pregunta/respuesta que el usuario configuró
             foreach (var par in preguntasYRespuestas)
             {
                 GuardarRespuestaDeSeguridad(idUsuario, par.Key, par.Value);
             }
         }
 
-        // Valida la respuesta del usuario
         public bool ValidarRespuesta(int idUsuario, int idPregunta, string respuestaEnTextoPlano)
         {
             if (string.IsNullOrWhiteSpace(respuestaEnTextoPlano))
             {
                 return false;
             }
-
-            // 1. La lógica pide a la capa de datos el hash guardado.
             string hashCorrecto = _preguntasDatos.ObtenerHashRespuestaGuardada(idUsuario, idPregunta);
 
-            // Si no hay un hash guardado, la validación falla.
             if (hashCorrecto == null)
             {
                 return false;
@@ -73,8 +63,7 @@ namespace CapaLogica
             return hashRespuestaIntento.Equals(hashCorrecto, StringComparison.OrdinalIgnoreCase);
         }
 
-        // Obtiene una pregunta al azar para el proceso de recuperación.
-        // <returns>Un DTO con los datos de la pregunta.</returns>
+
         public cls_PreguntaDTO ObtenerPreguntaRandomParaUsuario(int idUsuario)
         {
             // 1. Obtenemos TODAS las preguntas configuradas por el usuario.
@@ -88,7 +77,7 @@ namespace CapaLogica
 
             // 3.Usamos la clase Random de C# para elegir una.
             var random = new Random();
-            int indiceAleatorio = random.Next(0, preguntasConfiguradas.Count); // Genera un número entre 0 y el total de preguntas - 1
+            int indiceAleatorio = random.Next(0, preguntasConfiguradas.Count);
 
             // 4. Devolvemos la pregunta que se encuentra en esa posición aleatoria.
             return preguntasConfiguradas[indiceAleatorio];
