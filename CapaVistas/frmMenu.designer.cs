@@ -50,7 +50,6 @@ namespace CapaVistas
             this.lblUserLog = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnUsuarios = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.picReportes = new System.Windows.Forms.PictureBox();
             this.picFacturas = new System.Windows.Forms.PictureBox();
@@ -68,6 +67,8 @@ namespace CapaVistas
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPacientes = new System.Windows.Forms.Button();
             this.logoMenu = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnUsuarios = new System.Windows.Forms.Button();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.panelTitulo = new System.Windows.Forms.Panel();
             this.btnRoles = new System.Windows.Forms.Button();
@@ -75,7 +76,6 @@ namespace CapaVistas
             this.btnAdministrar = new System.Windows.Forms.Button();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             this.panelChildFrm = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -254,25 +254,6 @@ namespace CapaVistas
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 26;
             this.pictureBox2.TabStop = false;
-            // 
-            // btnUsuarios
-            // 
-            this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
-            this.btnUsuarios.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnUsuarios.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnUsuarios.FlatAppearance.BorderSize = 2;
-            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUsuarios.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
-            this.btnUsuarios.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnUsuarios.Location = new System.Drawing.Point(581, 6);
-            this.btnUsuarios.Margin = new System.Windows.Forms.Padding(2);
-            this.btnUsuarios.Name = "btnUsuarios";
-            this.btnUsuarios.Size = new System.Drawing.Size(104, 49);
-            this.btnUsuarios.TabIndex = 25;
-            this.btnUsuarios.Text = "Usuarios";
-            this.btnUsuarios.UseVisualStyleBackColor = false;
-            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
             // panel7
             // 
@@ -499,6 +480,42 @@ namespace CapaVistas
             this.logoMenu.TabIndex = 0;
             this.logoMenu.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(12, 600);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(228, 40);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Trámites";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // btnUsuarios
+            // 
+            this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.btnUsuarios.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUsuarios.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnUsuarios.FlatAppearance.BorderSize = 2;
+            this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUsuarios.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
+            this.btnUsuarios.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnUsuarios.Location = new System.Drawing.Point(581, 5);
+            this.btnUsuarios.Margin = new System.Windows.Forms.Padding(2);
+            this.btnUsuarios.Name = "btnUsuarios";
+            this.btnUsuarios.Size = new System.Drawing.Size(104, 49);
+            this.btnUsuarios.TabIndex = 25;
+            this.btnUsuarios.Text = "Usuarios";
+            this.btnUsuarios.UseVisualStyleBackColor = false;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
+            // 
             // lblTitulo
             // 
             this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -596,23 +613,6 @@ namespace CapaVistas
             this.panelChildFrm.Name = "panelChildFrm";
             this.panelChildFrm.Size = new System.Drawing.Size(1063, 605);
             this.panelChildFrm.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(12, 600);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(228, 40);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "Reportes";
-            this.button1.UseVisualStyleBackColor = false;
             // 
             // frmMenu
             // 
