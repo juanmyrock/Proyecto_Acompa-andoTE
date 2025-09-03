@@ -82,7 +82,7 @@
             // dgvVerUser
             // 
             this.dgvVerUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerUser.Location = new System.Drawing.Point(41, 12);
+            this.dgvVerUser.Location = new System.Drawing.Point(53, 30);
             this.dgvVerUser.MultiSelect = false;
             this.dgvVerUser.Name = "dgvVerUser";
             this.dgvVerUser.ReadOnly = true;
@@ -96,7 +96,7 @@
             // 
             this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
             this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(742, 236);
+            this.pictureBox3.Location = new System.Drawing.Point(754, 254);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(53, 44);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -107,7 +107,7 @@
             // 
             this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
             this.pictureBox2.ImageLocation = "";
-            this.pictureBox2.Location = new System.Drawing.Point(387, 236);
+            this.pictureBox2.Location = new System.Drawing.Point(399, 254);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(53, 44);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -118,7 +118,7 @@
             // 
             this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
             this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(57, 236);
+            this.pictureBox1.Location = new System.Drawing.Point(69, 254);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(41, 44);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -133,7 +133,7 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(795, 236);
+            this.btnEliminar.Location = new System.Drawing.Point(807, 254);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(168, 44);
             this.btnEliminar.TabIndex = 55;
@@ -149,7 +149,7 @@
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(444, 236);
+            this.btnModificar.Location = new System.Drawing.Point(456, 254);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(169, 44);
             this.btnModificar.TabIndex = 54;
@@ -165,7 +165,7 @@
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(104, 236);
+            this.btnCrear.Location = new System.Drawing.Point(116, 254);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(168, 44);
             this.btnCrear.TabIndex = 53;
@@ -213,9 +213,9 @@
             this.groupBox2.Controls.Add(this.cmbTipoDNIPac);
             this.groupBox2.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox2.Location = new System.Drawing.Point(41, 286);
+            this.groupBox2.Location = new System.Drawing.Point(53, 304);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(952, 269);
+            this.groupBox2.Size = new System.Drawing.Size(952, 278);
             this.groupBox2.TabIndex = 59;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Paciente";
@@ -534,7 +534,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1031, 561);
+            this.ClientSize = new System.Drawing.Size(1063, 605);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -543,6 +543,7 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.dgvVerUser);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmPacientes";
             this.Text = "Lista de Pacientes";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).EndInit();

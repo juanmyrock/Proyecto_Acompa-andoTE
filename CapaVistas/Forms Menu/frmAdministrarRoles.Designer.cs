@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdministrarRoles));
             this.lblNombreRol = new System.Windows.Forms.Label();
             this.dgvVerRoles = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,11 +52,13 @@
             this.lblRol = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerRoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNombreRol
@@ -317,12 +320,27 @@
             this.label4.TabIndex = 66;
             this.label4.Text = "Asignados:";
             // 
+            // btnCerrarForm
+            // 
+            this.btnCerrarForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrarForm.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarForm.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarForm.Image")));
+            this.btnCerrarForm.Location = new System.Drawing.Point(1243, 9);
+            this.btnCerrarForm.Name = "btnCerrarForm";
+            this.btnCerrarForm.Size = new System.Drawing.Size(35, 35);
+            this.btnCerrarForm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCerrarForm.TabIndex = 67;
+            this.btnCerrarForm.TabStop = false;
+            this.btnCerrarForm.Visible = false;
+            this.btnCerrarForm.Click += new System.EventHandler(this.btnCerrarForm_Click);
+            // 
             // frmAdministrarRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
             this.ClientSize = new System.Drawing.Size(1290, 507);
+            this.Controls.Add(this.btnCerrarForm);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblRol);
@@ -346,6 +364,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblNombreRol);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmAdministrarRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Administrar Roles";
@@ -355,6 +374,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,5 +404,6 @@
         private System.Windows.Forms.Label lblRol;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox btnCerrarForm;
     }
 }
