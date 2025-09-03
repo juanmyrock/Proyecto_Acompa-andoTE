@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdministrarRoles));
             this.lblNombreRol = new System.Windows.Forms.Label();
             this.dgvVerRoles = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,11 +50,15 @@
             this.ltvPermisosAsignados = new System.Windows.Forms.ListView();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.lblRol = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerRoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
             this.SuspendLayout();
             // 
             // lblNombreRol
@@ -61,7 +66,7 @@
             this.lblNombreRol.AutoSize = true;
             this.lblNombreRol.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNombreRol.ForeColor = System.Drawing.Color.White;
-            this.lblNombreRol.Location = new System.Drawing.Point(313, 346);
+            this.lblNombreRol.Location = new System.Drawing.Point(286, 331);
             this.lblNombreRol.Name = "lblNombreRol";
             this.lblNombreRol.Size = new System.Drawing.Size(104, 21);
             this.lblNombreRol.TabIndex = 8;
@@ -70,7 +75,7 @@
             // dgvVerRoles
             // 
             this.dgvVerRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerRoles.Location = new System.Drawing.Point(33, 48);
+            this.dgvVerRoles.Location = new System.Drawing.Point(12, 33);
             this.dgvVerRoles.Name = "dgvVerRoles";
             this.dgvVerRoles.Size = new System.Drawing.Size(652, 205);
             this.dgvVerRoles.TabIndex = 5;
@@ -82,7 +87,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(29, 24);
+            this.label1.Location = new System.Drawing.Point(8, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(79, 21);
             this.label1.TabIndex = 6;
@@ -96,7 +101,7 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(571, 257);
+            this.btnEliminar.Location = new System.Drawing.Point(550, 242);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(114, 50);
             this.btnEliminar.TabIndex = 2;
@@ -112,7 +117,7 @@
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(326, 259);
+            this.btnModificar.Location = new System.Drawing.Point(305, 244);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(129, 50);
             this.btnModificar.TabIndex = 1;
@@ -129,7 +134,7 @@
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(86, 259);
+            this.btnCrear.Location = new System.Drawing.Point(65, 244);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(103, 50);
             this.btnCrear.TabIndex = 0;
@@ -141,7 +146,7 @@
             // txtNombreRol
             // 
             this.txtNombreRol.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreRol.Location = new System.Drawing.Point(248, 370);
+            this.txtNombreRol.Location = new System.Drawing.Point(227, 355);
             this.txtNombreRol.Name = "txtNombreRol";
             this.txtNombreRol.Size = new System.Drawing.Size(237, 27);
             this.txtNombreRol.TabIndex = 3;
@@ -150,7 +155,7 @@
             // txtDescripcionRol
             // 
             this.txtDescripcionRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescripcionRol.Location = new System.Drawing.Point(86, 437);
+            this.txtDescripcionRol.Location = new System.Drawing.Point(65, 422);
             this.txtDescripcionRol.Multiline = true;
             this.txtDescripcionRol.Name = "txtDescripcionRol";
             this.txtDescripcionRol.Size = new System.Drawing.Size(550, 53);
@@ -161,7 +166,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(281, 413);
+            this.label2.Location = new System.Drawing.Point(260, 398);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(159, 21);
             this.label2.TabIndex = 8;
@@ -171,7 +176,7 @@
             // 
             this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
             this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(518, 257);
+            this.pictureBox3.Location = new System.Drawing.Point(497, 242);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(53, 50);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -182,7 +187,7 @@
             // 
             this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
             this.pictureBox2.ImageLocation = "";
-            this.pictureBox2.Location = new System.Drawing.Point(273, 259);
+            this.pictureBox2.Location = new System.Drawing.Point(252, 244);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(53, 50);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -204,7 +209,7 @@
             // 
             this.pictureBox4.Image = global::CapaVistas.Properties.Resources.check_logo;
             this.pictureBox4.ImageLocation = "";
-            this.pictureBox4.Location = new System.Drawing.Point(33, 259);
+            this.pictureBox4.Location = new System.Drawing.Point(12, 244);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(53, 50);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -213,7 +218,7 @@
             // 
             // btnAsignarTodos
             // 
-            this.btnAsignarTodos.Location = new System.Drawing.Point(1084, 460);
+            this.btnAsignarTodos.Location = new System.Drawing.Point(943, 384);
             this.btnAsignarTodos.Name = "btnAsignarTodos";
             this.btnAsignarTodos.Size = new System.Drawing.Size(75, 23);
             this.btnAsignarTodos.TabIndex = 59;
@@ -223,7 +228,7 @@
             // 
             // btnAsignarPermiso
             // 
-            this.btnAsignarPermiso.Location = new System.Drawing.Point(1084, 528);
+            this.btnAsignarPermiso.Location = new System.Drawing.Point(943, 452);
             this.btnAsignarPermiso.Name = "btnAsignarPermiso";
             this.btnAsignarPermiso.Size = new System.Drawing.Size(75, 23);
             this.btnAsignarPermiso.TabIndex = 60;
@@ -233,7 +238,7 @@
             // 
             // btnQuitarTodos
             // 
-            this.btnQuitarTodos.Location = new System.Drawing.Point(1084, 205);
+            this.btnQuitarTodos.Location = new System.Drawing.Point(943, 129);
             this.btnQuitarTodos.Name = "btnQuitarTodos";
             this.btnQuitarTodos.Size = new System.Drawing.Size(75, 23);
             this.btnQuitarTodos.TabIndex = 61;
@@ -243,7 +248,7 @@
             // 
             // btnQuitarPermiso
             // 
-            this.btnQuitarPermiso.Location = new System.Drawing.Point(1084, 144);
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(943, 68);
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(75, 23);
             this.btnQuitarPermiso.TabIndex = 62;
@@ -255,7 +260,7 @@
             // 
             this.ltvPermisosDisp.GridLines = true;
             this.ltvPermisosDisp.HideSelection = false;
-            this.ltvPermisosDisp.Location = new System.Drawing.Point(1235, 144);
+            this.ltvPermisosDisp.Location = new System.Drawing.Point(1029, 68);
             this.ltvPermisosDisp.Name = "ltvPermisosDisp";
             this.ltvPermisosDisp.Size = new System.Drawing.Size(234, 407);
             this.ltvPermisosDisp.TabIndex = 57;
@@ -266,7 +271,7 @@
             // 
             this.ltvPermisosAsignados.GridLines = true;
             this.ltvPermisosAsignados.HideSelection = false;
-            this.ltvPermisosAsignados.Location = new System.Drawing.Point(769, 144);
+            this.ltvPermisosAsignados.Location = new System.Drawing.Point(696, 68);
             this.ltvPermisosAsignados.Name = "ltvPermisosAsignados";
             this.ltvPermisosAsignados.Size = new System.Drawing.Size(234, 407);
             this.ltvPermisosAsignados.TabIndex = 58;
@@ -276,7 +281,7 @@
             // cmbRol
             // 
             this.cmbRol.FormattingEnabled = true;
-            this.cmbRol.Location = new System.Drawing.Point(769, 105);
+            this.cmbRol.Location = new System.Drawing.Point(916, 12);
             this.cmbRol.Name = "cmbRol";
             this.cmbRol.Size = new System.Drawing.Size(121, 21);
             this.cmbRol.TabIndex = 63;
@@ -287,18 +292,57 @@
             this.lblRol.AutoSize = true;
             this.lblRol.Font = new System.Drawing.Font("Century Gothic", 12F);
             this.lblRol.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblRol.Location = new System.Drawing.Point(765, 81);
+            this.lblRol.Location = new System.Drawing.Point(869, 12);
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(37, 21);
             this.lblRol.TabIndex = 64;
             this.lblRol.Text = "Rol:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F);
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label3.Location = new System.Drawing.Point(692, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 21);
+            this.label3.TabIndex = 65;
+            this.label3.Text = "Disponibles:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 12F);
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Location = new System.Drawing.Point(1025, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(95, 21);
+            this.label4.TabIndex = 66;
+            this.label4.Text = "Asignados:";
+            // 
+            // btnCerrarForm
+            // 
+            this.btnCerrarForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrarForm.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarForm.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarForm.Image")));
+            this.btnCerrarForm.Location = new System.Drawing.Point(1243, 9);
+            this.btnCerrarForm.Name = "btnCerrarForm";
+            this.btnCerrarForm.Size = new System.Drawing.Size(35, 35);
+            this.btnCerrarForm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCerrarForm.TabIndex = 67;
+            this.btnCerrarForm.TabStop = false;
+            this.btnCerrarForm.Visible = false;
+            this.btnCerrarForm.Click += new System.EventHandler(this.btnCerrarForm_Click);
             // 
             // frmAdministrarRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(20)))), ((int)(((byte)(88)))));
-            this.ClientSize = new System.Drawing.Size(1575, 583);
+            this.ClientSize = new System.Drawing.Size(1290, 507);
+            this.Controls.Add(this.btnCerrarForm);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblRol);
             this.Controls.Add(this.cmbRol);
             this.Controls.Add(this.btnAsignarTodos);
@@ -320,6 +364,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblNombreRol);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmAdministrarRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Administrar Roles";
@@ -329,6 +374,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +402,8 @@
         private System.Windows.Forms.ListView ltvPermisosAsignados;
         private System.Windows.Forms.ComboBox cmbRol;
         private System.Windows.Forms.Label lblRol;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox btnCerrarForm;
     }
 }

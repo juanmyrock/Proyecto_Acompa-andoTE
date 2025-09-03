@@ -34,6 +34,7 @@
             this.txtPuesto = new System.Windows.Forms.TextBox();
             this.txtCargaHS = new System.Windows.Forms.TextBox();
             this.txtCelular = new System.Windows.Forms.TextBox();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.lblCargahs = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.txtNumCalle = new System.Windows.Forms.TextBox();
@@ -58,15 +59,13 @@
             this.cmbTipoDNI = new System.Windows.Forms.ComboBox();
             this.dgvVerUser = new System.Windows.Forms.DataGridView();
             this.btnCrear = new System.Windows.Forms.Button();
-            this.lblUsuario = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnGestionarUser = new System.Windows.Forms.Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnGestionarUser = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -80,6 +79,7 @@
             this.groupBox2.Controls.Add(this.txtPuesto);
             this.groupBox2.Controls.Add(this.txtCargaHS);
             this.groupBox2.Controls.Add(this.txtCelular);
+            this.groupBox2.Controls.Add(this.btnLimpiar);
             this.groupBox2.Controls.Add(this.lblCargahs);
             this.groupBox2.Controls.Add(this.label39);
             this.groupBox2.Controls.Add(this.txtNumCalle);
@@ -104,9 +104,9 @@
             this.groupBox2.Controls.Add(this.cmbTipoDNI);
             this.groupBox2.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox2.Location = new System.Drawing.Point(35, 441);
+            this.groupBox2.Location = new System.Drawing.Point(56, 408);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(952, 174);
+            this.groupBox2.Size = new System.Drawing.Size(952, 156);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Empleado";
@@ -140,6 +140,22 @@
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(151, 22);
             this.txtCelular.TabIndex = 13;
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnLimpiar.FlatAppearance.BorderSize = 2;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Font = new System.Drawing.Font("Sans Serif Collection", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnLimpiar.Location = new System.Drawing.Point(809, 10);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(140, 33);
+            this.btnLimpiar.TabIndex = 18;
+            this.btnLimpiar.Text = "Limpiar Campos";
+            this.btnLimpiar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // lblCargahs
             // 
@@ -335,14 +351,14 @@
             // dgvVerUser
             // 
             this.dgvVerUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerUser.Location = new System.Drawing.Point(35, 45);
+            this.dgvVerUser.Location = new System.Drawing.Point(56, 63);
             this.dgvVerUser.MultiSelect = false;
             this.dgvVerUser.Name = "dgvVerUser";
             this.dgvVerUser.ReadOnly = true;
             this.dgvVerUser.RowHeadersVisible = false;
             this.dgvVerUser.RowHeadersWidth = 47;
             this.dgvVerUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVerUser.Size = new System.Drawing.Size(952, 334);
+            this.dgvVerUser.Size = new System.Drawing.Size(952, 293);
             this.dgvVerUser.TabIndex = 19;
             this.dgvVerUser.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_CellClick);
             this.dgvVerUser.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerUser_RowEnter);
@@ -356,25 +372,14 @@
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(113, 385);
+            this.btnCrear.Location = new System.Drawing.Point(134, 361);
             this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(168, 50);
+            this.btnCrear.Size = new System.Drawing.Size(168, 41);
             this.btnCrear.TabIndex = 2;
             this.btnCrear.Text = "Crear Empleado";
             this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
-            // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Bahnschrift", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblUsuario.Location = new System.Drawing.Point(39, 13);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(164, 24);
-            this.lblUsuario.TabIndex = 47;
-            this.lblUsuario.Text = "Lista de usuarios";
             // 
             // btnRefresh
             // 
@@ -384,7 +389,7 @@
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnRefresh.Location = new System.Drawing.Point(876, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(897, 21);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(111, 36);
             this.btnRefresh.TabIndex = 0;
@@ -400,9 +405,9 @@
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(446, 385);
+            this.btnModificar.Location = new System.Drawing.Point(467, 361);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(169, 50);
+            this.btnModificar.Size = new System.Drawing.Size(169, 41);
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar Empleado";
             this.btnModificar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -417,63 +422,14 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(803, 385);
+            this.btnEliminar.Location = new System.Drawing.Point(824, 361);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(168, 50);
+            this.btnEliminar.Size = new System.Drawing.Size(168, 41);
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar Empleado";
             this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnEliminar.UseVisualStyleBackColor = true;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnLimpiar.FlatAppearance.BorderSize = 3;
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnLimpiar.Location = new System.Drawing.Point(819, 621);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(135, 38);
-            this.btnLimpiar.TabIndex = 18;
-            this.btnLimpiar.Text = "Limpiar Campos";
-            this.btnLimpiar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
-            this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(750, 385);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(53, 50);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 52;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
-            this.pictureBox2.ImageLocation = "";
-            this.pictureBox2.Location = new System.Drawing.Point(393, 385);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(53, 50);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 52;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
-            this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(60, 385);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(53, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 52;
-            this.pictureBox1.TabStop = false;
             // 
             // btnGestionarUser
             // 
@@ -483,7 +439,7 @@
             this.btnGestionarUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGestionarUser.Font = new System.Drawing.Font("Sans Serif Collection", 8.999999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGestionarUser.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnGestionarUser.Location = new System.Drawing.Point(411, 5);
+            this.btnGestionarUser.Location = new System.Drawing.Point(56, 21);
             this.btnGestionarUser.Name = "btnGestionarUser";
             this.btnGestionarUser.Size = new System.Drawing.Size(204, 36);
             this.btnGestionarUser.TabIndex = 53;
@@ -491,28 +447,60 @@
             this.btnGestionarUser.UseVisualStyleBackColor = true;
             this.btnGestionarUser.Click += new System.EventHandler(this.btnGestionarUser_Click);
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
+            this.pictureBox3.ImageLocation = "";
+            this.pictureBox3.Location = new System.Drawing.Point(779, 361);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(45, 41);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 52;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
+            this.pictureBox2.ImageLocation = "";
+            this.pictureBox2.Location = new System.Drawing.Point(420, 361);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(47, 41);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 52;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
+            this.pictureBox1.ImageLocation = "";
+            this.pictureBox1.Location = new System.Drawing.Point(84, 361);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(50, 41);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 52;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmABMUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1022, 672);
+            this.ClientSize = new System.Drawing.Size(1063, 605);
             this.Controls.Add(this.btnGestionarUser);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvVerUser);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCrear);
-            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnRefresh);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmABMUsuarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Usuarios";
+            this.Text = "Lista de Empleados";
             this.Load += new System.EventHandler(this.frmABMUsuarios_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -521,7 +509,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -552,7 +539,6 @@
         private System.Windows.Forms.ComboBox cmbTipoDNI;
         private System.Windows.Forms.DataGridView dgvVerUser;
         private System.Windows.Forms.Button btnCrear;
-        private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnEliminar;

@@ -491,5 +491,10 @@ namespace CapaVistas.Forms_Menu
             }
             _logicaPermisos.CargarPermisosParaRolSeleccionado(_idRolSeleccionado, ltvPermisosAsignados, ltvPermisosDisp);
         }
+
+        private void btnCerrarForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

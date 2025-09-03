@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.dgvVerUser = new System.Windows.Forms.DataGridView();
-            this.lblPanel = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -37,6 +36,10 @@
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnCrear = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtAfiliado = new System.Windows.Forms.TextBox();
@@ -69,10 +72,6 @@
             this.lblDniPac = new System.Windows.Forms.Label();
             this.cmbLocalidadPac = new System.Windows.Forms.ComboBox();
             this.cmbTipoDNIPac = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -83,34 +82,23 @@
             // dgvVerUser
             // 
             this.dgvVerUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerUser.Location = new System.Drawing.Point(41, 47);
+            this.dgvVerUser.Location = new System.Drawing.Point(53, 30);
             this.dgvVerUser.MultiSelect = false;
             this.dgvVerUser.Name = "dgvVerUser";
             this.dgvVerUser.ReadOnly = true;
             this.dgvVerUser.RowHeadersVisible = false;
             this.dgvVerUser.RowHeadersWidth = 47;
             this.dgvVerUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVerUser.Size = new System.Drawing.Size(952, 334);
+            this.dgvVerUser.Size = new System.Drawing.Size(952, 218);
             this.dgvVerUser.TabIndex = 48;
-            // 
-            // lblPanel
-            // 
-            this.lblPanel.AutoSize = true;
-            this.lblPanel.Font = new System.Drawing.Font("Bahnschrift", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPanel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblPanel.Location = new System.Drawing.Point(37, 20);
-            this.lblPanel.Name = "lblPanel";
-            this.lblPanel.Size = new System.Drawing.Size(174, 24);
-            this.lblPanel.TabIndex = 49;
-            this.lblPanel.Text = "Lista de Pacientes";
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
             this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(762, 387);
+            this.pictureBox3.Location = new System.Drawing.Point(754, 254);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox3.Size = new System.Drawing.Size(53, 44);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 56;
             this.pictureBox3.TabStop = false;
@@ -119,9 +107,9 @@
             // 
             this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
             this.pictureBox2.ImageLocation = "";
-            this.pictureBox2.Location = new System.Drawing.Point(405, 387);
+            this.pictureBox2.Location = new System.Drawing.Point(399, 254);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(53, 44);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 57;
             this.pictureBox2.TabStop = false;
@@ -130,9 +118,9 @@
             // 
             this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
             this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(72, 387);
+            this.pictureBox1.Location = new System.Drawing.Point(69, 254);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(53, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(41, 44);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 58;
             this.pictureBox1.TabStop = false;
@@ -145,9 +133,9 @@
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(815, 387);
+            this.btnEliminar.Location = new System.Drawing.Point(807, 254);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(168, 50);
+            this.btnEliminar.Size = new System.Drawing.Size(168, 44);
             this.btnEliminar.TabIndex = 55;
             this.btnEliminar.Text = "Eliminar Paciente";
             this.btnEliminar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -161,9 +149,9 @@
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(458, 387);
+            this.btnModificar.Location = new System.Drawing.Point(456, 254);
             this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(169, 50);
+            this.btnModificar.Size = new System.Drawing.Size(169, 44);
             this.btnModificar.TabIndex = 54;
             this.btnModificar.Text = "Modificar Paciente";
             this.btnModificar.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -177,9 +165,9 @@
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(125, 387);
+            this.btnCrear.Location = new System.Drawing.Point(116, 254);
             this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(168, 50);
+            this.btnCrear.Size = new System.Drawing.Size(168, 44);
             this.btnCrear.TabIndex = 53;
             this.btnCrear.Text = "Crear Paciente";
             this.btnCrear.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -225,12 +213,46 @@
             this.groupBox2.Controls.Add(this.cmbTipoDNIPac);
             this.groupBox2.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox2.Location = new System.Drawing.Point(49, 443);
+            this.groupBox2.Location = new System.Drawing.Point(53, 304);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(952, 269);
+            this.groupBox2.Size = new System.Drawing.Size(952, 278);
             this.groupBox2.TabIndex = 59;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos del Paciente";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(134, 170);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(121, 22);
+            this.textBox4.TabIndex = 76;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(72, 164);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 28);
+            this.label5.TabIndex = 77;
+            this.label5.Text = "Num \r\nDomicilio:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(279, 178);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 14);
+            this.label2.TabIndex = 75;
+            this.label2.Text = "Diagnostico:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(358, 178);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(576, 85);
+            this.textBox1.TabIndex = 74;
             // 
             // textBox3
             // 
@@ -507,46 +529,12 @@
             this.cmbTipoDNIPac.Size = new System.Drawing.Size(121, 22);
             this.cmbTipoDNIPac.TabIndex = 10;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(358, 178);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(576, 85);
-            this.textBox1.TabIndex = 74;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 178);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 14);
-            this.label2.TabIndex = 75;
-            this.label2.Text = "Diagnostico:";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(134, 170);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(121, 22);
-            this.textBox4.TabIndex = 76;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(72, 164);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 28);
-            this.label5.TabIndex = 77;
-            this.label5.Text = "Num \r\nDomicilio:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // frmAT
+            // frmPacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1031, 724);
+            this.ClientSize = new System.Drawing.Size(1063, 605);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
@@ -555,9 +543,9 @@
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.dgvVerUser);
-            this.Controls.Add(this.lblPanel);
-            this.Name = "frmAT";
-            this.Text = "frmPacientes";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "frmPacientes";
+            this.Text = "Lista de Pacientes";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -565,14 +553,12 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView dgvVerUser;
-        private System.Windows.Forms.Label lblPanel;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
