@@ -179,6 +179,9 @@ namespace CapaVistas
             
         }
 
-       
+        private void btnTurnos_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmGestionTurnos(), sender);
+        }
     }
 }

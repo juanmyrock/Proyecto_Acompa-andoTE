@@ -75,6 +75,7 @@ namespace CapaVistas
             this.btnAdministrar = new System.Windows.Forms.Button();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             this.panelChildFrm = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -183,7 +184,6 @@ namespace CapaVistas
             this.panelMenu.Controls.Add(this.lblUserLog);
             this.panelMenu.Controls.Add(this.panel8);
             this.panelMenu.Controls.Add(this.pictureBox2);
-            this.panelMenu.Controls.Add(this.btnUsuarios);
             this.panelMenu.Controls.Add(this.panel7);
             this.panelMenu.Controls.Add(this.picReportes);
             this.panelMenu.Controls.Add(this.picFacturas);
@@ -201,11 +201,12 @@ namespace CapaVistas
             this.panelMenu.Controls.Add(this.panel1);
             this.panelMenu.Controls.Add(this.btnPacientes);
             this.panelMenu.Controls.Add(this.logoMenu);
+            this.panelMenu.Controls.Add(this.button1);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 35);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(2);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(217, 753);
+            this.panelMenu.Size = new System.Drawing.Size(217, 665);
             this.panelMenu.TabIndex = 3;
             // 
             // btnLogOut
@@ -213,7 +214,7 @@ namespace CapaVistas
             this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
-            this.btnLogOut.Location = new System.Drawing.Point(169, 205);
+            this.btnLogOut.Location = new System.Drawing.Point(169, 155);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(45, 45);
             this.btnLogOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -225,7 +226,7 @@ namespace CapaVistas
             // 
             this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUserLog.Location = new System.Drawing.Point(31, 203);
+            this.lblUserLog.Location = new System.Drawing.Point(31, 153);
             this.lblUserLog.Name = "lblUserLog";
             this.lblUserLog.Size = new System.Drawing.Size(132, 60);
             this.lblUserLog.TabIndex = 0;
@@ -234,7 +235,7 @@ namespace CapaVistas
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel8.Location = new System.Drawing.Point(0, 205);
+            this.panel8.Location = new System.Drawing.Point(0, 155);
             this.panel8.Margin = new System.Windows.Forms.Padding(2);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(10, 45);
@@ -246,7 +247,7 @@ namespace CapaVistas
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Enabled = false;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1, 648);
+            this.pictureBox2.Location = new System.Drawing.Point(4, 600);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(40, 40);
@@ -256,17 +257,18 @@ namespace CapaVistas
             // 
             // btnUsuarios
             // 
-            this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.btnUsuarios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
             this.btnUsuarios.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnUsuarios.FlatAppearance.BorderSize = 0;
+            this.btnUsuarios.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnUsuarios.FlatAppearance.BorderSize = 2;
             this.btnUsuarios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
             this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUsuarios.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
-            this.btnUsuarios.ForeColor = System.Drawing.Color.White;
-            this.btnUsuarios.Location = new System.Drawing.Point(11, 648);
+            this.btnUsuarios.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
+            this.btnUsuarios.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnUsuarios.Location = new System.Drawing.Point(581, 6);
             this.btnUsuarios.Margin = new System.Windows.Forms.Padding(2);
             this.btnUsuarios.Name = "btnUsuarios";
-            this.btnUsuarios.Size = new System.Drawing.Size(228, 40);
+            this.btnUsuarios.Size = new System.Drawing.Size(104, 49);
             this.btnUsuarios.TabIndex = 25;
             this.btnUsuarios.Text = "Usuarios";
             this.btnUsuarios.UseVisualStyleBackColor = false;
@@ -275,7 +277,7 @@ namespace CapaVistas
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel7.Location = new System.Drawing.Point(-1, 648);
+            this.panel7.Location = new System.Drawing.Point(0, 600);
             this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(10, 40);
@@ -287,7 +289,7 @@ namespace CapaVistas
             this.picReportes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picReportes.Enabled = false;
             this.picReportes.Image = ((System.Drawing.Image)(resources.GetObject("picReportes.Image")));
-            this.picReportes.Location = new System.Drawing.Point(2, 575);
+            this.picReportes.Location = new System.Drawing.Point(4, 525);
             this.picReportes.Margin = new System.Windows.Forms.Padding(2);
             this.picReportes.Name = "picReportes";
             this.picReportes.Size = new System.Drawing.Size(40, 40);
@@ -301,7 +303,7 @@ namespace CapaVistas
             this.picFacturas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picFacturas.Enabled = false;
             this.picFacturas.Image = global::CapaVistas.Properties.Resources.Calendario1;
-            this.picFacturas.Location = new System.Drawing.Point(2, 500);
+            this.picFacturas.Location = new System.Drawing.Point(4, 450);
             this.picFacturas.Margin = new System.Windows.Forms.Padding(2);
             this.picFacturas.Name = "picFacturas";
             this.picFacturas.Size = new System.Drawing.Size(40, 40);
@@ -315,7 +317,7 @@ namespace CapaVistas
             this.picClientes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picClientes.Enabled = false;
             this.picClientes.Image = ((System.Drawing.Image)(resources.GetObject("picClientes.Image")));
-            this.picClientes.Location = new System.Drawing.Point(2, 426);
+            this.picClientes.Location = new System.Drawing.Point(4, 375);
             this.picClientes.Margin = new System.Windows.Forms.Padding(2);
             this.picClientes.Name = "picClientes";
             this.picClientes.Size = new System.Drawing.Size(40, 40);
@@ -329,7 +331,7 @@ namespace CapaVistas
             this.picVentas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picVentas.Enabled = false;
             this.picVentas.Image = global::CapaVistas.Properties.Resources.AT;
-            this.picVentas.Location = new System.Drawing.Point(2, 354);
+            this.picVentas.Location = new System.Drawing.Point(4, 300);
             this.picVentas.Margin = new System.Windows.Forms.Padding(2);
             this.picVentas.Name = "picVentas";
             this.picVentas.Size = new System.Drawing.Size(40, 40);
@@ -343,7 +345,7 @@ namespace CapaVistas
             this.picProductos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picProductos.Enabled = false;
             this.picProductos.Image = global::CapaVistas.Properties.Resources.Pacientes_jpg;
-            this.picProductos.Location = new System.Drawing.Point(2, 277);
+            this.picProductos.Location = new System.Drawing.Point(4, 230);
             this.picProductos.Margin = new System.Windows.Forms.Padding(2);
             this.picProductos.Name = "picProductos";
             this.picProductos.Size = new System.Drawing.Size(40, 40);
@@ -360,7 +362,7 @@ namespace CapaVistas
             this.btnReportes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReportes.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
             this.btnReportes.ForeColor = System.Drawing.Color.White;
-            this.btnReportes.Location = new System.Drawing.Point(12, 575);
+            this.btnReportes.Location = new System.Drawing.Point(12, 525);
             this.btnReportes.Margin = new System.Windows.Forms.Padding(2);
             this.btnReportes.Name = "btnReportes";
             this.btnReportes.Size = new System.Drawing.Size(228, 40);
@@ -377,13 +379,14 @@ namespace CapaVistas
             this.btnTurnos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTurnos.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
             this.btnTurnos.ForeColor = System.Drawing.Color.White;
-            this.btnTurnos.Location = new System.Drawing.Point(12, 500);
+            this.btnTurnos.Location = new System.Drawing.Point(12, 450);
             this.btnTurnos.Margin = new System.Windows.Forms.Padding(2);
             this.btnTurnos.Name = "btnTurnos";
             this.btnTurnos.Size = new System.Drawing.Size(228, 40);
             this.btnTurnos.TabIndex = 13;
             this.btnTurnos.Text = "Turnos";
             this.btnTurnos.UseVisualStyleBackColor = false;
+            this.btnTurnos.Click += new System.EventHandler(this.btnTurnos_Click);
             // 
             // btnInformes
             // 
@@ -394,7 +397,7 @@ namespace CapaVistas
             this.btnInformes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInformes.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
             this.btnInformes.ForeColor = System.Drawing.Color.White;
-            this.btnInformes.Location = new System.Drawing.Point(12, 426);
+            this.btnInformes.Location = new System.Drawing.Point(12, 375);
             this.btnInformes.Margin = new System.Windows.Forms.Padding(2);
             this.btnInformes.Name = "btnInformes";
             this.btnInformes.Size = new System.Drawing.Size(228, 40);
@@ -411,7 +414,7 @@ namespace CapaVistas
             this.btnProfesionales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProfesionales.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
             this.btnProfesionales.ForeColor = System.Drawing.Color.White;
-            this.btnProfesionales.Location = new System.Drawing.Point(12, 354);
+            this.btnProfesionales.Location = new System.Drawing.Point(12, 300);
             this.btnProfesionales.Margin = new System.Windows.Forms.Padding(2);
             this.btnProfesionales.Name = "btnProfesionales";
             this.btnProfesionales.Size = new System.Drawing.Size(228, 40);
@@ -422,7 +425,7 @@ namespace CapaVistas
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel5.Location = new System.Drawing.Point(0, 575);
+            this.panel5.Location = new System.Drawing.Point(0, 525);
             this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(10, 40);
@@ -431,7 +434,7 @@ namespace CapaVistas
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel4.Location = new System.Drawing.Point(0, 500);
+            this.panel4.Location = new System.Drawing.Point(0, 450);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(10, 40);
@@ -440,7 +443,7 @@ namespace CapaVistas
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel3.Location = new System.Drawing.Point(0, 426);
+            this.panel3.Location = new System.Drawing.Point(0, 375);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(10, 40);
@@ -449,7 +452,7 @@ namespace CapaVistas
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel2.Location = new System.Drawing.Point(0, 354);
+            this.panel2.Location = new System.Drawing.Point(0, 300);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(10, 40);
@@ -458,7 +461,7 @@ namespace CapaVistas
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel1.Location = new System.Drawing.Point(0, 277);
+            this.panel1.Location = new System.Drawing.Point(0, 230);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(10, 40);
@@ -474,7 +477,7 @@ namespace CapaVistas
             this.btnPacientes.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
             this.btnPacientes.ForeColor = System.Drawing.Color.White;
             this.btnPacientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPacientes.Location = new System.Drawing.Point(12, 277);
+            this.btnPacientes.Location = new System.Drawing.Point(12, 230);
             this.btnPacientes.Margin = new System.Windows.Forms.Padding(2);
             this.btnPacientes.Name = "btnPacientes";
             this.btnPacientes.Size = new System.Drawing.Size(228, 40);
@@ -491,7 +494,7 @@ namespace CapaVistas
             this.logoMenu.Location = new System.Drawing.Point(0, 0);
             this.logoMenu.Margin = new System.Windows.Forms.Padding(2);
             this.logoMenu.Name = "logoMenu";
-            this.logoMenu.Size = new System.Drawing.Size(217, 201);
+            this.logoMenu.Size = new System.Drawing.Size(217, 170);
             this.logoMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoMenu.TabIndex = 0;
             this.logoMenu.TabStop = false;
@@ -517,6 +520,7 @@ namespace CapaVistas
             this.panelTitulo.Controls.Add(this.btnConfigSist);
             this.panelTitulo.Controls.Add(this.btnAdministrar);
             this.panelTitulo.Controls.Add(this.btnCerrarForm);
+            this.panelTitulo.Controls.Add(this.btnUsuarios);
             this.panelTitulo.Controls.Add(this.lblTitulo);
             this.panelTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTitulo.Location = new System.Drawing.Point(217, 35);
@@ -526,6 +530,7 @@ namespace CapaVistas
             // 
             // btnRoles
             // 
+            this.btnRoles.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRoles.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnRoles.FlatAppearance.BorderSize = 2;
             this.btnRoles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -554,16 +559,17 @@ namespace CapaVistas
             // 
             // btnAdministrar
             // 
+            this.btnAdministrar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdministrar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnAdministrar.FlatAppearance.BorderSize = 2;
             this.btnAdministrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdministrar.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdministrar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnAdministrar.Location = new System.Drawing.Point(838, 5);
+            this.btnAdministrar.Location = new System.Drawing.Point(839, 5);
             this.btnAdministrar.Name = "btnAdministrar";
             this.btnAdministrar.Size = new System.Drawing.Size(104, 49);
             this.btnAdministrar.TabIndex = 30;
-            this.btnAdministrar.Text = "Parametros Contraseña";
+            this.btnAdministrar.Text = "Parametros Sistema";
             this.btnAdministrar.UseVisualStyleBackColor = true;
             this.btnAdministrar.Click += new System.EventHandler(this.btnAdministrar_Click);
             // 
@@ -588,8 +594,25 @@ namespace CapaVistas
             this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
             this.panelChildFrm.Name = "panelChildFrm";
-            this.panelChildFrm.Size = new System.Drawing.Size(1063, 693);
+            this.panelChildFrm.Size = new System.Drawing.Size(1063, 605);
             this.panelChildFrm.TabIndex = 4;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(12, 600);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(228, 40);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Reportes";
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // frmMenu
             // 
@@ -597,7 +620,7 @@ namespace CapaVistas
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(1280, 788);
+            this.ClientSize = new System.Drawing.Size(1280, 700);
             this.Controls.Add(this.panelChildFrm);
             this.Controls.Add(this.panelTitulo);
             this.Controls.Add(this.panelMenu);
@@ -666,5 +689,6 @@ namespace CapaVistas
         private Panel panelChildFrm;
         private Label lblUserLog;
         private Button btnRoles;
+        private Button button1;
     }
 }

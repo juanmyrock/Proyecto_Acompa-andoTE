@@ -40,7 +40,7 @@
             // 
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(43, 138);
+            this.listView1.Location = new System.Drawing.Point(27, 41);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(234, 407);
             this.listView1.TabIndex = 0;
@@ -51,7 +51,7 @@
             // 
             this.listView2.GridLines = true;
             this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(515, 138);
+            this.listView2.Location = new System.Drawing.Point(430, 41);
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(234, 407);
             this.listView2.TabIndex = 0;
@@ -60,7 +60,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(365, 138);
+            this.button1.Location = new System.Drawing.Point(308, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -69,7 +69,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(365, 199);
+            this.button2.Location = new System.Drawing.Point(308, 101);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -78,7 +78,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(365, 522);
+            this.button3.Location = new System.Drawing.Point(308, 424);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
@@ -87,7 +87,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(365, 454);
+            this.button4.Location = new System.Drawing.Point(308, 356);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 1;
@@ -98,7 +98,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 617);
+            this.ClientSize = new System.Drawing.Size(689, 465);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -106,7 +106,7 @@
             this.Controls.Add(this.listView2);
             this.Controls.Add(this.listView1);
             this.Name = "frmPermisos";
-            this.Text = "frmPermisos";
+            this.Text = "Permisos del Usuario";
             this.ResumeLayout(false);
 
         }
