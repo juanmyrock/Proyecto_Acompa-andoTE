@@ -13,6 +13,8 @@ namespace CapaDTO.SistemaDTO
 
         public int num_afiliado { get; set; }
 
+        public int id_tipo_dni { get; set; }
+
         public int dni_paciente { get; set; }
         public DateTime? fecha_nac { get; set; }
 
