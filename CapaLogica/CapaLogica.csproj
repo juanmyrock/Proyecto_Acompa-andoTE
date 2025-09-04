@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM\cls_LogicaGestionarPacientes.cs" />
     <Compile Include="ABM\cls_LogicaGestionEmpleados.cs" />
     <Compile Include="ABM\cls_LogicaGestionarUsuarios.cs" />
     <Compile Include="ABM\cls_Permisos.cs" />
