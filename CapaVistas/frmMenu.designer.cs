@@ -67,7 +67,7 @@ namespace CapaVistas
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPacientes = new System.Windows.Forms.Button();
             this.logoMenu = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTramites = new System.Windows.Forms.Button();
             this.btnUsuarios = new System.Windows.Forms.Button();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.panelTitulo = new System.Windows.Forms.Panel();
@@ -201,7 +201,7 @@ namespace CapaVistas
             this.panelMenu.Controls.Add(this.panel1);
             this.panelMenu.Controls.Add(this.btnPacientes);
             this.panelMenu.Controls.Add(this.logoMenu);
-            this.panelMenu.Controls.Add(this.button1);
+            this.panelMenu.Controls.Add(this.btnTramites);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 35);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(2);
@@ -480,22 +480,23 @@ namespace CapaVistas
             this.logoMenu.TabIndex = 0;
             this.logoMenu.TabStop = false;
             // 
-            // button1
+            // btnTramites
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(12, 600);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(228, 40);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "Trámites";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnTramites.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.btnTramites.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTramites.FlatAppearance.BorderSize = 0;
+            this.btnTramites.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnTramites.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTramites.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.btnTramites.ForeColor = System.Drawing.Color.White;
+            this.btnTramites.Location = new System.Drawing.Point(12, 600);
+            this.btnTramites.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTramites.Name = "btnTramites";
+            this.btnTramites.Size = new System.Drawing.Size(228, 40);
+            this.btnTramites.TabIndex = 27;
+            this.btnTramites.Text = "Trámites";
+            this.btnTramites.UseVisualStyleBackColor = false;
+            this.btnTramites.Click += new System.EventHandler(this.btnTramites_Click);
             // 
             // btnUsuarios
             // 
@@ -689,6 +690,6 @@ namespace CapaVistas
         private Panel panelChildFrm;
         private Label lblUserLog;
         private Button btnRoles;
-        private Button button1;
+        private Button btnTramites;
     }
 }

@@ -183,5 +183,10 @@ namespace CapaVistas
         {
             OpenChildForm(new frmGestionTurnos(), sender);
         }
+
+        private void btnTramites_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmGestionTramites(), sender);
+        }
     }
 }

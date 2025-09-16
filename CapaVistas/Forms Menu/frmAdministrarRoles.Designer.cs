@@ -260,7 +260,7 @@
             // 
             this.ltvPermisosDisp.GridLines = true;
             this.ltvPermisosDisp.HideSelection = false;
-            this.ltvPermisosDisp.Location = new System.Drawing.Point(1029, 68);
+            this.ltvPermisosDisp.Location = new System.Drawing.Point(696, 68);
             this.ltvPermisosDisp.Name = "ltvPermisosDisp";
             this.ltvPermisosDisp.Size = new System.Drawing.Size(234, 407);
             this.ltvPermisosDisp.TabIndex = 57;
@@ -271,7 +271,7 @@
             // 
             this.ltvPermisosAsignados.GridLines = true;
             this.ltvPermisosAsignados.HideSelection = false;
-            this.ltvPermisosAsignados.Location = new System.Drawing.Point(696, 68);
+            this.ltvPermisosAsignados.Location = new System.Drawing.Point(1029, 68);
             this.ltvPermisosAsignados.Name = "ltvPermisosAsignados";
             this.ltvPermisosAsignados.Size = new System.Drawing.Size(234, 407);
             this.ltvPermisosAsignados.TabIndex = 58;
@@ -331,7 +331,6 @@
             this.btnCerrarForm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnCerrarForm.TabIndex = 67;
             this.btnCerrarForm.TabStop = false;
-            this.btnCerrarForm.Visible = false;
             this.btnCerrarForm.Click += new System.EventHandler(this.btnCerrarForm_Click);
             // 
             // frmAdministrarRoles
