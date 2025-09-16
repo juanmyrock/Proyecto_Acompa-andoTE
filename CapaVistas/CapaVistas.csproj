@@ -88,6 +88,12 @@
     <Compile Include="Forms Menu\frmGestionarUsuario.Designer.cs">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmGestionReportes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmGestionReportes.Designer.cs">
+      <DependentUpon>frmGestionReportes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmGestionTramites.cs">
       <SubType>Form</SubType>
     </Compile>

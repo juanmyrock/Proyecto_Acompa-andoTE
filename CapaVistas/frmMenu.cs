@@ -188,5 +188,10 @@ namespace CapaVistas
         {
             OpenChildForm(new frmGestionTramites(), sender);
         }
+
+        private void btnReportes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmGestionReportes(), sender);
+        }
     }
 }

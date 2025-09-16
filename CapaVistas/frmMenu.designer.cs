@@ -350,6 +350,7 @@ namespace CapaVistas
             this.btnReportes.TabIndex = 14;
             this.btnReportes.Text = "Reportes";
             this.btnReportes.UseVisualStyleBackColor = false;
+            this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
             // 
             // btnTurnos
             // 

@@ -12,7 +12,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
         private Point dragCursorPoint;
         private Point dragFormPoint;
 
-        public frmGestionTramites   ()
+        public frmGestionTramites()
         {
             InitializeComponent();
         }
