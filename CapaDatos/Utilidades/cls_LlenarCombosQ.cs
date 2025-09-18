@@ -30,9 +30,9 @@ namespace CapaDatos.Utilidades
                     response.Localidades = new List<cls_LocalidadDTO>(); // Inicializa la lista
                     foreach (DataRow row in tablaLocalidades.Rows)
                     {
-                        response.Localidades.Add(new cls_LocalidadDTO // Usamos LocalidadDTO sin cls_ (según la recomendación anterior)
+                        response.Localidades.Add(new cls_LocalidadDTO
                         {
-                            id_localidad = Convert.ToInt32(row["id_localidad"]), // PascalCase para propiedades
+                            id_localidad = Convert.ToInt32(row["id_localidad"]),
                             nombre_localidad = row["localidad"].ToString()
                         });
                     }
@@ -141,6 +141,37 @@ namespace CapaDatos.Utilidades
         }
 
         #endregion
+
+        #region Tabla Obras_Sociales
+        public LlenarCombosResponseDTO ObtenerObrasSociales()
+        {
+            var response = new LlenarCombosResponseDTO();
+            string query = "SELECT id_obra_social, nombre_os FROM Obra_Social";
+            try
+            {
+                DataTable tablaObraSocial = _ejecutar.ConsultaRead(query);
+                if (tablaObraSocial.Rows.Count > 0)
+                {
+                    response.ObraSocial = new List<cls_ObraSocialDTO>();
+                    foreach (DataRow row in tablaObraSocial.Rows)
+                    {
+                        response.ObraSocial.Add(new cls_ObraSocialDTO
+                        {
+                            id_obra_social = Convert.ToInt32(row["id_obra_social"]),
+                            descripcion = row["nombre_os"].ToString()
+                        });
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en cls_ObraSocialQ al obtener obras sociales: {ex.Message}");
+                return null;
+            }
+            #endregion
+
+        }
     }
 }
 
