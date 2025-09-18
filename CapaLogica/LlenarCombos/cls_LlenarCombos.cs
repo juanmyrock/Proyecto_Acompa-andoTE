@@ -39,7 +39,7 @@ namespace CapaLogica.LlenarCombos
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al obtener localidades: {ex.Message}");
+                Console.WriteLine($"Error al obtener sexos: {ex.Message}");
                 return null;
             }
         }
@@ -66,6 +66,19 @@ namespace CapaLogica.LlenarCombos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al obtener roles: {ex.Message}");
+                return null;
+            }
+        }
+
+        public LlenarCombosResponseDTO ObtenerObrasSociales()
+        {
+            try
+            {
+                return _llenador.ObtenerObrasSociales();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener obras sociales: {ex.Message}");
                 return null;
             }
         }

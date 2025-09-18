@@ -187,6 +187,7 @@ namespace CapaDatos.ABM
                 new SqlParameter("@telefono", paciente.telefono),
                 new SqlParameter("@email", paciente.email),
                 new SqlParameter("@id_paciente", paciente.id_paciente)
+
             };
 
             _ejecutar.ConsultaWrite(sqlUpdate, parametros);

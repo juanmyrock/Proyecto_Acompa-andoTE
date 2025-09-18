@@ -53,10 +53,10 @@ namespace CapaVistas.Forms_Menu
             var cargaLocalidades = _rellenador.ObtenerLocalidades();
             var cargaSexos = _rellenador.ObtenerSexos();
             var cargaTiposDocumento = _rellenador.ObtenerTiposDocumento();
-            //var obrasSociales = _rellenador.ObtenerObrasSociales();
+            var cargaObrasSociales = _rellenador.ObtenerObrasSociales();
             try
             {
-                //CapaUtilidades.cls_LlenarCombos.Cargar(cmbObraSocial, obrasSociales.ObrasSociales, "descripcion", "id_os");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbObraSocial, cargaObrasSociales.ObraSocial, "descripcion", "id_obra_social");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbTipoDNI, cargaTiposDocumento.TiposDocumento, "descripcion", "id_tipo_documento");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbLocalidad, cargaLocalidades.Localidades, "nombre_localidad", "id_localidad");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbSexo, cargaSexos.Sexos, "descripcion", "id_sexo");
@@ -176,18 +176,36 @@ namespace CapaVistas.Forms_Menu
                     txtAmbito.Text = pacienteSeleccionado.ambito;
                     txtTelefono.Text = pacienteSeleccionado.telefono.ToString();
                     txtEmail.Text = pacienteSeleccionado.email;
+                    
 
                     
-                    /*if (pacienteSeleccionado.id_os.HasValue)
+                    if (pacienteSeleccionado.id_os.HasValue)
                     {
                         cmbObraSocial.SelectedValue = pacienteSeleccionado.id_os.Value;
                     }
                     else
                     {
                         cmbObraSocial.SelectedIndex = -1;
-                    }*/
+                    }
+
+                    if (pacienteSeleccionado.id_tipo_dni.HasValue) {
+                        cmbTipoDNI.SelectedValue = pacienteSeleccionado.id_tipo_dni.Value;
+                    }
+                    else
+                    {
+                        cmbTipoDNI.SelectedIndex = -1;
+                    }
+                    if (pacienteSeleccionado.id_tipo_dni.HasValue)
+                    {
+                        cmbTipoDNI.SelectedValue = pacienteSeleccionado.id_sexo.Value;
+                    }
+                    else
+                    {
+                        cmbTipoDNI.SelectedIndex = -1;
+                    }
 
                     cmbLocalidad.SelectedValue = pacienteSeleccionado.id_localidad;
+                    
 
                     if (pacienteSeleccionado.fecha_nac.HasValue &&
                         pacienteSeleccionado.fecha_nac.Value >= dateFechaNac.MinDate &&
