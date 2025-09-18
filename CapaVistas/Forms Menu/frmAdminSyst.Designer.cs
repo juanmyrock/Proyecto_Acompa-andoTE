@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAdminSyst));
             this.lblPassCharVerification = new System.Windows.Forms.Label();
             this.lblAskUser = new System.Windows.Forms.Label();
             this.lblCombMayus = new System.Windows.Forms.Label();
@@ -401,6 +402,7 @@
             this.Controls.Add(this.lblAskUser);
             this.Controls.Add(this.lblPassCharVerification);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAdminSyst";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Administrar Sistema";

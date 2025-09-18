@@ -18,18 +18,23 @@ namespace CapaVistas.Forms_Menu
             InitializeComponent();
             _logicaPaciente = new cls_LogicaGestionarPacientes();
             _rellenador = new cls_LlenarCombos();
+            cmbOrden.SelectedIndex = 0;
         }
 
         private void frmPacientes_Load(object sender, EventArgs e)
         {
-            CargarPacientesEnDataGridView();
-            CargarCombos();
+                CargarPacientesEnDataGridView();
+                CargarCombos();
+                
+
+          
         }
         private void CargarPacientesEnDataGridView()
         {
+
             try
             {
-                List<cls_PacienteDTO> listaPacientes = _logicaPaciente.ObtenerPacientes();
+                List<cls_PacienteDTO> listaPacientes = _logicaPaciente.ObtenerPacientesActivos();
                 dgvVerPacientes.DataSource = listaPacientes;
                 dgvVerPacientes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dgvVerPacientes.ReadOnly = true;
@@ -37,7 +42,7 @@ namespace CapaVistas.Forms_Menu
                 dgvVerPacientes.AllowUserToAddRows = false;
 
                 dgvVerPacientes.Columns["id_os"].Visible = false;
-                dgvVerPacientes.Columns["id_diagnostico"].Visible = false;
+                dgvVerPacientes.Columns["diagnostico"].Visible = false;
                 dgvVerPacientes.Columns["id_localidad"].Visible = false;
                 dgvVerPacientes.Columns["esActivo"].Visible = false;
 
@@ -47,6 +52,45 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Error al cargar los pacientes en la vista: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        
+
+        private void CargarTodosLosPacientesEnDataGridView(string filtro)
+        {
+            try
+            {
+                List<cls_PacienteDTO> listaPacientes = new List<cls_PacienteDTO>();
+                if (filtro == "Pacientes Activos")
+                {
+                    listaPacientes = _logicaPaciente.ObtenerPacientesActivos();
+                }
+                else if (filtro == "Pacientes Inactivos")
+                {
+                    listaPacientes = _logicaPaciente.ObtenerPacientesInactivos();
+                }
+                else if (filtro == "Todos")
+                {
+                    listaPacientes = _logicaPaciente.ObtenerPacientes();
+                }
+
+                dgvVerPacientes.DataSource = listaPacientes;
+                dgvVerPacientes.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dgvVerPacientes.ReadOnly = true;
+                dgvVerPacientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvVerPacientes.AllowUserToAddRows = false;
+
+                dgvVerPacientes.Columns["id_os"].Visible = false;
+                dgvVerPacientes.Columns["diagnostico"].Visible = false;
+                dgvVerPacientes.Columns["id_localidad"].Visible = false;
+                dgvVerPacientes.Columns["esActivo"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los pacientes en la vista: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
         private void CargarCombos()
         {
@@ -76,6 +120,7 @@ namespace CapaVistas.Forms_Menu
             txtNumAfiliado.Clear();
             txtDniPaciente.Clear();
             txtCud.Clear();
+            txtDiagnostico.Clear();
             txtDomicilio.Clear();
             txtNumDomicilio.Clear();
             txtCargaHoraria.Clear();
@@ -86,6 +131,9 @@ namespace CapaVistas.Forms_Menu
             if (cmbObraSocial.Items.Count > 0) cmbObraSocial.SelectedIndex = -1;
 
             if (cmbLocalidad.Items.Count > 0) cmbLocalidad.SelectedIndex = -1;
+            if (cmbSexo.Items.Count > 0) cmbSexo.SelectedIndex = -1;
+            if (cmbTipoDNI.Items.Count > 0) cmbTipoDNI.SelectedIndex = -1;
+
             dateFechaNac.Value = DateTime.Now;
             _idPacienteSeleccionado = -1;
         }
@@ -132,13 +180,6 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("La carga horaria debe ser un número decimal válido y positivo.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-
-            //if (cmbObraSocial.SelectedValue == null || cmbLocalidad.SelectedValue == null)
-            //{
-            //    MessageBox.Show("Por favor, seleccione una opción en todos los campos desplegables.", "Campos Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return false;
-            //}
-
             return true;
         }
 
@@ -155,7 +196,7 @@ namespace CapaVistas.Forms_Menu
 
         private void dgvVerPacientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= -1)
             {
                 try
                 {
@@ -170,6 +211,7 @@ namespace CapaVistas.Forms_Menu
                     txtNumAfiliado.Text = pacienteSeleccionado.num_afiliado.ToString();
                     txtDniPaciente.Text = pacienteSeleccionado.dni_paciente.ToString();
                     txtCud.Text = pacienteSeleccionado.cud;
+                    txtDiagnostico.Text = pacienteSeleccionado.diagnostico.ToString();
                     txtDomicilio.Text = pacienteSeleccionado.domicilio;
                     txtNumDomicilio.Text = pacienteSeleccionado.num_domicilio.ToString();
                     txtCargaHoraria.Text = pacienteSeleccionado.cargahoraria_at.ToString();
@@ -195,13 +237,13 @@ namespace CapaVistas.Forms_Menu
                     {
                         cmbTipoDNI.SelectedIndex = -1;
                     }
-                    if (pacienteSeleccionado.id_tipo_dni.HasValue)
+                    if (pacienteSeleccionado.id_sexo.HasValue)
                     {
-                        cmbTipoDNI.SelectedValue = pacienteSeleccionado.id_sexo.Value;
+                        cmbSexo.SelectedValue = pacienteSeleccionado.id_sexo.Value;
                     }
                     else
                     {
-                        cmbTipoDNI.SelectedIndex = -1;
+                        cmbSexo.SelectedIndex = -1;
                     }
 
                     cmbLocalidad.SelectedValue = pacienteSeleccionado.id_localidad;
@@ -242,13 +284,18 @@ namespace CapaVistas.Forms_Menu
                 dni_paciente = Convert.ToInt32(txtDniPaciente.Text),
                 fecha_nac = dateFechaNac.Value,
                 cud = txtCud.Text,
+                diagnostico = txtDiagnostico.Text,
+                id_sexo = Convert.ToInt32(cmbSexo.SelectedValue),
+                id_tipo_dni = Convert.ToInt32(cmbTipoDNI.SelectedValue),
                 id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
                 domicilio = txtDomicilio.Text,
                 num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
-                cargahoraria_at = Convert.ToInt32(txtCargaHoraria.Text),
+                cargahoraria_at = Convert.ToDecimal(txtCargaHoraria.Text),
                 ambito = txtAmbito.Text,
                 telefono = Convert.ToInt32(txtTelefono.Text),
-                email = txtEmail.Text
+                email = txtEmail.Text,
+                esActivo = Convert.ToBoolean(1)
+                
             };
 
             if (_logicaPaciente.InsertarPaciente(nuevoPaciente))
@@ -284,13 +331,16 @@ namespace CapaVistas.Forms_Menu
                 dni_paciente = Convert.ToInt32(txtDniPaciente.Text),
                 fecha_nac = dateFechaNac.Value,
                 cud = txtCud.Text,
+                diagnostico = txtDiagnostico.Text,
                 id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
                 domicilio = txtDomicilio.Text,
                 num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
-                cargahoraria_at = Convert.ToInt32(txtCargaHoraria.Text),
+                cargahoraria_at = Convert.ToDecimal(txtCargaHoraria.Text),
                 ambito = txtAmbito.Text,
                 telefono = Convert.ToInt32(txtTelefono.Text),
-                email = txtEmail.Text
+                email = txtEmail.Text,
+                id_sexo = Convert.ToInt32(cmbSexo.SelectedValue),
+                id_tipo_dni = Convert.ToInt32(cmbTipoDNI.SelectedValue)
             };
 
             if (_logicaPaciente.ActualizarPaciente(pacienteModificado))
@@ -330,6 +380,114 @@ namespace CapaVistas.Forms_Menu
                     MessageBox.Show("No se pudo eliminar el paciente. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnRefresh_Click_1(object sender, EventArgs e)
+        {
+            LimpiarCampos();
+            CargarPacientesEnDataGridView();
+            cmbOrden.SelectedIndex = 0;
+
+        }
+
+        private void dgvVerPacientes_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvVerPacientes.CurrentRow != null && dgvVerPacientes.CurrentRow.Index >= 0)
+            {
+                try
+                {
+                    cls_PacienteDTO pacienteSeleccionado = (cls_PacienteDTO)dgvVerPacientes.CurrentRow.DataBoundItem;
+
+                    _idPacienteSeleccionado = pacienteSeleccionado.id_paciente;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al obtener la selección del empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _idPacienteSeleccionado = -1;
+                }
+            }
+        }
+
+        private void dgvVerPacientes_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    DataGridViewRow filaSeleccionada = dgvVerPacientes.Rows[e.RowIndex];
+                    cls_PacienteDTO pacienteSeleccionado = (cls_PacienteDTO)filaSeleccionada.DataBoundItem;
+
+                    _idPacienteSeleccionado = pacienteSeleccionado.id_paciente;
+
+                    txtNombre.Text = pacienteSeleccionado.Nombre;
+                    txtApellido.Text = pacienteSeleccionado.Apellido;
+                    txtDniTitular.Text = pacienteSeleccionado.dni_titular.ToString();
+                    txtNumAfiliado.Text = pacienteSeleccionado.num_afiliado.ToString();
+                    txtDniPaciente.Text = pacienteSeleccionado.dni_paciente.ToString();
+                    txtCud.Text = pacienteSeleccionado.cud;
+                    txtDiagnostico.Text = pacienteSeleccionado.diagnostico;
+                    txtDomicilio.Text = pacienteSeleccionado.domicilio;
+                    txtNumDomicilio.Text = pacienteSeleccionado.num_domicilio.ToString();
+                    txtCargaHoraria.Text = pacienteSeleccionado.cargahoraria_at.ToString();
+                    txtAmbito.Text = pacienteSeleccionado.ambito;
+                    txtTelefono.Text = pacienteSeleccionado.telefono.ToString();
+                    txtEmail.Text = pacienteSeleccionado.email;
+                    if (pacienteSeleccionado.id_os.HasValue)
+                    {
+                        cmbObraSocial.SelectedValue = pacienteSeleccionado.id_os.Value;
+                    }
+                    else
+                    {
+                        cmbObraSocial.SelectedIndex = -1;
+                    }
+
+                    if (pacienteSeleccionado.id_tipo_dni.HasValue)
+                    {
+                        cmbTipoDNI.SelectedValue = pacienteSeleccionado.id_tipo_dni.Value;
+                    }
+                    else
+                    {
+                        cmbTipoDNI.SelectedIndex = -1;
+                    }
+
+                    if (pacienteSeleccionado.id_sexo.HasValue)
+                    {
+                        cmbSexo.SelectedValue = pacienteSeleccionado.id_sexo.Value;
+                    }
+                    else
+                    {
+                        cmbSexo.SelectedIndex = -1;
+                    }
+
+                    cmbLocalidad.SelectedValue = pacienteSeleccionado.id_localidad;
+
+                    // Para el DateTimePicker
+                    if (pacienteSeleccionado.fecha_nac.HasValue &&
+                        pacienteSeleccionado.fecha_nac.Value >= dateFechaNac.MinDate &&
+                        pacienteSeleccionado.fecha_nac.Value <= dateFechaNac.MaxDate)
+                    {
+                        dateFechaNac.Value = pacienteSeleccionado.fecha_nac.Value;
+                    }
+                    else
+                    {
+                        dateFechaNac.Value = DateTime.Now;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al seleccionar paciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _idPacienteSeleccionado = -1;
+                }
+            }
+        }
+
+        private void cmbOrden_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            LimpiarCampos();
+            string filtroSeleccionado = cmbOrden.SelectedItem.ToString();
+            CargarTodosLosPacientesEnDataGridView(filtroSeleccionado);
         }
     }
 }

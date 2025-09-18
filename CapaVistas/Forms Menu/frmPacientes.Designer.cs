@@ -73,6 +73,8 @@
             this.cmbLocalidad = new System.Windows.Forms.ComboBox();
             this.cmbTipoDNI = new System.Windows.Forms.ComboBox();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.cmbOrden = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerPacientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -93,6 +95,8 @@
             this.dgvVerPacientes.Size = new System.Drawing.Size(952, 218);
             this.dgvVerPacientes.TabIndex = 48;
             this.dgvVerPacientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerPacientes_CellClick);
+            this.dgvVerPacientes.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVerPacientes_RowEnter);
+            this.dgvVerPacientes.SelectionChanged += new System.EventHandler(this.dgvVerPacientes_SelectionChanged);
             // 
             // pictureBox3
             // 
@@ -545,6 +549,33 @@
             this.btnRefresh.TabIndex = 60;
             this.btnRefresh.Text = "Cargar";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click_1);
+            // 
+            // cmbOrden
+            // 
+            this.cmbOrden.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbOrden.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbOrden.FormattingEnabled = true;
+            this.cmbOrden.Items.AddRange(new object[] {
+            "Pacientes Activos",
+            "Pacientes Inactivos",
+            "Todos"});
+            this.cmbOrden.Location = new System.Drawing.Point(137, 3);
+            this.cmbOrden.Name = "cmbOrden";
+            this.cmbOrden.Size = new System.Drawing.Size(121, 21);
+            this.cmbOrden.TabIndex = 78;
+            this.cmbOrden.SelectedIndexChanged += new System.EventHandler(this.cmbOrden_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Bahnschrift", 9F);
+            this.label7.ForeColor = System.Drawing.SystemColors.Control;
+            this.label7.Location = new System.Drawing.Point(57, 5);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(74, 14);
+            this.label7.TabIndex = 78;
+            this.label7.Text = "Ordenar por:";
             // 
             // frmPacientes
             // 
@@ -552,6 +583,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cmbOrden);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.pictureBox3);
@@ -572,6 +605,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -622,5 +656,7 @@
         private System.Windows.Forms.TextBox txtNumDomicilio;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ComboBox cmbOrden;
+        private System.Windows.Forms.Label label7;
     }
 }

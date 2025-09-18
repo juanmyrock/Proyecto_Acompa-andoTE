@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CapaDatos.ABM;
 using CapaDTO.SistemaDTO;
-using CapaDatos.ABM;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace CapaLogica.SistemaLogica
 {
@@ -19,6 +20,19 @@ namespace CapaLogica.SistemaLogica
             try
             {
                 return _pacientesQ.ObtenerPacientesActivos();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al obtener pacientes: {ex.Message}");
+                return new List<cls_PacienteDTO>();
+            }
+        }
+
+        public List<cls_PacienteDTO> ObtenerPacientesInactivos()
+        {
+            try
+            {
+                return _pacientesQ.ObtenerPacientesInactivos();
             }
             catch (Exception ex)
             {
@@ -64,8 +78,7 @@ namespace CapaLogica.SistemaLogica
                     return false;
                 }
 
-                if (nuevoPaciente.id_diagnostico <= 0 ||
-                    nuevoPaciente.id_localidad <= 0)
+                if (nuevoPaciente.id_localidad <= 0)
                 {
                     return false;
                 }
@@ -136,5 +149,6 @@ namespace CapaLogica.SistemaLogica
                 return false;
             }
         }
+       
     }
 }

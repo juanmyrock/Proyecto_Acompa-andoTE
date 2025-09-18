@@ -153,6 +153,9 @@
     <EmbeddedResource Include="Forms Menu\frmGestionarUsuario.resx">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmGestionReportes.resx">
+      <DependentUpon>frmGestionReportes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmGestionTramites.resx">
       <DependentUpon>frmGestionTramites.cs</DependentUpon>
     </EmbeddedResource>

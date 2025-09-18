@@ -63,7 +63,7 @@
             this.lblTituloForm.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.lblTituloForm.Location = new System.Drawing.Point(12, 7);
             this.lblTituloForm.Name = "lblTituloForm";
-            this.lblTituloForm.Size = new System.Drawing.Size(124, 16);
+            this.lblTituloForm.Size = new System.Drawing.Size(120, 16);
             this.lblTituloForm.TabIndex = 1;
             this.lblTituloForm.Text = "Gestión de Trámites";
             // 
@@ -79,6 +79,7 @@
             this.lblClose.Size = new System.Drawing.Size(20, 19);
             this.lblClose.TabIndex = 0;
             this.lblClose.Text = "X";
+            this.lblClose.Visible = false;
             this.lblClose.Click += new System.EventHandler(this.lblClose_Click);
             // 
             // gbBusqueda
@@ -114,7 +115,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(20, 95);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 14);
+            this.label2.Size = new System.Drawing.Size(122, 14);
             this.label2.TabIndex = 3;
             this.label2.Text = "Trámites del Paciente:";
             // 
@@ -142,14 +143,14 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(20, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 14);
+            this.label1.Size = new System.Drawing.Size(182, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Buscar Paciente (DNI o Apellido):";
             // 
             // pnlChat
             // 
-            this.pnlChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlChat.AutoScroll = true;
             this.pnlChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
@@ -260,7 +261,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(20, 30);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 14);
+            this.label4.Size = new System.Drawing.Size(83, 14);
             this.label4.TabIndex = 0;
             this.label4.Text = "Estado Actual:";
             // 
@@ -271,11 +272,11 @@
             this.lblTramiteSeleccionado.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblTramiteSeleccionado.Location = new System.Drawing.Point(365, 45);
             this.lblTramiteSeleccionado.Name = "lblTramiteSeleccionado";
-            this.lblTramiteSeleccionado.Size = new System.Drawing.Size(262, 23);
+            this.lblTramiteSeleccionado.Size = new System.Drawing.Size(271, 23);
             this.lblTramiteSeleccionado.TabIndex = 6;
             this.lblTramiteSeleccionado.Text = "Seleccione un trámite para ver";
             // 
-            // frmGestionTramitesChat
+            // frmGestionTramites
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -288,7 +289,7 @@
             this.Controls.Add(this.gbBusqueda);
             this.Controls.Add(this.panelTopBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmGestionTramitesChat";
+            this.Name = "frmGestionTramites";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmGestionTramitesChat";
             this.panelTopBar.ResumeLayout(false);

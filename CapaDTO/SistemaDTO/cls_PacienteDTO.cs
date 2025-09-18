@@ -21,7 +21,7 @@ namespace CapaDTO.SistemaDTO
         public int? id_sexo { get; set; }
         public string cud {  get; set; }
 
-        public int id_diagnostico { get; set; }
+        public string diagnostico { get; set; }
 
         public int id_localidad { get; set; }
 
@@ -29,7 +29,7 @@ namespace CapaDTO.SistemaDTO
 
         public int num_domicilio { get; set; }
 
-        public int cargahoraria_at {  get; set; }
+        public decimal cargahoraria_at { get; set; }
 
         public string ambito { get; set; }
 
