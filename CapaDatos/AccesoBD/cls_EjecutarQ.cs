@@ -41,6 +41,40 @@ namespace CapaDatos
             return datosTabla;
         }
 
+        public DataTable ConsultaReadSP(string consultaSql, List<SqlParameter> parametros = null)
+        {
+            DataTable datosTabla = new DataTable();
+            try
+            {
+                using (SqlConnection conexion = GetConexion())
+                {
+                    conexion.Open();
+                    using (SqlCommand comando = new SqlCommand(consultaSql, conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        if (parametros != null)
+                        {
+                            comando.Parameters.AddRange(parametros.ToArray());
+                        }
+
+                        using (SqlDataReader lector = comando.ExecuteReader())
+                        {
+                            datosTabla.Load(lector);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Error de SQL: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            return datosTabla;
+        }
+
         // Método para ejecutar una consulta SQL que no devuelve datos (como INSERT, UPDATE, DELETE)
         public void ConsultaWrite(string comandoSql, List<SqlParameter> parametros = null)
         {
@@ -57,6 +91,36 @@ namespace CapaDatos
                         }
 
                         comando.ExecuteNonQuery(); // Ejecuta el comando SQL
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Error de SQL: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        public void ConsultaWriteSP(string nombreStoredProcedure, List<SqlParameter> parametros = null)
+        {
+            try
+            {
+                using (SqlConnection conexion = GetConexion())
+                {
+                    conexion.Open();
+                    using (SqlCommand comando = new SqlCommand(nombreStoredProcedure, conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+
+                        if (parametros != null)
+                        {
+                            comando.Parameters.AddRange(parametros.ToArray());
+                        }
+
+                        comando.ExecuteNonQuery(); // Ejecuta el Stored Procedure
                     }
                 }
             }

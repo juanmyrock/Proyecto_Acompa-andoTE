@@ -149,6 +149,25 @@ namespace CapaLogica.SistemaLogica
                 return false;
             }
         }
-       
+
+        public bool ReactivarPaciente(int id_paciente)
+        {
+            try
+            {
+                _pacientesQ.ReactivarPaciente(id_paciente);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al reactivar paciente: {ex.Message}");
+                return false;
+            }
+        }
+
+        public cls_PacienteDTO BuscarPacientePorDni(int dni)
+        {
+            return _pacientesQ.BuscarPacientePorDni(dni);
+        }
+
     }
 }

@@ -245,5 +245,8 @@
   <ItemGroup>
     <None Include="Resources\eliminar logo1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maximizar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

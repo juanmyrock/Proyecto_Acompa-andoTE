@@ -44,6 +44,8 @@ namespace CapaVistas.Forms_Menu
                 dgvVerPacientes.Columns["id_os"].Visible = false;
                 dgvVerPacientes.Columns["diagnostico"].Visible = false;
                 dgvVerPacientes.Columns["id_localidad"].Visible = false;
+                dgvVerPacientes.Columns["id_sexo"].Visible = false;
+                dgvVerPacientes.Columns["id_tipo_dni"].Visible = false;
                 dgvVerPacientes.Columns["esActivo"].Visible = false;
 
             }
@@ -127,7 +129,8 @@ namespace CapaVistas.Forms_Menu
             txtAmbito.Clear();
             txtTelefono.Clear();
             txtEmail.Clear();
-            //txtDiagnostico.Clear();
+            txtBusquedaPaciente.Clear();
+            txtDiagnostico.Clear();
             if (cmbObraSocial.Items.Count > 0) cmbObraSocial.SelectedIndex = -1;
 
             if (cmbLocalidad.Items.Count > 0) cmbLocalidad.SelectedIndex = -1;
@@ -187,11 +190,13 @@ namespace CapaVistas.Forms_Menu
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
+            cmbOrden.SelectedIndex = 0;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             CargarPacientesEnDataGridView();
+            cmbOrden.SelectedIndex = 0;
         }
 
         private void dgvVerPacientes_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -303,6 +308,7 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Paciente creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarCampos();
                 CargarPacientesEnDataGridView();
+                cmbOrden.SelectedIndex = 0;
             }
             else
             {
@@ -348,6 +354,7 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Paciente modificado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarCampos();
                 CargarPacientesEnDataGridView();
+                cmbOrden.SelectedIndex = 0;
             }
             else
             {
@@ -374,6 +381,7 @@ namespace CapaVistas.Forms_Menu
                     MessageBox.Show("Paciente eliminado lógicamente (inactivado) exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarCampos();
                     CargarPacientesEnDataGridView();
+                    cmbOrden.SelectedIndex = 0;
                 }
                 else
                 {
@@ -386,6 +394,7 @@ namespace CapaVistas.Forms_Menu
         {
             LimpiarCampos();
             CargarPacientesEnDataGridView();
+
             cmbOrden.SelectedIndex = 0;
 
         }
@@ -399,6 +408,14 @@ namespace CapaVistas.Forms_Menu
                     cls_PacienteDTO pacienteSeleccionado = (cls_PacienteDTO)dgvVerPacientes.CurrentRow.DataBoundItem;
 
                     _idPacienteSeleccionado = pacienteSeleccionado.id_paciente;
+                    if (_idPacienteSeleccionado != 0 && pacienteSeleccionado.esActivo == false)
+                        {
+                        btnReactivar.Visible = true;
+                        }
+                    else if (_idPacienteSeleccionado != 0 && pacienteSeleccionado.esActivo == true)
+                    {
+                        btnReactivar.Visible = false;
+                    }
 
                 }
                 catch (Exception ex)
@@ -488,6 +505,72 @@ namespace CapaVistas.Forms_Menu
             LimpiarCampos();
             string filtroSeleccionado = cmbOrden.SelectedItem.ToString();
             CargarTodosLosPacientesEnDataGridView(filtroSeleccionado);
+        }
+
+        private void btnReactivar_Click(object sender, EventArgs e)
+        {
+            if (_idPacienteSeleccionado == -1)
+            {
+                MessageBox.Show("Por favor, seleccione un paciente de la lista para Reactivar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult resultado = MessageBox.Show(
+                "¿Está seguro de que desea REACTIVAR al paciente seleccionado? Esto lo reactivara en el sistema.",
+                "Confirmar Reactivación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resultado == DialogResult.Yes)
+            {
+                if (_logicaPaciente.ReactivarPaciente(_idPacienteSeleccionado))
+                {
+                    MessageBox.Show("Paciente Reactivado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
+                    CargarPacientesEnDataGridView();
+                    cmbOrden.SelectedIndex = 0;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo reactivar el paciente. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnBuscarDNI_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtBusquedaPaciente.Text, out int dniBuscado))
+            {
+                MessageBox.Show("Por favor, ingrese un número de DNI válido.", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtBusquedaPaciente.Clear();
+                return;
+            }
+
+            try
+            {
+                cls_PacienteDTO pacienteEncontrado = _logicaPaciente.BuscarPacientePorDni(dniBuscado);
+
+                if (pacienteEncontrado != null)
+                {
+
+                    List<cls_PacienteDTO> resultado = new List<cls_PacienteDTO> { pacienteEncontrado };
+
+                    dgvVerPacientes.DataSource = resultado;
+
+                    MessageBox.Show($"Paciente {pacienteEncontrado.Nombre} {pacienteEncontrado.Apellido} encontrado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+
+                    MessageBox.Show($"No se encontró ningún paciente con DNI: {dniBuscado}.", "No Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    CargarPacientesEnDataGridView();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar el paciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CargarPacientesEnDataGridView();
+            }
+            
         }
     }
 }

@@ -36,6 +36,7 @@ namespace CapaVistas.Forms_Menu
                 dgvVerUser.ReadOnly = true;
                 dgvVerUser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgvVerUser.AllowUserToAddRows = false;
+                dgvVerUser.Columns["esActivo"].Visible = false;
                 dgvVerUser.Columns["id_sexo"].Visible = false;
                 dgvVerUser.Columns["id_tipo_dni"].Visible = false;
                 dgvVerUser.Columns["id_localidad"].Visible = false;

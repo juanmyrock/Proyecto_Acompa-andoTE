@@ -75,6 +75,11 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.cmbOrden = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnReactivar = new System.Windows.Forms.Button();
+            this.txtBusquedaPaciente = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnBuscarDNI = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerPacientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -84,8 +89,10 @@
             // 
             // dgvVerPacientes
             // 
+            this.dgvVerPacientes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvVerPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVerPacientes.Location = new System.Drawing.Point(53, 30);
+            this.dgvVerPacientes.Location = new System.Drawing.Point(60, 51);
             this.dgvVerPacientes.MultiSelect = false;
             this.dgvVerPacientes.Name = "dgvVerPacientes";
             this.dgvVerPacientes.ReadOnly = true;
@@ -100,9 +107,10 @@
             // 
             // pictureBox3
             // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.Image = global::CapaVistas.Properties.Resources.eliminar_logo1;
             this.pictureBox3.ImageLocation = "";
-            this.pictureBox3.Location = new System.Drawing.Point(754, 254);
+            this.pictureBox3.Location = new System.Drawing.Point(761, 275);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(53, 44);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -111,9 +119,10 @@
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox2.Image = global::CapaVistas.Properties.Resources.logo_editar;
             this.pictureBox2.ImageLocation = "";
-            this.pictureBox2.Location = new System.Drawing.Point(399, 254);
+            this.pictureBox2.Location = new System.Drawing.Point(406, 275);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(53, 44);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -124,7 +133,7 @@
             // 
             this.pictureBox1.Image = global::CapaVistas.Properties.Resources.check_logo;
             this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(69, 254);
+            this.pictureBox1.Location = new System.Drawing.Point(76, 275);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(41, 44);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -133,13 +142,14 @@
             // 
             // btnEliminar
             // 
+            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEliminar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnEliminar.FlatAppearance.BorderSize = 3;
             this.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnEliminar.Location = new System.Drawing.Point(807, 254);
+            this.btnEliminar.Location = new System.Drawing.Point(814, 275);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(168, 44);
             this.btnEliminar.TabIndex = 55;
@@ -150,13 +160,14 @@
             // 
             // btnModificar
             // 
+            this.btnModificar.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnModificar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModificar.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
             this.btnModificar.FlatAppearance.BorderSize = 3;
             this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnModificar.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModificar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnModificar.Location = new System.Drawing.Point(456, 254);
+            this.btnModificar.Location = new System.Drawing.Point(463, 275);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(169, 44);
             this.btnModificar.TabIndex = 54;
@@ -173,7 +184,7 @@
             this.btnCrear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCrear.Font = new System.Drawing.Font("Sans Serif Collection", 9.749998F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCrear.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnCrear.Location = new System.Drawing.Point(116, 254);
+            this.btnCrear.Location = new System.Drawing.Point(123, 275);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(168, 44);
             this.btnCrear.TabIndex = 53;
@@ -184,6 +195,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.txtNumDomicilio);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label2);
@@ -222,7 +236,7 @@
             this.groupBox2.Controls.Add(this.cmbTipoDNI);
             this.groupBox2.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox2.Location = new System.Drawing.Point(53, 304);
+            this.groupBox2.Location = new System.Drawing.Point(60, 325);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(952, 278);
             this.groupBox2.TabIndex = 59;
@@ -231,15 +245,15 @@
             // 
             // txtNumDomicilio
             // 
-            this.txtNumDomicilio.Location = new System.Drawing.Point(134, 170);
+            this.txtNumDomicilio.Location = new System.Drawing.Point(562, 134);
             this.txtNumDomicilio.Name = "txtNumDomicilio";
-            this.txtNumDomicilio.Size = new System.Drawing.Size(121, 22);
-            this.txtNumDomicilio.TabIndex = 76;
+            this.txtNumDomicilio.Size = new System.Drawing.Size(134, 22);
+            this.txtNumDomicilio.TabIndex = 16;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(72, 164);
+            this.label5.Location = new System.Drawing.Point(498, 128);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 28);
             this.label5.TabIndex = 77;
@@ -261,19 +275,19 @@
             this.txtDiagnostico.Multiline = true;
             this.txtDiagnostico.Name = "txtDiagnostico";
             this.txtDiagnostico.Size = new System.Drawing.Size(576, 85);
-            this.txtDiagnostico.TabIndex = 74;
+            this.txtDiagnostico.TabIndex = 19;
             // 
             // txtCargaHoraria
             // 
-            this.txtCargaHoraria.Location = new System.Drawing.Point(783, 134);
+            this.txtCargaHoraria.Location = new System.Drawing.Point(134, 170);
             this.txtCargaHoraria.Name = "txtCargaHoraria";
-            this.txtCargaHoraria.Size = new System.Drawing.Size(151, 22);
-            this.txtCargaHoraria.TabIndex = 72;
+            this.txtCargaHoraria.Size = new System.Drawing.Size(121, 22);
+            this.txtCargaHoraria.TabIndex = 18;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(702, 128);
+            this.label4.Location = new System.Drawing.Point(51, 164);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 28);
             this.label4.TabIndex = 73;
@@ -369,15 +383,15 @@
             // 
             // txtAmbito
             // 
-            this.txtAmbito.Location = new System.Drawing.Point(562, 134);
+            this.txtAmbito.Location = new System.Drawing.Point(783, 137);
             this.txtAmbito.Name = "txtAmbito";
-            this.txtAmbito.Size = new System.Drawing.Size(134, 22);
-            this.txtAmbito.TabIndex = 16;
+            this.txtAmbito.Size = new System.Drawing.Size(151, 22);
+            this.txtAmbito.TabIndex = 17;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(509, 137);
+            this.label6.Location = new System.Drawing.Point(730, 140);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 14);
             this.label6.TabIndex = 57;
@@ -420,7 +434,7 @@
             this.txtDniPaciente.Location = new System.Drawing.Point(562, 55);
             this.txtDniPaciente.Name = "txtDniPaciente";
             this.txtDniPaciente.Size = new System.Drawing.Size(134, 22);
-            this.txtDniPaciente.TabIndex = 11;
+            this.txtDniPaciente.TabIndex = 12;
             // 
             // txtDniTitular
             // 
@@ -540,12 +554,13 @@
             // 
             // btnRefresh
             // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnRefresh.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnRefresh.Location = new System.Drawing.Point(873, 1);
+            this.btnRefresh.Location = new System.Drawing.Point(937, 5);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(75, 40);
             this.btnRefresh.TabIndex = 60;
             this.btnRefresh.Text = "Cargar";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -560,7 +575,7 @@
             "Pacientes Activos",
             "Pacientes Inactivos",
             "Todos"});
-            this.cmbOrden.Location = new System.Drawing.Point(137, 3);
+            this.cmbOrden.Location = new System.Drawing.Point(144, 14);
             this.cmbOrden.Name = "cmbOrden";
             this.cmbOrden.Size = new System.Drawing.Size(121, 21);
             this.cmbOrden.TabIndex = 78;
@@ -569,13 +584,70 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Bahnschrift", 9F);
+            this.label7.Font = new System.Drawing.Font("Bahnschrift", 12F);
             this.label7.ForeColor = System.Drawing.SystemColors.Control;
-            this.label7.Location = new System.Drawing.Point(57, 5);
+            this.label7.Location = new System.Drawing.Point(56, 14);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(74, 14);
+            this.label7.Size = new System.Drawing.Size(87, 19);
             this.label7.TabIndex = 78;
-            this.label7.Text = "Ordenar por:";
+            this.label7.Text = "Filtrar por:";
+            // 
+            // btnReactivar
+            // 
+            this.btnReactivar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReactivar.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnReactivar.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReactivar.ForeColor = System.Drawing.Color.DarkOliveGreen;
+            this.btnReactivar.Location = new System.Drawing.Point(719, 5);
+            this.btnReactivar.Name = "btnReactivar";
+            this.btnReactivar.Size = new System.Drawing.Size(169, 40);
+            this.btnReactivar.TabIndex = 79;
+            this.btnReactivar.Text = "Reactivar Paciente";
+            this.btnReactivar.UseVisualStyleBackColor = true;
+            this.btnReactivar.Visible = false;
+            this.btnReactivar.Click += new System.EventHandler(this.btnReactivar_Click);
+            // 
+            // txtBusquedaPaciente
+            // 
+            this.txtBusquedaPaciente.Location = new System.Drawing.Point(462, 15);
+            this.txtBusquedaPaciente.Name = "txtBusquedaPaciente";
+            this.txtBusquedaPaciente.Size = new System.Drawing.Size(121, 20);
+            this.txtBusquedaPaciente.TabIndex = 78;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label8.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.label8.Location = new System.Drawing.Point(342, 17);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 16);
+            this.label8.TabIndex = 79;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Bahnschrift", 12F);
+            this.label9.ForeColor = System.Drawing.SystemColors.Control;
+            this.label9.Location = new System.Drawing.Point(315, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(144, 19);
+            this.label9.TabIndex = 80;
+            this.label9.Text = "Busqueda por DNI:";
+            // 
+            // btnBuscarDNI
+            // 
+            this.btnBuscarDNI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBuscarDNI.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBuscarDNI.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarDNI.ForeColor = System.Drawing.Color.DarkOliveGreen;
+            this.btnBuscarDNI.Location = new System.Drawing.Point(589, 15);
+            this.btnBuscarDNI.Name = "btnBuscarDNI";
+            this.btnBuscarDNI.Size = new System.Drawing.Size(94, 20);
+            this.btnBuscarDNI.TabIndex = 81;
+            this.btnBuscarDNI.Text = "Buscar";
+            this.btnBuscarDNI.UseVisualStyleBackColor = true;
+            this.btnBuscarDNI.Click += new System.EventHandler(this.btnBuscarDNI_Click);
             // 
             // frmPacientes
             // 
@@ -583,6 +655,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
+            this.Controls.Add(this.btnBuscarDNI);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtBusquedaPaciente);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.btnReactivar);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbOrden);
             this.Controls.Add(this.btnRefresh);
@@ -658,5 +735,10 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ComboBox cmbOrden;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnReactivar;
+        private System.Windows.Forms.TextBox txtBusquedaPaciente;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnBuscarDNI;
     }
 }

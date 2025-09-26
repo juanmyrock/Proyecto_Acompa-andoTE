@@ -13,19 +13,10 @@ namespace CapaDatos.ABM
         /// Obtiene los datos específicos para la gestión de un usuario.
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
-            string sql = @"
-                SELECT 
-                    u.id_usuario, u.username, u.id_rol, u.es_activo, u.fecha_bloqueo,
-                    r.nombre_rol,
-                    e.nombre + ' ' + e.apellido AS nombre_completo,
-                    e.email
-                FROM Usuarios u
-                LEFT JOIN Roles r ON u.id_rol = r.id_rol
-                INNER JOIN Empleados e ON u.id_usuario = e.id_empleado
-                WHERE u.id_usuario = @idUsuario";
+            string sql = "[dbo].[ObtenerUsuarioParaGestion]";
 
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
-            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaReadSP(sql, parametros);
 
             if (tabla.Rows.Count == 0) return null;
 
@@ -46,54 +37,44 @@ namespace CapaDatos.ABM
         /// Desbloquea a un usuario, reseteando sus intentos fallidos y reactivándolo.
         public void DesbloquearUsuario(int idUsuario)
         {
-            string sql = @"
-                UPDATE Usuarios 
-                SET 
-                    intentos_fallidos = 0, 
-                    fecha_bloqueo = NULL,
-                    es_activo = 1
-                WHERE id_usuario = @idUsuario";
+            string sql = "[dbo].[DesbloquearUsuario]";
 
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
-            _ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWriteSP(sql, parametros);
         }
         // Cambia el estado de un usuario (activo/inactivo).
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
             // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
-            string sql = @"
-                UPDATE Usuarios 
-                SET es_activo = @esActivo,
-                    fecha_baja = CASE WHEN @esActivo = 0 THEN GETDATE() ELSE NULL END
-                WHERE id_usuario = @idUsuario";
+            string sql = "[dbo].[CambiarEstadoUsuario]";
 
             var parametros = new List<SqlParameter>
             {
                 new SqlParameter("@idUsuario", idUsuario),
                 new SqlParameter("@esActivo", nuevoEstado)
             };
-            _ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWriteSP(sql, parametros);
         }
 
         // Actualiza el rol de un usuario específico.
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
-            string sql = "UPDATE Usuarios SET id_rol = @idRol WHERE id_usuario = @idUsuario";
+            string sql = "[dbo].[ActualizarRolUsuario]";
             var parametros = new List<SqlParameter>
             {
                 new SqlParameter("@idUsuario", idUsuario),
                 new SqlParameter("@idRol", idRol)
             };
-            _ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWriteSP(sql, parametros);
         }
 
         // Verifica si ya existe un registro en la tabla Usuarios para un id_usuario específico.
         // True si el usuario existe, de lo contrario False.
         public bool ExisteUsuario(int idUsuario)
         {
-            string sql = "SELECT COUNT(1) FROM Usuarios WHERE id_usuario = @idUsuario";
+            string sql = "[dbo].[ExisteUsuario]";
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
-            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            DataTable tabla = _ejecutar.ConsultaReadSP(sql, parametros);
             return Convert.ToInt32(tabla.Rows[0][0]) > 0;
         }
 
@@ -101,9 +82,7 @@ namespace CapaDatos.ABM
         public void CrearNuevoUsuario(int idUsuario, string username, int idRol)
         {
             // Al crear un usuario, siempre lo marcamos para que configure su cuenta en el primer login.
-            string sql = @"
-        INSERT INTO Usuarios (id_usuario, username, id_rol, es_activo, es_primer_ingreso, es_random_pass, fecha_alta) 
-        VALUES (@idUsuario, @username, @idRol, 1, 1, 1, GETDATE())";
+            string sql = "[dbo].[CrearNuevoUsuario]";
 
             var parametros = new List<SqlParameter>
     {

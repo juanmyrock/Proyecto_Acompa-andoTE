@@ -23,5 +23,7 @@ namespace CapaDTO.SistemaDTO
         public string email { get; set; }
         public string telefono { get; set; }
 
+        public bool? esActivo { get; set; }
+
     }
 }
