@@ -17,8 +17,7 @@ namespace CapaDatos
 
         public bool InsertarEmpleado(cls_EmpleadoDTO empleado)
         { 
-        string query = "INSERT INTO Empleados (puesto, nombre, apellido, id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad, domicilio, num_domicilio, carga_hs, email, telefono) " +
-                           "VALUES (@puesto, @nombre, @apellido, @id_sexo, @id_tipo_dni, @dni, @fecha_nac, @id_localidad, @domicilio, @num_domicilio, @carga_hs, @email, @telefono)";
+        string query = "[dbo].[InsertarEmpleado]";
 
         List<SqlParameter> parametros = new List<SqlParameter>
             {
@@ -39,7 +38,7 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros);
+                _ejecutor.ConsultaWriteSP(query, parametros);
                 return true; // Si no hay excepción, la inserción fue exitosa
             }
             catch (Exception ex)
@@ -51,14 +50,11 @@ namespace CapaDatos
 
         public List<cls_EmpleadoDTO> ObtenerEmpleados()
         {
-            string query = "SELECT id_empleado, puesto, nombre, apellido, " +
-                "id_sexo, id_tipo_dni, dni, fecha_nac, id_localidad," +
-                " domicilio, num_domicilio, carga_hs, email, telefono" +
-                " FROM Empleados ORDER BY id_empleado ASC";
+            string query = "[dbo].[ObtenerEmpleados]";
 
             try
             {
-                DataTable tabla = _ejecutor.ConsultaRead(query);
+                DataTable tabla = _ejecutor.ConsultaReadSP(query);
                 var listaEmpleados = new List<cls_EmpleadoDTO>();
 
                 // Convertimos cada fila del DataTable en un objeto DTO, asegurándonos de mapear TODOS los campos
@@ -79,7 +75,8 @@ namespace CapaDatos
                         num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                         carga_hs = Convert.ToDecimal(row["carga_hs"]),
                         email = row["email"].ToString(), // Mapeo del email
-                        telefono = row["telefono"].ToString()
+                        telefono = row["telefono"].ToString(),
+                        esActivo = Convert.ToBoolean(row["esActivo"])
                     });
                 }
 
@@ -94,10 +91,7 @@ namespace CapaDatos
 
         public bool ActualizarEmpleado(cls_EmpleadoDTO empleado)
         {
-            string query = "UPDATE Empleados SET puesto = @puesto, nombre = @nombre, apellido = @apellido, " +
-                           "id_sexo = @id_sexo, id_tipo_dni = @id_tipo_dni, dni = @dni, fecha_nac = @fecha_nac, " +
-                           "id_localidad = @id_localidad, domicilio = @domicilio, num_domicilio = @num_domicilio, " +
-                           "carga_hs = @carga_hs, email = @email, telefono = @telefono WHERE id_empleado = @id_empleado";
+            string query = "[dbo].[ActualizarEmpleado]";
 
             List<SqlParameter> parametros = new List<SqlParameter>
             {
@@ -119,7 +113,7 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); 
+                _ejecutor.ConsultaWriteSP(query, parametros); 
                 return true; 
             }
             catch (Exception ex)
@@ -131,7 +125,7 @@ namespace CapaDatos
 
         public bool EliminarEmpleado(int id_empleado)
         {
-            string query = "DELETE FROM Empleados WHERE id_empleado = @id_empleado";
+            string query = "[dbo].[EliminarEmpleado]";
             List<SqlParameter> parametros = new List<SqlParameter>
             {
                 new SqlParameter("@id_empleado", id_empleado)
@@ -139,7 +133,7 @@ namespace CapaDatos
 
             try
             {
-                _ejecutor.ConsultaWrite(query, parametros); 
+                _ejecutor.ConsultaWriteSP(query, parametros); 
                 return true;
             }
             catch (Exception ex)

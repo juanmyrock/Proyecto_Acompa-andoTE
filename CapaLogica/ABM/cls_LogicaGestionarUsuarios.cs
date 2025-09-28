@@ -50,9 +50,6 @@ namespace CapaLogica.ABM
             return _userDatos.ExisteUsuario(idEmpleado);
         }
 
-        /// Orquesta TODO el proceso de creación de un nuevo usuario y el envío de su
-        /// contraseña temporal, todo dentro de una transacción segura.
-        /// </summary>
         public void CrearUsuarioYEnviarContraseña(int idUsuario, string username, int idRol, string email, string nombreCompleto)
         {
             // 1. Validación de Pre-condiciones
@@ -60,7 +57,6 @@ namespace CapaLogica.ABM
             {
                 throw new Exception("El empleado no tiene un correo electrónico asignado. No se puede crear el usuario.");
             }
-            // TODO: Añadir validación para que el username no esté en uso.
             // if (_userDatos.ExisteUsername(username)) throw new Exception("El nombre de usuario ya está en uso.");
 
             // 2. Generar la contraseña temporal ANTES de la transacción
@@ -100,8 +96,7 @@ namespace CapaLogica.ABM
             }
             catch (Exception ex)
             {
-                // Lanzamos una excepción específica si el email falla, para que el admin sepa
-                // que el usuario fue creado pero el email no se pudo enviar.
+                // Lanzamos una excepción específica si el email falla, para que el admin sepa que el usuario fue creado pero el email no se pudo enviar.
                 throw new Exception($"Usuario creado con éxito, pero falló el envío del correo: {ex.Message}");
             }
         }

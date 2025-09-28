@@ -84,7 +84,8 @@ namespace CapaVistas
         private void btnMaximize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
-            //btnMinimize.Visible = true;
+            btnMaximizar.Visible = false;
+           
             //btnMaximize.Visible = false;
         }
         #endregion
@@ -192,6 +193,20 @@ namespace CapaVistas
         private void btnReportes_Click(object sender, EventArgs e)
         {
             OpenChildForm(new frmGestionReportes(), sender);
+        }
+
+        private void btnMaximizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+            btnMaximizar.Visible = false;
+            btnNormalizar.Visible = true;
+        }
+
+        private void btnNormalizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            btnNormalizar.Visible = false;
+            btnMaximizar.Visible = true;
         }
     }
 }

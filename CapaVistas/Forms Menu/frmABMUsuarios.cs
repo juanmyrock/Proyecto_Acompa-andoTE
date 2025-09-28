@@ -36,6 +36,7 @@ namespace CapaVistas.Forms_Menu
                 dgvVerUser.ReadOnly = true;
                 dgvVerUser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgvVerUser.AllowUserToAddRows = false;
+                dgvVerUser.Columns["esActivo"].Visible = false;
                 dgvVerUser.Columns["id_sexo"].Visible = false;
                 dgvVerUser.Columns["id_tipo_dni"].Visible = false;
                 dgvVerUser.Columns["id_localidad"].Visible = false;
@@ -103,7 +104,6 @@ namespace CapaVistas.Forms_Menu
                     }
                     else
                     {
-                        // Si la fecha está fuera de rango, asigna una fecha válida, por ejemplo, la fecha actual
                         dateNacimiento.Value = DateTime.Now;
                         MessageBox.Show("La fecha de nacimiento del empleado está fuera del rango permitido y se ha establecido a la fecha actual.", "Advertencia de Fecha", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
@@ -183,7 +183,6 @@ namespace CapaVistas.Forms_Menu
             }
 
 
-            // 2. Crear un objeto DTO con los datos del formulario
             cls_EmpleadoDTO nuevoEmpleado = new cls_EmpleadoDTO
             {
                 puesto = txtPuesto.Text, 
@@ -201,7 +200,6 @@ namespace CapaVistas.Forms_Menu
                 telefono = txtCelular.Text
             };
 
-            // 3. Llamar al método de inserción de la capa lógica
             try
             {
                 bool insertado = _logicaEmpleado.InsertarEmpleado(nuevoEmpleado);
@@ -271,14 +269,13 @@ namespace CapaVistas.Forms_Menu
         #region Modificar Empleado
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            // 1. Verificar si hay un empleado seleccionado para modificar
+            // Verificar si hay un empleado seleccionado para modificar
             if (_idEmpleadoSeleccionado == -1)
             {
                 MessageBox.Show("Por favor, seleccione un empleado de la lista para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2. Validar los campos de entrada
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtDNI.Text) ||
@@ -326,7 +323,6 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // 3. Crear un objeto DTO con los datos actualizados del formulario
             try
             {
                 cls_EmpleadoDTO empleadoModificado = new cls_EmpleadoDTO
@@ -347,7 +343,7 @@ namespace CapaVistas.Forms_Menu
                     telefono = txtCelular.Text
                 };
 
-                // 4. Llamar al método de actualización de la capa lógica
+                // llamamos al método de actualización de la capa lógica
                 bool actualizado = _logicaEmpleado.ActualizarEmpleado(empleadoModificado);
 
                 if (actualizado)
@@ -479,7 +475,7 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // 1. Obtenemos el DTO completo del empleado seleccionado
+            // obtenemos el DTO completo del empleado seleccionado
             var empleadoSeleccionado = (cls_EmpleadoDTO)dgvVerUser.CurrentRow.DataBoundItem;
 
             try
@@ -487,7 +483,7 @@ namespace CapaVistas.Forms_Menu
                 var logicaGestion = new cls_LogicaGestionarUsuarios();
                 bool usuarioExiste = logicaGestion.VerificarSiUsuarioExiste(empleadoSeleccionado.id_empleado);
 
-                // 2. Creamos el DTO para el formulario hijo y nos aseguramos de pasarle el email.
+                // creamos el DTO para el formulario hijo y nos aseguramos de pasarle el email.
                 var datosParaGestion = new cls_DatosParaGestionUsuarioDTO
                 {
                     IdEmpleado = empleadoSeleccionado.id_empleado,
@@ -496,13 +492,13 @@ namespace CapaVistas.Forms_Menu
                     Email = empleadoSeleccionado.email
                 };
 
-                // 3. Abrimos el formulario de gestión, pasándole el DTO completo
+                // abrimos el formulario de gestión, pasándole el DTO completo
                 using (var formGestion = new frmGestionarUsuario(datosParaGestion))
                 {
                     formGestion.ShowDialog();
                 }
 
-                // 4. Recargamos la grilla por si hubo cambios
+                // actualizamos el dgv por si hubo cambios
                 CargarEmpleadosEnDataGridView();
             }
             catch (Exception ex)
