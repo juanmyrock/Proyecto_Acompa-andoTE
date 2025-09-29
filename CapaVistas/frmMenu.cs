@@ -14,6 +14,7 @@ namespace CapaVistas
     public partial class frmMenu : Form
     {
         private Form activeForm = null;
+        private SesionUsuario _usuario = SesionUsuario.Instancia;
 
 
 
@@ -22,7 +23,20 @@ namespace CapaVistas
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            lblUserLog.Text = CapaSesion.Login.SesionUsuario.Instancia.NombreEmpleado + " " + CapaSesion.Login.SesionUsuario.Instancia.ApellidoEmpleado;
+            lblUserLog.Text = _usuario.NombreEmpleado + " " + _usuario.ApellidoEmpleado;
+            if (_usuario.EsAdmin == true)
+            {
+                btnUsuarios.Visible = true;
+                btnRoles.Visible = true;
+                btnAdministrar.Visible = true;
+
+            }
+            else {
+                btnUsuarios.Visible = false;
+                btnRoles.Visible = false;
+                btnAdministrar.Visible = false;
+            }
+
 
         }
 
