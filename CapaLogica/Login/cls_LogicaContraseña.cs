@@ -106,7 +106,9 @@ namespace CapaLogica.Login
             _userDatos.MarcarContraseñaComoRandom(idUsuario);
 
             ArmarMail.Preparar(emailDestino,"Contraseña Temporal", contraseñaTemporal, nombreUsuario);
+            
         }
+        
 
 
 

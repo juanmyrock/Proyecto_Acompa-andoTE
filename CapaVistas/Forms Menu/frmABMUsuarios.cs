@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CapaDTO;
 using CapaDTO.SistemaDTO;
 using CapaLogica;
+using CapaSesion.Login;
 using CapaLogica.ABM;
 using CapaLogica.LlenarCombos;
 using CapaLogica.SistemaLogica;
@@ -16,11 +17,13 @@ namespace CapaVistas.Forms_Menu
         private cls_LogicaGestionEmpleados _logicaEmpleado;
         private int _idEmpleadoSeleccionado = -1;
         private cls_LlenarCombos _rellenador;
+        private SesionUsuario _usuario;
         public frmABMUsuarios()
         {
             InitializeComponent();
             _logicaEmpleado = new cls_LogicaGestionEmpleados();
             _rellenador = new cls_LlenarCombos();
+            _usuario = SesionUsuario.Instancia;
         }
         
 
@@ -70,7 +73,7 @@ namespace CapaVistas.Forms_Menu
         {
             CargarEmpleadosEnDataGridView(); 
             CargarCombos();
-  
+            
 
         }
 
