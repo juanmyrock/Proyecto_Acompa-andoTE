@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CapaDTO.SistemaDTO;
+using CapaLogica.LlenarCombos;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -11,15 +13,21 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         private Dictionary<string, List<string>> medicosPorEspecialidad = new Dictionary<string, List<string>>();
         private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
 
+        private cls_LlenarCombos _rellenador;
+
         public frmGestionTurnos()
         {
             InitializeComponent();
+            _rellenador = new cls_LlenarCombos();
+            
         }
 
         private void frmGestionTurnos_Load(object sender, EventArgs e)
         {
             // Simula la carga de datos iniciales
             CargarDatosDePrueba();
+            CargarAcompañantes();
+
 
             // 1. Cargar Especialidades desde la Base de Datos
             // Aquí harías: SELECT * FROM Especialidades
@@ -27,19 +35,34 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             cmbEspecialidad.Items.Add("Clínica Médica");
             cmbEspecialidad.Items.Add("Pediatría");
         }
+        private void CargarAcompañantes()
+        {
+           
+            var cargarAcompañantes = _rellenador.ObtenerAcompañantes();
+            try
+            {
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbAcompañante, cargarAcompañantes.Acompañantes, "NomApe", "id_profesional");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }
 
+       
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             // 2. Cargar Médicos según la Especialidad seleccionada
             string especialidad = cmbEspecialidad.SelectedItem.ToString();
-            cmbMedico.Items.Clear();
+            cmbAcompañante.Items.Clear();
 
             // Aquí harías: SELECT Nombre FROM Medicos WHERE IDEspecialidad = ...
             if (medicosPorEspecialidad.ContainsKey(especialidad))
             {
                 foreach (var medico in medicosPorEspecialidad[especialidad])
                 {
-                    cmbMedico.Items.Add(medico);
+                    cmbAcompañante.Items.Add(medico);
                 }
             }
             dgvAgenda.Rows.Clear();
@@ -52,9 +75,9 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
 
         private void CargarAgenda()
         {
-            if (cmbMedico.SelectedItem == null) return;
+            if (cmbAcompañante.SelectedItem == null) return;
 
-            string medico = cmbMedico.SelectedItem.ToString();
+            string medico = cmbAcompañante.SelectedItem.ToString();
             DateTime fecha = monthCalendar.SelectionStart;
             lblAgenda.Text = $"Agenda de {medico} - {fecha:dd/MM/yyyy}";
 
@@ -124,13 +147,13 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
             // 5. Validar y guardar el turno en la base de datos
-            if (cmbMedico.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("no encontrado") || lblNombrePaciente.Text.Contains("..."))
+            if (cmbAcompañante.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("no encontrado") || lblNombrePaciente.Text.Contains("..."))
             {
                 MessageBox.Show("Debe seleccionar médico, un horario disponible y un paciente válido.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string medico = cmbMedico.SelectedItem.ToString();
+            string medico = cmbAcompañante.SelectedItem.ToString();
             string hora = cmbHorarios.SelectedItem.ToString();
             string paciente = lblNombrePaciente.Text;
             string fecha = monthCalendar.SelectionStart.ToShortDateString();

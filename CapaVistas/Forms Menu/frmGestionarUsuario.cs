@@ -228,7 +228,7 @@ namespace CapaVistas.Forms_Menu
 
         private void btnGestionPermisos_Click(object sender, EventArgs e)
         {
-            var frmPermisos = new frmPermisos();
+            var frmPermisos = new frmAdministrarRoles();
             frmPermisos.ShowDialog();
         }
     }

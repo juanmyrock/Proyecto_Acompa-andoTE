@@ -11,7 +11,7 @@ namespace CapaDTO.SistemaDTO
 
         public int dni_titular { get; set; }
 
-        public int num_afiliado { get; set; }
+        public Int64 num_afiliado { get; set; }
 
         public int? id_tipo_dni { get; set; }
 
