@@ -9,7 +9,7 @@ namespace CapaSesion
         public static void sendMail(string to, string asunto, string body)
         {
             string from = "malebagonsaez@gmail.com"; //correo de la empresa
-            string displayName = "Recuperacion de contraseña VincularAzul"; //Lo que se ve al recibir el mail
+            string displayName = "Nueva contraseña VincularAzul"; //Lo que se ve al recibir el mail
             try
             {
                 MailMessage mail = new MailMessage

@@ -29,13 +29,21 @@ namespace CapaDTO
             public int id_obra_social { get; set; }
             public string descripcion { get; set; }
         }
+
+    public class cls_AcompañantesDTO
+    {
+        public int id_profesional {  get; set; }
+        public string NomApe { get; set; }
+        
+    }
         public class LlenarCombosResponseDTO
         {
             public List<cls_LocalidadDTO> Localidades { get; set; }
             public List<cls_SexoDTO> Sexos { get; set; }
             public List<cls_TipoDocumentoDTO> TiposDocumento { get; set; }
             public List<cls_RolDTO> Roles { get; set; }
-        public List<cls_ObraSocialDTO> ObraSocial { get; set; }
+            public List<cls_AcompañantesDTO> Acompañantes {  get; set; }
+            public List<cls_ObraSocialDTO> ObraSocial { get; set; }
         }
 
    

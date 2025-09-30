@@ -169,8 +169,37 @@ namespace CapaDatos.Utilidades
                 Console.WriteLine($"Error en cls_ObraSocialQ al obtener obras sociales: {ex.Message}");
                 return null;
             }
+        }
             #endregion
 
+
+            public LlenarCombosResponseDTO ObtenerAcompañantes()
+        {
+            var response = new LlenarCombosResponseDTO();
+            string query = "SELECT id_profesional, nombre + ' ' + apellido as NomApe FROM Acompañantes";
+            try
+            {
+                DataTable tablaAcompañantes = _ejecutar.ConsultaRead(query);
+                if (tablaAcompañantes.Rows.Count > 0)
+                {
+                    response.Acompañantes = new List<cls_AcompañantesDTO>();
+                    foreach (DataRow row in tablaAcompañantes.Rows)
+                    {
+                        response.Acompañantes.Add(new cls_AcompañantesDTO
+                        {
+                            id_profesional = Convert.ToInt32(row["id_profesional"]),
+                            NomApe = row["NomApe"].ToString()
+                            
+                        });
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en cls_ObraSocialQ al obtener obras sociales: {ex.Message}");
+                return null;
+            }
         }
     }
 }
