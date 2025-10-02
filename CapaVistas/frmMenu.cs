@@ -14,6 +14,7 @@ namespace CapaVistas
     public partial class frmMenu : Form
     {
         private Form activeForm = null;
+        private SesionUsuario _usuario = SesionUsuario.Instancia;
 
 
 
@@ -22,7 +23,20 @@ namespace CapaVistas
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-            lblUserLog.Text = CapaSesion.Login.SesionUsuario.Instancia.NombreEmpleado + " " + CapaSesion.Login.SesionUsuario.Instancia.ApellidoEmpleado;
+            lblUserLog.Text = _usuario.NombreEmpleado + " " + _usuario.ApellidoEmpleado;
+            if (_usuario.EsAdmin == true)
+            {
+                btnUsuarios.Visible = true;
+                btnRoles.Visible = true;
+                btnAdministrar.Visible = true;
+
+            }
+            else {
+                btnUsuarios.Visible = false;
+                btnRoles.Visible = false;
+                btnAdministrar.Visible = false;
+            }
+
 
         }
 
@@ -134,7 +148,7 @@ namespace CapaVistas
             childForm.Dock = DockStyle.Fill;
             this.panelChildFrm.Controls.Add(childForm);
             this.panelChildFrm.Tag = childForm;
-            childForm.BringToFront();
+            //childForm.BringToFront();
             childForm.Show();
             lblTitulo.Text = childForm.Text;
             btnCerrarForm.Visible = true;
@@ -182,7 +196,15 @@ namespace CapaVistas
 
         private void btnTurnos_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new frmGestionTurnos(), sender);
+            if (pnlTurnos.Visible == false)
+            {
+                pnlTurnos.Visible = true;
+            }
+            else if (pnlTurnos.Visible == true)
+            {
+                pnlTurnos.Visible = false;
+            }
+            
         }
 
         private void btnTramites_Click(object sender, EventArgs e)
@@ -207,6 +229,23 @@ namespace CapaVistas
             this.WindowState = FormWindowState.Normal;
             btnNormalizar.Visible = false;
             btnMaximizar.Visible = true;
+        }
+
+        private void btnConsultorios_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmGestionTurnos(), sender);
+            pnlTurnos.Visible =false;
+        }
+
+        private void pnlTurnos_MouseLeave(object sender, EventArgs e)
+        {
+            pnlTurnos.Visible = false;
+        }
+
+        private void btnTurnoAT_Click(object sender, EventArgs e)
+        {
+
+            pnlTurnos.Visible = false;
         }
     }
 }

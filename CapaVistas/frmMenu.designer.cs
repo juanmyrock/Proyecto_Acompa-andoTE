@@ -48,6 +48,7 @@ namespace CapaVistas
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             this.btnOcultar = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.lblUserLog = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -78,6 +79,9 @@ namespace CapaVistas
             this.btnAdministrar = new System.Windows.Forms.Button();
             this.btnCerrarForm = new System.Windows.Forms.PictureBox();
             this.panelChildFrm = new System.Windows.Forms.Panel();
+            this.pnlTurnos = new System.Windows.Forms.Panel();
+            this.btnConsultorios = new System.Windows.Forms.Button();
+            this.btnTurnoAT = new System.Windows.Forms.Button();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnNormalizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMaximizar)).BeginInit();
@@ -96,6 +100,8 @@ namespace CapaVistas
             this.panelTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
+            this.panelChildFrm.SuspendLayout();
+            this.pnlTurnos.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelBarraClose
@@ -217,6 +223,7 @@ namespace CapaVistas
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.panelMenu.Controls.Add(this.panel6);
             this.panelMenu.Controls.Add(this.btnLogOut);
             this.panelMenu.Controls.Add(this.lblUserLog);
             this.panelMenu.Controls.Add(this.panel8);
@@ -245,6 +252,14 @@ namespace CapaVistas
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(217, 665);
             this.panelMenu.TabIndex = 3;
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Location = new System.Drawing.Point(217, 450);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(216, 92);
+            this.panel6.TabIndex = 0;
             // 
             // btnLogOut
             // 
@@ -401,7 +416,7 @@ namespace CapaVistas
             this.btnTurnos.Location = new System.Drawing.Point(12, 450);
             this.btnTurnos.Margin = new System.Windows.Forms.Padding(2);
             this.btnTurnos.Name = "btnTurnos";
-            this.btnTurnos.Size = new System.Drawing.Size(228, 40);
+            this.btnTurnos.Size = new System.Drawing.Size(205, 40);
             this.btnTurnos.TabIndex = 13;
             this.btnTurnos.Text = "Turnos";
             this.btnTurnos.UseVisualStyleBackColor = false;
@@ -649,11 +664,60 @@ namespace CapaVistas
             // 
             this.panelChildFrm.AutoScroll = true;
             this.panelChildFrm.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panelChildFrm.Controls.Add(this.pnlTurnos);
             this.panelChildFrm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChildFrm.Location = new System.Drawing.Point(217, 95);
             this.panelChildFrm.Name = "panelChildFrm";
             this.panelChildFrm.Size = new System.Drawing.Size(1063, 605);
             this.panelChildFrm.TabIndex = 4;
+            // 
+            // pnlTurnos
+            // 
+            this.pnlTurnos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(39)))), ((int)(((byte)(55)))));
+            this.pnlTurnos.Controls.Add(this.btnConsultorios);
+            this.pnlTurnos.Controls.Add(this.btnTurnoAT);
+            this.pnlTurnos.Location = new System.Drawing.Point(0, 391);
+            this.pnlTurnos.Name = "pnlTurnos";
+            this.pnlTurnos.Size = new System.Drawing.Size(230, 87);
+            this.pnlTurnos.TabIndex = 0;
+            this.pnlTurnos.Visible = false;
+            this.pnlTurnos.MouseLeave += new System.EventHandler(this.pnlTurnos_MouseLeave);
+            // 
+            // btnConsultorios
+            // 
+            this.btnConsultorios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.btnConsultorios.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnConsultorios.FlatAppearance.BorderSize = 0;
+            this.btnConsultorios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnConsultorios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConsultorios.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.btnConsultorios.ForeColor = System.Drawing.Color.White;
+            this.btnConsultorios.Location = new System.Drawing.Point(0, 43);
+            this.btnConsultorios.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConsultorios.Name = "btnConsultorios";
+            this.btnConsultorios.Size = new System.Drawing.Size(228, 40);
+            this.btnConsultorios.TabIndex = 29;
+            this.btnConsultorios.Text = "Consultorios";
+            this.btnConsultorios.UseVisualStyleBackColor = false;
+            this.btnConsultorios.Click += new System.EventHandler(this.btnConsultorios_Click);
+            // 
+            // btnTurnoAT
+            // 
+            this.btnTurnoAT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.btnTurnoAT.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTurnoAT.FlatAppearance.BorderSize = 0;
+            this.btnTurnoAT.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnTurnoAT.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTurnoAT.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.btnTurnoAT.ForeColor = System.Drawing.Color.White;
+            this.btnTurnoAT.Location = new System.Drawing.Point(0, 3);
+            this.btnTurnoAT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTurnoAT.Name = "btnTurnoAT";
+            this.btnTurnoAT.Size = new System.Drawing.Size(228, 40);
+            this.btnTurnoAT.TabIndex = 28;
+            this.btnTurnoAT.Text = "Acompañantes";
+            this.btnTurnoAT.UseVisualStyleBackColor = false;
+            this.btnTurnoAT.Click += new System.EventHandler(this.btnTurnoAT_Click);
             // 
             // frmMenu
             // 
@@ -691,6 +755,8 @@ namespace CapaVistas
             this.panelTitulo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnConfigSist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
+            this.panelChildFrm.ResumeLayout(false);
+            this.pnlTurnos.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -736,5 +802,9 @@ namespace CapaVistas
         private Button btnTramites;
         private PictureBox btnMaximizar;
         private PictureBox btnNormalizar;
+        private Panel panel6;
+        private Panel pnlTurnos;
+        private Button btnConsultorios;
+        private Button btnTurnoAT;
     }
 }

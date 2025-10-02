@@ -158,11 +158,12 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("El DNI del titular debe ser un número entero válido y positivo.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!int.TryParse(txtNumAfiliado.Text, out int numAfiliado) || numAfiliado <= 0)
+            if (!long.TryParse(txtNumAfiliado.Text, out Int64 numAfiliado) || numAfiliado <=0)
             {
                 MessageBox.Show("El número de afiliado debe ser un número entero válido y positivo.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+            
             if (!int.TryParse(txtDniPaciente.Text, out int dniPaciente) || dniPaciente <= 0)
             {
                 MessageBox.Show("El DNI del paciente debe ser un número entero válido y positivo.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -285,7 +286,7 @@ namespace CapaVistas.Forms_Menu
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 dni_titular = Convert.ToInt32(txtDniTitular.Text),
-                num_afiliado = Convert.ToInt32(txtNumAfiliado.Text),
+                num_afiliado = Convert.ToInt64(txtNumAfiliado.Text),
                 dni_paciente = Convert.ToInt32(txtDniPaciente.Text),
                 fecha_nac = dateFechaNac.Value,
                 cud = txtCud.Text,
@@ -333,7 +334,7 @@ namespace CapaVistas.Forms_Menu
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 dni_titular = Convert.ToInt32(txtDniTitular.Text),
-                num_afiliado = Convert.ToInt32(txtNumAfiliado.Text),
+                num_afiliado = Convert.ToInt64(txtNumAfiliado.Text),
                 dni_paciente = Convert.ToInt32(txtDniPaciente.Text),
                 fecha_nac = dateFechaNac.Value,
                 cud = txtCud.Text,

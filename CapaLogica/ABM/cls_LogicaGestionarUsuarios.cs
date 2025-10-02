@@ -3,6 +3,7 @@ using CapaDatos.ABM;
 using CapaDTO;
 using CapaUtilidades;
 using System;
+using CapaSesion;
 using System.Collections.Generic;
 using System.Transactions;
 
@@ -13,6 +14,7 @@ namespace CapaLogica.ABM
         private readonly cls_ConectarUserQ conectarUser = new cls_ConectarUserQ();
         private readonly cls_UsuariosQ _userDatos = new cls_UsuariosQ();
         private readonly cls_ContraseñasQ _contraseñasDatos = new cls_ContraseñasQ();
+        
 
         //obtiene los datos de un usuario para mostrarlos en el formulario de gestión
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
@@ -60,6 +62,8 @@ namespace CapaLogica.ABM
             // if (_userDatos.ExisteUsername(username)) throw new Exception("El nombre de usuario ya está en uso.");
 
             // 2. Generar la contraseña temporal ANTES de la transacción
+            _userDatos.CrearNuevoUsuario(idUsuario, username, idRol);
+            
             string contraseñaTemporal = new Random().Next(100000, 999999).ToString();
             string hashTemporal = cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);
 
@@ -92,7 +96,7 @@ namespace CapaLogica.ABM
             // Si esto falla, el usuario ya está creado en la BD, pero es un error menos crítico.
             try
             {
-                //_servicioEmail.EnviarContraseñaTemporal(email, nombreCompleto, contraseñaTemporal);
+                ArmarMail.Preparar(email, "Contraseña Nueva", contraseñaTemporal, username);
             }
             catch (Exception ex)
             {

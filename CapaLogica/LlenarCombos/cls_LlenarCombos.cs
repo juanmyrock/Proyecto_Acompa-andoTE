@@ -82,5 +82,18 @@ namespace CapaLogica.LlenarCombos
                 return null;
             }
         }
+
+        public LlenarCombosResponseDTO ObtenerAcompañantes()
+        {
+            try
+            {
+                return _llenador.ObtenerAcompañantes();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener acompañantes: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

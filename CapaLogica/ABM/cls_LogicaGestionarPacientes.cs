@@ -117,10 +117,7 @@ namespace CapaLogica.SistemaLogica
                     return false;
                 }
 
-                /*if (pacienteModificado.id_diagnostico <= 0 || pacienteModificado.id_localidad <= 0)
-                {
-                    return false;
-                }*/
+                
                 if (pacienteModificado.id_paciente <= 0)
                 {
                      throw new ArgumentException("El ID del paciente no es válido.");

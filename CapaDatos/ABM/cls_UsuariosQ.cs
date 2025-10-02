@@ -90,7 +90,7 @@ namespace CapaDatos.ABM
         new SqlParameter("@username", username),
         new SqlParameter("@idRol", idRol)
     };
-            _ejecutar.ConsultaWrite(sql, parametros);
+            _ejecutar.ConsultaWriteSP(sql, parametros);
         }
     }
 }
