@@ -39,8 +39,6 @@ namespace CapaDatos.Negocio
 
         public List<cls_Tramite_PacienteDTO> BuscarTramites(string busquedaPaciente, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            // La consulta es compleja. Busca pacientes por DNI o Apellido,
-            // y trae el último estado del trámite de ese paciente.
             string sql = @"
                 SELECT 
                     TP1.id_tp AS IdTramite, 
@@ -89,8 +87,8 @@ namespace CapaDatos.Negocio
             {
                 lista.Add(new cls_Tramite_PacienteDTO
                 {
-                    IdTramite = Convert.ToInt32(row["IdTramite"]),
-                    IdPaciente = Convert.ToInt32(row["id_paciente"]),
+                    id_tramite = Convert.ToInt32(row["IdTramite"]),
+                    id_paciente = Convert.ToInt32(row["id_paciente"]),
                     NombrePacienteCompleto = $"{row["apellido"]}, {row["nombre"]}",
                     Descripcion = $"TR-{Convert.ToInt32(row["IdTramite"]):0000} ({row["TipoTramite"]}) - {row["apellido"]}",
                     EstadoActual = row["EstadoActual"].ToString()
@@ -105,7 +103,7 @@ namespace CapaDatos.Negocio
             string sql = @"
                 SELECT 
                     TP.fecha_hora, 
-                    U.nombre_usuario, -- Asumo que tienes una tabla Usuarios con nombre_usuario
+                    U.username,
                     TP.comentario, 
                     T.descripcion
                 FROM Tramite_Paciente TP
@@ -129,7 +127,7 @@ namespace CapaDatos.Negocio
                 historial.Add(new cls_HistorialDTO
                 {
                     FechaHora = Convert.ToDateTime(row["fecha_hora"]),
-                    Usuario = row["nombre_usuario"] != DBNull.Value ? row["nombre_usuario"].ToString() : "Sistema",
+                    Usuario = row["username"] != DBNull.Value ? row["username"].ToString() : "Sistema",
                     Comentario = row["comentario"] != DBNull.Value ? row["comentario"].ToString() : string.Empty,
                     EsCambioDeEstado = esEstado,
                     NuevoEstado = esEstado ? row["descripcion"].ToString() : string.Empty
@@ -138,45 +136,78 @@ namespace CapaDatos.Negocio
             return historial;
         }
 
-        public bool RegistrarComentario(int idTp, int idUsuario, string comentario)
+        public bool RegistrarComentario(int id_tp, int id_usuario, string comentario, int id_paciente)
         {
-            // Insertar solo comentario. id_tramite (estado) es NULL.
             string sql = @"
                 INSERT INTO Tramite_Paciente 
-                (id_tp, id_paciente, fecha_hora, id_usuario, comentario)
-                VALUES (@IdTp, 
-                        (SELECT id_paciente FROM Tramite_Paciente WHERE id_tp = @IdTp LIMIT 1), -- Asumiendo MySQL/PostgreSQL o usar subconsulta para obtener id_paciente
-                        GETDATE(), @IdUsuario, @Comentario)"; // Usar GETDATE() para SQL Server
+                (id_paciente, fecha_hora, id_usuario, comentario) 
+                VALUES (
+                        @id_paciente, -- 1. id_paciente (Tomado del nuevo parámetro)
+                        GETDATE(),    -- 2. fecha_hora
+                        @id_usuario,  -- 3. id_usuario
+                        @comentario  -- 4. comentario
+                     
+                       )";
 
-            var parameters = new List<SqlParameter>
+                    var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@IdTp", idTp),
-                new SqlParameter("@IdUsuario", idUsuario),
-                new SqlParameter("@Comentario", comentario)
+                new SqlParameter("@id_tp", id_tp),
+                new SqlParameter("@id_usuario", id_usuario),
+                new SqlParameter("@id_paciente", id_paciente) 
             };
 
+        
             return _ejecutarQ.ConsultaCUD(sql, parameters) > 0;
         }
 
-        public bool RegistrarCambioEstado(int idTp, int idUsuario, int idNuevoEstado)
+        public int ObtenerIdPacientePorIdTp(int id_tp)
         {
-            // Solo listamos las columnas a las que se les da un valor no-NULL. 
-            // SQL Server asignará NULL automáticamente al campo 'comentario'.
+           
             string sql = @"
-            INSERT INTO Tramite_Paciente 
-            (id_tp, id_paciente, fecha_hora, id_usuario, id_tramite)
-            VALUES (@id_tp, 
-                    (SELECT TOP 1 id_paciente FROM Tramite_Paciente WHERE id_tp = @id_tp),
-                    GETDATE(), @id_usuario, @IdNuevoEstado)";
-            // NOTA: Se elimina ORDER BY fecha_hora DESC de la subconsulta si id_tp ya es el ID único del trámite.
+                SELECT TOP 1 id_paciente 
+                FROM Tramite_Paciente 
+                WHERE id_tp = @id_tp
+                ORDER BY fecha_hora ASC"; 
 
-            var parameters = new List<SqlParameter>
+                    SqlParameter[] parameters = new SqlParameter[]
+                    {
+                         new SqlParameter("@id_tp", id_tp)
+                    };
+
+            DataTable tb = _ejecutarQ.ConsultaRead(sql, parameters.ToList());
+
+            if (tb != null && tb.Rows.Count > 0)
             {
-                new SqlParameter("@id_tp", idTp),
-                new SqlParameter("@id_usuario", idUsuario),
-                new SqlParameter("@IdNuevoEstado", idNuevoEstado)
+                DataRow row = tb.Rows[0];
+                if (row["id_paciente"] != DBNull.Value)
+                {
+                    return Convert.ToInt32(row["id_paciente"]);
+                }
+            }
+            return 0;
+        }
+
+        public bool RegistrarCambioEstado(int id_tp, int id_usuario, int id_tramite, int id_paciente)
+        {
+            
+            string sql = @"
+                INSERT INTO Tramite_Paciente 
+                (id_tramite, id_paciente, fecha_hora, id_usuario) 
+                VALUES (
+                        @id_tramite,  -- 1. id_tramite (Nuevo Estado)
+                        @id_paciente, -- 2. id_paciente (Tomado del nuevo parámetro)
+                        GETDATE(),    -- 3. fecha_hora
+                        @id_usuario  -- 4. id_usuario
+                       )";
+
+                    var parameters = new List<SqlParameter>
+            {    
+                new SqlParameter("@id_usuario", id_usuario),
+                new SqlParameter("@id_tramite", id_tramite), 
+                new SqlParameter("@id_paciente", id_paciente) 
             };
 
+            
             return _ejecutarQ.ConsultaCUD(sql, parameters) > 0;
         }
 

@@ -1,11 +1,13 @@
-﻿using CapaLogica.LlenarCombos;
-using CapaLogica.CapaLogica;
-using System;
+﻿using CapaDTO;
 using CapaDTO.SistemaDTO;
+using CapaLogica.CapaLogica;
+using CapaLogica.CapaLogica.Tramites;
+using CapaLogica.LlenarCombos;
+using CapaSesion.Login;
+using System;
 using System.Collections.Generic; // Necesario para usar List
 using System.Drawing;
 using System.Windows.Forms;
-using CapaLogica.CapaLogica.Tramites;
 
 namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 {
@@ -15,6 +17,8 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
         private cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
         private List<cls_Tramite_PacienteDTO> _tramitesCargados = new List<cls_Tramite_PacienteDTO>();
         private cls_PacienteDTO _paciente = new cls_PacienteDTO();
+        private cls_UsuarioDTO _usuario = new cls_UsuarioDTO();
+        private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
@@ -31,8 +35,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
 
         }
-
-        // --- LÓGICA PARA ARRASTRAR EL FORMULARIO ---
         private void panelTopBar_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
@@ -59,7 +61,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             this.Close();
         }
 
-        // --- LÓGICA DE LA APLICACIÓN ---
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -79,7 +80,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
             try
             {
-                // ** Llama a la lógica para buscar trámites reales **
                 _tramitesCargados = _logicaTramites.BuscarTramites(busqueda, fechaInicio, fechaFin);
 
                 lbTramites.Items.Clear();
@@ -96,6 +96,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                     }
                     // Opcional: Seleccionar el primer elemento automáticamente
                     // lbTramites.SelectedIndex = 0;
+
                 }
                 else
                 {
@@ -116,7 +117,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             var tramiteSeleccionadoDTO = _tramitesCargados[lbTramites.SelectedIndex];
 
             // Usamos el ID del trámite real
-            int idTramiteSeleccionado = tramiteSeleccionadoDTO.IdTramite;
+            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tramite;
             string descripcionTramite = tramiteSeleccionadoDTO.Descripcion;
 
             lblTramiteSeleccionado.Text = $"Historial del Trámite: {descripcionTramite}";
@@ -128,14 +129,14 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                 var historial = _logicaTramites.ObtenerHistorialTramite(idTramiteSeleccionado);
 
                 // Actualizar el estado actual y color (usando el último estado del historial, o el que viene en el DTO)
-                string estadoActual = tramiteSeleccionadoDTO.EstadoActual; // O puedes obtenerlo del último registro del historial
+                string estadoActual = tramiteSeleccionadoDTO.Descripcion; // O puedes obtenerlo del último registro del historial
 
                 lblEstadoActual.Text = estadoActual;
                 AsignarColorEstado(estadoActual);
 
                 foreach (var evento in historial)
                 {
-                    string tipo = evento.EsCambioDeEstado ? "Estado" : "Comentario";
+                    string tipo = evento.EsCambioDeEstado ? estadoActual : "Comentario";
                     string texto = evento.EsCambioDeEstado ? $"El estado cambió a: \"{evento.NuevoEstado}\"" : evento.Comentario;
 
                     AgregarMensaje(evento.FechaHora.ToString("dd/MM/yyyy HH:mm"), evento.Usuario, tipo, texto, false);
@@ -163,22 +164,26 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             string mensaje = txtMensaje.Text.Trim();
             if (string.IsNullOrWhiteSpace(mensaje)) return;
 
-            int idTramite = _tramitesCargados[lbTramites.SelectedIndex].IdTramite;
-            // Debes obtener el ID del usuario actual de alguna manera (p.ej. una sesión)
-            int idUsuarioActual = 1; // ** REEMPLAZAR CON EL ID DE USUARIO REAL **
-            string nombreUsuario = "UsuarioActual"; // ** REEMPLAZAR CON EL NOMBRE DE USUARIO REAL **
+            // Asumimos que IdTramite es tu ID maestro (id_tp)
+            int id_tramite = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
+
+            // ** REEMPLAZAR CON EL ID DE USUARIO REAL Y NOMBRE DE SESIÓN **
+            int id_usuario = _usuariologeado.IdUsuario;
+            string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
 
             try
             {
-                // ** Llama a la lógica para guardar el comentario real **
-                if (_logicaTramites.RegistrarComentario(idTramite, idUsuarioActual, mensaje))
+                // Llama a la lógica: El método RegistrarComentario en la lógica ahora es seguro 
+                // y busca id_paciente internamente.
+                if (_logicaTramites.RegistrarComentario(id_tramite, id_usuario, mensaje))
                 {
                     AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario", mensaje);
                     txtMensaje.Clear();
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el comentario.", "Error de DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Este error puede indicar un fallo de DB o que ObtenerIdPacientePorIdTp devolvió 0.
+                    MessageBox.Show("No se pudo registrar el comentario. Verifique el ID de Trámite y Usuario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -186,6 +191,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                 MessageBox.Show("Error al enviar el comentario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void btnCambiarEstado_Click(object sender, EventArgs e)
         {
@@ -200,18 +206,17 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                 return;
             }
 
-            // Asumimos que el cmbNuevoEstado está cargado con un objeto que tiene el ID y la descripción
-            // Si usas CapaUtilidades.cls_LlenarCombos.Cargar, el SelectedValue es el id_tramite
             int idNuevoEstado = (int)cmbNuevoEstado.SelectedValue;
             string nuevoEstadoDescripcion = cmbNuevoEstado.Text;
-            int idTramite = _tramitesCargados[lbTramites.SelectedIndex].IdTramite;
-            int idUsuarioActual = 1; // ** REEMPLAZAR CON EL ID DE USUARIO REAL **
-            string nombreUsuario = _paciente.Nombre; 
+             
+            int idTramiteMaestro = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
+            int idUsuarioActual = _usuariologeado.IdUsuario;
+            // Usar el nombre del usuario de la sesión, no el nombre del paciente
+            string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
 
             try
             {
-                // ** Llama a la lógica para actualizar el estado real **
-                if (_logicaTramites.RegistrarCambioEstado(idTramite, idUsuarioActual, idNuevoEstado)) // La lógica debería guardar el ID
+                if (_logicaTramites.RegistrarCambioEstado(idTramiteMaestro, idUsuarioActual, idNuevoEstado))
                 {
                     // Se registra el cambio en la tabla Tramite_Paciente
                     string mensajeEstado = $"El estado cambió a: \"{nuevoEstadoDescripcion}\"";
@@ -220,12 +225,11 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                     lblEstadoActual.Text = nuevoEstadoDescripcion;
                     AsignarColorEstado(nuevoEstadoDescripcion);
 
-                    // Actualizar el DTO en memoria para reflejar el cambio
                     _tramitesCargados[lbTramites.SelectedIndex].EstadoActual = nuevoEstadoDescripcion;
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el cambio de estado.", "Error de DB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo registrar el cambio de estado. Verifique el ID de Trámite y Usuario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

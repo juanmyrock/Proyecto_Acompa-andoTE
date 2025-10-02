@@ -76,8 +76,8 @@ namespace CapaLogica
                 {
                     lista.Add(new cls_Tramite_PacienteDTO
                     {
-                        IdTramite = Convert.ToInt32(row["IdTramite"]),
-                        IdPaciente = Convert.ToInt32(row["id_paciente"]),
+                        id_tramite = Convert.ToInt32(row["IdTramite"]),
+                        id_paciente = Convert.ToInt32(row["id_paciente"]),
                         NombrePacienteCompleto = $"{row["apellido"]}, {row["nombre"]}",
                         Descripcion = $"TR-{Convert.ToInt32(row["IdTramite"]):0000} ({row["TipoTramite"]}) - {row["apellido"]}",
                         EstadoActual = row["EstadoActual"].ToString()
@@ -124,26 +124,41 @@ namespace CapaLogica
                 }
                 return historial;
             }
-           
 
-            public bool RegistrarComentario(int idTramite, int idUsuario, string comentario)
+
+            public bool RegistrarComentario(int id_tramite, int id_usuario, string comentario)
             {
-                if (string.IsNullOrWhiteSpace(comentario) || idTramite <= 0 || idUsuario <= 0)
+                if (string.IsNullOrWhiteSpace(comentario) || id_tramite <= 0 || id_usuario <= 0)
                 {
-                    // Lógica para manejar errores de validación
                     return false;
                 }
-                return _tramitesQ.RegistrarComentario(idTramite, idUsuario, comentario);
+
+                int id_paciente = _tramitesQ.ObtenerIdPacientePorIdTp(id_tramite);
+
+                if (id_paciente <= 0)
+                {
+                    return false;
+                }
+
+                return _tramitesQ.RegistrarComentario(id_tramite, id_usuario, comentario, id_paciente);
             }
 
             public bool RegistrarCambioEstado(int idTramite, int idUsuario, int idNuevoEstado)
             {
                 if (idTramite <= 0 || idUsuario <= 0 || idNuevoEstado <= 0)
                 {
-                    // Lógica para manejar errores de validación
                     return false;
                 }
-                return _tramitesQ.RegistrarCambioEstado(idTramite, idUsuario, idNuevoEstado);
+
+                int idPaciente = _tramitesQ.ObtenerIdPacientePorIdTp(idTramite);
+
+                if (idPaciente <= 0)
+                {
+                    return false;
+                }
+          
+                return _tramitesQ.RegistrarCambioEstado(idTramite, idUsuario, idNuevoEstado, idPaciente);
+
             }
 
 

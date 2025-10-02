@@ -8,10 +8,13 @@ namespace CapaDTO.SistemaDTO
 {
     public class cls_Tramite_PacienteDTO
     {
-        public int IdTramite { get; set; }
-        public int IdPaciente { get; set; }
+        public int id_tramite { get; set; }
+        public int id_paciente { get; set; }
         public string Descripcion { get; set; } 
         public string EstadoActual { get; set; } 
         public string NombrePacienteCompleto { get; set; }
+        public int id_tp {  get; set; }
+        public DateTime fecha_hora { get; set; }
+
     }
 }
