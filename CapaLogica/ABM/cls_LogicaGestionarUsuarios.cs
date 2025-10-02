@@ -62,7 +62,7 @@ namespace CapaLogica.ABM
             // if (_userDatos.ExisteUsername(username)) throw new Exception("El nombre de usuario ya está en uso.");
 
             // 2. Generar la contraseña temporal ANTES de la transacción
-            _userDatos.CrearNuevoUsuario(idUsuario, username, idRol);
+            //_userDatos.CrearNuevoUsuario(idUsuario, username, idRol);
             
             string contraseñaTemporal = new Random().Next(100000, 999999).ToString();
             string hashTemporal = cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);

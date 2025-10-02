@@ -38,11 +38,6 @@ namespace CapaDatos.Negocio
                     fecha_nac = row["fecha_nac"] as DateTime?,
                     email = row["email"].ToString()
 
-
-
-
-
-
                 });
 
             }

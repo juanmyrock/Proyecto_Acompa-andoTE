@@ -170,10 +170,10 @@ namespace CapaDatos.Utilidades
                 return null;
             }
         }
-            #endregion
+        #endregion
 
-
-            public LlenarCombosResponseDTO ObtenerAcompañantes()
+        #region Tabla Acompañantes
+        public LlenarCombosResponseDTO ObtenerAcompañantes()
         {
             var response = new LlenarCombosResponseDTO();
             string query = "SELECT id_profesional, nombre + ' ' + apellido as NomApe FROM Acompañantes";
@@ -201,6 +201,39 @@ namespace CapaDatos.Utilidades
                 return null;
             }
         }
+        #endregion
+
+        #region Tabla Tramites
+        public LlenarCombosResponseDTO ObtenerTramites()
+        {
+            
+            var response = new LlenarCombosResponseDTO();
+            string query = "SELECT id_tramite, descripcion FROM Tramites";
+            try
+            {
+                DataTable tablaTramites = _ejecutar.ConsultaRead(query);
+                if (tablaTramites.Rows.Count > 0)
+                {
+                    response.Tramites = new List<cls_TramitesDTO>();
+                    foreach (DataRow row in tablaTramites.Rows)
+                    {
+                        response.Tramites.Add(new cls_TramitesDTO
+                        {
+                            id_tramite = Convert.ToInt32(row["id_tramite"]),
+                            descripcion = row["descripcion"].ToString()
+
+                        });
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en cls_TramitesQ al obtener Tramites: {ex.Message}");
+                return null;
+            }
+        }
+        #endregion
     }
 }
 
