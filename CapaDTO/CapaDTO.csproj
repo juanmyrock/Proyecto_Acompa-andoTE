@@ -55,8 +55,11 @@
     <Compile Include="SistemaDTO\cls_AcompañanteDTO.cs" />
     <Compile Include="SistemaDTO\cls_DatosEmpleadoGestionUserDTO.cs" />
     <Compile Include="SistemaDTO\cls_EmpleadoDTO.cs" />
+    <Compile Include="SistemaDTO\cls_HistorialDTO.cs" />
     <Compile Include="SistemaDTO\cls_ObraSocialDTO.cs" />
     <Compile Include="SistemaDTO\cls_PacienteDTO.cs" />
+    <Compile Include="SistemaDTO\cls_TramitesDTO.cs" />
+    <Compile Include="SistemaDTO\cls_Tramite_PacienteDTO.cs" />
     <Compile Include="SistemaDTO\cls_UsuarioGestionDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

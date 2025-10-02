@@ -49,6 +49,7 @@
     <Compile Include="ABM\cls_UsuariosQ.cs" />
     <Compile Include="Negocio\cls_AcompañanteQ.cs" />
     <Compile Include="Negocio\cls_ObraSocialQ.cs" />
+    <Compile Include="Negocio\cls_TramitesQ.cs" />
     <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />

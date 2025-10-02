@@ -95,5 +95,18 @@ namespace CapaLogica.LlenarCombos
                 return null;
             }
         }
+
+        public LlenarCombosResponseDTO ObtenerTramites()
+        {
+            try
+            {
+                return _llenador.ObtenerTramites();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener tramites: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

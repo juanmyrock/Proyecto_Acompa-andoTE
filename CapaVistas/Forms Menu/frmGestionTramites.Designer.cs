@@ -18,6 +18,8 @@
         private void InitializeComponent()
         {
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
+            this.mthFechas = new System.Windows.Forms.MonthCalendar();
+            this.btnFechas = new System.Windows.Forms.Button();
             this.lbTramites = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
@@ -40,6 +42,8 @@
             // 
             // gbBusqueda
             // 
+            this.gbBusqueda.Controls.Add(this.mthFechas);
+            this.gbBusqueda.Controls.Add(this.btnFechas);
             this.gbBusqueda.Controls.Add(this.lbTramites);
             this.gbBusqueda.Controls.Add(this.label2);
             this.gbBusqueda.Controls.Add(this.btnBuscar);
@@ -49,10 +53,30 @@
             this.gbBusqueda.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.gbBusqueda.Location = new System.Drawing.Point(25, 50);
             this.gbBusqueda.Name = "gbBusqueda";
-            this.gbBusqueda.Size = new System.Drawing.Size(320, 250);
+            this.gbBusqueda.Size = new System.Drawing.Size(320, 322);
             this.gbBusqueda.TabIndex = 2;
             this.gbBusqueda.TabStop = false;
             this.gbBusqueda.Text = "Búsqueda";
+            // 
+            // mthFechas
+            // 
+            this.mthFechas.Location = new System.Drawing.Point(23, 117);
+            this.mthFechas.Name = "mthFechas";
+            this.mthFechas.TabIndex = 0;
+            this.mthFechas.Visible = false;
+            this.mthFechas.MouseLeave += new System.EventHandler(this.mthFechas_MouseLeave);
+            // 
+            // btnFechas
+            // 
+            this.btnFechas.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnFechas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFechas.Location = new System.Drawing.Point(23, 92);
+            this.btnFechas.Name = "btnFechas";
+            this.btnFechas.Size = new System.Drawing.Size(277, 23);
+            this.btnFechas.TabIndex = 7;
+            this.btnFechas.Text = "Seleccione un rango de fechas";
+            this.btnFechas.UseVisualStyleBackColor = true;
+            this.btnFechas.Click += new System.EventHandler(this.btnFechas_Click);
             // 
             // lbTramites
             // 
@@ -60,7 +84,7 @@
             this.lbTramites.ForeColor = System.Drawing.Color.White;
             this.lbTramites.FormattingEnabled = true;
             this.lbTramites.ItemHeight = 14;
-            this.lbTramites.Location = new System.Drawing.Point(20, 115);
+            this.lbTramites.Location = new System.Drawing.Point(20, 175);
             this.lbTramites.Name = "lbTramites";
             this.lbTramites.Size = new System.Drawing.Size(280, 116);
             this.lbTramites.TabIndex = 4;
@@ -69,7 +93,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 95);
+            this.label2.Location = new System.Drawing.Point(20, 155);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 14);
             this.label2.TabIndex = 3;
@@ -158,7 +182,7 @@
             this.gbEstado.Controls.Add(this.label4);
             this.gbEstado.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbEstado.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.gbEstado.Location = new System.Drawing.Point(25, 315);
+            this.gbEstado.Location = new System.Drawing.Point(25, 378);
             this.gbEstado.Name = "gbEstado";
             this.gbEstado.Size = new System.Drawing.Size(320, 204);
             this.gbEstado.TabIndex = 5;
@@ -275,5 +299,7 @@
         private System.Windows.Forms.Button btnCambiarEstado;
         private System.Windows.Forms.ComboBox cmbNuevoEstado;
         private System.Windows.Forms.Label lblTramiteSeleccionado;
+        private System.Windows.Forms.Button btnFechas;
+        private System.Windows.Forms.MonthCalendar mthFechas;
     }
 }
