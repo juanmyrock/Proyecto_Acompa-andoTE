@@ -7,41 +7,10 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 {
     public partial class frmGestionTramites : Form
     {
-        // Variables para poder arrastrar el formulario sin borde
-        private bool dragging = false;
-        private Point dragCursorPoint;
-        private Point dragFormPoint;
 
         public frmGestionTramites()
         {
             InitializeComponent();
-        }
-
-        // --- LÓGICA PARA ARRASTRAR EL FORMULARIO ---
-        private void panelTopBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            dragging = true;
-            dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
-        }
-
-        private void panelTopBar_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (dragging)
-            {
-                Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-                this.Location = Point.Add(dragFormPoint, new Size(diff));
-            }
-        }
-
-        private void panelTopBar_MouseUp(object sender, MouseEventArgs e)
-        {
-            dragging = false;
-        }
-
-        private void lblClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         // --- LÓGICA DE LA APLICACIÓN ---
