@@ -17,9 +17,6 @@
 
         private void InitializeComponent()
         {
-            this.panelTopBar = new System.Windows.Forms.Panel();
-            this.lblTituloForm = new System.Windows.Forms.Label();
-            this.lblClose = new System.Windows.Forms.Label();
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
             this.lbTramites = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -36,51 +33,10 @@
             this.lblEstadoActual = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblTramiteSeleccionado = new System.Windows.Forms.Label();
-            this.panelTopBar.SuspendLayout();
             this.gbBusqueda.SuspendLayout();
             this.pnlEnviarMensaje.SuspendLayout();
             this.gbEstado.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelTopBar
-            // 
-            this.panelTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.panelTopBar.Controls.Add(this.lblTituloForm);
-            this.panelTopBar.Controls.Add(this.lblClose);
-            this.panelTopBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTopBar.Location = new System.Drawing.Point(0, 0);
-            this.panelTopBar.Name = "panelTopBar";
-            this.panelTopBar.Size = new System.Drawing.Size(1063, 30);
-            this.panelTopBar.TabIndex = 1;
-            this.panelTopBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTopBar_MouseDown);
-            this.panelTopBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelTopBar_MouseMove);
-            this.panelTopBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelTopBar_MouseUp);
-            // 
-            // lblTituloForm
-            // 
-            this.lblTituloForm.AutoSize = true;
-            this.lblTituloForm.Font = new System.Drawing.Font("Bahnschrift", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloForm.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblTituloForm.Location = new System.Drawing.Point(12, 7);
-            this.lblTituloForm.Name = "lblTituloForm";
-            this.lblTituloForm.Size = new System.Drawing.Size(120, 16);
-            this.lblTituloForm.TabIndex = 1;
-            this.lblTituloForm.Text = "Gestión de Trámites";
-            // 
-            // lblClose
-            // 
-            this.lblClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblClose.AutoSize = true;
-            this.lblClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblClose.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClose.ForeColor = System.Drawing.Color.White;
-            this.lblClose.Location = new System.Drawing.Point(1035, 6);
-            this.lblClose.Name = "lblClose";
-            this.lblClose.Size = new System.Drawing.Size(20, 19);
-            this.lblClose.TabIndex = 0;
-            this.lblClose.Text = "X";
-            this.lblClose.Visible = false;
-            this.lblClose.Click += new System.EventHandler(this.lblClose_Click);
             // 
             // gbBusqueda
             // 
@@ -287,13 +243,10 @@
             this.Controls.Add(this.pnlEnviarMensaje);
             this.Controls.Add(this.pnlChat);
             this.Controls.Add(this.gbBusqueda);
-            this.Controls.Add(this.panelTopBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmGestionTramites";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmGestionTramitesChat";
-            this.panelTopBar.ResumeLayout(false);
-            this.panelTopBar.PerformLayout();
             this.gbBusqueda.ResumeLayout(false);
             this.gbBusqueda.PerformLayout();
             this.pnlEnviarMensaje.ResumeLayout(false);
@@ -306,10 +259,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelTopBar;
-        private System.Windows.Forms.Label lblTituloForm;
-        private System.Windows.Forms.Label lblClose;
         private System.Windows.Forms.GroupBox gbBusqueda;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtBuscarPaciente;
