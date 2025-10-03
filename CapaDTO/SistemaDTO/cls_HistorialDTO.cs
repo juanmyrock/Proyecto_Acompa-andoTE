@@ -9,9 +9,10 @@ namespace CapaDTO.SistemaDTO
     public class cls_HistorialDTO
     {
         public DateTime FechaHora { get; set; }
-        public string Usuario { get; set; } 
-        public string Comentario { get; set; } 
+        public string Usuario { get; set; }
+        public string Comentario { get; set; }
         public bool EsCambioDeEstado { get; set; }
-        public string NuevoEstado { get; set; } 
+        public string NuevoEstado { get; set; }
+        public string TipoAccion { get; set; } // 'COMENTARIO' o 'CAMBIO_ESTADO'
     }
 }

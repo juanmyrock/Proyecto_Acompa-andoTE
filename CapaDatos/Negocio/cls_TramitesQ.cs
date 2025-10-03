@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,37 +42,25 @@ namespace CapaDatos.Negocio
         {
             string sql = @"
                 SELECT 
-                    TP1.id_tp AS IdTramite, 
-                    P.id_paciente, 
-                    P.nombre, 
+                    TP.id_tp AS IdTramite,
+                    TP.id_tramite,  -- ¡AGREGAR ESTA COLUMNA!
+                    P.id_paciente,
+                    P.nombre,
                     P.apellido, 
                     T.descripcion AS TipoTramite,
-                    ULTIMO_ESTADO.descripcion AS EstadoActual
-                FROM Pacientes P
-                INNER JOIN Tramite_Paciente TP1 ON P.id_paciente = TP1.id_paciente
-                INNER JOIN Tramites T ON T.id_tramite = TP1.id_tramite
-                LEFT JOIN (
-                    -- Subconsulta para encontrar el último estado de CADA trámite
-                    SELECT 
-                        TP_INNER.id_tp, 
-                        TR.descripcion
-                    FROM Tramite_Paciente TP_INNER
-                    INNER JOIN Tramites TR ON TR.id_tramite = TP_INNER.id_tramite
-                    WHERE TP_INNER.id_tp IN (
-                        SELECT TOP 1 id_tp
-                        FROM Tramite_Paciente TP_MAX
-                        WHERE TP_MAX.id_paciente = TP_INNER.id_paciente
-                        ORDER BY TP_MAX.fecha_hora DESC
-                    )
-                ) AS ULTIMO_ESTADO ON ULTIMO_ESTADO.id_tp = TP1.id_tp
+                    T_ESTADO.descripcion AS EstadoActual,
+                    TP.fecha_creacion,
+                    TP.comentario_inicial
+                FROM Tramites_Principal TP
+                INNER JOIN Pacientes P ON P.id_paciente = TP.id_paciente
+                INNER JOIN Tramites T ON T.id_tramite = TP.id_tramite
+                INNER JOIN Tramites T_ESTADO ON T_ESTADO.id_tramite = TP.estado_actual
                 WHERE 
                     (P.dni_paciente = @Busqueda OR P.apellido LIKE '%' + @Busqueda + '%')
-                    AND (@FechaInicio IS NULL OR TP1.fecha_hora >= @FechaInicio)
-                    AND (@FechaFin IS NULL OR TP1.fecha_hora <= @FechaFin)
-                GROUP BY 
-                    TP1.id_tp, P.id_paciente, P.nombre, P.apellido, T.descripcion, ULTIMO_ESTADO.descripcion
+                    AND (@FechaInicio IS NULL OR TP.fecha_creacion >= @FechaInicio)
+                    AND (@FechaFin IS NULL OR TP.fecha_creacion <= @FechaFin)
                 ORDER BY 
-                    P.apellido, P.nombre, TP1.id_tp DESC;";
+                    P.apellido, P.nombre, TP.fecha_creacion DESC";
 
             var parameters = new List<SqlParameter>
             {
@@ -87,34 +76,37 @@ namespace CapaDatos.Negocio
             {
                 lista.Add(new cls_Tramite_PacienteDTO
                 {
-                    id_tramite = Convert.ToInt32(row["IdTramite"]),
+                    id_tp = Convert.ToInt32(row["IdTramite"]),  // Usar el alias correcto
                     id_paciente = Convert.ToInt32(row["id_paciente"]),
+                    id_tramite = Convert.ToInt32(row["id_tramite"]),
                     NombrePacienteCompleto = $"{row["apellido"]}, {row["nombre"]}",
                     Descripcion = $"TR-{Convert.ToInt32(row["IdTramite"]):0000} ({row["TipoTramite"]}) - {row["apellido"]}",
-                    EstadoActual = row["EstadoActual"].ToString()
+                    EstadoActual = row["EstadoActual"].ToString(),
+                    fecha_creacion = Convert.ToDateTime(row["fecha_creacion"]),
+                    comentario_inicial = row["comentario_inicial"] != DBNull.Value ? row["comentario_inicial"].ToString() : string.Empty
                 });
             }
             return lista;
         }
 
-        public List<cls_HistorialDTO> ObtenerHistorialTramite(int idTramite)
+        public List<cls_HistorialDTO> ObtenerHistorialTramite(int idTramitePrincipal)
         {
-            // Trae todos los registros de la tabla Tramite_Paciente para un id_tp específico.
             string sql = @"
                 SELECT 
-                    TP.fecha_hora, 
+                    TH.fecha_hora,
                     U.username,
-                    TP.comentario, 
-                    T.descripcion
-                FROM Tramite_Paciente TP
-                LEFT JOIN Usuarios U ON U.id_usuario = TP.id_usuario
-                LEFT JOIN Tramites T ON T.id_tramite = TP.id_tramite -- Si T.id_tramite está seteado es un cambio de estado
-                WHERE TP.id_tp = @IdTramite
-                ORDER BY TP.fecha_hora ASC";
+                    TH.comentario,
+                    T.descripcion AS NuevoEstado,
+                    TH.tipo_accion
+                FROM Tramites_Historial TH
+                LEFT JOIN Usuarios U ON U.id_usuario = TH.id_usuario
+                LEFT JOIN Tramites T ON T.id_tramite = TH.id_tramite_nuevo
+                WHERE TH.id_tp = @IdTramitePrincipal
+                ORDER BY TH.fecha_hora ASC";
 
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@IdTramite", idTramite)
+                new SqlParameter("@IdTramitePrincipal", idTramitePrincipal)
             };
 
             DataTable tb = _ejecutarQ.ConsultaRead(sql, parameters);
@@ -122,43 +114,71 @@ namespace CapaDatos.Negocio
 
             foreach (DataRow row in tb.Rows)
             {
-                bool esEstado = row["descripcion"] != DBNull.Value;
+                string tipoAccion = row["tipo_accion"].ToString();
+                bool esCambioDeEstado = tipoAccion == "CAMBIO_ESTADO";
 
                 historial.Add(new cls_HistorialDTO
                 {
                     FechaHora = Convert.ToDateTime(row["fecha_hora"]),
                     Usuario = row["username"] != DBNull.Value ? row["username"].ToString() : "Sistema",
                     Comentario = row["comentario"] != DBNull.Value ? row["comentario"].ToString() : string.Empty,
-                    EsCambioDeEstado = esEstado,
-                    NuevoEstado = esEstado ? row["descripcion"].ToString() : string.Empty
+                    EsCambioDeEstado = esCambioDeEstado,
+                    NuevoEstado = esCambioDeEstado ? row["NuevoEstado"].ToString() : string.Empty,
+                    TipoAccion = tipoAccion
                 });
             }
             return historial;
         }
 
-        public bool RegistrarComentario(int id_tp, int id_usuario, string comentario, int id_paciente)
+        public bool RegistrarComentario(int id_tp, int id_usuario, string comentario)
         {
             string sql = @"
-                INSERT INTO Tramite_Paciente 
-                (id_paciente, fecha_hora, id_usuario, comentario) 
+                INSERT INTO Tramites_Historial 
+                (id_tp, fecha_hora, id_usuario, comentario, tipo_accion) 
                 VALUES (
-                        @id_paciente, -- 1. id_paciente (Tomado del nuevo parámetro)
-                        GETDATE(),    -- 2. fecha_hora
-                        @id_usuario,  -- 3. id_usuario
-                        @comentario  -- 4. comentario
-                     
-                       )";
+                    @id_tp,
+                    GETDATE(),
+                    @id_usuario,
+                    @comentario,
+                    'COMENTARIO'
+                )";
 
-                    var parameters = new List<SqlParameter>
+            var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@id_tp", id_tp),
                 new SqlParameter("@id_usuario", id_usuario),
-                new SqlParameter("@id_paciente", id_paciente) 
+                new SqlParameter("@comentario", comentario)
             };
 
-        
             return _ejecutarQ.ConsultaCUD(sql, parameters) > 0;
         }
+
+        // Método para obtener el id_tramite por id_tp
+        //private int ObtenerIdTramitePorIdTp(int id_tp)
+        //{
+        //    string sql = @"
+        //        SELECT TOP 1 id_tramite 
+        //        FROM Tramite_Paciente 
+        //        WHERE id_tp = @id_tp
+        //        ORDER BY fecha_hora ASC";
+
+        //    SqlParameter[] parameters = new SqlParameter[]
+        //    {
+        //        new SqlParameter("@id_tp", id_tp)
+        //    };
+
+        //    DataTable tb = _ejecutarQ.ConsultaRead(sql, parameters.ToList());
+
+        //    if (tb != null && tb.Rows.Count > 0)
+        //    {
+        //        DataRow row = tb.Rows[0];
+        //        if (row["id_tramite"] != DBNull.Value)
+        //        {
+        //            return Convert.ToInt32(row["id_tramite"]);
+        //        }
+        //    }
+        //    return 0;
+        //}
 
         public int ObtenerIdPacientePorIdTp(int id_tp)
         {
@@ -187,31 +207,119 @@ namespace CapaDatos.Negocio
             return 0;
         }
 
-        public bool RegistrarCambioEstado(int id_tp, int id_usuario, int id_tramite, int id_paciente)
+        public bool RegistrarCambioEstado(int id_tp, int id_usuario, int id_nuevo_estado)
         {
-            
-            string sql = @"
-                INSERT INTO Tramite_Paciente 
-                (id_tramite, id_paciente, fecha_hora, id_usuario) 
-                VALUES (
-                        @id_tramite,  -- 1. id_tramite (Nuevo Estado)
-                        @id_paciente, -- 2. id_paciente (Tomado del nuevo parámetro)
-                        GETDATE(),    -- 3. fecha_hora
-                        @id_usuario  -- 4. id_usuario
-                       )";
+            try
+            {
+                // 1. Actualizar el estado actual en la tabla principal
+                string sqlUpdate = @"
+                    UPDATE Tramites_Principal 
+                    SET estado_actual = @id_nuevo_estado
+                    WHERE id_tp = @id_tp";
 
-                    var parameters = new List<SqlParameter>
-            {    
-                new SqlParameter("@id_usuario", id_usuario),
-                new SqlParameter("@id_tramite", id_tramite), 
-                new SqlParameter("@id_paciente", id_paciente) 
-            };
+                var parametersUpdate = new List<SqlParameter>
+                {
+                    new SqlParameter("@id_tp", id_tp),
+                    new SqlParameter("@id_nuevo_estado", id_nuevo_estado)
+                };
 
-            
-            return _ejecutarQ.ConsultaCUD(sql, parameters) > 0;
+                int filasActualizadas = _ejecutarQ.ConsultaCUD(sqlUpdate, parametersUpdate);
+
+                if (filasActualizadas <= 0)
+                {
+                    LogToFile("ERROR: No se pudo actualizar el estado en Tramites_Principal");
+                    return false;
+                }
+
+                // 2. Registrar en el historial
+                string sqlInsert = @"
+                    INSERT INTO Tramites_Historial 
+                    (id_tp, fecha_hora, id_usuario, id_tramite_nuevo, tipo_accion) 
+                    VALUES (
+                        @id_tp,
+                        GETDATE(),
+                        @id_usuario,
+                        @id_tramite_nuevo,
+                        'CAMBIO_ESTADO'
+                    )";
+
+                var parametersInsert = new List<SqlParameter>
+                {
+                    new SqlParameter("@id_tp", id_tp),
+                    new SqlParameter("@id_usuario", id_usuario),
+                    new SqlParameter("@id_tramite_nuevo", id_nuevo_estado)
+                };
+
+                int filasInsertadas = _ejecutarQ.ConsultaCUD(sqlInsert, parametersInsert);
+
+                bool exito = filasInsertadas > 0;
+                LogToFile($"RegistrarCambioEstado - Update: {filasActualizadas}, Insert: {filasInsertadas}, Éxito: {exito}");
+
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                LogToFile($"EXCEPCIÓN en RegistrarCambioEstado: {ex.Message}");
+                return false;
+            }
         }
 
+        public int CrearNuevoTramite(int id_paciente, int id_tramite, int id_usuario_creador, string comentario_inicial = null)
+        {
+            string sql = @"
+                INSERT INTO Tramites_Principal 
+                (id_paciente, id_tramite, fecha_creacion, estado_actual, id_usuario_creador, comentario_inicial) 
+                VALUES (
+                    @id_paciente,
+                    @id_tramite,
+                    GETDATE(),
+                    @id_tramite,  -- Estado inicial igual al tipo de trámite
+                    @id_usuario_creador,
+                    @comentario_inicial
+                );
+                SELECT SCOPE_IDENTITY();";  // Retorna el id_tp generado
 
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@id_paciente", id_paciente),
+                new SqlParameter("@id_tramite", id_tramite),
+                new SqlParameter("@id_usuario_creador", id_usuario_creador),
+                new SqlParameter("@comentario_inicial", string.IsNullOrEmpty(comentario_inicial) ? (object)DBNull.Value : comentario_inicial)
+            };
+
+            DataTable tb = _ejecutarQ.ConsultaRead(sql, parameters);
+
+            if (tb != null && tb.Rows.Count > 0)
+            {
+                int id_tp_generado = Convert.ToInt32(tb.Rows[0][0]);
+                LogToFile($"Nuevo trámite creado - id_tp: {id_tp_generado}");
+                return id_tp_generado;
+            }
+
+            LogToFile("ERROR: No se pudo crear el nuevo trámite");
+            return 0;
+        }
+
+        private void LogToFile(string message)
+        {
+            try
+            {
+                string path = @"C:\temp\tramites_debug.txt";
+                string directory = Path.GetDirectoryName(path);
+
+                // Crear directorio si no existe
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                File.AppendAllText(path, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}: {message}\n");
+            }
+            catch (Exception ex)
+            {
+                // Si falla el logging, no hacer nada para no complicar el debug
+            }
+        }
 
     }
 }

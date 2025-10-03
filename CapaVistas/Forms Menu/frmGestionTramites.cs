@@ -16,8 +16,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
         private cls_LlenarCombos _rellenador;
         private cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
         private List<cls_Tramite_PacienteDTO> _tramitesCargados = new List<cls_Tramite_PacienteDTO>();
-        private cls_PacienteDTO _paciente = new cls_PacienteDTO();
-        private cls_UsuarioDTO _usuario = new cls_UsuarioDTO();
         private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
         private bool dragging = false;
         private Point dragCursorPoint;
@@ -113,38 +111,37 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
         {
             if (lbTramites.SelectedIndex < 0 || _tramitesCargados == null || _tramitesCargados.Count == 0) return;
 
-            // Obtenemos el DTO del trámite seleccionado
             var tramiteSeleccionadoDTO = _tramitesCargados[lbTramites.SelectedIndex];
 
-            // Usamos el ID del trámite real
-            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tramite;
+            // CORREGIR: Usar id_tp en lugar de id_tramite
+            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tp;  // CAMBIAR ESTO
             string descripcionTramite = tramiteSeleccionadoDTO.Descripcion;
 
             lblTramiteSeleccionado.Text = $"Historial del Trámite: {descripcionTramite}";
-            pnlChat.Controls.Clear(); // Limpiamos el chat anterior
+            pnlChat.Controls.Clear();
 
             try
             {
                 var historial = _logicaTramites.ObtenerHistorialTramite(idTramiteSeleccionado);
 
-                string estadoActual = tramiteSeleccionadoDTO.Descripcion; // O puedes obtenerlo del último registro del historial
-
+                // CORREGIR: Usar EstadoActual en lugar de Descripcion
+                string estadoActual = tramiteSeleccionadoDTO.EstadoActual;  // CAMBIAR ESTO
                 lblEstadoActual.Text = estadoActual;
+                
                 AsignarColorEstado(estadoActual);
 
                 foreach (var evento in historial)
                 {
-                    string tipo = evento.EsCambioDeEstado ? estadoActual : "Comentario";
+                    string tipo = evento.EsCambioDeEstado ? "Estado" : "Comentario";  // CAMBIAR ESTO
                     string texto = evento.EsCambioDeEstado ? $"El estado cambió a: \"{evento.NuevoEstado}\"" : evento.Comentario;
 
                     AgregarMensaje(evento.FechaHora.ToString("dd/MM/yyyy HH:mm"), evento.Usuario, tipo, texto, false);
                 }
-                // Scroll al final al cargar
+
                 if (pnlChat.Controls.Count > 0)
                 {
                     pnlChat.ScrollControlIntoView(pnlChat.Controls[pnlChat.Controls.Count - 1]);
                 }
-
             }
             catch (Exception ex)
             {
@@ -162,24 +159,23 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             string mensaje = txtMensaje.Text.Trim();
             if (string.IsNullOrWhiteSpace(mensaje)) return;
 
-            // Asumimos que IdTramite es tu ID maestro (id_tp)
-            int id_tramite = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
-
-            // ** REEMPLAZAR CON EL ID DE USUARIO REAL Y NOMBRE DE SESIÓN **
+            // CORREGIDO: Usar id_tp que es el identificador único
+            int id_tp = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
             int id_usuario = _usuariologeado.IdUsuario;
             string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
 
+            // DEBUG TEMPORAL
+            MessageBox.Show($"DEBUG Enviar: id_tp={id_tp}, id_usuario={id_usuario}, mensaje={mensaje}");
+
             try
             {
-
-                if (_logicaTramites.RegistrarComentario(id_tramite, id_usuario, mensaje))
+                if (_logicaTramites.RegistrarComentario(id_tp, id_usuario, mensaje))
                 {
                     AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario", mensaje);
                     txtMensaje.Clear();
                 }
                 else
                 {
-                    // Este error puede indicar un fallo de DB o que ObtenerIdPacientePorIdTp devolvió 0.
                     MessageBox.Show("No se pudo registrar el comentario. Verifique el ID de Trámite y Usuario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -205,17 +201,15 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
             int idNuevoEstado = (int)cmbNuevoEstado.SelectedValue;
             string nuevoEstadoDescripcion = cmbNuevoEstado.Text;
-             
+
             int idTramiteMaestro = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
             int idUsuarioActual = _usuariologeado.IdUsuario;
-            // Usar el nombre del usuario de la sesión, no el nombre del paciente
             string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
 
             try
             {
                 if (_logicaTramites.RegistrarCambioEstado(idTramiteMaestro, idUsuarioActual, idNuevoEstado))
                 {
-                    // Se registra el cambio en la tabla Tramite_Paciente
                     string mensajeEstado = $"El estado cambió a: \"{nuevoEstadoDescripcion}\"";
                     AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Estado", mensajeEstado);
 
@@ -240,7 +234,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             string e = estado.ToLower();
             if (e.Contains("vencido") || e.Contains("rechazado") || e.Contains("perdido"))
                 lblEstadoActual.BackColor = Color.Crimson;
-            else if (e.Contains("autorizado") || e.Contains("al dia") || e.Contains("finalizado"))
+            else if (e.Contains("autorizado") || e.Contains("al dia") || e.Contains("finalizado") || e.Contains("asignado"))
                 lblEstadoActual.BackColor = Color.SeaGreen;
             else if (e.Contains("pendiente") || e.Contains("espera"))
                 lblEstadoActual.BackColor = Color.Orange;

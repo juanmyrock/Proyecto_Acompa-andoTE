@@ -145,25 +145,33 @@ namespace CapaDatos
                     {
                         if (parametros != null)
                         {
-                            // Agrega los parámetros a la colección de parámetros del comando
                             command.Parameters.AddRange(parametros.ToArray());
+
+                            // DEBUG: Mostrar parámetros
+                            Console.WriteLine("DEBUG - SQL: " + sql);
+                            foreach (var param in parametros)
+                            {
+                                Console.WriteLine($"DEBUG - Parámetro: {param.ParameterName} = {param.Value}");
+                            }
                         }
 
-                        connection.Open(); // Abre la conexión a la base de datos
-                        filasAfectadas = command.ExecuteNonQuery(); // Ejecuta la consulta y devuelve el número de filas afectadas
+                        connection.Open();
+                        filasAfectadas = command.ExecuteNonQuery();
+                        Console.WriteLine($"DEBUG - Filas afectadas: {filasAfectadas}");
                     }
                 }
                 return filasAfectadas;
             }
             catch (SqlException ex)
             {
-                Console.WriteLine($"Error de SQL: {ex.Message}");
-                return -1; // Indica un error en la ejecución
+                Console.WriteLine($"ERROR SQL: {ex.Message}");
+                Console.WriteLine($"ERROR SQL Number: {ex.Number}");
+                return -1;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return -1; // Indica un error en la ejecución
+                Console.WriteLine($"ERROR: {ex.Message}");
+                return -1;
             }
         }
     }
