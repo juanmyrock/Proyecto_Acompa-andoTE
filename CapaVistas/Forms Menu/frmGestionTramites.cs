@@ -125,10 +125,8 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
             try
             {
-                // ** Llama a la lógica para obtener el historial real **
                 var historial = _logicaTramites.ObtenerHistorialTramite(idTramiteSeleccionado);
 
-                // Actualizar el estado actual y color (usando el último estado del historial, o el que viene en el DTO)
                 string estadoActual = tramiteSeleccionadoDTO.Descripcion; // O puedes obtenerlo del último registro del historial
 
                 lblEstadoActual.Text = estadoActual;
