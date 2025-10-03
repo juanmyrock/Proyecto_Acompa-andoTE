@@ -171,8 +171,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
             try
             {
-                // Llama a la lógica: El método RegistrarComentario en la lógica ahora es seguro 
-                // y busca id_paciente internamente.
+
                 if (_logicaTramites.RegistrarComentario(id_tramite, id_usuario, mensaje))
                 {
                     AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario", mensaje);
