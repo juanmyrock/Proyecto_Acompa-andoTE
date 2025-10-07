@@ -208,7 +208,7 @@ namespace CapaDatos.Utilidades
         {
             
             var response = new LlenarCombosResponseDTO();
-            string query = "SELECT id_tramite, descripcion FROM Tramites";
+            string query = "SELECT id_tramite, descripcion FROM Tipos_Tramite";
             try
             {
                 DataTable tablaTramites = _ejecutar.ConsultaRead(query);

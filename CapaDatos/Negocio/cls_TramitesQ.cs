@@ -43,7 +43,7 @@ namespace CapaDatos.Negocio
             string sql = @"
                 SELECT 
                     TP.id_tp AS IdTramite,
-                    TP.id_tramite,  -- ¡AGREGAR ESTA COLUMNA!
+                    TP.id_tramite, 
                     P.id_paciente,
                     P.nombre,
                     P.apellido, 
@@ -51,10 +51,10 @@ namespace CapaDatos.Negocio
                     T_ESTADO.descripcion AS EstadoActual,
                     TP.fecha_creacion,
                     TP.comentario_inicial
-                FROM Tramites_Principal TP
+                FROM Tramites TP
                 INNER JOIN Pacientes P ON P.id_paciente = TP.id_paciente
-                INNER JOIN Tramites T ON T.id_tramite = TP.id_tramite
-                INNER JOIN Tramites T_ESTADO ON T_ESTADO.id_tramite = TP.estado_actual
+                INNER JOIN Tipos_Tramite T ON T.id_tramite = TP.id_tramite
+                INNER JOIN Tipos_Tramite T_ESTADO ON T_ESTADO.id_tramite = TP.estado_actual
                 WHERE 
                     (P.dni_paciente = @Busqueda OR P.apellido LIKE '%' + @Busqueda + '%')
                     AND (@FechaInicio IS NULL OR TP.fecha_creacion >= @FechaInicio)
@@ -100,7 +100,7 @@ namespace CapaDatos.Negocio
                     TH.tipo_accion
                 FROM Tramites_Historial TH
                 LEFT JOIN Usuarios U ON U.id_usuario = TH.id_usuario
-                LEFT JOIN Tramites T ON T.id_tramite = TH.id_tramite_nuevo
+                LEFT JOIN Tipos_Tramite T ON T.id_tramite = TH.id_tramite_nuevo
                 WHERE TH.id_tp = @IdTramitePrincipal
                 ORDER BY TH.fecha_hora ASC";
 
@@ -213,7 +213,7 @@ namespace CapaDatos.Negocio
             {
                 // 1. Actualizar el estado actual en la tabla principal
                 string sqlUpdate = @"
-                    UPDATE Tramites_Principal 
+                    UPDATE Tramites
                     SET estado_actual = @id_nuevo_estado
                     WHERE id_tp = @id_tp";
 
@@ -267,7 +267,7 @@ namespace CapaDatos.Negocio
         public int CrearNuevoTramite(int id_paciente, int id_tramite, int id_usuario_creador, string comentario_inicial = null)
         {
             string sql = @"
-                INSERT INTO Tramites_Principal 
+                INSERT INTO Tramites
                 (id_paciente, id_tramite, fecha_creacion, estado_actual, id_usuario_creador, comentario_inicial) 
                 VALUES (
                     @id_paciente,
