@@ -113,8 +113,8 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
             var tramiteSeleccionadoDTO = _tramitesCargados[lbTramites.SelectedIndex];
 
-            // CORREGIR: Usar id_tp en lugar de id_tramite
-            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tp;  // CAMBIAR ESTO
+            
+            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tp;  
             string descripcionTramite = tramiteSeleccionadoDTO.Descripcion;
 
             lblTramiteSeleccionado.Text = $"Historial del Trámite: {descripcionTramite}";
@@ -124,8 +124,8 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             {
                 var historial = _logicaTramites.ObtenerHistorialTramite(idTramiteSeleccionado);
 
-                // CORREGIR: Usar EstadoActual en lugar de Descripcion
-                string estadoActual = tramiteSeleccionadoDTO.EstadoActual;  // CAMBIAR ESTO
+              
+                string estadoActual = tramiteSeleccionadoDTO.EstadoActual; 
                 lblEstadoActual.Text = estadoActual;
                 
                 AsignarColorEstado(estadoActual);
