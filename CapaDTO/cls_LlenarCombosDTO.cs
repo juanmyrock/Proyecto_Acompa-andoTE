@@ -42,6 +42,12 @@ namespace CapaDTO
         public int id_tramite { get; set; }
         public string descripcion { get; set; }
     }
+
+    public class cls_EspecialidadesDTO
+    {
+        public int id_especialidad { get; set; }
+        public string especialidad { get; set; }
+    }
         public class LlenarCombosResponseDTO
         {
             public List<cls_LocalidadDTO> Localidades { get; set; }
@@ -52,6 +58,8 @@ namespace CapaDTO
             public List<cls_ObraSocialDTO> ObraSocial { get; set; }
 
             public List<cls_TramitesDTO> Tramites { get; set; }
+
+            public List<cls_EspecialidadesDTO> Especialidades { get; set; }
         }
     }
     

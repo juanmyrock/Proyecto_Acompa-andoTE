@@ -462,6 +462,7 @@ namespace CapaVistas
             this.btnProfesionales.TabIndex = 11;
             this.btnProfesionales.Text = "     Profesionales";
             this.btnProfesionales.UseVisualStyleBackColor = false;
+            this.btnProfesionales.Click += new System.EventHandler(this.btnProfesionales_Click);
             // 
             // panel5
             // 

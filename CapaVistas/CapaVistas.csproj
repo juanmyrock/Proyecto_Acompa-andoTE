@@ -118,6 +118,12 @@
     <Compile Include="Forms Menu\frmPermisos.Designer.cs">
       <DependentUpon>frmPermisos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmProfesionales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmProfesionales.Designer.cs">
+      <DependentUpon>frmProfesionales.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmPermisos.resx">
       <DependentUpon>frmPermisos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmProfesionales.resx">
+      <DependentUpon>frmProfesionales.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>

@@ -13,6 +13,6 @@ namespace CapaDTO.SistemaDTO
         public string Comentario { get; set; }
         public bool EsCambioDeEstado { get; set; }
         public string NuevoEstado { get; set; }
-        public string TipoAccion { get; set; } // 'COMENTARIO' o 'CAMBIO_ESTADO'
+        public int TipoAccion { get; set; } 
     }
 }
