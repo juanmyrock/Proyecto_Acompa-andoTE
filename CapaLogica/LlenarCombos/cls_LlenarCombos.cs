@@ -1,7 +1,9 @@
-﻿using CapaDatos.Utilidades;
+﻿using CapaDatos;
+using CapaDatos.Utilidades;
 using CapaDTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace CapaLogica.LlenarCombos
     public class cls_LlenarCombos
     {
         private cls_LlenarCombosQ _llenador;
+        private cls_EjecutarQ _ejecutarQ = new cls_EjecutarQ();
 
         public cls_LlenarCombos()
         {
@@ -57,6 +60,16 @@ namespace CapaLogica.LlenarCombos
             }
         }
 
+        public LlenarCombosResponseDTO ObtenerEspecialidades()
+        {
+            try { return _llenador.ObtenerEspecialidades(); }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error al obtener especialidades: {ex.Message}");
+                return null;
+            }
+        }
+
         public LlenarCombosResponseDTO ObtenerRoles()
         {
             try
@@ -83,11 +96,11 @@ namespace CapaLogica.LlenarCombos
             }
         }
 
-        public LlenarCombosResponseDTO ObtenerAcompañantes()
+        public LlenarCombosResponseDTO ObtenerProfesionales()
         {
             try
             {
-                return _llenador.ObtenerAcompañantes();
+                return _llenador.ObtenerProfesionales();
             }
             catch (Exception ex)
             {

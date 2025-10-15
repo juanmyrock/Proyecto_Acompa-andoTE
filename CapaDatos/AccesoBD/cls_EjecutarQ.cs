@@ -174,5 +174,50 @@ namespace CapaDatos
                 return -1;
             }
         }
+
+        public int ConsultaCUDSP(string storedProcedure, List<SqlParameter> parametros)
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                using (SqlConnection connection = GetConexion())
+                {
+                    using (SqlCommand command = new SqlCommand(storedProcedure, connection))
+                    {
+                        // Especificar que es un stored procedure
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        if (parametros != null)
+                        {
+                            command.Parameters.AddRange(parametros.ToArray());
+
+                            // DEBUG: Mostrar parámetros
+                            Console.WriteLine("DEBUG - Stored Procedure: " + storedProcedure);
+                            foreach (var param in parametros)
+                            {
+                                Console.WriteLine($"DEBUG - Parámetro: {param.ParameterName} = {param.Value} (Tipo: {param.SqlDbType})");
+                            }
+                        }
+
+                        connection.Open();
+                        filasAfectadas = command.ExecuteNonQuery();
+                        Console.WriteLine($"DEBUG - Filas afectadas: {filasAfectadas}");
+                    }
+                }
+                return filasAfectadas;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"ERROR SQL en SP {storedProcedure}: {ex.Message}");
+                Console.WriteLine($"ERROR SQL Number: {ex.Number}");
+                Console.WriteLine($"ERROR SQL LineNumber: {ex.LineNumber}");
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR en SP {storedProcedure}: {ex.Message}");
+                return -1;
+            }
+        }
     }
 }

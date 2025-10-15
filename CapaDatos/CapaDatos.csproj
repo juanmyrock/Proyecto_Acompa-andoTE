@@ -47,7 +47,7 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
-    <Compile Include="Negocio\cls_AcompañanteQ.cs" />
+    <Compile Include="Negocio\cls_ProfesionalesQ.cs" />
     <Compile Include="Negocio\cls_ObraSocialQ.cs" />
     <Compile Include="Negocio\cls_TramitesQ.cs" />
     <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
