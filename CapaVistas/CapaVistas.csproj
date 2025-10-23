@@ -106,6 +106,12 @@
     <Compile Include="Forms Menu\frmGestionTurnos.Designer.cs">
       <DependentUpon>frmGestionTurnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmInformesAT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmInformesAT.Designer.cs">
+      <DependentUpon>frmInformesAT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmPacientes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmGestionTurnos.resx">
       <DependentUpon>frmGestionTurnos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmInformesAT.resx">
+      <DependentUpon>frmInformesAT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmPacientes.resx">
       <DependentUpon>frmPacientes.cs</DependentUpon>

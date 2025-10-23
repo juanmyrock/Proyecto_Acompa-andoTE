@@ -57,7 +57,9 @@
     <Compile Include="Login\cls_LogicaPreguntas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>

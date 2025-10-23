@@ -252,5 +252,10 @@ namespace CapaVistas
         {
             OpenChildForm(new frmProfesionales(), sender);
         }
+
+        private void btnInformes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmInformesAT(), sender);
+        }
     }
 }
