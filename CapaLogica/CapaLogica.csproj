@@ -55,11 +55,10 @@
     <Compile Include="Login\cls_LogicaLogin.cs" />
     <Compile Include="Login\cls_ParametrosContraseña.cs" />
     <Compile Include="Login\cls_LogicaPreguntas.cs" />
+    <Compile Include="Negocio\cls_LogicaInformes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
       <Project>{64182b3c-c9f4-4d08-ac8a-12ef479ea15f}</Project>
