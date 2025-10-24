@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtBusquedaPaciente = new System.Windows.Forms.TextBox();
             this.lblAcompañante = new System.Windows.Forms.Label();
             this.lblDNI = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -39,7 +39,8 @@
             this.btnGuardarInforme = new System.Windows.Forms.Button();
             this.lblApeNom = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHorasAsignadas = new System.Windows.Forms.Label();
+            this.lblHoras = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -49,12 +50,12 @@
             this.textBox1.Size = new System.Drawing.Size(179, 20);
             this.textBox1.TabIndex = 0;
             // 
-            // textBox3
+            // txtBusquedaPaciente
             // 
-            this.textBox3.Location = new System.Drawing.Point(12, 121);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(179, 20);
-            this.textBox3.TabIndex = 2;
+            this.txtBusquedaPaciente.Location = new System.Drawing.Point(12, 121);
+            this.txtBusquedaPaciente.Name = "txtBusquedaPaciente";
+            this.txtBusquedaPaciente.Size = new System.Drawing.Size(179, 20);
+            this.txtBusquedaPaciente.TabIndex = 2;
             // 
             // lblAcompañante
             // 
@@ -148,16 +149,27 @@
             this.btnBuscar.TabIndex = 12;
             this.btnBuscar.Text = "Buscar Paciente";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // label1
+            // lblHorasAsignadas
             // 
-            this.label1.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(12, 191);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(377, 23);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Nombre Paciente:";
+            this.lblHorasAsignadas.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
+            this.lblHorasAsignadas.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblHorasAsignadas.Location = new System.Drawing.Point(12, 191);
+            this.lblHorasAsignadas.Name = "lblHorasAsignadas";
+            this.lblHorasAsignadas.Size = new System.Drawing.Size(115, 23);
+            this.lblHorasAsignadas.TabIndex = 13;
+            this.lblHorasAsignadas.Text = "Horas Asignadas:";
+            // 
+            // lblHoras
+            // 
+            this.lblHoras.Font = new System.Drawing.Font("Bahnschrift", 9.75F);
+            this.lblHoras.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblHoras.Location = new System.Drawing.Point(119, 191);
+            this.lblHoras.Name = "lblHoras";
+            this.lblHoras.Size = new System.Drawing.Size(126, 23);
+            this.lblHoras.TabIndex = 14;
+            this.lblHoras.Text = "00 hs";
             // 
             // frmInformesAT
             // 
@@ -165,7 +177,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1047, 566);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblHoras);
+            this.Controls.Add(this.lblHorasAsignadas);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblApeNom);
             this.Controls.Add(this.btnGuardarInforme);
@@ -175,7 +188,7 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.lblDNI);
             this.Controls.Add(this.lblAcompañante);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtBusquedaPaciente);
             this.Controls.Add(this.textBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmInformesAT";
@@ -188,7 +201,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtBusquedaPaciente;
         private System.Windows.Forms.Label lblAcompañante;
         private System.Windows.Forms.Label lblDNI;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
@@ -198,6 +211,7 @@
         private System.Windows.Forms.Button btnGuardarInforme;
         private System.Windows.Forms.Label lblApeNom;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHorasAsignadas;
+        private System.Windows.Forms.Label lblHoras;
     }
 }
