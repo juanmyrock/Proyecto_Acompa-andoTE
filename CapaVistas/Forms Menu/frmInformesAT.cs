@@ -1,4 +1,5 @@
 ﻿using CapaDTO.SistemaDTO;
+using CapaLogica.SistemaLogica;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmInformesAT : Form
     {
+        cls_LogicaGestionarPacientes _logicaPaciente = new cls_LogicaGestionarPacientes();
         public frmInformesAT()
         {
             InitializeComponent();
@@ -36,22 +38,24 @@ namespace CapaVistas.Forms_Menu
 
                     List<cls_PacienteDTO> resultado = new List<cls_PacienteDTO> { pacienteEncontrado };
 
-                    dgvVerPacientes.DataSource = resultado;
+                    lblApeNom.Text = pacienteEncontrado.Nombre + " " + pacienteEncontrado.Apellido;
 
-                    MessageBox.Show($"Paciente {pacienteEncontrado.Nombre} {pacienteEncontrado.Apellido} encontrado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblHoras.Text = Convert.ToString(pacienteEncontrado.cargahoraria_at);
+
+                    
                 }
                 else
                 {
 
                     MessageBox.Show($"No se encontró ningún paciente con DNI: {dniBuscado}.", "No Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    CargarPacientesEnDataGridView();
+                 
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al buscar el paciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CargarPacientesEnDataGridView();
+                
             }
         }
     }
