@@ -247,5 +247,15 @@ namespace CapaVistas
 
             pnlTurnos.Visible = false;
         }
+
+        private void btnProfesionales_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmProfesionales(), sender);
+        }
+
+        private void btnInformes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmInformesAT(), sender);
+        }
     }
 }

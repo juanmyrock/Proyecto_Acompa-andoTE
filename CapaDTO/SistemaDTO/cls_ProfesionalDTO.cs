@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CapaDTO.SistemaDTO
 {
-    public class cls_AcompañanteDTO
+    public class cls_ProfesionalDTO
     {
         public int id_profesional { get; set; }
         public int id_tipo_dni { get; set; }
@@ -22,6 +22,10 @@ namespace CapaDTO.SistemaDTO
         public int num_domicilio { get; set; }
         public DateTime? fecha_nac {  get; set; }
         public string email {  get; set; }
+
+        public int id_especialidad { get; set; }
+
+        public bool? es_activo {  get; set; }
 
 
 

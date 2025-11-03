@@ -26,7 +26,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         {
             // Simula la carga de datos iniciales
             CargarDatosDePrueba();
-            CargarAcompañantes();
+            CargarProfesionales();
 
 
             // 1. Cargar Especialidades desde la Base de Datos
@@ -35,10 +35,10 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             cmbEspecialidad.Items.Add("Clínica Médica");
             cmbEspecialidad.Items.Add("Pediatría");
         }
-        private void CargarAcompañantes()
+        private void CargarProfesionales()
         {
            
-            var cargarAcompañantes = _rellenador.ObtenerAcompañantes();
+            var cargarAcompañantes = _rellenador.ObtenerProfesionales();
             try
             {
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbAcompañante, cargarAcompañantes.Acompañantes, "NomApe", "id_profesional");

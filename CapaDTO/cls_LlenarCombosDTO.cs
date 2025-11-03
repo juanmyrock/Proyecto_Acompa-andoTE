@@ -36,15 +36,31 @@ namespace CapaDTO
         public string NomApe { get; set; }
         
     }
+
+    public class cls_TramitesDTO
+    {
+        public int id_tramite { get; set; }
+        public string descripcion { get; set; }
+    }
+
+    public class cls_EspecialidadesDTO
+    {
+        public int id_especialidad { get; set; }
+        public string especialidad { get; set; }
+    }
         public class LlenarCombosResponseDTO
         {
             public List<cls_LocalidadDTO> Localidades { get; set; }
             public List<cls_SexoDTO> Sexos { get; set; }
             public List<cls_TipoDocumentoDTO> TiposDocumento { get; set; }
             public List<cls_RolDTO> Roles { get; set; }
-            public List<cls_AcompañantesDTO> Acompañantes {  get; set; }
+            public List<cls_AcompañantesDTO> Acompañantes { get; set; }
             public List<cls_ObraSocialDTO> ObraSocial { get; set; }
-        }
 
-   
-}
+            public List<cls_TramitesDTO> Tramites { get; set; }
+
+            public List<cls_EspecialidadesDTO> Especialidades { get; set; }
+        }
+    }
+    
+
