@@ -48,6 +48,9 @@ namespace CapaVistas
             this.btnCerrar = new System.Windows.Forms.PictureBox();
             this.btnOcultar = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.picObraSocial = new System.Windows.Forms.PictureBox();
+            this.btnObraSocial = new System.Windows.Forms.Button();
+            this.panel9 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.PictureBox();
             this.lblUserLog = new System.Windows.Forms.Label();
@@ -82,9 +85,6 @@ namespace CapaVistas
             this.pnlTurnos = new System.Windows.Forms.Panel();
             this.btnConsultorios = new System.Windows.Forms.Button();
             this.btnTurnoAT = new System.Windows.Forms.Button();
-            this.btnObraSocial = new System.Windows.Forms.Button();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.picObraSocial = new System.Windows.Forms.PictureBox();
             this.panelBarraClose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnNormalizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnMaximizar)).BeginInit();
@@ -92,6 +92,7 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).BeginInit();
             this.panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picObraSocial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).BeginInit();
@@ -105,7 +106,6 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).BeginInit();
             this.panelChildFrm.SuspendLayout();
             this.pnlTurnos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picObraSocial)).BeginInit();
             this.SuspendLayout();
             // 
             // panelBarraClose
@@ -260,6 +260,47 @@ namespace CapaVistas
             this.panelMenu.Size = new System.Drawing.Size(217, 665);
             this.panelMenu.TabIndex = 3;
             // 
+            // picObraSocial
+            // 
+            this.picObraSocial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.picObraSocial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picObraSocial.Enabled = false;
+            this.picObraSocial.Image = ((System.Drawing.Image)(resources.GetObject("picObraSocial.Image")));
+            this.picObraSocial.Location = new System.Drawing.Point(4, 440);
+            this.picObraSocial.Margin = new System.Windows.Forms.Padding(2);
+            this.picObraSocial.Name = "picObraSocial";
+            this.picObraSocial.Size = new System.Drawing.Size(40, 40);
+            this.picObraSocial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picObraSocial.TabIndex = 29;
+            this.picObraSocial.TabStop = false;
+            // 
+            // btnObraSocial
+            // 
+            this.btnObraSocial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.btnObraSocial.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnObraSocial.FlatAppearance.BorderSize = 0;
+            this.btnObraSocial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.btnObraSocial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnObraSocial.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
+            this.btnObraSocial.ForeColor = System.Drawing.Color.White;
+            this.btnObraSocial.Location = new System.Drawing.Point(12, 440);
+            this.btnObraSocial.Margin = new System.Windows.Forms.Padding(2);
+            this.btnObraSocial.Name = "btnObraSocial";
+            this.btnObraSocial.Size = new System.Drawing.Size(228, 40);
+            this.btnObraSocial.TabIndex = 28;
+            this.btnObraSocial.Text = "Obra Social";
+            this.btnObraSocial.UseVisualStyleBackColor = false;
+            this.btnObraSocial.Click += new System.EventHandler(this.btnObraSocial_Click);
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
+            this.panel9.Location = new System.Drawing.Point(0, 440);
+            this.panel9.Margin = new System.Windows.Forms.Padding(2);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(10, 40);
+            this.panel9.TabIndex = 9;
+            // 
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -285,9 +326,10 @@ namespace CapaVistas
             // 
             this.lblUserLog.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserLog.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUserLog.Location = new System.Drawing.Point(31, 144);
+            this.lblUserLog.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.lblUserLog.Location = new System.Drawing.Point(31, 150);
             this.lblUserLog.Name = "lblUserLog";
-            this.lblUserLog.Size = new System.Drawing.Size(132, 60);
+            this.lblUserLog.Size = new System.Drawing.Size(132, 47);
             this.lblUserLog.TabIndex = 0;
             this.lblUserLog.Text = "Don Pepito";
             // 
@@ -728,46 +770,6 @@ namespace CapaVistas
             this.btnTurnoAT.UseVisualStyleBackColor = false;
             this.btnTurnoAT.Click += new System.EventHandler(this.btnTurnoAT_Click);
             // 
-            // btnObraSocial
-            // 
-            this.btnObraSocial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.btnObraSocial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnObraSocial.FlatAppearance.BorderSize = 0;
-            this.btnObraSocial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.btnObraSocial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnObraSocial.Font = new System.Drawing.Font("Century Gothic", 13.74545F);
-            this.btnObraSocial.ForeColor = System.Drawing.Color.White;
-            this.btnObraSocial.Location = new System.Drawing.Point(12, 440);
-            this.btnObraSocial.Margin = new System.Windows.Forms.Padding(2);
-            this.btnObraSocial.Name = "btnObraSocial";
-            this.btnObraSocial.Size = new System.Drawing.Size(228, 40);
-            this.btnObraSocial.TabIndex = 28;
-            this.btnObraSocial.Text = "Obra Social";
-            this.btnObraSocial.UseVisualStyleBackColor = false;
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(200)))));
-            this.panel9.Location = new System.Drawing.Point(0, 440);
-            this.panel9.Margin = new System.Windows.Forms.Padding(2);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(10, 40);
-            this.panel9.TabIndex = 9;
-            // 
-            // picObraSocial
-            // 
-            this.picObraSocial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picObraSocial.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picObraSocial.Enabled = false;
-            this.picObraSocial.Image = ((System.Drawing.Image)(resources.GetObject("picObraSocial.Image")));
-            this.picObraSocial.Location = new System.Drawing.Point(4, 440);
-            this.picObraSocial.Margin = new System.Windows.Forms.Padding(2);
-            this.picObraSocial.Name = "picObraSocial";
-            this.picObraSocial.Size = new System.Drawing.Size(40, 40);
-            this.picObraSocial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picObraSocial.TabIndex = 29;
-            this.picObraSocial.TabStop = false;
-            // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -792,6 +794,7 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOcultar)).EndInit();
             this.panelMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picObraSocial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picReportes)).EndInit();
@@ -806,7 +809,6 @@ namespace CapaVistas
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrarForm)).EndInit();
             this.panelChildFrm.ResumeLayout(false);
             this.pnlTurnos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picObraSocial)).EndInit();
             this.ResumeLayout(false);
 
         }

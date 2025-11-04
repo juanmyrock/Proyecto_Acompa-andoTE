@@ -244,8 +244,8 @@ namespace CapaVistas
 
         private void btnTurnoAT_Click(object sender, EventArgs e)
         {
-
             pnlTurnos.Visible = false;
+            OpenChildForm(new frmAsignacionAT(), sender);
         }
 
         private void btnProfesionales_Click(object sender, EventArgs e)
@@ -256,6 +256,11 @@ namespace CapaVistas
         private void btnInformes_Click(object sender, EventArgs e)
         {
             OpenChildForm(new frmInformesAT(), sender);
+        }
+
+        private void btnObraSocial_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmABMObraSocial(), sender);
         }
     }
 }

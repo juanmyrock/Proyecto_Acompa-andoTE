@@ -64,6 +64,24 @@
     <Compile Include="Forms Login\frmValidarUser.designer.cs">
       <DependentUpon>frmValidarUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmABMAmbitos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMAmbitos.Designer.cs">
+      <DependentUpon>frmABMAmbitos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMObraSocial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMObraSocial.Designer.cs">
+      <DependentUpon>frmABMObraSocial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMTramites.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMTramites.Designer.cs">
+      <DependentUpon>frmABMTramites.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmABMUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +100,29 @@
     <Compile Include="Forms Menu\frmAdminSyst.Designer.cs">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms Menu\frmABMEspecialidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmABMEspecialidades.Designer.cs">
+      <DependentUpon>frmABMEspecialidades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmAsignacionAT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmAsignacionAT.Designer.cs">
+      <DependentUpon>frmAsignacionAT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms Menu\frmGestionarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms Menu\frmGestionarUsuario.Designer.cs">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms Menu\frmGestionHorarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms Menu\frmGestionHorarios.Designer.cs">
+      <DependentUpon>frmGestionHorarios.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms Menu\frmGestionReportes.cs">
       <SubType>Form</SubType>
@@ -153,6 +189,9 @@
     <EmbeddedResource Include="Forms Login\frmValidarUser.resx">
       <DependentUpon>frmValidarUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmABMObraSocial.resx">
+      <DependentUpon>frmABMObraSocial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmABMUsuarios.resx">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmAdminSyst.resx">
       <DependentUpon>frmAdminSyst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmAsignacionAT.resx">
+      <DependentUpon>frmAsignacionAT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmGestionarUsuario.resx">
       <DependentUpon>frmGestionarUsuario.cs</DependentUpon>

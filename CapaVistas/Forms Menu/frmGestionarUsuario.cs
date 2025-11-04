@@ -228,8 +228,31 @@ namespace CapaVistas.Forms_Menu
 
         private void btnGestionPermisos_Click(object sender, EventArgs e)
         {
-            var frmPermisos = new frmPermisos();
-            frmPermisos.ShowDialog();
+            // 1. Asegúrate de tener los datos del usuario que estás editando.
+            // (Estos datos deberías tenerlos cargados en variables cuando abriste frmGestionarUsuario)
+
+            // --- EJEMPLO (reemplaza esto con tus variables reales) ---
+            int idUsuarioActual = 123; // El ID del usuario que estás editando
+            string nombreUsuarioActual = lblNombreEmpleado.Text;
+            int idRolActual = 2; // El ID del rol que tiene ese usuario
+                                 // --- Fin Ejemplo ---
+
+
+            // 2. Aquí llamamos al formulario de permisos
+            //    Le pasamos los 3 datos que su constructor necesita
+            frmPermisos formPermisos = new frmPermisos(idUsuarioActual, nombreUsuarioActual, idRolActual);
+
+            // 3. Lo mostramos con ShowDialog()
+            //    Esto hace que la ventana de permisos aparezca por encima
+            //    y no te deje volver atrás hasta que la cierres.
+            formPermisos.ShowDialog();
+
+            // 4. (Opcional) Si el formulario de permisos devuelve OK,
+            //    puedes hacer algo, aunque para este caso no suele ser necesario.
+            if (formPermisos.DialogResult == DialogResult.OK)
+            {
+                // Los permisos se guardaron
+            }
         }
     }
 }
