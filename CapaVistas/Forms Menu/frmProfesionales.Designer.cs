@@ -72,6 +72,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbOrdenEspecialidad = new System.Windows.Forms.ComboBox();
+            this.btnEspecialidadMedica = new System.Windows.Forms.Button();
+            this.btnHorariosProf = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerProfesionales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -578,12 +580,42 @@
             this.cmbOrdenEspecialidad.TabIndex = 98;
             this.cmbOrdenEspecialidad.SelectedIndexChanged += new System.EventHandler(this.cmbOrdenEspecialidad_SelectedIndexChanged);
             // 
+            // btnEspecialidadMedica
+            // 
+            this.btnEspecialidadMedica.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEspecialidadMedica.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnEspecialidadMedica.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEspecialidadMedica.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnEspecialidadMedica.Location = new System.Drawing.Point(962, 92);
+            this.btnEspecialidadMedica.Name = "btnEspecialidadMedica";
+            this.btnEspecialidadMedica.Size = new System.Drawing.Size(89, 40);
+            this.btnEspecialidadMedica.TabIndex = 99;
+            this.btnEspecialidadMedica.Text = "Especialidades Médicas";
+            this.btnEspecialidadMedica.UseVisualStyleBackColor = true;
+            this.btnEspecialidadMedica.Click += new System.EventHandler(this.btnEspecialidadMedica_Click);
+            // 
+            // btnHorariosProf
+            // 
+            this.btnHorariosProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHorariosProf.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnHorariosProf.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHorariosProf.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnHorariosProf.Location = new System.Drawing.Point(962, 167);
+            this.btnHorariosProf.Name = "btnHorariosProf";
+            this.btnHorariosProf.Size = new System.Drawing.Size(89, 40);
+            this.btnHorariosProf.TabIndex = 100;
+            this.btnHorariosProf.Text = "Gestionar Horarios";
+            this.btnHorariosProf.UseVisualStyleBackColor = true;
+            this.btnHorariosProf.Click += new System.EventHandler(this.btnHorariosProf_Click);
+            // 
             // frmProfesionales
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
+            this.Controls.Add(this.btnHorariosProf);
+            this.Controls.Add(this.btnEspecialidadMedica);
             this.Controls.Add(this.cmbOrdenEspecialidad);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBuscarDNI);
@@ -663,5 +695,7 @@
         private System.Windows.Forms.DataGridView dgvVerProfesionales;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbOrdenEspecialidad;
+        private System.Windows.Forms.Button btnEspecialidadMedica;
+        private System.Windows.Forms.Button btnHorariosProf;
     }
 }

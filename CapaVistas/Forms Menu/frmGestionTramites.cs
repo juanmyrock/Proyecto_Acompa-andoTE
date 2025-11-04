@@ -338,5 +338,40 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             // lblRangoFechas.Text = $"{e.Start.ToShortDateString()} - {e.End.ToShortDateString()}";
             // mthFechas.Visible = false;
         }
+
+        private void btnGestionTramite_Click(object sender, EventArgs e)
+        {
+            // 1. Primero, asegúrate de tener un paciente seleccionado
+            // (Supongo que tienes estas variables después de buscar un paciente)
+            int idPacienteSeleccionado = 123; // Reemplaza esto con el ID real
+            string nombrePaciente = "González, Juan"; // Reemplaza esto con el nombre real
+
+            if (idPacienteSeleccionado == 0)
+            {
+                MessageBox.Show("Debe seleccionar un paciente para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Llamamos al nuevo formulario pasándole los datos
+            frmABMTramites formCrear = new frmABMTramites(idPacienteSeleccionado, nombrePaciente);
+
+            // 3. Lo mostramos como un diálogo
+            // El programa se detiene aquí hasta que el usuario cierre el pop-up
+            DialogResult resultado = formCrear.ShowDialog();
+
+            // 4. (Opcional) Si el usuario presionó "Guardar" (DialogResult.OK),
+            // refrescamos la lista de trámites
+            if (resultado == DialogResult.OK)
+            {
+                // Vuelve a ejecutar la consulta que carga tu ListBox de trámites
+                CargarListaDeTramites();
+            }
+        }
+
+        private void CargarListaDeTramites()
+        {
+            // ... tu lógica para consultar la DB y llenar el ListBox ...
+        }
+
     }
 }
