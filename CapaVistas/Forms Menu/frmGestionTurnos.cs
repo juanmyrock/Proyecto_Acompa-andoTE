@@ -206,5 +206,5 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             turnosOcupados.Add(new Tuple<string, string>("10:00", "Perez, Maria"));
             turnosOcupados.Add(new Tuple<string, string>("11:30", "Rodriguez, Carlos"));
         }
-    }
+    }     
 }
