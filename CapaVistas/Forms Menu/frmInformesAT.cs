@@ -18,7 +18,7 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmInformesAT : Form
     {
-        private string rutaArchivoGuardado = string.Empty;
+        private string rutaArchivoGuardado = @"C:\InformesAT";
         private string guidArchivo = string.Empty;
         private int _idAcompanamientoActual;
         cls_LogicaGestionarPacientes _logicaPaciente = new cls_LogicaGestionarPacientes();
@@ -109,9 +109,16 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 // Validar que hay un paciente seleccionado
-                if (string.IsNullOrEmpty(txtBusquedaPaciente.Text) || !int.TryParse(txtBusquedaPaciente.Text, out int dniPaciente))
+                if (_idAcompanamientoActual == 0)
                 {
                     MessageBox.Show("Debe buscar un paciente primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validar que hay contenido en el informe
+                if (string.IsNullOrWhiteSpace(txtInforme.Text))
+                {
+                    MessageBox.Show("El informe no puede estar vacío.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -120,7 +127,7 @@ namespace CapaVistas.Forms_Menu
                     guidArchivo = Guid.NewGuid().ToString();
 
                 // Construir ruta del archivo
-                string ruta = Path.Combine(rutaArchivoGuardado, guidArchivo);
+                string ruta = Path.Combine(rutaArchivoGuardado, guidArchivo + ".dat");
 
                 // 1. Guardar archivo físicamente
                 gestor.GuardarArchivo(ruta, txtInforme.Text);
@@ -130,15 +137,15 @@ namespace CapaVistas.Forms_Menu
                 {
                     // Si es nuevo informe, id_informe_at estará vacío
                     id_informe_at = string.Empty, // Esto hará que se inserte como nuevo
-                    id_acompanamiento = gestor.ObtenerIdAcompanamiento(dniPaciente), // Necesitas implementar esto
-                    fecha_periodo = DateTime.Now, // O usar un DateTimePicker si tienes
-                    id_usuario_creador = 1, // Necesitas implementar esto
+                    id_acompanamiento = _idAcompanamientoActual, // ← USA LA VARIABLE QUE YA GUARDASTE
+                    fecha_periodo = DateTime.Now,
+                    id_usuario_creador = 1, // Temporal - implementa ObtenerUsuarioLogueado()
                     fecha_creacion = DateTime.Now,
                     ruta = ruta, // Guardamos la ruta del archivo
-                    dni_paciente = dniPaciente,
-                    nombre_paciente = lblApeNom.Text.Split(' ')[0], // Asumiendo formato "Nombre Apellido"
+                    dni_paciente = Convert.ToInt32(txtBusquedaPaciente.Text),
+                    nombre_paciente = lblApeNom.Text.Split(' ')[0],
                     apellido_paciente = lblApeNom.Text.Split(' ').Length > 1 ? lblApeNom.Text.Split(' ')[1] : "",
-                    cargahoraria_at = Convert.ToDecimal(lblHoras.Text) // Asumiendo que muestra carga horaria
+                    cargahoraria_at = Convert.ToDecimal(lblHoras.Text)
                 };
 
                 // 3. Guardar en la base de datos usando el gestor
