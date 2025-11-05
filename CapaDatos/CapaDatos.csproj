@@ -32,6 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=9.0.0.10, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.9.0.10\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +51,7 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
+    <Compile Include="Negocio\cls_InformesQ.cs" />
     <Compile Include="Negocio\cls_ProfesionalesQ.cs" />
     <Compile Include="Negocio\cls_ObraSocialQ.cs" />
     <Compile Include="Negocio\cls_TramitesQ.cs" />
@@ -72,6 +77,9 @@
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
       <Name>CapaSesion</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

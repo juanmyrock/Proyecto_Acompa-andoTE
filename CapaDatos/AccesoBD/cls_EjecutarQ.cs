@@ -219,5 +219,68 @@ namespace CapaDatos
                 return -1;
             }
         }
+            public object ExecuteScalar(string consultaSql, List<SqlParameter> parametros = null)
+            {
+                try
+                {
+                    using (SqlConnection conexion = GetConexion())
+                    {
+                        conexion.Open();
+                        using (SqlCommand comando = new SqlCommand(consultaSql, conexion))
+                        {
+                            if (parametros != null)
+                            {
+                                comando.Parameters.AddRange(parametros.ToArray());
+                            }
+
+                            return comando.ExecuteScalar(); // Retorna la primera columna de la primera fila
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"Error de SQL en ExecuteScalar: {ex.Message}");
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en ExecuteScalar: {ex.Message}");
+                    return null;
+                }
+            }
+
+            // Versión para Stored Procedures
+            public object ExecuteScalarSP(string storedProcedure, List<SqlParameter> parametros = null)
+            {
+                try
+                {
+                    using (SqlConnection conexion = GetConexion())
+                    {
+                        conexion.Open();
+                        using (SqlCommand comando = new SqlCommand(storedProcedure, conexion))
+                        {
+                            comando.CommandType = CommandType.StoredProcedure;
+
+                            if (parametros != null)
+                            {
+                                comando.Parameters.AddRange(parametros.ToArray());
+                            }
+
+                            return comando.ExecuteScalar();
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"Error de SQL en ExecuteScalarSP: {ex.Message}");
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en ExecuteScalarSP: {ex.Message}");
+                    return null;
+                }
+            }
+        }
     }
-}
+

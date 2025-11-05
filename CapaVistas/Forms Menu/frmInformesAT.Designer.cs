@@ -34,7 +34,7 @@
             this.lblDNI = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.lblMes = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtInforme = new System.Windows.Forms.TextBox();
             this.lblInforme = new System.Windows.Forms.Label();
             this.btnGuardarInforme = new System.Windows.Forms.Button();
             this.lblApeNom = new System.Windows.Forms.Label();
@@ -97,13 +97,13 @@
             this.lblMes.TabIndex = 6;
             this.lblMes.Text = "Mes del Informe:";
             // 
-            // textBox2
+            // txtInforme
             // 
-            this.textBox2.Location = new System.Drawing.Point(424, 31);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(539, 513);
-            this.textBox2.TabIndex = 7;
+            this.txtInforme.Location = new System.Drawing.Point(424, 31);
+            this.txtInforme.Multiline = true;
+            this.txtInforme.Name = "txtInforme";
+            this.txtInforme.Size = new System.Drawing.Size(539, 513);
+            this.txtInforme.TabIndex = 7;
             // 
             // lblInforme
             // 
@@ -130,6 +130,7 @@
             this.btnGuardarInforme.TabIndex = 9;
             this.btnGuardarInforme.Text = "Guardar Informe";
             this.btnGuardarInforme.UseVisualStyleBackColor = true;
+            this.btnGuardarInforme.Click += new System.EventHandler(this.btnGuardarInforme_Click);
             // 
             // lblApeNom
             // 
@@ -183,7 +184,7 @@
             this.Controls.Add(this.lblApeNom);
             this.Controls.Add(this.btnGuardarInforme);
             this.Controls.Add(this.lblInforme);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtInforme);
             this.Controls.Add(this.lblMes);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.lblDNI);
@@ -206,7 +207,7 @@
         private System.Windows.Forms.Label lblDNI;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label lblMes;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtInforme;
         private System.Windows.Forms.Label lblInforme;
         private System.Windows.Forms.Button btnGuardarInforme;
         private System.Windows.Forms.Label lblApeNom;
