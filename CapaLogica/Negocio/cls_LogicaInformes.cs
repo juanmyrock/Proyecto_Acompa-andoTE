@@ -148,7 +148,7 @@ namespace CapaLogica.Negocio
         {
             try
             {
-                // Aquí puedes agregar validaciones de negocio antes de guardar
+                
                 if (informe == null)
                     throw new ArgumentNullException("El informe no puede ser nulo");
 
@@ -161,7 +161,29 @@ namespace CapaLogica.Negocio
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en lógica al guardar informe: {ex.Message}");
-                throw; // Relanzar la excepción
+                throw; 
+            }
+
+        }
+
+        public bool ActualizarInforme(cls_InformeATDTO informe)
+        {
+            try
+            {
+                // Validaciones de negocio
+                if (informe == null)
+                    throw new ArgumentNullException("El informe no puede ser nulo");
+
+                if (string.IsNullOrEmpty(informe.id_informe_at))
+                    throw new Exception("No se puede actualizar un informe sin ID");
+
+                // Llamar al método del DAO
+                return _informesQ.ActualizarInforme(informe);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en lógica al actualizar informe: {ex.Message}");
+                throw;
             }
         }
     }

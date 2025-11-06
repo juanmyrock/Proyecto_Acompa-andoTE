@@ -41,6 +41,7 @@
             this.btnBuscar = new System.Windows.Forms.Button();
             this.lblHorasAsignadas = new System.Windows.Forms.Label();
             this.lblHoras = new System.Windows.Forms.Label();
+            this.btnActualizar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -172,12 +173,30 @@
             this.lblHoras.TabIndex = 14;
             this.lblHoras.Text = "00 hs";
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnActualizar.FlatAppearance.BorderColor = System.Drawing.Color.LawnGreen;
+            this.btnActualizar.FlatAppearance.BorderSize = 2;
+            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActualizar.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActualizar.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnActualizar.Location = new System.Drawing.Point(89, 455);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(210, 41);
+            this.btnActualizar.TabIndex = 15;
+            this.btnActualizar.Text = "Actualizar Informe";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Visible = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
             // frmInformesAT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1047, 566);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.lblHoras);
             this.Controls.Add(this.lblHorasAsignadas);
             this.Controls.Add(this.btnBuscar);
@@ -214,5 +233,6 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Label lblHorasAsignadas;
         private System.Windows.Forms.Label lblHoras;
+        private System.Windows.Forms.Button btnActualizar;
     }
 }

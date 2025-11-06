@@ -116,19 +116,20 @@ namespace CapaDatos.Negocio
             }
         }
 
-        public int InsertarInforme(cls_InformeATDTO informe)
+        public bool InsertarInforme(cls_InformeATDTO informe)
         {
-                string query = @"
+            string query = @"
             INSERT INTO Informes_AT 
-            (id_acompanamiento, fecha_periodo, id_usuario_creador, fecha_creacion, prestador, prestacion, ruta)
+            (id_informe_at, id_acompanamiento, fecha_periodo, id_usuario_creador, fecha_creacion, prestador, prestacion, ruta)
             VALUES 
-            (@IdAcompanamiento, @FechaPeriodo, @IdUsuarioCreador, @FechaCreacion, @Prestador, @Prestacion, @Ruta);
-            SELECT SCOPE_IDENTITY();"; // Retorna el ID generado
+            (@id_informe_at, @IdAcompanamiento, @FechaPeriodo, @IdUsuarioCreador, @FechaCreacion, @Prestador, @Prestacion, @Ruta);
+            SELECT SCOPE_IDENTITY();";
 
             try
             {
                 var parametros = new List<SqlParameter>
         {
+            new SqlParameter("@id_informe_at", informe.id_informe_at),
             new SqlParameter("@IdAcompanamiento", informe.id_acompanamiento),
             new SqlParameter("@FechaPeriodo", informe.fecha_periodo),
             new SqlParameter("@IdUsuarioCreador", informe.id_usuario_creador),
@@ -138,14 +139,22 @@ namespace CapaDatos.Negocio
             new SqlParameter("@Ruta", informe.ruta ?? (object)DBNull.Value)
         };
 
-                // Asumiendo que _ejecutor tiene un método para ejecutar y retornar un escalar
                 object resultado = _ejecutor.ExecuteScalar(query, parametros);
-                return Convert.ToInt32(resultado);
+
+              
+                if (resultado != null && resultado != DBNull.Value)
+                {
+                    // Convertir a decimal primero y luego verificar si es mayor a 0
+                    decimal idGenerado = Convert.ToDecimal(resultado);
+                    return idGenerado > 0;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al insertar informe: {ex.Message}");
-                throw;
+                return false;
             }
         }
 
@@ -185,20 +194,22 @@ namespace CapaDatos.Negocio
         }
         public bool GuardarInforme(cls_InformeATDTO informe)
         {
-            // Si tiene ID, es una actualización, sino es un nuevo registro
+         
             if (!string.IsNullOrEmpty(informe.id_informe_at))
             {
-                return ActualizarInforme(informe);
+                return InsertarInforme(informe);
             }
             else
             {
-                int nuevoId = InsertarInforme(informe);
-                if (nuevoId > 0)
+                bool nuevoId = InsertarInforme(informe);
+
+                if (nuevoId == true)
                 {
                     informe.id_informe_at = nuevoId.ToString();
                     return true;
                 }
-                return false;
+                return true;
+              
             }
         }
     }
