@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CapaDTO.SistemaDTO
 {
     public class cls_HistorialDTO
     {
-        public DateTime FechaHora { get; set; }
-        public string Usuario { get; set; }
-        public string Comentario { get; set; }
-        public bool EsCambioDeEstado { get; set; }
-        public string NuevoEstado { get; set; }
-        public int TipoAccion { get; set; } 
+        public DateTime fecha_hora { get; set; }
+        public string nombre_usuario { get; set; } //quien modifica el historial
+        public string comentario { get; set; }
+        public bool es_comentario { get; set; } // true si es un comentario, false si es un cambio de estado
+        public string descripcion_tipo_tramite { get; set; } // Ej: "Comentario", "Evento"
     }
 }
