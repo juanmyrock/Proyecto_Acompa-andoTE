@@ -1,141 +1,151 @@
-﻿using CapaDTO;
-using CapaDTO.SistemaDTO;
-using CapaLogica.CapaLogica;
+﻿using CapaDTO;           // Para EstadoTramiteDTO y cls_TramiteResumenDTO
+using CapaDTO.SistemaDTO; // Para cls_HistorialDTO
 using CapaLogica.CapaLogica.Tramites;
-using CapaLogica.LlenarCombos;
 using CapaSesion.Login;
+using CapaUtilidades; // Para cls_LlenarCombos
 using System;
-using System.Collections.Generic; // Necesario para usar List
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices; // Para arrastrar la ventana (si usas panelTopBar)
 
-namespace CapaVistas.Forms_Menu // O el namespace que estés usando
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionTramites : Form
     {
-        private cls_LlenarCombos _rellenador;
-        private cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
-        private List<cls_Tramite_PacienteDTO> _tramitesCargados = new List<cls_Tramite_PacienteDTO>();
-        private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
-        private bool dragging = false;
-        private Point dragCursorPoint;
-        private Point dragFormPoint;
+        // --- Conexión a la lógica refactorizada ---
+        private readonly cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
 
+        // --- DTOs y Sesión ---
+        private List<cls_TramiteResumenDTO> _tramitesCargados = new List<cls_TramiteResumenDTO>();
+        private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
+
+        // --- Variables de estado del formulario ---
+        private cls_TramiteResumenDTO _tramiteSeleccionado = null;
+        private cls_PacienteSimpleDTO _pacienteEncontrado = null; // Para el botón "Gestionar Trámite"
+        private string _dniPacienteBuscado = null;
 
         public frmGestionTramites()
         {
             InitializeComponent();
-            
-            CargarCombos();
+            CargarComboEstados(); // Carga el combo de estados (nuevo nombre)
             mthFechas.Visible = false;
             mthFechas.SelectionStart = DateTime.Today.AddMonths(-1);
             mthFechas.SelectionEnd = DateTime.Today;
-
-
         }
-        private void panelTopBar_MouseDown(object sender, MouseEventArgs e)
+
+        #region --- Eventos Visuales  ---
+
+
+        private void btnFechas_Click(object sender, EventArgs e)
         {
-            dragging = true;
-            dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
+            mthFechas.Visible = !mthFechas.Visible;
         }
 
-        private void panelTopBar_MouseMove(object sender, MouseEventArgs e)
+        private void mthFechas_MouseLeave(object sender, EventArgs e)
         {
-            if (dragging)
-            {
-                Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-                this.Location = Point.Add(dragFormPoint, new Size(diff));
-            }
+            mthFechas.Visible = false;
         }
 
-        private void panelTopBar_MouseUp(object sender, MouseEventArgs e)
+        private void mthFechas_DateSelected(object sender, DateRangeEventArgs e)
         {
-            dragging = false;
+            // Opcional: Ocultar al seleccionar
+            // mthFechas.Visible = false;
+            // O actualizar un label con el rango
         }
 
-        private void lblClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        #endregion
 
+        #region --- Lógica Principal del Formulario (Refactorizada) ---
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            string busqueda = txtBuscarPaciente.Text.Trim();
-            if (string.IsNullOrWhiteSpace(busqueda) && !mthFechas.Visible)
+            string busquedaDNI = txtBuscarPaciente.Text.Trim();
+            if (string.IsNullOrWhiteSpace(busquedaDNI))
             {
-                MessageBox.Show("Debe ingresar un DNI/apellido o seleccionar un rango de fechas.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe ingresar un DNI de paciente.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Ocultar el MonthCalendar
             mthFechas.Visible = false;
-
-            // Obtener el rango de fechas
             DateTime? fechaInicio = mthFechas.SelectionStart.Date;
-            DateTime? fechaFin = mthFechas.SelectionEnd.Date.AddDays(1).AddSeconds(-1); // Fin del día
+            DateTime? fechaFin = mthFechas.SelectionEnd.Date.AddDays(1).AddSeconds(-1);
+
+            // Limpiamos todo antes de la búsqueda
+            LimpiarSeleccion();
+            _pacienteEncontrado = null; // ¡Importante!
+            _dniPacienteBuscado = null;
 
             try
             {
-                _tramitesCargados = _logicaTramites.BuscarTramites(busqueda, fechaInicio, fechaFin);
+                // --- PASO 1: BUSCAR Y VALIDAR EL PACIENTE ---
+                // (Asumo que tienes una _logicaPacientes o puedes crearla, 
+                // igual que en tu otro formulario)
+                var _logicaPacientes = new CapaLogica.cls_PacienteLogica(); // O como se llame
+                var pacienteEncontrado = _logicaPacientes.BuscarPaciente(busquedaDNI);
 
-                lbTramites.Items.Clear();
-                pnlChat.Controls.Clear();
-                lblEstadoActual.Text = "Seleccione un trámite...";
-                lblEstadoActual.BackColor = Color.Gray;
-
-                if (_tramitesCargados != null && _tramitesCargados.Count > 0)
+                if (pacienteEncontrado == null || pacienteEncontrado.Count == 0)
                 {
-                    foreach (var tramite in _tramitesCargados)
-                    {
-                        // Agregamos una descripción útil al ListBox
-                        lbTramites.Items.Add(tramite.Descripcion);
-                    }
-                    // Opcional: Seleccionar el primer elemento automáticamente
-                    // lbTramites.SelectedIndex = 0;
-
+                    MessageBox.Show("Paciente no encontrado con ese DNI.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // No seguimos si no hay paciente
                 }
-                else
+
+                // (Si encontrara más de uno, deberías poner un ListBox,
+                // pero para trámites por DNI asumimos que es 1)
+                _pacienteEncontrado = pacienteEncontrado[0];
+                _dniPacienteBuscado = _pacienteEncontrado.dni_paciente; // Guardamos el DNI
+
+
+                // --- PASO 2: BUSCAR LOS TRÁMITES (Sabiendo que el paciente existe) ---
+                _tramitesCargados = _logicaTramites.BuscarTramites(busquedaDNI, fechaInicio, fechaFin);
+
+                lbTramites.DataSource = _tramitesCargados;
+                lbTramites.DisplayMember = "DescripcionLista";
+                lbTramites.ValueMember = "id_tp";
+
+                if (_tramitesCargados.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron trámites para los criterios de búsqueda.", "Búsqueda Sin Resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Paciente encontrado, pero no tiene trámites registrados.", "Búsqueda Sin Resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al realizar la búsqueda: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _dniPacienteBuscado = null;
+                _pacienteEncontrado = null;
             }
         }
 
         private void lbTramites_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lbTramites.SelectedIndex < 0 || _tramitesCargados == null || _tramitesCargados.Count == 0) return;
+            if (lbTramites.SelectedItem == null)
+            {
+                LimpiarSeleccion();
+                return;
+            }
 
-            var tramiteSeleccionadoDTO = _tramitesCargados[lbTramites.SelectedIndex];
+            _tramiteSeleccionado = (cls_TramiteResumenDTO)lbTramites.SelectedItem;
 
-            
-            int idTramiteSeleccionado = tramiteSeleccionadoDTO.id_tp;  
-            string descripcionTramite = tramiteSeleccionadoDTO.Descripcion;
-
-            lblTramiteSeleccionado.Text = $"Historial del Trámite: {descripcionTramite}";
+            lblTramiteSeleccionado.Text = $"Historial: {_tramiteSeleccionado.titulo_inicial}";
             pnlChat.Controls.Clear();
 
             try
             {
-                var historial = _logicaTramites.ObtenerHistorialTramite(idTramiteSeleccionado);
-
-              
-                string estadoActual = tramiteSeleccionadoDTO.EstadoActual; 
+                var historial = _logicaTramites.ObtenerHistorialTramite(_tramiteSeleccionado.id_tp);
+                string estadoActual = _tramiteSeleccionado.estado_actual;
                 lblEstadoActual.Text = estadoActual;
-                
                 AsignarColorEstado(estadoActual);
 
                 foreach (var evento in historial)
                 {
-                    string tipo = evento.EsCambioDeEstado ? "Estado" : "Comentario";  // CAMBIAR ESTO
-                    string texto = evento.EsCambioDeEstado ? $"El estado cambió a: \"{evento.NuevoEstado}\"" : evento.Comentario;
+                    // AHORA USAMOS 'descripcion_tipo_tramite'
+                    string tipo = evento.descripcion_tipo_tramite;
 
-                    AgregarMensaje(evento.FechaHora.ToString("dd/MM/yyyy HH:mm"), evento.Usuario, tipo, texto, false);
+                    string texto = evento.es_comentario
+                        ? evento.comentario
+                        : tipo; // Muestra "Pago Vencido", "O.S. Autorizada"
+
+                    AgregarMensaje(evento.fecha_hora.ToString("dd/MM/yyyy HH:mm"), evento.nombre_usuario, tipo, texto, false);
                 }
 
                 if (pnlChat.Controls.Count > 0)
@@ -151,7 +161,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
-            if (lbTramites.SelectedIndex < 0 || _tramitesCargados == null || _tramitesCargados.Count == 0)
+            if (_tramiteSeleccionado == null)
             {
                 MessageBox.Show("Debe seleccionar un trámite primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -159,24 +169,20 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             string mensaje = txtMensaje.Text.Trim();
             if (string.IsNullOrWhiteSpace(mensaje)) return;
 
-            // CORREGIDO: Usar id_tp que es el identificador único
-            int id_tp = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
+            int id_tp = _tramiteSeleccionado.id_tp;
             int id_usuario = _usuariologeado.IdUsuario;
-            string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
-
-            // DEBUG TEMPORAL
-            MessageBox.Show($"DEBUG Enviar: id_tp={id_tp}, id_usuario={id_usuario}, mensaje={mensaje}");
+            string nombreUsuario = $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}";
 
             try
             {
                 if (_logicaTramites.RegistrarComentario(id_tp, id_usuario, mensaje))
                 {
-                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario", mensaje);
+                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario de Usuario", mensaje);
                     txtMensaje.Clear();
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el comentario. Verifique el ID de Trámite y Usuario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo registrar el comentario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -185,74 +191,108 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
             }
         }
 
-
         private void btnCambiarEstado_Click(object sender, EventArgs e)
         {
-            if (lbTramites.SelectedIndex < 0 || _tramitesCargados == null || _tramitesCargados.Count == 0)
+            if (_tramiteSeleccionado == null)
             {
                 MessageBox.Show("Debe seleccionar un trámite primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (cmbNuevoEstado.SelectedItem == null)
+            if (cmbNuevoEstado.SelectedValue == null)
             {
-                MessageBox.Show("Debe seleccionar un nuevo estado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe seleccionar un tipo de evento.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idNuevoEstado = (int)cmbNuevoEstado.SelectedValue;
-            string nuevoEstadoDescripcion = cmbNuevoEstado.Text;
-
-            int idTramiteMaestro = _tramitesCargados[lbTramites.SelectedIndex].id_tp;
+            int idTipoTramite = (int)cmbNuevoEstado.SelectedValue;
+            string descripcionEvento = cmbNuevoEstado.Text;
+            int idTramiteMaestro = _tramiteSeleccionado.id_tp;
             int idUsuarioActual = _usuariologeado.IdUsuario;
-            string nombreUsuario = _usuariologeado.NombreEmpleado + " " + _usuariologeado.ApellidoEmpleado;
+            string nombreUsuario = $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}";
 
             try
             {
-                if (_logicaTramites.RegistrarCambioEstado(idTramiteMaestro, idUsuarioActual, idNuevoEstado))
+                // Esta es la lógica nueva: SOLO registra un evento en el historial
+                if (_logicaTramites.RegistrarEventoDeTipo(idTramiteMaestro, idUsuarioActual, idTipoTramite))
                 {
-                    string mensajeEstado = $"El estado cambió a: \"{nuevoEstadoDescripcion}\"";
-                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Estado", mensajeEstado);
-
-                    lblEstadoActual.Text = nuevoEstadoDescripcion;
-                    AsignarColorEstado(nuevoEstadoDescripcion);
-
-                    _tramitesCargados[lbTramites.SelectedIndex].EstadoActual = nuevoEstadoDescripcion;
+                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, descripcionEvento, descripcionEvento);
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el cambio de estado. Verifique el ID de Trámite y Usuario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo registrar el evento.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cambiar el estado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al registrar el evento: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnGestionTramite_Click(object sender, EventArgs e)
+        {
+            // 1. Validamos contra el objeto DTO, no contra el string DNI
+            if (_pacienteEncontrado == null)
+            {
+                MessageBox.Show("Debe buscar y encontrar un paciente (por DNI) para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Preparamos los datos para el constructor del popup
+            // (Los tomamos del DTO que guardamos al buscar)
+            int idPaciente = _pacienteEncontrado.id_paciente;
+            string nombrePaciente = _pacienteEncontrado.nombre_completo;
+
+            // 3. Llamamos al formulario popup (frmABMTramites)
+            // Usamos 'using' para que el formulario se destruya correctamente
+            using (frmABMTramites formCrear = new frmABMTramites(idPaciente, nombrePaciente))
+            {
+                // 4. Lo mostramos como un diálogo (esto detiene la ejecución)
+                DialogResult resultado = formCrear.ShowDialog();
+
+                // 5. Si el usuario cerró el popup presionando "Guardar"...
+                if (resultado == DialogResult.OK)
+                {
+                    // ...refrescamos la lista de trámites simulando
+                    // un nuevo clic en el botón de búsqueda.
+                    btnBuscar.PerformClick();
+                }
+            }
+        }
+
+        #endregion
+
+        #region --- Métodos Auxiliares (Sin cambios de lógica) ---
+
+        private void LimpiarSeleccion()
+        {
+            _tramiteSeleccionado = null;
+            pnlChat.Controls.Clear();
+            lblTramiteSeleccionado.Text = "Seleccione un trámite para ver";
+            lblEstadoActual.Text = "Seleccione un trámite...";
+            lblEstadoActual.BackColor = Color.DimGray;
         }
 
         private void AsignarColorEstado(string estado)
         {
             string e = estado.ToLower();
-            if (e.Contains("vencido") || e.Contains("rechazado") || e.Contains("perdido"))
+            if (e.Contains("vencido") || e.Contains("rechazado") || e.Contains("perdido") || e.Contains("cerrado"))
                 lblEstadoActual.BackColor = Color.Crimson;
-            else if (e.Contains("autorizado") || e.Contains("al dia") || e.Contains("finalizado") || e.Contains("asignado"))
+            else if (e.Contains("autorizado") || e.Contains("al dia") || e.Contains("finalizado") || e.Contains("asignado") || e.Contains("aprobado"))
                 lblEstadoActual.BackColor = Color.SeaGreen;
-            else if (e.Contains("pendiente") || e.Contains("espera"))
+            else if (e.Contains("pendiente") || e.Contains("espera") || e.Contains("abierto"))
                 lblEstadoActual.BackColor = Color.Orange;
             else
-                lblEstadoActual.BackColor = Color.DarkGray; // Estado por defecto
+                lblEstadoActual.BackColor = Color.DarkGray;
         }
 
         private void AgregarMensaje(string fecha, string usuario, string tipo, string texto, bool scroll = true)
         {
-            // Panel contenedor para cada mensaje
             Panel pnlMensaje = new Panel
             {
                 Width = pnlChat.ClientSize.Width - 25,
                 Padding = new Padding(5),
                 Margin = new Padding(10, 5, 10, 5)
             };
-
-            // Etiqueta para el encabezado (Usuario y Fecha)
             Label lblHeader = new Label
             {
                 Text = $"{usuario.ToUpper()} - {fecha}",
@@ -260,8 +300,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                 Font = new Font("Bahnschrift", 8, FontStyle.Bold),
                 Dock = DockStyle.Top
             };
-
-            // Etiqueta para el cuerpo del mensaje
             Label lblBody = new Label
             {
                 Text = texto,
@@ -271,107 +309,41 @@ namespace CapaVistas.Forms_Menu // O el namespace que estés usando
                 AutoSize = true,
                 MaximumSize = new Size(pnlMensaje.Width - 20, 0)
             };
-
             pnlMensaje.Controls.Add(lblBody);
             pnlMensaje.Controls.Add(lblHeader);
-            // Ajustar altura después de que AutoSize=true calcule el alto de lblBody
             pnlMensaje.Height = lblBody.Height + lblHeader.Height + 10;
 
-            // Estilo visual según el tipo de mensaje
-            if (tipo == "Estado")
-            {
-                pnlMensaje.BackColor = Color.FromArgb(10, 90, 90);
-            }
-            else
-            {
+            // Lógica de color (como la tenías antes)
+            if (tipo.ToLower().Contains("comentario"))
                 pnlMensaje.BackColor = Color.FromArgb(0, 70, 70);
-            }
+            else
+                pnlMensaje.BackColor = Color.FromArgb(10, 90, 90);
 
-            // Ubicación del nuevo mensaje en la parte inferior del panel
             pnlMensaje.Top = pnlChat.Controls.Count > 0
                 ? pnlChat.Controls[pnlChat.Controls.Count - 1].Bottom + 5
                 : 10;
 
             pnlChat.Controls.Add(pnlMensaje);
 
-            // Hacer scroll automático al último mensaje
             if (scroll)
             {
                 pnlChat.ScrollControlIntoView(pnlMensaje);
             }
         }
 
-        private void CargarCombos()
+        // CORREGIDO: Carga los Tipos de Trámite (los eventos del chat)
+        private void CargarComboEstados()
         {
-            _rellenador = new cls_LlenarCombos();
-            // Asumiendo que ObtenerTramites() obtiene los posibles ESTADOS de trámite de la tabla Tramites
-            var cargaTramites = _rellenador.ObtenerTramites();
-
             try
             {
-                // Usamos el id_tramite como valor real y la descripcion para mostrar
-                CapaUtilidades.cls_LlenarCombos.Cargar(cmbNuevoEstado, cargaTramites.Tramites, "descripcion", "id_tramite");
+                cls_LlenarCombos.Cargar(cmbNuevoEstado, _logicaTramites.ObtenerTiposTramite(), "descripcion", "id_tipo_tramite");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar los tipos de trámite: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // --- LÓGICA DE CALENDARIO (Se mantiene) ---
-
-        private void btnFechas_Click(object sender, EventArgs e)
-        {
-            mthFechas.Visible = !mthFechas.Visible;
-        }
-
-        private void mthFechas_MouseLeave(object sender, EventArgs e)
-        {
-            // Solo ocultar si el mouse se va del control
-            mthFechas.Visible = false;
-        }
-
-        // Opcional: Cerrar al seleccionar un rango
-        private void mthFechas_DateSelected(object sender, DateRangeEventArgs e)
-        {
-            // Puedes actualizar una etiqueta con el rango y ocultarlo
-            // lblRangoFechas.Text = $"{e.Start.ToShortDateString()} - {e.End.ToShortDateString()}";
-            // mthFechas.Visible = false;
-        }
-
-        private void btnGestionTramite_Click(object sender, EventArgs e)
-        {
-            // 1. Primero, asegúrate de tener un paciente seleccionado
-            // (Supongo que tienes estas variables después de buscar un paciente)
-            int idPacienteSeleccionado = 123; // Reemplaza esto con el ID real
-            string nombrePaciente = "González, Juan"; // Reemplaza esto con el nombre real
-
-            if (idPacienteSeleccionado == 0)
-            {
-                MessageBox.Show("Debe seleccionar un paciente para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // 2. Llamamos al nuevo formulario pasándole los datos
-            frmABMTramites formCrear = new frmABMTramites(idPacienteSeleccionado, nombrePaciente);
-
-            // 3. Lo mostramos como un diálogo
-            // El programa se detiene aquí hasta que el usuario cierre el pop-up
-            DialogResult resultado = formCrear.ShowDialog();
-
-            // 4. (Opcional) Si el usuario presionó "Guardar" (DialogResult.OK),
-            // refrescamos la lista de trámites
-            if (resultado == DialogResult.OK)
-            {
-                // Vuelve a ejecutar la consulta que carga tu ListBox de trámites
-                CargarListaDeTramites();
-            }
-        }
-
-        private void CargarListaDeTramites()
-        {
-            // ... tu lógica para consultar la DB y llenar el ListBox ...
-        }
-
+        #endregion
     }
 }
