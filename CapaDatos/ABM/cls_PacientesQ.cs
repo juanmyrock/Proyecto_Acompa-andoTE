@@ -123,25 +123,25 @@ namespace CapaDatos.ABM
             string nombreStoredProcedure = "[dbo].[AgregarPaciente]";
 
             var parametros = new List<SqlParameter>
-    {
-        new SqlParameter("@id_os", (object)paciente.id_os ?? DBNull.Value),
-        new SqlParameter("@nombre", paciente.Nombre),
-        new SqlParameter("@apellido", paciente.Apellido),
-        new SqlParameter("@dni_titular", paciente.dni_titular),
-        new SqlParameter("@num_afiliado", paciente.num_afiliado),
-        new SqlParameter("@dni_paciente", paciente.dni_paciente),
-        new SqlParameter("@fecha_nac", (object)paciente.fecha_nac ?? DBNull.Value),
-        new SqlParameter("@cud", paciente.cud),
-        new SqlParameter("@diagnostico", paciente.diagnostico),
-        new SqlParameter("@id_localidad", paciente.id_localidad),
-        new SqlParameter("@domicilio", paciente.domicilio),
-        new SqlParameter("@num_domicilio", paciente.num_domicilio),
-        new SqlParameter("@cargahoraria_at", paciente.cargahoraria_at),
-        new SqlParameter("@telefono", paciente.telefono),
-        new SqlParameter("@email", paciente.email),
-        new SqlParameter("@id_tipo_dni", paciente.id_tipo_dni),
-        new SqlParameter("@id_sexo", paciente.id_sexo)
-    };
+            {
+                new SqlParameter("@id_os", (object)paciente.id_os ?? DBNull.Value),
+                new SqlParameter("@nombre", paciente.Nombre),
+                new SqlParameter("@apellido", paciente.Apellido),
+                new SqlParameter("@dni_titular", paciente.dni_titular),
+                new SqlParameter("@num_afiliado", paciente.num_afiliado),
+                new SqlParameter("@dni_paciente", paciente.dni_paciente),
+                new SqlParameter("@fecha_nac", (object)paciente.fecha_nac ?? DBNull.Value),
+                new SqlParameter("@cud", paciente.cud),
+                new SqlParameter("@diagnostico", paciente.diagnostico),
+                new SqlParameter("@id_localidad", paciente.id_localidad),
+                new SqlParameter("@domicilio", paciente.domicilio),
+                new SqlParameter("@num_domicilio", paciente.num_domicilio),
+                new SqlParameter("@cargahoraria_at", paciente.cargahoraria_at),
+                new SqlParameter("@telefono", paciente.telefono),
+                new SqlParameter("@email", paciente.email),
+                new SqlParameter("@id_tipo_dni", paciente.id_tipo_dni),
+                new SqlParameter("@id_sexo", paciente.id_sexo)
+            };
 
             _ejecutar.ConsultaWriteSP(nombreStoredProcedure, parametros);
         }
