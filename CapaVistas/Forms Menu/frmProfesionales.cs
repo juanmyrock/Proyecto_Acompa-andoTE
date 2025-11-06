@@ -154,9 +154,9 @@ namespace CapaVistas.Forms_Menu
 
                 MostrarProfesionalesEnDataGridView(listaProfesionales);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //MessageBox.Show("Error al aplicar los filtros: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
             }
         }
 
@@ -651,22 +651,15 @@ namespace CapaVistas.Forms_Menu
                 // 2. Obtenemos los datos de la fila seleccionada
                 DataGridViewRow filaSeleccionada = dgvVerProfesionales.SelectedRows[0];
 
-                // (Asegurate de que estos nombres de columna coincidan con los de tu grilla)
                 int idProfesionalSeleccionado = Convert.ToInt32(filaSeleccionada.Cells["id_profesional"].Value);
                 string nombre = filaSeleccionada.Cells["nombre"].Value.ToString();
                 string apellido = filaSeleccionada.Cells["apellido"].Value.ToString();
                 string nombreCompleto = $"{apellido}, {nombre}";
 
-                // 3. ¡Aquí es donde "llamas" al nuevo formulario!
-                // Le pasamos los datos al constructor, como lo definimos
                 frmGestionHorarios formHorarios = new frmGestionHorarios(idProfesionalSeleccionado, nombreCompleto);
 
-                // 4. Usamos ShowDialog() para que el formulario aparezca de forma modal
-                // (no se puede volver al ABM hasta que no se cierre esta ventana)
                 formHorarios.ShowDialog();
 
-                // 5. (Opcional) Cuando el formulario de horarios se cierra, podés recargar algo si es necesario.
-                // CargarGrillaProfesionales(); 
             }
             else
             {

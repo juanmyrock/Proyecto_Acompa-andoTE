@@ -177,7 +177,6 @@ namespace CapaLogica.Negocio
                 if (string.IsNullOrEmpty(informe.id_informe_at))
                     throw new Exception("No se puede actualizar un informe sin ID");
 
-                // Llamar al método del DAO
                 return _informesQ.ActualizarInforme(informe);
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@ namespace CapaVistas.Forms_Menu
         private cls_LogicaGestionarPacientes _logicaPaciente;
         private cls_LlenarCombos _rellenador;
         private int _idPacienteSeleccionado = -1;
+        private int _dniOriginal = -1;
 
         public frmPacientes()
         {
@@ -47,6 +48,7 @@ namespace CapaVistas.Forms_Menu
                 dgvVerPacientes.Columns["id_sexo"].Visible = false;
                 dgvVerPacientes.Columns["id_tipo_dni"].Visible = false;
                 dgvVerPacientes.Columns["esActivo"].Visible = false;
+
 
             }
             catch (Exception ex)
@@ -126,7 +128,6 @@ namespace CapaVistas.Forms_Menu
             txtDomicilio.Clear();
             txtNumDomicilio.Clear();
             txtCargaHoraria.Clear();
-            txtAmbito.Clear();
             txtTelefono.Clear();
             txtEmail.Clear();
             txtBusquedaPaciente.Clear();
@@ -147,7 +148,7 @@ namespace CapaVistas.Forms_Menu
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) || string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtCud.Text) || string.IsNullOrWhiteSpace(txtDomicilio.Text) ||
-                string.IsNullOrWhiteSpace(txtAmbito.Text) || string.IsNullOrWhiteSpace(txtEmail.Text))
+                 string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 MessageBox.Show("Por favor, complete todos los campos de texto obligatorios.", "Campos Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -221,7 +222,6 @@ namespace CapaVistas.Forms_Menu
                     txtDomicilio.Text = pacienteSeleccionado.domicilio;
                     txtNumDomicilio.Text = pacienteSeleccionado.num_domicilio.ToString();
                     txtCargaHoraria.Text = pacienteSeleccionado.cargahoraria_at.ToString();
-                    txtAmbito.Text = pacienteSeleccionado.ambito;
                     txtTelefono.Text = pacienteSeleccionado.telefono.ToString();
                     txtEmail.Text = pacienteSeleccionado.email;
                     
@@ -277,8 +277,19 @@ namespace CapaVistas.Forms_Menu
 
         private void btnCrear_Click_1(object sender, EventArgs e)
         {
-
             if (!ValidarCampos()) return;
+
+            // VERIFICAR SI EL DNI YA EXISTE
+            int dniPaciente = Convert.ToInt32(txtDniPaciente.Text);
+            bool dniExiste = _logicaPaciente.VerificarDniExistente(dniPaciente);
+
+            if (dniExiste)
+            {
+                MessageBox.Show($"El DNI {dniPaciente} ya se encuentra registrado en el sistema. No se puede crear un paciente duplicado.",
+                               "DNI Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
 
             cls_PacienteDTO nuevoPaciente = new cls_PacienteDTO
             {
@@ -297,7 +308,6 @@ namespace CapaVistas.Forms_Menu
                 domicilio = txtDomicilio.Text,
                 num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
                 cargahoraria_at = Convert.ToDecimal(txtCargaHoraria.Text),
-                ambito = txtAmbito.Text,
                 telefono = Convert.ToInt32(txtTelefono.Text),
                 email = txtEmail.Text,
                 esActivo = Convert.ToBoolean(1)
@@ -319,6 +329,8 @@ namespace CapaVistas.Forms_Menu
 
         private void btnModificar_Click_1(object sender, EventArgs e)
         {
+
+
             if (_idPacienteSeleccionado == -1)
             {
                 MessageBox.Show("Por favor, seleccione un paciente de la lista para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -326,6 +338,22 @@ namespace CapaVistas.Forms_Menu
             }
 
             if (!ValidarCampos()) return;
+
+            int dniPacienteActual = Convert.ToInt32(txtDniPaciente.Text);
+
+            // VERIFICAR SI EL DNI DEL PACIENTE CAMBIÓ
+            if (dniPacienteActual != _dniOriginal)
+            {
+                bool dniPacienteExiste = _logicaPaciente.VerificarDniExistente(dniPacienteActual);
+
+                if (dniPacienteExiste)
+                {
+                    MessageBox.Show($"El DNI {dniPacienteActual} ya pertenece a otro paciente. No se puede modificar.",
+                                   "DNI Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
 
             cls_PacienteDTO pacienteModificado = new cls_PacienteDTO
             {
@@ -343,7 +371,6 @@ namespace CapaVistas.Forms_Menu
                 domicilio = txtDomicilio.Text,
                 num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
                 cargahoraria_at = Convert.ToDecimal(txtCargaHoraria.Text),
-                ambito = txtAmbito.Text,
                 telefono = Convert.ToInt32(txtTelefono.Text),
                 email = txtEmail.Text,
                 id_sexo = Convert.ToInt32(cmbSexo.SelectedValue),
@@ -437,6 +464,7 @@ namespace CapaVistas.Forms_Menu
                     cls_PacienteDTO pacienteSeleccionado = (cls_PacienteDTO)filaSeleccionada.DataBoundItem;
 
                     _idPacienteSeleccionado = pacienteSeleccionado.id_paciente;
+                    _dniOriginal = pacienteSeleccionado.dni_paciente;
 
                     txtNombre.Text = pacienteSeleccionado.Nombre;
                     txtApellido.Text = pacienteSeleccionado.Apellido;
@@ -448,7 +476,6 @@ namespace CapaVistas.Forms_Menu
                     txtDomicilio.Text = pacienteSeleccionado.domicilio;
                     txtNumDomicilio.Text = pacienteSeleccionado.num_domicilio.ToString();
                     txtCargaHoraria.Text = pacienteSeleccionado.cargahoraria_at.ToString();
-                    txtAmbito.Text = pacienteSeleccionado.ambito;
                     txtTelefono.Text = pacienteSeleccionado.telefono.ToString();
                     txtEmail.Text = pacienteSeleccionado.email;
                     if (pacienteSeleccionado.id_os.HasValue)
@@ -480,7 +507,6 @@ namespace CapaVistas.Forms_Menu
 
                     cmbLocalidad.SelectedValue = pacienteSeleccionado.id_localidad;
 
-                    // Para el DateTimePicker
                     if (pacienteSeleccionado.fecha_nac.HasValue &&
                         pacienteSeleccionado.fecha_nac.Value >= dateFechaNac.MinDate &&
                         pacienteSeleccionado.fecha_nac.Value <= dateFechaNac.MaxDate)
@@ -496,6 +522,7 @@ namespace CapaVistas.Forms_Menu
                 {
                     MessageBox.Show("Error al seleccionar paciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     _idPacienteSeleccionado = -1;
+                    _dniOriginal = -1;
                 }
             }
         }
@@ -572,6 +599,78 @@ namespace CapaVistas.Forms_Menu
                 CargarPacientesEnDataGridView();
             }
             
+        }
+
+        private void txtDniTitular_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDniPaciente_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtNumAfiliado_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtNumDomicilio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDomicilio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetter(e.KeyChar) || e.KeyChar == ' ')
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCargaHoraria_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
         }
     }
 }
