@@ -1,146 +1,254 @@
-﻿using CapaDTO.SistemaDTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CapaDTO;
+using CapaDTO.SistemaDTO;
 
 namespace CapaDatos.Negocio
 {
     public class cls_TramitesQ
-    {   private readonly cls_EjecutarQ _ejecutarQ = new cls_EjecutarQ();
-        
+    {
+        private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        public List<cls_Tramite_PacienteDTO> BuscarTramites(string busquedaPaciente, DateTime? fechaInicio, DateTime? fechaFin)
+        // Este método está CORRECTO como estaba.
+        public List<cls_TramiteResumenDTO> BuscarTramites(string dniPaciente, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            string sql = "[dbo].[BuscarTramites]";
+            // 1. Buscamos al paciente
+            string sqlPaciente = "SELECT id_paciente FROM Pacientes WHERE dni_paciente = @dni";
+            var paramPaciente = new List<SqlParameter> { new SqlParameter("@dni", dniPaciente) };
+            DataTable tablaPaciente = _ejecutar.ConsultaRead(sqlPaciente, paramPaciente);
 
-            var parameters = new List<SqlParameter>
+            if (tablaPaciente.Rows.Count == 0)
+                throw new Exception("Paciente no encontrado con ese DNI.");
+            int id_paciente = Convert.ToInt32(tablaPaciente.Rows[0]["id_paciente"]);
+
+            // 2. Buscamos los trámites (Cabecera)
+            string sql = @"
+                SELECT 
+                    t.id_tp, t.titulo_inicial, t.fecha_creacion,
+                    et.estado_descripcion AS estado_actual
+                FROM Tramites t
+                INNER JOIN Estado_Tramite et ON t.id_estado_actual = et.id_estado_tramite
+                WHERE t.id_paciente = @id_paciente";
+
+            var parametros = new List<SqlParameter> { new SqlParameter("@id_paciente", id_paciente) };
+
+            if (fechaInicio.HasValue && fechaFin.HasValue)
             {
-                new SqlParameter("@Busqueda", string.IsNullOrEmpty(busquedaPaciente) ? (object)DBNull.Value : busquedaPaciente),
-                new SqlParameter("@FechaInicio", fechaInicio.HasValue ? (object)fechaInicio.Value : DBNull.Value),
-                new SqlParameter("@FechaFin", fechaFin.HasValue ? (object)fechaFin.Value : DBNull.Value)
-            };
+                sql += " AND t.fecha_creacion BETWEEN @fechaInicio AND @fechaFin";
+                parametros.Add(new SqlParameter("@fechaInicio", fechaInicio.Value));
+                parametros.Add(new SqlParameter("@fechaFin", fechaFin.Value));
+            }
+            sql += " ORDER BY t.fecha_creacion DESC";
 
-            DataTable tb = _ejecutarQ.ConsultaReadSP(sql, parameters);
-            List<cls_Tramite_PacienteDTO> lista = new List<cls_Tramite_PacienteDTO>();
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            var lista = new List<cls_TramiteResumenDTO>();
 
-            foreach (DataRow row in tb.Rows)
+            foreach (DataRow row in tabla.Rows)
             {
-                lista.Add(new cls_Tramite_PacienteDTO
+                lista.Add(new cls_TramiteResumenDTO
                 {
-                    id_tp = Convert.ToInt32(row["IdTramite"]),  // Usar el alias correcto
-                    id_paciente = Convert.ToInt32(row["id_paciente"]),
-                    id_tramite = Convert.ToInt32(row["id_tramite"]),
-                    NombrePacienteCompleto = $"{row["apellido"]}, {row["nombre"]}",
-                    Descripcion = $"TR-{Convert.ToInt32(row["IdTramite"]):0000} ({row["TipoTramite"]}) - {row["apellido"]}",
-                    EstadoActual = row["EstadoActual"].ToString(),
+                    id_tp = Convert.ToInt32(row["id_tp"]),
+                    titulo_inicial = row["titulo_inicial"].ToString(),
                     fecha_creacion = Convert.ToDateTime(row["fecha_creacion"]),
-                    comentario_inicial = row["comentario_inicial"] != DBNull.Value ? row["comentario_inicial"].ToString() : string.Empty
+                    estado_actual = row["estado_actual"].ToString()
                 });
             }
             return lista;
         }
 
-        public List<cls_HistorialDTO> ObtenerHistorialTramite(int idTramitePrincipal)
+        // Este método está CORREGIDO para unirse a Tipos_Tramite
+        public List<cls_HistorialDTO> ObtenerHistorialTramite(int id_tp)
         {
-            string sql = "[dbo].[ObtenerHistorialTramite]";
+            string sql = @"
+                SELECT 
+                    h.fecha_hora,
+                    u.username AS nombre_usuario, 
+                    h.comentario,
+                    h.es_comentario,
+                    tt.descripcion AS descripcion_tipo_tramite
+                FROM Tramites_Historial h
+                INNER JOIN Usuarios u ON h.id_usuario = u.id_usuario
+                INNER JOIN Tipos_Tramite tt ON h.id_tipo_tramite = tt.id_tipo_tramite
+                WHERE h.id_tp = @id_tp
+                ORDER BY h.fecha_hora ASC";
 
-            var parameters = new List<SqlParameter>
+            var parametros = new List<SqlParameter> { new SqlParameter("@id_tp", id_tp) };
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            var lista = new List<cls_HistorialDTO>();
+
+            foreach (DataRow row in tabla.Rows)
             {
-                new SqlParameter("@IdTramitePrincipal", idTramitePrincipal)
-            };
-
-            DataTable tb = _ejecutarQ.ConsultaReadSP(sql, parameters);
-            List<cls_HistorialDTO> historial = new List<cls_HistorialDTO>();
-
-            foreach (DataRow row in tb.Rows)
-            {
-                int tipoAccion = Convert.ToInt32(row["es_comentario"]);
-                bool esCambioDeEstado = tipoAccion == 0;
-
-                historial.Add(new cls_HistorialDTO
+                lista.Add(new cls_HistorialDTO
                 {
-                    FechaHora = Convert.ToDateTime(row["fecha_hora"]),
-                    Usuario = row["username"] != DBNull.Value ? row["username"].ToString() : "Sistema",
-                    Comentario = row["comentario"] != DBNull.Value ? row["comentario"].ToString() : string.Empty,
-                    EsCambioDeEstado = esCambioDeEstado,
-                    NuevoEstado = esCambioDeEstado ? row["NuevoEstado"].ToString() : string.Empty,
-                    TipoAccion = tipoAccion
+                    fecha_hora = Convert.ToDateTime(row["fecha_hora"]),
+                    nombre_usuario = row["nombre_usuario"].ToString(),
+                    comentario = row["comentario"].ToString(),
+                    es_comentario = Convert.ToBoolean(row["es_comentario"]),
+                    descripcion_tipo_tramite = row["descripcion_tipo_tramite"].ToString()
                 });
             }
-            return historial;
+            return lista;
         }
 
+        // Inserta un nuevo comentario en el historial.
         public bool RegistrarComentario(int id_tp, int id_usuario, string comentario)
         {
-            string sql = "[dbo].[RegistrarComentario]";
+            // Asumimos que "Comentario de Usuario" es un tipo de trámite
+            int idTipoComentario = 1; // DEBERÍAS BUSCARLO DINÁMICAMENTE (ver nota abajo)
 
-            var parameters = new List<SqlParameter>
+            string sql = @"
+                INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
+                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, @comentario, 1)"; // es_comentario = 1 (true)
+
+            var parametros = new List<SqlParameter>
             {
                 new SqlParameter("@id_tp", id_tp),
                 new SqlParameter("@id_usuario", id_usuario),
+                new SqlParameter("@id_tipo_tramite", idTipoComentario),
                 new SqlParameter("@comentario", comentario)
             };
 
-            return _ejecutarQ.ConsultaCUDSP(sql, parameters) > 0;
+            _ejecutar.ConsultaWrite(sql, parametros);
+            return true;
         }
 
-        public bool RegistrarCambioEstado(int id_tp, int id_usuario, int id_nuevo_estado)
+        // CORREGIDO: Ya no actualiza la tabla maestra. Solo inserta un evento.
+        public bool RegistrarEventoDeTipo(int id_tp, int id_usuario, int id_tipo_tramite)
         {
-            try
-            {
-                string storedProcedure = "[dbo].[RegistrarCambioEstado]";
+            string sql = @"
+                INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
+                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, NULL, 0)"; // es_comentario = 0 (false)
 
-                var parameters = new List<SqlParameter>
-        {
-            new SqlParameter("@id_tp", id_tp),
-            new SqlParameter("@id_usuario", id_usuario),
-            new SqlParameter("@id_nuevo_estado", id_nuevo_estado)
-        };
-
-                _ejecutarQ.ConsultaWriteSP(storedProcedure, parameters);
-                return true;
-            }
-            catch (Exception ex)
+            var parametros = new List<SqlParameter>
             {
-                Console.WriteLine($"Error en RegistrarCambioEstado: {ex.Message}");
-                return false;
-            }
+                new SqlParameter("@id_tp", id_tp),
+                new SqlParameter("@id_usuario", id_usuario),
+                new SqlParameter("@id_tipo_tramite", id_tipo_tramite)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+            return true;
         }
 
-        public int CrearNuevoTramite(int id_paciente, int id_tramite, int id_usuario_creador, string comentario_inicial)
+        // CORREGIDO: Ahora obtiene los Tipos de Trámite (para el combo)
+        public List<cls_TiposTramitesDTO> ObtenerTiposTramite()
         {
-            try
+            // No traemos "Comentario de Usuario" porque ese se maneja con el otro botón
+            string sql = "SELECT id_tipo_tramite, descripcion FROM Tipos_Tramite WHERE descripcion <> 'Comentario de Usuario' ORDER BY descripcion";
+            DataTable tabla = _ejecutar.ConsultaRead(sql, null);
+            var lista = new List<cls_TiposTramitesDTO>();
+
+            foreach (DataRow row in tabla.Rows)
             {
-                string storedProcedure = "[dbo].[CrearNuevoTramite]";
-
-                var parameters = new List<SqlParameter>
-        {
-            new SqlParameter("@id_paciente", id_paciente),
-            new SqlParameter("@id_tramite", id_tramite),
-            new SqlParameter("@id_usuario_creador", id_usuario_creador),
-            new SqlParameter("@comentario_inicial", comentario_inicial ?? (object)DBNull.Value)
-        };
-
-                DataTable dt = _ejecutarQ.ConsultaReadSP(storedProcedure, parameters);
-
-                if (dt.Rows.Count > 0)
+                lista.Add(new cls_TiposTramitesDTO
                 {
-                    return Convert.ToInt32(dt.Rows[0]["id_tp_generado"]);
-                }
-
-                return -1;
+                    id_tipo_tramite = Convert.ToInt32(row["id_tipo_tramite"]),
+                    descripcion = row["descripcion"].ToString()
+                });
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error en CrearNuevoTramite: {ex.Message}");
-                return -1;
-            }
+            return lista;
         }
+
+        /// <summary>
+        /// Inserta el trámite principal (la cabecera) y devuelve el nuevo ID.
+        /// </summary>
+        public int InsertarTramiteMaestro(cls_TramiteCreacionDTO dto)
+        {
+            string sql = @"
+        INSERT INTO Tramites (
+            id_paciente, fecha_creacion, id_estado_actual, id_usuario_creador, titulo_inicial
+        ) 
+        VALUES (
+            @id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial
+        );
+        SELECT SCOPE_IDENTITY();"; // Devuelve el ID que se acaba de crear
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@id_paciente", dto.id_paciente),
+                new SqlParameter("@id_estado_actual", dto.id_estado_actual),
+                new SqlParameter("@id_usuario_creador", dto.id_usuario_creador),
+                new SqlParameter("@titulo_inicial", dto.titulo_inicial)
+            };
+
+            // Usamos ConsultaRead para poder capturar el ID que devuelve SCOPE_IDENTITY
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+            return Convert.ToInt32(tabla.Rows[0][0]);
+        }
+
+        /// <summary>
+        /// Busca el ID de un Tipo de Trámite por su nombre exacto.
+        /// </summary>
+        public int ObtenerIdTipoTramitePorDescripcion(string descripcion)
+        {
+            string sql = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = @descripcion";
+            var parametros = new List<SqlParameter> { new SqlParameter("@descripcion", descripcion) };
+
+            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
+
+            if (tabla.Rows.Count == 0)
+            {
+                // Lanzamos una excepción clara porque el sistema no puede funcionar sin este dato.
+                throw new Exception($"Error fatal: No se encontró el 'Tipo_Tramite' llamado '{descripcion}' en la base de datos.");
+            }
+
+            // Devolvemos el int, no el DataTable
+            return Convert.ToInt32(tabla.Rows[0]["id_tipo_tramite"]);
+        }
+
+
+        /// <summary>
+        /// Registra el evento de cambio de estado en el historial.
+        /// </summary>
+        public bool RegistrarEventoDeEstado(int id_tp, int id_usuario, int id_nuevo_estado)
+        {
+            // Asumimos que un cambio de estado tiene un 'id_tipo_tramite' = 2 (o el que corresponda)
+            // DEBERÍAS verificar qué ID es "Cambio de Estado" en tu tabla Tipos_Tramite
+            string sqlTipo = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = 'Cambio de Estado'";
+            DataTable tablaTipo = _ejecutar.ConsultaRead(sqlTipo, null);
+            if (tablaTipo.Rows.Count == 0)
+                throw new Exception("Error fatal: No se encontró el 'Tipo_Tramite' llamado 'Cambio de Estado' en la base de datos.");
+
+            int idTipoCambioEstado = Convert.ToInt32(tablaTipo.Rows[0]["id_tipo_tramite"]);
+
+            string sql = @"
+                INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
+                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, NULL, 0)"; // es_comentario = 0 (false)
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@id_tp", id_tp),
+                new SqlParameter("@id_usuario", id_usuario),
+                new SqlParameter("@id_tipo_tramite", idTipoCambioEstado)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+            return true;
+        }
+
+        /// <summary>
+        /// Obtiene los posibles estados MAESTROS para el ComboBox (Abierto, Cerrado, etc.).
+        /// </summary>
+        public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
+        {
+            string sql = "SELECT id_estado_tramite, estado_descripcion FROM Estado_Tramite ORDER BY estado_descripcion";
+            DataTable tabla = _ejecutar.ConsultaRead(sql, null);
+            var lista = new List<EstadoTramiteDTO>();
+
+            foreach (DataRow row in tabla.Rows)
+            {
+                lista.Add(new EstadoTramiteDTO
+                {
+                    id_estado_tramite = Convert.ToInt32(row["id_estado_tramite"]),
+                    estado_descripcion = row["estado_descripcion"].ToString()
+                });
+            }
+            return lista;
+        }
+
+
 
 
     }
