@@ -130,5 +130,24 @@ namespace CapaLogica.ABM
                 return false;
             }
         }
+
+        public bool ReactivarObraSocial(int idObraSocial)
+        {
+            try
+            {
+                if (idObraSocial <= 0)
+                {
+                    throw new ArgumentException("El ID de la obra social no es válido.");
+                }
+
+                _obraSocialQ.ReactivarObraSocial(idObraSocial);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al reactivar obra social: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

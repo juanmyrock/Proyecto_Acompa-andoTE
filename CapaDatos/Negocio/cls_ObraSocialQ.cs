@@ -215,6 +215,31 @@ namespace CapaDatos
                 throw;
             }
         }
+
+        public bool ReactivarObraSocial(int idObraSocial)
+        {
+            string query = @"
+    UPDATE Obra_Social 
+    SET estado = 1, 
+        fecha_baja = NULL
+    WHERE id_obra_social = @IdObraSocial";
+
+            try
+            {
+                var parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@IdObraSocial", idObraSocial)
+        };
+
+                int filasAfectadas = _ejecutor.ConsultaCUD(query, parametros);
+                return filasAfectadas > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al reactivar obra social: {ex.Message}");
+                throw;
+            }
+        }
     }
 }
 

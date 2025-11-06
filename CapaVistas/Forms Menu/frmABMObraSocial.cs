@@ -247,24 +247,28 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void btnReactivar_Click(object sender, EventArgs e)
         {
-            if (dgvObrasSociales.SelectedRows.Count == 0)
+            if (_idObraSocialSeleccionada <= 0)
             {
                 MessageBox.Show("Debe seleccionar una obra social 'Inactiva' para reactivar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idSeleccionado = Convert.ToInt32(dgvObrasSociales.SelectedRows[0].Cells["id_obra_social"].Value);
-            string nombre = dgvObrasSociales.SelectedRows[0].Cells["nombre_os"].Value.ToString();
+            string nombre = txtNombreOS.Text;
 
             if (MessageBox.Show($"¿Está seguro que desea reactivar la obra social '{nombre}'?", "Confirmar Reactivación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // AQUÍ: Lógica para REACTIVAR
-                // UPDATE Obras_Sociales SET estado = 1, fecha_baja = NULL
-                // WHERE id_obra_social = @idSeleccionado
-
-                MessageBox.Show("Obra Social reactivada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarGrilla();
-                LimpiarCampos();
+                // Necesitarías implementar un método ReactivarObraSocial en tu capa lógica
+                if (_obraSocial.ReactivarObraSocial(_idObraSocialSeleccionada))
+                {
+                    MessageBox.Show("Obra Social reactivada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarGrilla();
+                    LimpiarCampos();
+                    _idObraSocialSeleccionada = -1;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo reactivar la obra social.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
