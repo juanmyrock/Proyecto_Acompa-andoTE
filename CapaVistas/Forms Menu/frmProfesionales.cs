@@ -154,9 +154,9 @@ namespace CapaVistas.Forms_Menu
 
                 MostrarProfesionalesEnDataGridView(listaProfesionales);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //MessageBox.Show("Error al aplicar los filtros: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 

@@ -19,6 +19,7 @@
         {
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
             this.mthFechas = new System.Windows.Forms.MonthCalendar();
+            this.btnGestionTramite = new System.Windows.Forms.Button();
             this.btnFechas = new System.Windows.Forms.Button();
             this.lbTramites = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -35,7 +36,6 @@
             this.lblEstadoActual = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblTramiteSeleccionado = new System.Windows.Forms.Label();
-            this.btnGestionTramite = new System.Windows.Forms.Button();
             this.gbBusqueda.SuspendLayout();
             this.pnlEnviarMensaje.SuspendLayout();
             this.gbEstado.SuspendLayout();
@@ -63,10 +63,27 @@
             // mthFechas
             // 
             this.mthFechas.Location = new System.Drawing.Point(23, 117);
+            this.mthFechas.MaxSelectionCount = 30;
             this.mthFechas.Name = "mthFechas";
             this.mthFechas.TabIndex = 0;
             this.mthFechas.Visible = false;
             this.mthFechas.MouseLeave += new System.EventHandler(this.mthFechas_MouseLeave);
+            // 
+            // btnGestionTramite
+            // 
+            this.btnGestionTramite.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGestionTramite.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
+            this.btnGestionTramite.FlatAppearance.BorderSize = 2;
+            this.btnGestionTramite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionTramite.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGestionTramite.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnGestionTramite.Location = new System.Drawing.Point(64, 269);
+            this.btnGestionTramite.Name = "btnGestionTramite";
+            this.btnGestionTramite.Size = new System.Drawing.Size(200, 40);
+            this.btnGestionTramite.TabIndex = 6;
+            this.btnGestionTramite.Text = "Gestionar Trámite";
+            this.btnGestionTramite.UseVisualStyleBackColor = true;
+            this.btnGestionTramite.Click += new System.EventHandler(this.btnGestionTramite_Click);
             // 
             // btnFechas
             // 
@@ -257,22 +274,6 @@
             this.lblTramiteSeleccionado.Size = new System.Drawing.Size(271, 23);
             this.lblTramiteSeleccionado.TabIndex = 6;
             this.lblTramiteSeleccionado.Text = "Seleccione un trámite para ver";
-            // 
-            // btnGestionTramite
-            // 
-            this.btnGestionTramite.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnGestionTramite.FlatAppearance.BorderColor = System.Drawing.Color.Teal;
-            this.btnGestionTramite.FlatAppearance.BorderSize = 2;
-            this.btnGestionTramite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGestionTramite.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGestionTramite.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnGestionTramite.Location = new System.Drawing.Point(64, 269);
-            this.btnGestionTramite.Name = "btnGestionTramite";
-            this.btnGestionTramite.Size = new System.Drawing.Size(200, 40);
-            this.btnGestionTramite.TabIndex = 6;
-            this.btnGestionTramite.Text = "Gestionar Trámite";
-            this.btnGestionTramite.UseVisualStyleBackColor = true;
-            this.btnGestionTramite.Click += new System.EventHandler(this.btnGestionTramite_Click);
             // 
             // frmGestionTramites
             // 
