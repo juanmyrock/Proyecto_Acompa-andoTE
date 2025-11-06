@@ -275,7 +275,7 @@
             this.btnExportarPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportarPDF.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExportarPDF.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnExportarPDF.Location = new System.Drawing.Point(704, 545);
+            this.btnExportarPDF.Location = new System.Drawing.Point(880, 545);
             this.btnExportarPDF.Name = "btnExportarPDF";
             this.btnExportarPDF.Size = new System.Drawing.Size(160, 35);
             this.btnExportarPDF.TabIndex = 6;
@@ -304,12 +304,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
-            this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.dgvReporte);
             this.Controls.Add(this.lblTituloReporte);
             this.Controls.Add(this.gbFiltros);
             this.Controls.Add(this.panelTopBar);
+            this.Controls.Add(this.btnImprimir);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmGestionReportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
