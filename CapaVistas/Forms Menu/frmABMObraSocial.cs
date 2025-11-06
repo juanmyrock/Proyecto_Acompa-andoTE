@@ -1,20 +1,27 @@
-﻿using System;
+﻿using CapaDTO.SistemaDTO;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using CapaLogica.ABM;
 
 namespace CapaVistas.Forms_Menu // O tu namespace
 {
     public partial class frmABMObraSocial : Form
     {
+        cls_LogicaGestionarOS _obraSocial;
+        private int _idObraSocialSeleccionada = -1;
         public frmABMObraSocial()
         {
+            
             InitializeComponent();
+            _obraSocial = new cls_LogicaGestionarOS();
+            cmbOrden.SelectedIndex = 0;
+           
         }
 
         private void frmObrasSociales_Load(object sender, EventArgs e)
         {
-            // Configuración inicial
-            cmbOrden.SelectedIndex = 0; // "Activas" por defecto
             CargarGrilla();
             ConfigurarEstilosGrilla();
         }
@@ -22,56 +29,45 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             CargarGrilla();
+            LimpiarCampos();
         }
 
         private void cmbOrden_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Filtra la grilla cuando cambia la selección
-            CargarGrilla();
 
-            // Muestra el botón de reactivar si se eligen "Inactivas"
-            btnReactivar.Visible = (cmbOrden.SelectedItem.ToString() == "Inactivas");
+            string filtroSeleccionado = cmbOrden.SelectedItem.ToString();
+            CargarTodosLosPacientesEnDataGridView(filtroSeleccionado);
         }
 
         private void btnBuscarOS_Click(object sender, EventArgs e)
         {
-            // AQUÍ: Lógica para buscar por Nombre o CUIT
-            MessageBox.Show("Lógica de búsqueda no implementada.");
-            CargarGrilla(); // Simula recarga
+
         }
 
         private void CargarGrilla()
         {
-            // AQUÍ: Harías tu consulta a la DB
-            // string filtroEstado = cmbOrden.SelectedItem.ToString();
-            // SELECT id_obra_social, nombre_os, codigo, cuit, domicilio, num_domicilio, telefono, estado 
-            // FROM Obras_Sociales WHERE estado = @filtroEstado ...
 
-            // --- Simulación de datos ---
-            DataTable dt = new DataTable();
-            dt.Columns.Add("id_obra_social", typeof(int));
-            dt.Columns.Add("nombre_os", typeof(string));
-            dt.Columns.Add("codigo", typeof(int));
-            dt.Columns.Add("cuit", typeof(long)); // Usamos long para CUIT
-            dt.Columns.Add("domicilio", typeof(string));
-            dt.Columns.Add("num_domicilio", typeof(int));
-            dt.Columns.Add("telefono", typeof(string));
-            dt.Columns.Add("estado", typeof(bool));
-
-            // Añadir filas de ejemplo
-            if (cmbOrden.SelectedItem.ToString() != "Inactivas")
+            try
             {
-                dt.Rows.Add(1, "OSDE", 326, 30500090909, "Av. Corrientes", 450, "0810-555-6733", true);
-                dt.Rows.Add(2, "Swiss Medical", 220, 30692138760, "Av. Santa Fe", 1200, "0810-444-7700", true);
-            }
-            if (cmbOrden.SelectedItem.ToString() != "Activas")
-            {
-                dt.Rows.Add(3, "Medicus (Baja)", 115, 30546633333, "Av. Callao", 900, "0800-333-6334", false);
-            }
-            // --- Fin Simulación ---
+                List<cls_ObraSocialDTO> listaObraSocial = _obraSocial.ObtenerOSActivas();
+                dgvObrasSociales.DataSource = listaObraSocial;
+                dgvObrasSociales.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dgvObrasSociales.ReadOnly = true;
+                dgvObrasSociales.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvObrasSociales.AllowUserToAddRows = false;
 
-            dgvObrasSociales.DataSource = dt;
+                dgvObrasSociales.Columns["fecha_baja"].Visible = false;
+                dgvObrasSociales.Columns["fecha_alta"].Visible = false;
+                dgvObrasSociales.Columns["estado"].Visible = false;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los pacientes en la vista: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+        
 
         private void ConfigurarEstilosGrilla()
         {
@@ -96,23 +92,30 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void dgvObrasSociales_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvObrasSociales.SelectedRows.Count > 0)
+            if (dgvObrasSociales.CurrentRow != null && dgvObrasSociales.CurrentRow.Index >= 0)
             {
-                CargarCamposDesdeGrilla();
+                try
+                {
+                    cls_ObraSocialDTO osSeleccionada = (cls_ObraSocialDTO)dgvObrasSociales.CurrentRow.DataBoundItem;
+
+                    _idObraSocialSeleccionada = osSeleccionada.id_obra_social;
+                    if (_idObraSocialSeleccionada != 0 && osSeleccionada.estado == false)
+                    {
+                        btnReactivar.Visible = true;
+                    }
+                    else if (_idObraSocialSeleccionada != 0 && osSeleccionada.estado == true)
+                    {
+                        btnReactivar.Visible = false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al obtener la selección de la obra social: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _idObraSocialSeleccionada = -1;
+                }
             }
         }
-
-        private void CargarCamposDesdeGrilla()
-        {
-            DataGridViewRow fila = dgvObrasSociales.SelectedRows[0];
-            txtNombreOS.Text = fila.Cells["nombre_os"].Value.ToString();
-            txtCodigo.Text = fila.Cells["codigo"].Value.ToString();
-            txtCuit.Text = fila.Cells["cuit"].Value.ToString();
-            txtDomicilio.Text = fila.Cells["domicilio"].Value.ToString();
-            txtNumDomicilio.Text = fila.Cells["num_domicilio"].Value.ToString();
-            txtTelefono.Text = fila.Cells["telefono"].Value.ToString();
-        }
-
         private void LimpiarCampos()
         {
             txtNombreOS.Clear();
@@ -122,44 +125,90 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             txtNumDomicilio.Clear();
             txtTelefono.Clear();
             dgvObrasSociales.ClearSelection();
+            cmbOrden.SelectedIndex = 0;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            // AQUÍ: Validar campos
-            if (string.IsNullOrWhiteSpace(txtNombreOS.Text))
+            cls_ObraSocialDTO nuevaObraSocial = new cls_ObraSocialDTO
             {
-                MessageBox.Show("El campo 'Nombre O.S.' es obligatorio.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                nombre_os = txtNombreOS.Text,
+                codigo = Convert.ToInt32(txtCodigo.Text),
+                cuit = Convert.ToInt64(txtCuit.Text),
+                domicilio = txtDomicilio.Text,
+                num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
+                telefono = txtTelefono.Text,
+                estado = Convert.ToBoolean(1),
+                fecha_alta = DateTime.Now
+
+            };
+
+            if (_obraSocial.AgregarObraSocial(nuevaObraSocial))
+            {
+                MessageBox.Show("Obra Social creada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarGrilla();
+                LimpiarCampos();
+                cmbOrden.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("No se pudo crear la obra social. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            // AQUÍ: Lógica para INSERT en la DB
-            // INSERT INTO Obras_Sociales (nombre_os, codigo, cuit, domicilio, num_domicilio, telefono, estado, fecha_alta)
-            // VALUES (@nombre, @codigo, @cuit, @domicilio, @num, @tel, 1, GETDATE())
-
-            MessageBox.Show("Obra Social creada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CargarGrilla();
-            LimpiarCampos();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            if (dgvObrasSociales.SelectedRows.Count == 0)
+            if (_idObraSocialSeleccionada <= 0)
             {
-                MessageBox.Show("Debe seleccionar una obra social de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe seleccionar una obra social para modificar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idSeleccionado = Convert.ToInt32(dgvObrasSociales.SelectedRows[0].Cells["id_obra_social"].Value);
+            // Validar campos obligatorios
+            if (string.IsNullOrWhiteSpace(txtNombreOS.Text) ||
+                string.IsNullOrWhiteSpace(txtCodigo.Text) ||
+                string.IsNullOrWhiteSpace(txtCuit.Text))
+            {
+                MessageBox.Show("Los campos Nombre, Código y CUIT son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            // AQUÍ: Lógica para UPDATE en la DB
-            // UPDATE Obras_Sociales SET nombre_os = @nombre, codigo = @codigo, cuit = @cuit, 
-            // domicilio = @domicilio, num_domicilio = @num, telefono = @tel
-            // WHERE id_obra_social = @idSeleccionado
+            try
+            {
+                cls_ObraSocialDTO obraSocialModificada = new cls_ObraSocialDTO
+                {
+                    id_obra_social = _idObraSocialSeleccionada,
+                    nombre_os = txtNombreOS.Text.Trim(),
+                    codigo = Convert.ToInt32(txtCodigo.Text.Trim()),
+                    cuit = Convert.ToInt64(txtCuit.Text.Trim()),
+                    domicilio = txtDomicilio.Text.Trim(),
+                    num_domicilio = string.IsNullOrWhiteSpace(txtNumDomicilio.Text) ? 0 : Convert.ToInt32(txtNumDomicilio.Text.Trim()),
+                    telefono = txtTelefono.Text.Trim(),
+                    estado = true,
+                    fecha_alta = DateTime.Now
+                };
 
-            MessageBox.Show("Obra Social modificada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CargarGrilla();
-            LimpiarCampos();
+                if (_obraSocial.ModificarObraSocial(obraSocialModificada))
+                {
+                    MessageBox.Show("Obra Social modificada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarGrilla();
+                    LimpiarCampos();
+                    _idObraSocialSeleccionada = -1; // Resetear el ID
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo modificar la obra social.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Verifique que los campos numéricos contengan valores válidos.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al modificar la obra social: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -170,18 +219,29 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 return;
             }
 
-            int idSeleccionado = Convert.ToInt32(dgvObrasSociales.SelectedRows[0].Cells["id_obra_social"].Value);
-            string nombre = dgvObrasSociales.SelectedRows[0].Cells["nombre_os"].Value.ToString();
-
-            if (MessageBox.Show($"¿Está seguro que desea dar de baja la obra social '{nombre}'?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (_idObraSocialSeleccionada == -1)
             {
-                // AQUÍ: Lógica para BAJA (lógica, no física)
-                // UPDATE Obras_Sociales SET estado = 0, fecha_baja = GETDATE()
-                // WHERE id_obra_social = @idSeleccionado
+                MessageBox.Show("Por favor, seleccione una obra social de la lista para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                MessageBox.Show("Obra Social dada de baja con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarGrilla();
-                LimpiarCampos();
+            DialogResult resultado = MessageBox.Show(
+                "¿Está seguro de que desea eliminar la obra social seleccionada? Esta la inactivará del sistema.",
+                "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resultado == DialogResult.Yes)
+            {
+                if (_obraSocial.EliminarObraSocial(_idObraSocialSeleccionada))
+                {
+                    MessageBox.Show("Obra Social eliminada desactivada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
+                    CargarGrilla();
+                    cmbOrden.SelectedIndex = 0;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo eliminar la obra social. Verifique los datos o la conexión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -205,6 +265,94 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 MessageBox.Show("Obra Social reactivada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarGrilla();
                 LimpiarCampos();
+            }
+        }
+
+        private void CargarTodosLosPacientesEnDataGridView(string filtro)
+        {
+            try
+            {
+                List<cls_ObraSocialDTO> listaObraSocial = new List<cls_ObraSocialDTO>();
+                if (filtro == "Activas")
+                {
+                    listaObraSocial = _obraSocial.ObtenerOSActivas();
+                }
+                else if (filtro == "Inactivas")
+                {
+                    listaObraSocial = _obraSocial.ObtenerOSInactivas();
+                }
+                else if (filtro == "Todas")
+                {
+                    listaObraSocial = _obraSocial.ObtenerTodasLasOS();
+                }
+
+                dgvObrasSociales.DataSource = listaObraSocial;
+                dgvObrasSociales.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dgvObrasSociales.ReadOnly = true;
+                dgvObrasSociales.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvObrasSociales.AllowUserToAddRows = false;
+
+                dgvObrasSociales.Columns["fecha_baja"].Visible = false;
+                dgvObrasSociales.Columns["fecha_alta"].Visible = false;
+                dgvObrasSociales.Columns["estado"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los pacientes en la vista: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvObrasSociales_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    DataGridViewRow filaSeleccionada = dgvObrasSociales.Rows[e.RowIndex];
+                    cls_ObraSocialDTO osSeleccionada = (cls_ObraSocialDTO)filaSeleccionada.DataBoundItem;
+
+                    _idObraSocialSeleccionada = osSeleccionada.id_obra_social;
+
+                    txtNombreOS.Text = osSeleccionada.nombre_os;
+                    txtCodigo.Text = osSeleccionada.codigo.ToString();
+                    txtCuit.Text = osSeleccionada.cuit.ToString();
+                    txtDomicilio.Text = osSeleccionada.domicilio;
+                    txtNumDomicilio.Text = osSeleccionada.num_domicilio.ToString();
+                    txtTelefono.Text = osSeleccionada.telefono.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al seleccionar Obra Social: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _idObraSocialSeleccionada = -1;
+                  
+                }
+            }
+        }
+
+        private void dgvObrasSociales_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= -1)
+            {
+                try
+                {
+                    DataGridViewRow filaSeleccionada = dgvObrasSociales.Rows[e.RowIndex];
+                    cls_ObraSocialDTO osSeleccionada = (cls_ObraSocialDTO)filaSeleccionada.DataBoundItem;
+
+                    _idObraSocialSeleccionada = osSeleccionada.id_obra_social;
+
+                    txtNombreOS.Text = osSeleccionada.nombre_os;
+                    txtCodigo.Text = osSeleccionada.codigo.ToString();
+                    txtCuit.Text = osSeleccionada.cuit.ToString();
+                    txtDomicilio.Text = osSeleccionada.domicilio;
+                    txtNumDomicilio.Text = osSeleccionada.num_domicilio.ToString();
+                    txtTelefono.Text = osSeleccionada.telefono.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al seleccionar Obra Social: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _idObraSocialSeleccionada = -1;
+
+                }
             }
         }
     }

@@ -167,7 +167,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnRefresh.Location = new System.Drawing.Point(962, 3);
@@ -583,12 +583,12 @@
             // btnEspecialidadMedica
             // 
             this.btnEspecialidadMedica.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEspecialidadMedica.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnEspecialidadMedica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEspecialidadMedica.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEspecialidadMedica.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnEspecialidadMedica.Location = new System.Drawing.Point(962, 92);
             this.btnEspecialidadMedica.Name = "btnEspecialidadMedica";
-            this.btnEspecialidadMedica.Size = new System.Drawing.Size(89, 40);
+            this.btnEspecialidadMedica.Size = new System.Drawing.Size(89, 46);
             this.btnEspecialidadMedica.TabIndex = 99;
             this.btnEspecialidadMedica.Text = "Especialidades Médicas";
             this.btnEspecialidadMedica.UseVisualStyleBackColor = true;
@@ -597,12 +597,12 @@
             // btnHorariosProf
             // 
             this.btnHorariosProf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHorariosProf.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnHorariosProf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHorariosProf.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHorariosProf.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnHorariosProf.Location = new System.Drawing.Point(962, 167);
             this.btnHorariosProf.Name = "btnHorariosProf";
-            this.btnHorariosProf.Size = new System.Drawing.Size(89, 40);
+            this.btnHorariosProf.Size = new System.Drawing.Size(89, 49);
             this.btnHorariosProf.TabIndex = 100;
             this.btnHorariosProf.Text = "Gestionar Horarios";
             this.btnHorariosProf.UseVisualStyleBackColor = true;
