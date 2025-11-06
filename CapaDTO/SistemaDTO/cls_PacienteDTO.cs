@@ -31,8 +31,6 @@ namespace CapaDTO.SistemaDTO
 
         public decimal cargahoraria_at { get; set; }
 
-        public string ambito { get; set; }
-
         public int telefono { get; set; }
         public bool? esActivo { get; set; }
         public string email {  get; set; }

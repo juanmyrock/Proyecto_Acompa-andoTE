@@ -1,6 +1,4 @@
-﻿using CapaDTO.SistemaDTO;
-using CapaLogica.LlenarCombos;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,21 +11,15 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         private Dictionary<string, List<string>> medicosPorEspecialidad = new Dictionary<string, List<string>>();
         private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
 
-        private cls_LlenarCombos _rellenador;
-
         public frmGestionTurnos()
         {
             InitializeComponent();
-            _rellenador = new cls_LlenarCombos();
-            
         }
 
         private void frmGestionTurnos_Load(object sender, EventArgs e)
         {
             // Simula la carga de datos iniciales
             CargarDatosDePrueba();
-            CargarProfesionales();
-
 
             // 1. Cargar Especialidades desde la Base de Datos
             // Aquí harías: SELECT * FROM Especialidades
@@ -35,22 +27,7 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             cmbEspecialidad.Items.Add("Clínica Médica");
             cmbEspecialidad.Items.Add("Pediatría");
         }
-        private void CargarProfesionales()
-        {
-           
-            var cargarAcompañantes = _rellenador.ObtenerProfesionales();
-            try
-            {
-                CapaUtilidades.cls_LlenarCombos.Cargar(cmbAcompañante, cargarAcompañantes.Acompañantes, "NomApe", "id_profesional");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
-        }
 
-       
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             // 2. Cargar Médicos según la Especialidad seleccionada

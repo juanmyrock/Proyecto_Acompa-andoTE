@@ -41,7 +41,6 @@ namespace CapaDatos.ABM
                     domicilio = row["domicilio"].ToString(),
                     num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                     cargahoraria_at = Convert.ToDecimal(row["cargahoraria_at"]),
-                    ambito = row["ambito"].ToString(),
                     telefono = Convert.ToInt32(row["telefono"]),
                     email = row["email"].ToString(),
                     esActivo = Convert.ToBoolean(row["esActivo"])
@@ -77,7 +76,6 @@ namespace CapaDatos.ABM
                     domicilio = row["domicilio"].ToString(),
                     num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                     cargahoraria_at = Convert.ToDecimal(row["cargahoraria_at"]),
-                    ambito = row["ambito"].ToString(),
                     telefono = Convert.ToInt32(row["telefono"]),
                     email = row["email"].ToString(),
                     esActivo = Convert.ToBoolean(row["esActivo"])
@@ -112,7 +110,6 @@ namespace CapaDatos.ABM
                     domicilio = row["domicilio"].ToString(),
                     num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                     cargahoraria_at = Convert.ToDecimal(row["cargahoraria_at"]),
-                    ambito = row["ambito"].ToString(),
                     telefono = Convert.ToInt32(row["telefono"]),
                     email = row["email"].ToString(),
                     esActivo = Convert.ToBoolean(row["esActivo"])
@@ -140,7 +137,6 @@ namespace CapaDatos.ABM
         new SqlParameter("@domicilio", paciente.domicilio),
         new SqlParameter("@num_domicilio", paciente.num_domicilio),
         new SqlParameter("@cargahoraria_at", paciente.cargahoraria_at),
-        new SqlParameter("@ambito", paciente.ambito),
         new SqlParameter("@telefono", paciente.telefono),
         new SqlParameter("@email", paciente.email),
         new SqlParameter("@id_tipo_dni", paciente.id_tipo_dni),
@@ -169,7 +165,6 @@ namespace CapaDatos.ABM
                 new SqlParameter("@domicilio", paciente.domicilio),
                 new SqlParameter("@num_domicilio", paciente.num_domicilio),
                 new SqlParameter("@cargahoraria_at", paciente.cargahoraria_at),
-                new SqlParameter("@ambito", paciente.ambito),
                 new SqlParameter("@telefono", paciente.telefono),
                 new SqlParameter("@email", paciente.email),
                 new SqlParameter("@id_tipo_dni", paciente.id_tipo_dni),
@@ -247,7 +242,6 @@ namespace CapaDatos.ABM
                     domicilio = row["domicilio"].ToString(),
                     num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                     cargahoraria_at = Convert.ToDecimal(row["cargahoraria_at"]),
-                    ambito = row["ambito"].ToString(),
                     telefono = Convert.ToInt32(row["telefono"]),
                     email = row["email"].ToString(),
                     esActivo = Convert.ToBoolean(row["esActivo"])
@@ -257,6 +251,28 @@ namespace CapaDatos.ABM
 
             // Si no se encontró el paciente
             return null;
+        }
+
+        public bool VerificarDniExistente(int dni)
+        {
+            string query = "[dbo].[VerificarDniExistentePacientes]";
+
+            var parametros = new List<SqlParameter>
+        {
+            new SqlParameter("@Dni", dni)
+        };
+
+            try
+            {
+                object resultado = _ejecutar.ExecuteScalarSP(query, parametros);
+                int count = resultado != null && resultado != DBNull.Value ? Convert.ToInt32(resultado) : 0;
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en VerificarDniExistente: {ex.Message}");
+                return false;
+            }
         }
     }
 }
