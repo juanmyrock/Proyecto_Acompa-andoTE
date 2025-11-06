@@ -268,9 +268,9 @@ namespace CapaVistas.Forms_Menu
                     return;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-
+                throw;
             }
                 if (!int.TryParse(txtBusquedaPaciente.Text, out int dniBuscado))
             {

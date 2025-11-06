@@ -71,9 +71,9 @@ namespace CapaDatos.Negocio
 
                     listaInformes.Add(informe);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
+                    throw;
                 }
             }
             return listaInformes;
@@ -198,9 +198,8 @@ namespace CapaDatos.Negocio
                 // Si no encuentra acompañamiento, podrías crear uno o lanzar excepción
                 throw new Exception("No se encontró un acompañamiento activo para el paciente.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
                 throw;
             }
         }
