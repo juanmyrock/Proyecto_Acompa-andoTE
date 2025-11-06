@@ -51,6 +51,7 @@
     <Compile Include="AccesoBD\cls_EjecutarQ.cs" />
     <Compile Include="ABM\cls_EmpleadosQ.cs" />
     <Compile Include="ABM\cls_UsuariosQ.cs" />
+    <Compile Include="Negocio\cls_AsignacionATQ.cs" />
     <Compile Include="Negocio\cls_InformesQ.cs" />
     <Compile Include="Negocio\cls_ProfesionalesQ.cs" />
     <Compile Include="Negocio\cls_ObraSocialQ.cs" />
