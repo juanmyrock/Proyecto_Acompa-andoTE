@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnBuscarOS = new System.Windows.Forms.Button();
-            this.lblBusquedaOS = new System.Windows.Forms.Label();
             this.txtBusquedaOS = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnReactivar = new System.Windows.Forms.Button();
@@ -75,18 +74,8 @@
             this.btnBuscarOS.TabIndex = 2;
             this.btnBuscarOS.Text = "Buscar";
             this.btnBuscarOS.UseVisualStyleBackColor = true;
+            this.btnBuscarOS.Visible = false;
             this.btnBuscarOS.Click += new System.EventHandler(this.btnBuscarOS_Click);
-            // 
-            // lblBusquedaOS
-            // 
-            this.lblBusquedaOS.AutoSize = true;
-            this.lblBusquedaOS.Font = new System.Drawing.Font("Bahnschrift", 12F);
-            this.lblBusquedaOS.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblBusquedaOS.Location = new System.Drawing.Point(344, 13);
-            this.lblBusquedaOS.Name = "lblBusquedaOS";
-            this.lblBusquedaOS.Size = new System.Drawing.Size(195, 19);
-            this.lblBusquedaOS.TabIndex = 96;
-            this.lblBusquedaOS.Text = "Buscar por Nombre/CUIT:";
             // 
             // txtBusquedaOS
             // 
@@ -94,6 +83,7 @@
             this.txtBusquedaOS.Name = "txtBusquedaOS";
             this.txtBusquedaOS.Size = new System.Drawing.Size(150, 20);
             this.txtBusquedaOS.TabIndex = 1;
+            this.txtBusquedaOS.Visible = false;
             // 
             // label8
             // 
@@ -149,14 +139,14 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Bahnschrift Condensed", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefresh.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnRefresh.Location = new System.Drawing.Point(962, 3);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 40);
             this.btnRefresh.TabIndex = 3;
-            this.btnRefresh.Text = "Cargar";
+            this.btnRefresh.Text = "Recargar";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -181,14 +171,14 @@
             this.gbDatosOS.ForeColor = System.Drawing.SystemColors.Control;
             this.gbDatosOS.Location = new System.Drawing.Point(57, 351);
             this.gbDatosOS.Name = "gbDatosOS";
-            this.gbDatosOS.Size = new System.Drawing.Size(952, 216);
+            this.gbDatosOS.Size = new System.Drawing.Size(952, 179);
             this.gbDatosOS.TabIndex = 89;
             this.gbDatosOS.TabStop = false;
             this.gbDatosOS.Text = "Datos de la Obra Social";
             // 
             // txtTelefono
             // 
-            this.txtTelefono.Location = new System.Drawing.Point(341, 118);
+            this.txtTelefono.Location = new System.Drawing.Point(705, 117);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(160, 22);
             this.txtTelefono.TabIndex = 10;
@@ -196,7 +186,7 @@
             // lblTelefono
             // 
             this.lblTelefono.AutoSize = true;
-            this.lblTelefono.Location = new System.Drawing.Point(279, 121);
+            this.lblTelefono.Location = new System.Drawing.Point(643, 120);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(55, 14);
             this.lblTelefono.TabIndex = 10;
@@ -204,7 +194,7 @@
             // 
             // txtNumDomicilio
             // 
-            this.txtNumDomicilio.Location = new System.Drawing.Point(172, 118);
+            this.txtNumDomicilio.Location = new System.Drawing.Point(130, 117);
             this.txtNumDomicilio.Name = "txtNumDomicilio";
             this.txtNumDomicilio.Size = new System.Drawing.Size(80, 22);
             this.txtNumDomicilio.TabIndex = 9;
@@ -212,23 +202,23 @@
             // lblNumDomicilio
             // 
             this.lblNumDomicilio.AutoSize = true;
-            this.lblNumDomicilio.Location = new System.Drawing.Point(136, 121);
+            this.lblNumDomicilio.Location = new System.Drawing.Point(26, 121);
             this.lblNumDomicilio.Name = "lblNumDomicilio";
-            this.lblNumDomicilio.Size = new System.Drawing.Size(30, 14);
+            this.lblNumDomicilio.Size = new System.Drawing.Size(98, 14);
             this.lblNumDomicilio.TabIndex = 8;
-            this.lblNumDomicilio.Text = "Nro:";
+            this.lblNumDomicilio.Text = "Nro de Domicilio:";
             // 
             // txtDomicilio
             // 
-            this.txtDomicilio.Location = new System.Drawing.Point(593, 118);
+            this.txtDomicilio.Location = new System.Drawing.Point(370, 117);
             this.txtDomicilio.Name = "txtDomicilio";
-            this.txtDomicilio.Size = new System.Drawing.Size(341, 22);
+            this.txtDomicilio.Size = new System.Drawing.Size(203, 22);
             this.txtDomicilio.TabIndex = 11;
             // 
             // lblDomicilio
             // 
             this.lblDomicilio.AutoSize = true;
-            this.lblDomicilio.Location = new System.Drawing.Point(527, 121);
+            this.lblDomicilio.Location = new System.Drawing.Point(304, 120);
             this.lblDomicilio.Name = "lblDomicilio";
             this.lblDomicilio.Size = new System.Drawing.Size(60, 14);
             this.lblDomicilio.TabIndex = 6;
@@ -349,6 +339,8 @@
             this.dgvObrasSociales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvObrasSociales.Size = new System.Drawing.Size(851, 218);
             this.dgvObrasSociales.TabIndex = 20;
+            this.dgvObrasSociales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvObrasSociales_CellClick);
+            this.dgvObrasSociales.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvObrasSociales_RowEnter);
             this.dgvObrasSociales.SelectionChanged += new System.EventHandler(this.dgvObrasSociales_SelectionChanged);
             // 
             // pictureBox3
@@ -393,7 +385,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
             this.Controls.Add(this.btnBuscarOS);
-            this.Controls.Add(this.lblBusquedaOS);
             this.Controls.Add(this.txtBusquedaOS);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnReactivar);
@@ -426,7 +417,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnBuscarOS;
-        private System.Windows.Forms.Label lblBusquedaOS;
         private System.Windows.Forms.TextBox txtBusquedaOS;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnReactivar;

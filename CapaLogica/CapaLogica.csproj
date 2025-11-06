@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM\cls_LogicaGestionarOS.cs" />
     <Compile Include="ABM\cls_LogicaGestionarPacientes.cs" />
     <Compile Include="ABM\cls_LogicaGestionarProfesionales.cs" />
     <Compile Include="ABM\cls_LogicaGestionEmpleados.cs" />
