@@ -45,7 +45,6 @@ namespace CapaVistas.Forms_Menu
             {
                 List<cls_InformeATDTO> informesEncontrados = gestor.ObtenerInformesPorDni(dniBuscado);
 
-                // DEBUG EN EL FORMULARIO
                 Console.WriteLine($"DEBUG FORM - Cantidad de informes: {informesEncontrados?.Count ?? -1}");
                 if (informesEncontrados != null && informesEncontrados.Count > 0)
                 {
@@ -74,7 +73,18 @@ namespace CapaVistas.Forms_Menu
                         var primerInforme = informesExistentes[0];
                         if (!string.IsNullOrEmpty(primerInforme.ruta))
                         {
-                            gestor.CargarInforme(txtInforme, primerInforme.ruta, gestor);
+                            txtInforme.Text = gestor.CargarOCrearArchivo(primerInforme.ruta);
+                            if (pacienteEncontrado.id_informe_at != null)
+                            { 
+                            btnGuardarInforme.Visible = false;
+                            btnActualizar.Visible = true;
+                            }
+                            else if(pacienteEncontrado.id_informe_at == null)
+                            {
+                                btnGuardarInforme.Visible=true;
+                                btnActualizar.Visible=false;
+                            }
+                            
                         }
                         MessageBox.Show($"Se encontraron {informesExistentes.Count} informe(s) para el paciente.", "Informes Encontrados",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -136,7 +146,7 @@ namespace CapaVistas.Forms_Menu
                 var informe = new cls_InformeATDTO
                 {
                     // Si es nuevo informe, id_informe_at estará vacío
-                    id_informe_at = string.Empty, // Esto hará que se inserte como nuevo
+                    id_informe_at = guidArchivo, // Esto hará que se inserte como nuevo
                     id_acompanamiento = _idAcompanamientoActual, // ← USA LA VARIABLE QUE YA GUARDASTE
                     fecha_periodo = DateTime.Now,
                     id_usuario_creador = 1, // Temporal - implementa ObtenerUsuarioLogueado()
@@ -151,13 +161,14 @@ namespace CapaVistas.Forms_Menu
                 // 3. Guardar en la base de datos usando el gestor
                 bool guardadoExitoso = gestor.GuardarInforme(informe);
 
-                if (guardadoExitoso)
+                if (guardadoExitoso == true)
                 {
                     MessageBox.Show("Informe guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarCampos();
                 }
                 else
                 {
+                    Console.WriteLine(guardadoExitoso.ToString());
                     MessageBox.Show("No se pudo guardar el informe en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -182,6 +193,11 @@ namespace CapaVistas.Forms_Menu
         private void btnGuardarInforme_Click(object sender, EventArgs e)
         {
             GuardarInforme();
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            gestor.ActualizarInforme();
         }
     }
 }
