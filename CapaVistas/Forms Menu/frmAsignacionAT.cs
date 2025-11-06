@@ -73,7 +73,7 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 cls_LlenarCombos.Cargar(cmbAmbito, _logica.ObtenerAmbitos(), "descripcion", "id_ambito");
-                cls_LlenarCombos.Cargar(cmbProfesional, _logica.ObtenerAcompanantes(), "NomApe", "id_profesional");
+                cls_LlenarCombos.Cargar(cmbProfesional, _logica.ObtenerAcompanantes(), "ApeNom", "id_profesional");
                 cls_LlenarCombos.Cargar(cmbJornada, _logica.ObtenerJornadas(), "descripcion", "id_jornada");
                 cmbDiaSemana.Items.AddRange(new object[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" });
                 cmbDiaSemana.SelectedIndex = 0;
