@@ -118,12 +118,22 @@ namespace CapaDatos.Negocio
 
         public bool InsertarInforme(cls_InformeATDTO informe)
         {
+            Console.WriteLine($"=== DEBUG InsertarInforme INICIO ===");
+
+            // Asegurar que tenga GUID
+            if (string.IsNullOrEmpty(informe.id_informe_at))
+            {
+                informe.id_informe_at = Guid.NewGuid().ToString();
+                Console.WriteLine($"GUID generado: {informe.id_informe_at}");
+            }
+
             string query = @"
-            INSERT INTO Informes_AT 
-            (id_informe_at, id_acompanamiento, fecha_periodo, id_usuario_creador, fecha_creacion, prestador, prestacion, ruta)
-            VALUES 
-            (@id_informe_at, @IdAcompanamiento, @FechaPeriodo, @IdUsuarioCreador, @FechaCreacion, @Prestador, @Prestacion, @Ruta);
-            SELECT SCOPE_IDENTITY();";
+        INSERT INTO Informes_AT 
+        (id_informe_at, id_acompanamiento, fecha_periodo, id_usuario_creador, fecha_creacion, prestador, prestacion, ruta)
+        VALUES 
+        (@id_informe_at, @IdAcompanamiento, @FechaPeriodo, @IdUsuarioCreador, @FechaCreacion, @Prestador, @Prestacion, @Ruta)";
+
+            Console.WriteLine($"Query: {query}");
 
             try
             {
@@ -139,21 +149,23 @@ namespace CapaDatos.Negocio
             new SqlParameter("@Ruta", informe.ruta ?? (object)DBNull.Value)
         };
 
-                object resultado = _ejecutor.ExecuteScalar(query, parametros);
-
-              
-                if (resultado != null && resultado != DBNull.Value)
+                // DEBUG de parámetros
+                foreach (var param in parametros)
                 {
-                    // Convertir a decimal primero y luego verificar si es mayor a 0
-                    decimal idGenerado = Convert.ToDecimal(resultado);
-                    return idGenerado > 0;
+                    Console.WriteLine($"Parámetro: {param.ParameterName} = {param.Value} (Tipo: {param.Value?.GetType()})");
                 }
 
-                return false;
+                int filasAfectadas = _ejecutor.ConsultaCUD(query, parametros);
+                Console.WriteLine($"Filas afectadas: {filasAfectadas}");
+
+                bool resultado = filasAfectadas > 0;
+                Console.WriteLine($"=== DEBUG InsertarInforme FIN - Resultado: {resultado} ===");
+                return resultado;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al insertar informe: {ex.Message}");
+                Console.WriteLine($"ERROR en InsertarInforme: {ex.Message}");
+                Console.WriteLine($"Stack: {ex.StackTrace}");
                 return false;
             }
         }
@@ -194,22 +206,59 @@ namespace CapaDatos.Negocio
         }
         public bool GuardarInforme(cls_InformeATDTO informe)
         {
-         
-            if (!string.IsNullOrEmpty(informe.id_informe_at))
+            Console.WriteLine($"=== DEBUG GuardarInforme INICIO ===");
+            Console.WriteLine($"id_informe_at: '{informe?.id_informe_at}'");
+            Console.WriteLine($"id_acompanamiento: {informe?.id_acompanamiento}");
+
+            // VERIFICAR SI EL INFORME EXISTE EN LA BD
+            bool existeEnBD = VerificarSiExisteInforme(informe.id_informe_at);
+            Console.WriteLine($"Existe en BD: {existeEnBD}");
+
+            if (!string.IsNullOrEmpty(informe.id_informe_at) && existeEnBD)
             {
-                return InsertarInforme(informe);
+                Console.WriteLine("-> Ejecutando ACTUALIZACIÓN");
+                bool resultadoActualizar = ActualizarInforme(informe);
+                Console.WriteLine($"<- Resultado actualización: {resultadoActualizar}");
+                return resultadoActualizar;
             }
             else
             {
-                bool nuevoId = InsertarInforme(informe);
-
-                if (nuevoId == true)
+                Console.WriteLine("-> Ejecutando INSERCIÓN");
+                // Si no existe en BD pero tiene GUID, es un nuevo informe
+                if (string.IsNullOrEmpty(informe.id_informe_at))
                 {
-                    informe.id_informe_at = nuevoId.ToString();
-                    return true;
+                    informe.id_informe_at = Guid.NewGuid().ToString();
+                    Console.WriteLine($"Nuevo GUID generado: {informe.id_informe_at}");
                 }
-                return true;
-              
+                bool resultadoInsertar = InsertarInforme(informe);
+                Console.WriteLine($"<- Resultado inserción: {resultadoInsertar}");
+                return resultadoInsertar;
+            }
+        }
+
+        private bool VerificarSiExisteInforme(string idInforme)
+        {
+            if (string.IsNullOrEmpty(idInforme))
+                return false;
+
+            string query = "SELECT COUNT(1) FROM Informes_AT WHERE id_informe_at = @IdInforme";
+
+            var parametros = new List<SqlParameter>
+    {
+        new SqlParameter("@IdInforme", idInforme)
+    };
+
+            try
+            {
+                object resultado = _ejecutor.ExecuteScalar(query, parametros);
+                int count = resultado != null && resultado != DBNull.Value ? Convert.ToInt32(resultado) : 0;
+                Console.WriteLine($"Verificar existencia - Count: {count}");
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al verificar existencia: {ex.Message}");
+                return false;
             }
         }
     }

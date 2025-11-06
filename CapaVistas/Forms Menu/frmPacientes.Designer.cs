@@ -52,8 +52,6 @@
             this.dateFechaNac = new System.Windows.Forms.DateTimePicker();
             this.label29 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.txtAmbito = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.txtDomicilio = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
@@ -80,7 +78,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.btnBuscarDNI = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVerPacientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -199,7 +196,6 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.checkedListBox1);
             this.groupBox2.Controls.Add(this.txtNumDomicilio);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label2);
@@ -216,8 +212,6 @@
             this.groupBox2.Controls.Add(this.dateFechaNac);
             this.groupBox2.Controls.Add(this.label29);
             this.groupBox2.Controls.Add(this.label39);
-            this.groupBox2.Controls.Add(this.txtAmbito);
-            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.txtDomicilio);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.txtEmail);
@@ -251,6 +245,7 @@
             this.txtNumDomicilio.Name = "txtNumDomicilio";
             this.txtNumDomicilio.Size = new System.Drawing.Size(134, 22);
             this.txtNumDomicilio.TabIndex = 16;
+            this.txtNumDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumDomicilio_KeyPress);
             // 
             // label5
             // 
@@ -265,7 +260,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(279, 178);
+            this.label2.Location = new System.Drawing.Point(450, 166);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 14);
             this.label2.TabIndex = 75;
@@ -273,7 +268,7 @@
             // 
             // txtDiagnostico
             // 
-            this.txtDiagnostico.Location = new System.Drawing.Point(358, 178);
+            this.txtDiagnostico.Location = new System.Drawing.Point(204, 183);
             this.txtDiagnostico.Multiline = true;
             this.txtDiagnostico.Name = "txtDiagnostico";
             this.txtDiagnostico.Size = new System.Drawing.Size(576, 85);
@@ -281,15 +276,16 @@
             // 
             // txtCargaHoraria
             // 
-            this.txtCargaHoraria.Location = new System.Drawing.Point(134, 170);
+            this.txtCargaHoraria.Location = new System.Drawing.Point(783, 137);
             this.txtCargaHoraria.Name = "txtCargaHoraria";
-            this.txtCargaHoraria.Size = new System.Drawing.Size(121, 22);
+            this.txtCargaHoraria.Size = new System.Drawing.Size(151, 22);
             this.txtCargaHoraria.TabIndex = 18;
+            this.txtCargaHoraria.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCargaHoraria_KeyPress);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(51, 164);
+            this.label4.Location = new System.Drawing.Point(700, 131);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 28);
             this.label4.TabIndex = 73;
@@ -302,6 +298,7 @@
             this.txtNumAfiliado.Name = "txtNumAfiliado";
             this.txtNumAfiliado.Size = new System.Drawing.Size(121, 22);
             this.txtNumAfiliado.TabIndex = 68;
+            this.txtNumAfiliado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumAfiliado_KeyPress);
             // 
             // label1
             // 
@@ -383,28 +380,13 @@
             this.label39.TabIndex = 64;
             this.label39.Text = "Celular:";
             // 
-            // txtAmbito
-            // 
-            this.txtAmbito.Location = new System.Drawing.Point(783, 137);
-            this.txtAmbito.Name = "txtAmbito";
-            this.txtAmbito.Size = new System.Drawing.Size(151, 22);
-            this.txtAmbito.TabIndex = 17;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(730, 140);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 14);
-            this.label6.TabIndex = 57;
-            this.label6.Text = "Ambito:";
-            // 
             // txtDomicilio
             // 
             this.txtDomicilio.Location = new System.Drawing.Point(346, 134);
             this.txtDomicilio.Name = "txtDomicilio";
             this.txtDomicilio.Size = new System.Drawing.Size(121, 22);
             this.txtDomicilio.TabIndex = 15;
+            this.txtDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDomicilio_KeyPress);
             // 
             // label14
             // 
@@ -437,6 +419,7 @@
             this.txtDniPaciente.Name = "txtDniPaciente";
             this.txtDniPaciente.Size = new System.Drawing.Size(134, 22);
             this.txtDniPaciente.TabIndex = 12;
+            this.txtDniPaciente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDniPaciente_KeyPress);
             // 
             // txtDniTitular
             // 
@@ -444,6 +427,7 @@
             this.txtDniTitular.Name = "txtDniTitular";
             this.txtDniTitular.Size = new System.Drawing.Size(121, 22);
             this.txtDniTitular.TabIndex = 11;
+            this.txtDniTitular.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDniTitular_KeyPress);
             // 
             // label3
             // 
@@ -651,14 +635,6 @@
             this.btnBuscarDNI.UseVisualStyleBackColor = true;
             this.btnBuscarDNI.Click += new System.EventHandler(this.btnBuscarDNI_Click);
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(783, 137);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(151, 38);
-            this.checkedListBox1.TabIndex = 78;
-            // 
             // frmPacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -710,8 +686,6 @@
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label lblCud;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox txtAmbito;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDomicilio;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtEmail;
@@ -750,6 +724,5 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnBuscarDNI;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
     }
 }

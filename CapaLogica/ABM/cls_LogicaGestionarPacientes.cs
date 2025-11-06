@@ -62,7 +62,6 @@ namespace CapaLogica.SistemaLogica
                     string.IsNullOrEmpty(nuevoPaciente.Apellido) ||
                     string.IsNullOrEmpty(nuevoPaciente.cud) ||
                     string.IsNullOrEmpty(nuevoPaciente.domicilio) ||
-                    string.IsNullOrEmpty(nuevoPaciente.ambito) ||
                     string.IsNullOrEmpty(nuevoPaciente.email))
                 {
                     return false;
@@ -101,7 +100,6 @@ namespace CapaLogica.SistemaLogica
                     string.IsNullOrEmpty(pacienteModificado.Apellido) ||
                     string.IsNullOrEmpty(pacienteModificado.cud) ||
                     string.IsNullOrEmpty(pacienteModificado.domicilio) ||
-                    string.IsNullOrEmpty(pacienteModificado.ambito) ||
                     string.IsNullOrEmpty(pacienteModificado.email))
                 {
                     return false;
@@ -166,5 +164,19 @@ namespace CapaLogica.SistemaLogica
             return _pacientesQ.BuscarPacientePorDni(dni);
         }
 
+
+        public bool VerificarDniExistente(int dni)
+        {
+            try
+            {
+                // Llama al método del DAO
+                return _pacientesQ.VerificarDniExistente(dni);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al verificar DNI: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
