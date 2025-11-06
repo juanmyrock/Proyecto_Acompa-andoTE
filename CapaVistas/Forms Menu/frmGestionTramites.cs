@@ -1,13 +1,13 @@
-﻿using CapaDTO;           // Para EstadoTramiteDTO y cls_TramiteResumenDTO
-using CapaDTO.SistemaDTO; // Para cls_HistorialDTO
+﻿using CapaDTO;           
+using CapaDTO.SistemaDTO; 
 using CapaLogica.CapaLogica.Tramites;
+using CapaLogica.Negocio;
 using CapaSesion.Login;
-using CapaUtilidades; // Para cls_LlenarCombos
+using CapaUtilidades; 
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Runtime.InteropServices; // Para arrastrar la ventana (si usas panelTopBar)
 
 namespace CapaVistas.Forms_Menu
 {
@@ -15,6 +15,7 @@ namespace CapaVistas.Forms_Menu
     {
         // --- Conexión a la lógica refactorizada ---
         private readonly cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
+        private readonly cls_LogicaAsignacionAT _logicaAsignacionAT = new cls_LogicaAsignacionAT();
 
         // --- DTOs y Sesión ---
         private List<cls_TramiteResumenDTO> _tramitesCargados = new List<cls_TramiteResumenDTO>();
@@ -73,26 +74,34 @@ namespace CapaVistas.Forms_Menu
 
             // Limpiamos todo antes de la búsqueda
             LimpiarSeleccion();
-            _pacienteEncontrado = null; // ¡Importante!
+            _pacienteEncontrado = null;
             _dniPacienteBuscado = null;
 
             try
             {
                 // --- PASO 1: BUSCAR Y VALIDAR EL PACIENTE ---
-                // (Asumo que tienes una _logicaPacientes o puedes crearla, 
-                // igual que en tu otro formulario)
-                var _logicaPacientes = new CapaLogica.cls_PacienteLogica(); // O como se llame
-                var pacienteEncontrado = _logicaPacientes.BuscarPaciente(busquedaDNI);
+                // ¡ESTA ES LA LÍNEA CORREGIDA!
+                // Usamos la lógica que YA EXISTE en cls_LogicaAsignacionAT
+                List<cls_PacienteSimpleDTO> pacientesEncontrados = _logicaAsignacionAT.BuscarPaciente(busquedaDNI);
 
-                if (pacienteEncontrado == null || pacienteEncontrado.Count == 0)
+                if (pacientesEncontrados == null || pacientesEncontrados.Count == 0)
                 {
-                    MessageBox.Show("Paciente no encontrado con ese DNI.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Paciente no encontrado con ese DNI/Apellido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return; // No seguimos si no hay paciente
                 }
 
-                // (Si encontrara más de uno, deberías poner un ListBox,
-                // pero para trámites por DNI asumimos que es 1)
-                _pacienteEncontrado = pacienteEncontrado[0];
+                // (Si tu búsqueda de paciente te trae muchos, 
+                // aquí deberías mostrar un ListBox, igual que en el otro form.
+                // Por ahora, asumimos que para DNI trae 1)
+                if (pacientesEncontrados.Count > 1)
+                {
+                    // (Aquí iría la lógica para mostrar el ListBox de pacientes)
+                    MessageBox.Show("Se encontró más de un paciente. Lógica pendiente.");
+                    return;
+                }
+
+                // Si encontramos uno solo:
+                _pacienteEncontrado = pacientesEncontrados[0];
                 _dniPacienteBuscado = _pacienteEncontrado.dni_paciente; // Guardamos el DNI
 
 
