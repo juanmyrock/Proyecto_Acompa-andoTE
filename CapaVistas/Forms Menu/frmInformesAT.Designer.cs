@@ -53,6 +53,7 @@
             this.lblPrestadorEscrito = new System.Windows.Forms.Label();
             this.lblPrestacionEscrita = new System.Windows.Forms.Label();
             this.btnLimpiarCampos = new System.Windows.Forms.Button();
+            this.btnExportarPDF = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtAcompaniante
@@ -304,13 +305,29 @@
             this.btnLimpiarCampos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarCampos.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarCampos.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(93, 503);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(12, 503);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
-            this.btnLimpiarCampos.Size = new System.Drawing.Size(210, 41);
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(139, 41);
             this.btnLimpiarCampos.TabIndex = 25;
             this.btnLimpiarCampos.Text = "Limpiar Campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
             this.btnLimpiarCampos.Click += new System.EventHandler(this.btnLimpiarCampos_Click);
+            // 
+            // btnExportarPDF
+            // 
+            this.btnExportarPDF.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExportarPDF.FlatAppearance.BorderColor = System.Drawing.Color.LawnGreen;
+            this.btnExportarPDF.FlatAppearance.BorderSize = 2;
+            this.btnExportarPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportarPDF.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportarPDF.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.btnExportarPDF.Location = new System.Drawing.Point(250, 503);
+            this.btnExportarPDF.Name = "btnExportarPDF";
+            this.btnExportarPDF.Size = new System.Drawing.Size(139, 41);
+            this.btnExportarPDF.TabIndex = 26;
+            this.btnExportarPDF.Text = "Exportar PDF";
+            this.btnExportarPDF.UseVisualStyleBackColor = true;
+            this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
             // 
             // frmInformesAT
             // 
@@ -318,6 +335,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1047, 566);
+            this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.btnLimpiarCampos);
             this.Controls.Add(this.lblPrestacionEscrita);
             this.Controls.Add(this.lblPrestadorEscrito);
@@ -378,5 +396,6 @@
         private System.Windows.Forms.Label lblPrestadorEscrito;
         private System.Windows.Forms.Label lblPrestacionEscrita;
         private System.Windows.Forms.Button btnLimpiarCampos;
+        private System.Windows.Forms.Button btnExportarPDF;
     }
 }
