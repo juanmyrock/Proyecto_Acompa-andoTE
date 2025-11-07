@@ -11,6 +11,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -388,5 +390,42 @@ namespace CapaVistas.Forms_Menu
                 e.Handled = true;
             }
         }
+
+        private void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            if (txtInforme.Text.Length == 0 || txtBusquedaPaciente.Text.Length < 8)
+            {
+                MessageBox.Show("No se puede generar un PDF de un informe vacío o sin un documento valido escrito.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (txtInforme.Text.Length > 0 && txtBusquedaPaciente.Text.Length == 8)
+            {
+
+                try
+                {
+                    string titulo = "Informe Mensual";
+                    string contenido = //$"Paciente: {lblApeNom.Text}\n" +
+                                       // $"DNI: {txtBusquedaPaciente.Text}\n" +
+                                       // $"Fecha: {dtpMesInforme.Value.ToString("dd/MM/yyyy")}\n\n" +
+                                       // $"Prestador: {lblPrestadorEscrito.Text} \n" + 
+                                       //$"Prestación: {lblPrestacionEscrita.Text} \n" + 
+                                       //$"Diagnostico inicial: {lblDiagnosticoEscrito.Text}\n\n" +
+                                      $"{txtInforme.Text}";
+
+                    string contenidoAdicional = "Firmado por: VicularAzul S.R.L.";
+
+                    string rutaPDF = CapaUtilidades.cls_CrearPDF.GenerarPDFConNumeracion(
+                        titulo, contenido, contenidoAdicional);
+
+                    MessageBox.Show($"PDF generado: {Path.GetFileName(rutaPDF)}", "Éxito",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
+    
 }
