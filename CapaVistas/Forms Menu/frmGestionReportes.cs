@@ -1,6 +1,21 @@
-﻿using System;
+﻿using CapaDTO.SistemaDTO;
+using CapaLogica.Negocio;
+using CapaLogica.SistemaLogica;
+using iTextSharp.text.pdf.parser;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Text;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Threading.Tasks;
 
 namespace CapaVistas.Forms_Menu // O tu namespace
 {
@@ -10,10 +25,16 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
+        private string guidArchivo = string.Empty;
+        private int _idAcompanamientoActual;
+        cls_LogicaGestionarPacientes _logicaPaciente = new cls_LogicaGestionarPacientes();
+        cls_LogicaInformes gestor;
 
         public frmGestionReportes()
         {
             InitializeComponent();
+            string clave = "MiClave123";
+            gestor = new cls_LogicaInformes(clave);
         }
 
         // --- LÓGICA PARA ARRASTRAR Y CERRAR EL FORMULARIO ---
@@ -47,29 +68,78 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void cmbTipoReporte_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string seleccion = cmbTipoReporte.SelectedItem.ToString();
-
-            // Ocultamos todos los paneles de filtros
             pnlFiltroPaciente.Visible = false;
             pnlFiltroFecha.Visible = false;
+            lblFechaDesde.Visible = false;
+            lblFechaHasta.Visible = false;
 
-            // Limpiamos la grilla
-            dgvReporte.DataSource = null;
+            string seleccion = cmbTipoReporte.SelectedItem.ToString();
+            try
+            {
+                if (cmbTipoReporte.Text == "Informes por Paciente")
+                {
+                    dtpMesInforme.Visible = true;
+                    btnGenerarReporte.Visible = false;
+                    pnlFiltroFecha.Visible = true;
+                    pnlFiltroPaciente.Visible = true;
+                    dateDesde.Visible = false;
+                    dateHasta.Visible = false;
+                    btnGenerarReporte.Visible=false;
+
+
+                }
+                else if (cmbTipoReporte.Text == "Log de Auditoría")
+                {
+                    pnlFiltroFecha.Visible = true;
+                    lblFechaDesde.Visible = true;
+                    lblFechaHasta.Visible = true;
+                    dateDesde.Visible = true;
+                    dateHasta.Visible = true;
+                    dtpMesInforme.Visible = false;
+                    
+                }
+                else if (cmbTipoReporte.Text == "Trámites por Paciente")
+                {
+                    pnlFiltroFecha.Visible = true;
+                    lblFechaDesde.Visible = true;
+                    lblFechaHasta.Visible = true;
+                    pnlFiltroPaciente.Visible=true;
+                    dateDesde.Visible = true;
+                    dateHasta.Visible = true;
+                    dtpMesInforme.Visible = false;
+                    btnGenerarReporte.Visible = true;
+                }
+                else
+                {
+                    pnlFiltroPaciente.Visible = true;
+                    btnGenerarReporte.Visible = true;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+                // Ocultamos todos los paneles de filtros
+                
+
+                // Limpiamos la grilla
+                dgvReporte.DataSource = null;
             dgvReporte.Rows.Clear();
             dgvReporte.Columns.Clear();
 
-            // Mostramos el panel de filtros correspondiente a la selección
-            switch (seleccion)
-            {
-                case "Log de Auditoría":
-                    pnlFiltroFecha.Visible = true;
-                    break;
-                case "Informes por Paciente":
-                case "Trámites por Paciente":
-                case "Pagos por Paciente":
-                    pnlFiltroPaciente.Visible = true;
-                    break;
-            }
+            //// Mostramos el panel de filtros correspondiente a la selección
+            //switch (seleccion)
+            //{
+            //    case "Log de Auditoría":
+            //        pnlFiltroFecha.Visible = true;
+            //        break;
+            //    case "Informes por Paciente":
+            //    case "Trámites por Paciente":
+            //    case "Pagos por Paciente":
+            //        pnlFiltroPaciente.Visible = true;
+            //        break;
+            //}
             lblTituloReporte.Text = $"Visor de Reportes: {seleccion}";
         }
 
@@ -167,12 +237,154 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         // --- Lógica para botones de exportación (placeholders) ---
         private void btnExportarPDF_Click(object sender, EventArgs e)
         {
+            if(cmbTipoReporte.Text == "Informes por Paciente")
+            {
+                if (txtInforme.Text.Length == 0 || txtBuscarPaciente.Text.Length < 8)
+                {
+                    MessageBox.Show("No se puede generar un PDF de un informe vacío o sin un documento valido escrito.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else if (txtInforme.Text.Length > 0 && txtBuscarPaciente.Text.Length == 8)
+                {
+
+                    try
+                    {
+                        string titulo = "Informe Mensual";
+                        string contenido = //$"Paciente: {lblApeNom.Text}\n" +
+                                           // $"DNI: {txtBusquedaPaciente.Text}\n" +
+                                           // $"Fecha: {dtpMesInforme.Value.ToString("dd/MM/yyyy")}\n\n" +
+                                           // $"Prestador: {lblPrestadorEscrito.Text} \n" + 
+                                           //$"Prestación: {lblPrestacionEscrita.Text} \n" + 
+                                           //$"Diagnostico inicial: {lblDiagnosticoEscrito.Text}\n\n" +
+                                          $"{txtInforme.Text}";
+
+                        string contenidoAdicional = "Firmado por: VicularAzul S.R.L.";
+
+                        string rutaPDF = CapaUtilidades.cls_CrearPDF.GenerarPDFConNumeracion(
+                            titulo, contenido, contenidoAdicional);
+
+                        MessageBox.Show($"PDF generado: {System.IO.Path.GetFileName(rutaPDF)}", "Éxito",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error: {ex.Message}", "Error",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
             MessageBox.Show("Funcionalidad para exportar a PDF no implementada.", "En desarrollo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Funcionalidad para imprimir no implementada.", "En desarrollo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnBuscarPaciente_Click(object sender, EventArgs e)
+        {
+            if (cmbTipoReporte.Text == "Informes por Paciente")
+            {
+                dateDesde.Visible = false;
+                dateHasta.Visible = false;
+                if (!int.TryParse(txtBuscarPaciente.Text, out int dniBuscado))
+                {
+                    MessageBox.Show("Por favor, ingrese un número de DNI válido.", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtBuscarPaciente.Clear();
+                    return;
+                }
+                
+                // Validar que se seleccionó un mes
+                if (dtpMesInforme.Value == null)
+                {
+                    MessageBox.Show("Por favor, seleccione un mes para el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+                    dgvReporte.Visible = false;
+                    txtInforme.Visible = true;
+                    
+                    // Obtener el mes y año seleccionados
+                    DateTime mesSeleccionado = dtpMesInforme.Value;
+                    int mes = mesSeleccionado.Month;
+                    int año = mesSeleccionado.Year;
+
+                    List<cls_InformeATDTO> informesEncontrados = gestor.ObtenerInformesPorDni(dniBuscado);
+
+                    Console.WriteLine($"DEBUG FORM - Cantidad de informes: {informesEncontrados?.Count ?? -1}");
+                    Console.WriteLine($"DEBUG FORM - Mes seleccionado: {mes}/{año}");
+
+                    if (informesEncontrados != null && informesEncontrados.Count > 0)
+                    {
+                        Console.WriteLine($"DEBUG FORM - Primer paciente: {informesEncontrados[0].nombre_paciente}");
+                    }
+
+                    if (informesEncontrados != null && informesEncontrados.Count > 0)
+                    {
+                        cls_InformeATDTO pacienteEncontrado = informesEncontrados[0];
+                        cls_PacienteDTO paciente = _logicaPaciente.BuscarPacientePorDni(dniBuscado);
+                        List<cls_PacienteDTO> resultado = new List<cls_PacienteDTO> { paciente };
+                        DateTime fechaactual = DateTime.Today;
+                        DateTime? cumple = paciente.fecha_nac;
+
+                        // Guardar el id_acompanamiento
+                        _idAcompanamientoActual = pacienteEncontrado.id_acompanamiento;
+
+                        // BUSCAR INFORMES EXISTENTES EN EL MES SELECCIONADO
+                        var informesDelMes = informesEncontrados.Where(i =>
+                            !string.IsNullOrEmpty(i.id_informe_at) &&
+                            i.fecha_periodo.Month == mes &&
+                            i.fecha_periodo.Year == año
+                        ).ToList();
+
+                        Console.WriteLine($"DEBUG - Informes del mes {mes}/{año}: {informesDelMes.Count}");
+
+                        if (informesDelMes.Count > 0)
+                        {
+                            // Hay informe en el mes seleccionado - Cargar para ACTUALIZAR
+                            var informeDelMes = informesDelMes[0];
+
+                            // Guardar el GUID del informe existente
+                            guidArchivo = informeDelMes.id_informe_at;
+                            Console.WriteLine($"DEBUG - GUID cargado: {guidArchivo}");
+
+                            if (!string.IsNullOrEmpty(informeDelMes.ruta))
+                            {
+                                txtInforme.Text = gestor.CargarOCrearArchivo(informeDelMes.ruta);
+                            }
+
+                            // Mostrar solo botón Actualizar
+
+
+                            MessageBox.Show($"Se encontró un informe para {mesSeleccionado:MMMM yyyy}.", "Informe Existente",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            // No hay informe en el mes seleccionado - Preparar para NUEVO informe
+                            txtInforme.Clear();
+                            guidArchivo = string.Empty; // Limpiar GUID para nuevo informe
+                            Console.WriteLine($"DEBUG - No hay informes para {mesSeleccionado:MMMM yyyy}, GUID limpiado");
+
+
+                            MessageBox.Show($"No hay informe para {mesSeleccionado:MMMM yyyy}.", "Falta Informe",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"No se encontró ningún paciente con DNI: {dniBuscado}.", "No Encontrado",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al buscar el paciente: " + ex.Message, "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
