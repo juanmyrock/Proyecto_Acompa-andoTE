@@ -229,6 +229,7 @@ namespace CapaVistas.Forms_Menu
             lblDiagnosticoEscrito.Text = string.Empty;
             lblPrestadorEscrito.Text = string.Empty;
             lblPrestacionEscrita.Text = string.Empty ;
+            lblEdadEscrita.Text = string.Empty;
             lblHoras.Text = string.Empty;
             lblAcompañante.Visible = true;
             txtAcompaniante.Visible = true;

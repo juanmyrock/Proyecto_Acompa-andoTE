@@ -17,17 +17,17 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopBar = new System.Windows.Forms.Panel();
             this.lblTituloForm = new System.Windows.Forms.Label();
             this.lblClose = new System.Windows.Forms.Label();
             this.gbFiltros = new System.Windows.Forms.GroupBox();
             this.btnGenerarReporte = new System.Windows.Forms.Button();
             this.pnlFiltroFecha = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblFechaHasta = new System.Windows.Forms.Label();
             this.dateHasta = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblFechaDesde = new System.Windows.Forms.Label();
             this.dateDesde = new System.Windows.Forms.DateTimePicker();
             this.pnlFiltroPaciente = new System.Windows.Forms.Panel();
             this.btnBuscarPaciente = new System.Windows.Forms.Button();
@@ -39,6 +39,8 @@
             this.dgvReporte = new System.Windows.Forms.DataGridView();
             this.btnExportarPDF = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
+            this.txtInforme = new System.Windows.Forms.TextBox();
+            this.dtpMesInforme = new System.Windows.Forms.DateTimePicker();
             this.panelTopBar.SuspendLayout();
             this.gbFiltros.SuspendLayout();
             this.pnlFiltroFecha.SuspendLayout();
@@ -119,24 +121,25 @@
             // 
             // pnlFiltroFecha
             // 
-            this.pnlFiltroFecha.Controls.Add(this.label4);
+            this.pnlFiltroFecha.Controls.Add(this.lblFechaHasta);
             this.pnlFiltroFecha.Controls.Add(this.dateHasta);
-            this.pnlFiltroFecha.Controls.Add(this.label3);
+            this.pnlFiltroFecha.Controls.Add(this.lblFechaDesde);
             this.pnlFiltroFecha.Controls.Add(this.dateDesde);
+            this.pnlFiltroFecha.Controls.Add(this.dtpMesInforme);
             this.pnlFiltroFecha.Location = new System.Drawing.Point(10, 200);
             this.pnlFiltroFecha.Name = "pnlFiltroFecha";
             this.pnlFiltroFecha.Size = new System.Drawing.Size(260, 120);
             this.pnlFiltroFecha.TabIndex = 3;
             this.pnlFiltroFecha.Visible = false;
             // 
-            // label4
+            // lblFechaHasta
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 65);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 14);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Fecha Hasta:";
+            this.lblFechaHasta.AutoSize = true;
+            this.lblFechaHasta.Location = new System.Drawing.Point(10, 65);
+            this.lblFechaHasta.Name = "lblFechaHasta";
+            this.lblFechaHasta.Size = new System.Drawing.Size(75, 14);
+            this.lblFechaHasta.TabIndex = 3;
+            this.lblFechaHasta.Text = "Fecha Hasta:";
             // 
             // dateHasta
             // 
@@ -145,18 +148,18 @@
             this.dateHasta.Size = new System.Drawing.Size(240, 22);
             this.dateHasta.TabIndex = 2;
             // 
-            // label3
+            // lblFechaDesde
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 14);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Fecha Desde:";
+            this.lblFechaDesde.AutoSize = true;
+            this.lblFechaDesde.Location = new System.Drawing.Point(10, 10);
+            this.lblFechaDesde.Name = "lblFechaDesde";
+            this.lblFechaDesde.Size = new System.Drawing.Size(77, 14);
+            this.lblFechaDesde.TabIndex = 1;
+            this.lblFechaDesde.Text = "Fecha Desde:";
             // 
             // dateDesde
             // 
-            this.dateDesde.Location = new System.Drawing.Point(10, 30);
+            this.dateDesde.Location = new System.Drawing.Point(10, 33);
             this.dateDesde.Name = "dateDesde";
             this.dateDesde.Size = new System.Drawing.Size(240, 22);
             this.dateDesde.TabIndex = 0;
@@ -182,6 +185,7 @@
             this.btnBuscarPaciente.TabIndex = 2;
             this.btnBuscarPaciente.Text = "Buscar";
             this.btnBuscarPaciente.UseVisualStyleBackColor = true;
+            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
             // 
             // txtBuscarPaciente
             // 
@@ -241,23 +245,23 @@
             this.dgvReporte.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvReporte.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.dgvReporte.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReporte.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReporte.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvReporte.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvReporte.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvReporte.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvReporte.EnableHeadersVisualStyles = false;
             this.dgvReporte.GridColor = System.Drawing.Color.Teal;
             this.dgvReporte.Location = new System.Drawing.Point(325, 80);
@@ -298,6 +302,24 @@
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
+            // txtInforme
+            // 
+            this.txtInforme.Enabled = false;
+            this.txtInforme.Location = new System.Drawing.Point(325, 80);
+            this.txtInforme.Multiline = true;
+            this.txtInforme.Name = "txtInforme";
+            this.txtInforme.Size = new System.Drawing.Size(715, 450);
+            this.txtInforme.TabIndex = 8;
+            this.txtInforme.Visible = false;
+            // 
+            // dtpMesInforme
+            // 
+            this.dtpMesInforme.Location = new System.Drawing.Point(10, 33);
+            this.dtpMesInforme.Name = "dtpMesInforme";
+            this.dtpMesInforme.Size = new System.Drawing.Size(240, 22);
+            this.dtpMesInforme.TabIndex = 6;
+            this.dtpMesInforme.Visible = false;
+            // 
             // frmGestionReportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -310,6 +332,7 @@
             this.Controls.Add(this.gbFiltros);
             this.Controls.Add(this.panelTopBar);
             this.Controls.Add(this.btnImprimir);
+            this.Controls.Add(this.txtInforme);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmGestionReportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -341,14 +364,16 @@
         private System.Windows.Forms.TextBox txtBuscarPaciente;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel pnlFiltroFecha;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblFechaHasta;
         private System.Windows.Forms.DateTimePicker dateHasta;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblFechaDesde;
         private System.Windows.Forms.DateTimePicker dateDesde;
         private System.Windows.Forms.Button btnGenerarReporte;
         private System.Windows.Forms.Label lblTituloReporte;
         private System.Windows.Forms.DataGridView dgvReporte;
         private System.Windows.Forms.Button btnExportarPDF;
         private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.TextBox txtInforme;
+        private System.Windows.Forms.DateTimePicker dtpMesInforme;
     }
 }
