@@ -244,7 +244,7 @@
             this.txtNumDomicilio.Location = new System.Drawing.Point(562, 134);
             this.txtNumDomicilio.Name = "txtNumDomicilio";
             this.txtNumDomicilio.Size = new System.Drawing.Size(134, 22);
-            this.txtNumDomicilio.TabIndex = 16;
+            this.txtNumDomicilio.TabIndex = 20;
             this.txtNumDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumDomicilio_KeyPress);
             // 
             // label5
@@ -272,14 +272,14 @@
             this.txtDiagnostico.Multiline = true;
             this.txtDiagnostico.Name = "txtDiagnostico";
             this.txtDiagnostico.Size = new System.Drawing.Size(576, 85);
-            this.txtDiagnostico.TabIndex = 19;
+            this.txtDiagnostico.TabIndex = 22;
             // 
             // txtCargaHoraria
             // 
             this.txtCargaHoraria.Location = new System.Drawing.Point(783, 137);
             this.txtCargaHoraria.Name = "txtCargaHoraria";
             this.txtCargaHoraria.Size = new System.Drawing.Size(151, 22);
-            this.txtCargaHoraria.TabIndex = 18;
+            this.txtCargaHoraria.TabIndex = 21;
             this.txtCargaHoraria.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCargaHoraria_KeyPress);
             // 
             // label4
@@ -297,7 +297,7 @@
             this.txtNumAfiliado.Location = new System.Drawing.Point(346, 93);
             this.txtNumAfiliado.Name = "txtNumAfiliado";
             this.txtNumAfiliado.Size = new System.Drawing.Size(121, 22);
-            this.txtNumAfiliado.TabIndex = 68;
+            this.txtNumAfiliado.TabIndex = 15;
             this.txtNumAfiliado.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumAfiliado_KeyPress);
             // 
             // label1
@@ -317,7 +317,7 @@
             this.cmbObraSocial.Location = new System.Drawing.Point(134, 93);
             this.cmbObraSocial.Name = "cmbObraSocial";
             this.cmbObraSocial.Size = new System.Drawing.Size(121, 22);
-            this.cmbObraSocial.TabIndex = 67;
+            this.cmbObraSocial.TabIndex = 14;
             // 
             // lbl
             // 
@@ -333,7 +333,7 @@
             this.txtCud.Location = new System.Drawing.Point(562, 96);
             this.txtCud.Name = "txtCud";
             this.txtCud.Size = new System.Drawing.Size(134, 22);
-            this.txtCud.TabIndex = 17;
+            this.txtCud.TabIndex = 16;
             // 
             // txtTelefono
             // 
@@ -359,7 +359,7 @@
             this.dateFechaNac.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.dateFechaNac.Name = "dateFechaNac";
             this.dateFechaNac.Size = new System.Drawing.Size(151, 22);
-            this.dateFechaNac.TabIndex = 12;
+            this.dateFechaNac.TabIndex = 17;
             this.dateFechaNac.Value = new System.DateTime(2024, 6, 24, 0, 0, 0, 0);
             // 
             // label29
@@ -385,7 +385,7 @@
             this.txtDomicilio.Location = new System.Drawing.Point(346, 134);
             this.txtDomicilio.Name = "txtDomicilio";
             this.txtDomicilio.Size = new System.Drawing.Size(121, 22);
-            this.txtDomicilio.TabIndex = 15;
+            this.txtDomicilio.TabIndex = 19;
             this.txtDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDomicilio_KeyPress);
             // 
             // label14
@@ -526,7 +526,7 @@
             this.cmbLocalidad.Location = new System.Drawing.Point(134, 134);
             this.cmbLocalidad.Name = "cmbLocalidad";
             this.cmbLocalidad.Size = new System.Drawing.Size(121, 22);
-            this.cmbLocalidad.TabIndex = 13;
+            this.cmbLocalidad.TabIndex = 18;
             // 
             // cmbTipoDNI
             // 
