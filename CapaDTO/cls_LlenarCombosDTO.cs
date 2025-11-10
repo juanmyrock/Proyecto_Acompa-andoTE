@@ -57,7 +57,11 @@ namespace CapaDTO
         public int id_profesional { get; set; }
         public string ApeNom { get; set; }
     }
-
+    public class cls_ProvinciasDTO
+    {
+        public int id { get; set; }
+        public string provincia { get; set; }
+    }
     public class JornadaATDTO
     {
         public int id_jornada { get; set; }
@@ -76,6 +80,7 @@ namespace CapaDTO
         public List<cls_TramitesDTO> Tramites { get; set; }
 
         public List<cls_EspecialidadesDTO> Especialidades { get; set; }
+        public List<cls_ProvinciasDTO> Provincias { get; set; }
 
     }
 

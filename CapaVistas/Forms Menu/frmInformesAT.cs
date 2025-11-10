@@ -126,6 +126,7 @@ namespace CapaVistas.Forms_Menu
 
                         MessageBox.Show($"Se encontró un informe para {mesSeleccionado:MMMM yyyy}. Puede actualizarlo.", "Informe Existente",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnExportarPDF.Visible = true;
                     }
                     else
                     {
@@ -133,6 +134,7 @@ namespace CapaVistas.Forms_Menu
                         txtInforme.Clear();
                         guidArchivo = string.Empty; // Limpiar GUID para nuevo informe
                         Console.WriteLine($"DEBUG - No hay informes para {mesSeleccionado:MMMM yyyy}, GUID limpiado");
+                        btnExportarPDF.Visible = false;
 
                         // Mostrar solo botón Guardar
                         btnGuardarInforme.Visible = true;
@@ -140,6 +142,8 @@ namespace CapaVistas.Forms_Menu
 
                         MessageBox.Show($"No hay informe para {mesSeleccionado:MMMM yyyy}. Puede crear uno nuevo.", "Nuevo Informe",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lblAcompañante.Visible = true;
+                        txtAcompaniante.Visible = true;
                     }
                 }
                 else
@@ -159,35 +163,31 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Validar que hay un mes seleccionado
                 if (dtpMesInforme.Value == null)
                 {
                     MessageBox.Show("Debe seleccionar un mes para el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validar que hay un paciente seleccionado
                 if (_idAcompanamientoActual == 0)
                 {
                     MessageBox.Show("Debe buscar un paciente primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Generar GUID para nuevo informe
                 guidArchivo = Guid.NewGuid().ToString();
 
-                // Construir ruta del archivo
                 string ruta = Path.Combine(rutaArchivoGuardado, guidArchivo + ".dat");
 
                 // 1. Guardar archivo físicamente
                 gestor.GuardarArchivo(ruta, txtInforme.Text);
 
-                // 2. Crear el DTO con los datos del informe - USAR EL MES SELECCIONADO
+                // 2. Crear el DTO con los datos del informe
                 var informe = new cls_InformeATDTO
                 {
                     id_informe_at = guidArchivo,
                     id_acompanamiento = _idAcompanamientoActual,
-                    fecha_periodo = new DateTime(dtpMesInforme.Value.Year, dtpMesInforme.Value.Month, 1), // Primer día del mes seleccionado
+                    fecha_periodo = new DateTime(dtpMesInforme.Value.Year, dtpMesInforme.Value.Month, 1),
                     id_usuario_creador = 1,
                     fecha_creacion = DateTime.Now,
                     ruta = ruta,
@@ -233,8 +233,10 @@ namespace CapaVistas.Forms_Menu
             lblHoras.Text = string.Empty;
             lblAcompañante.Visible = true;
             txtAcompaniante.Visible = true;
+            txtAcompaniante.Clear();
             btnActualizar.Visible = false;
             btnGuardarInforme.Visible = true;
+            btnExportarPDF.Visible = false;
         }
 
         private void btnGuardarInforme_Click(object sender, EventArgs e)
@@ -374,6 +376,9 @@ namespace CapaVistas.Forms_Menu
 
             if (!string.IsNullOrEmpty(txtAcompaniante.Text))
                 encabezado.AppendLine($"Acompañante: {txtAcompaniante.Text}");
+
+            if (!string.IsNullOrEmpty(lblDiagnosticoEscrito.Text))
+                encabezado.AppendLine($"Diagnóstico Inicial: {lblDiagnosticoEscrito.Text}");
 
             encabezado.AppendLine("".PadRight(50, '=')); // Línea separadora
 

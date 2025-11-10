@@ -138,7 +138,7 @@
             this.btnGuardarInforme.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardarInforme.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardarInforme.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnGuardarInforme.Location = new System.Drawing.Point(93, 442);
+            this.btnGuardarInforme.Location = new System.Drawing.Point(93, 431);
             this.btnGuardarInforme.Name = "btnGuardarInforme";
             this.btnGuardarInforme.Size = new System.Drawing.Size(210, 41);
             this.btnGuardarInforme.TabIndex = 2;
@@ -193,7 +193,7 @@
             this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActualizar.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnActualizar.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnActualizar.Location = new System.Drawing.Point(93, 442);
+            this.btnActualizar.Location = new System.Drawing.Point(93, 431);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(210, 41);
             this.btnActualizar.TabIndex = 3;
@@ -305,11 +305,12 @@
             this.btnLimpiarCampos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiarCampos.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarCampos.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(12, 503);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(93, 478);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
-            this.btnLimpiarCampos.Size = new System.Drawing.Size(139, 41);
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(210, 41);
             this.btnLimpiarCampos.TabIndex = 25;
             this.btnLimpiarCampos.Text = "Limpiar Campos";
+            this.btnLimpiarCampos.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
             this.btnLimpiarCampos.Click += new System.EventHandler(this.btnLimpiarCampos_Click);
             // 
@@ -321,12 +322,13 @@
             this.btnExportarPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportarPDF.Font = new System.Drawing.Font("Sans Serif Collection", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExportarPDF.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnExportarPDF.Location = new System.Drawing.Point(250, 503);
+            this.btnExportarPDF.Location = new System.Drawing.Point(93, 525);
             this.btnExportarPDF.Name = "btnExportarPDF";
-            this.btnExportarPDF.Size = new System.Drawing.Size(139, 41);
+            this.btnExportarPDF.Size = new System.Drawing.Size(210, 41);
             this.btnExportarPDF.TabIndex = 26;
             this.btnExportarPDF.Text = "Exportar PDF";
             this.btnExportarPDF.UseVisualStyleBackColor = true;
+            this.btnExportarPDF.Visible = false;
             this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
             // 
             // frmInformesAT

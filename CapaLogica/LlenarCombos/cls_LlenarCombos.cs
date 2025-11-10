@@ -34,6 +34,19 @@ namespace CapaLogica.LlenarCombos
             }
         }
 
+        public LlenarCombosResponseDTO ObtenerProvincias()
+        {
+            try
+            {
+                return _llenador.ObtenerProvincias();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener provincias: {ex.Message}");
+                return null;
+            }
+        }
+
         public LlenarCombosResponseDTO ObtenerSexos()
         {
             try
