@@ -59,10 +59,7 @@ namespace CapaLogica.ABM
             {
                 throw new Exception("El empleado no tiene un correo electrónico asignado. No se puede crear el usuario.");
             }
-            // if (_userDatos.ExisteUsername(username)) throw new Exception("El nombre de usuario ya está en uso.");
 
-            // 2. Generar la contraseña temporal ANTES de la transacción
-            //_userDatos.CrearNuevoUsuario(idUsuario, username, idRol);
             
             string contraseñaTemporal = new Random().Next(100000, 999999).ToString();
             string hashTemporal = cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using CapaLogica.ABM;
+using CapaLogica.LlenarCombos;
 
 namespace CapaVistas.Forms_Menu // O tu namespace
 {
@@ -11,10 +12,12 @@ namespace CapaVistas.Forms_Menu // O tu namespace
     {
         cls_LogicaGestionarOS _obraSocial;
         private int _idObraSocialSeleccionada = -1;
+        cls_LlenarCombos _rellenador;
         public frmABMObraSocial()
         {
             
             InitializeComponent();
+            _rellenador = new cls_LlenarCombos();
             _obraSocial = new cls_LogicaGestionarOS();
             cmbOrden.SelectedIndex = 0;
            
@@ -24,6 +27,7 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         {
             CargarGrilla();
             ConfigurarEstilosGrilla();
+            CargarCombos();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -59,6 +63,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 dgvObrasSociales.Columns["fecha_baja"].Visible = false;
                 dgvObrasSociales.Columns["fecha_alta"].Visible = false;
                 dgvObrasSociales.Columns["estado"].Visible = false;
+                dgvObrasSociales.Columns["id_localidad"].Visible = false;
+                dgvObrasSociales.Columns["id_provincia"].Visible = false;
 
 
             }
@@ -71,7 +77,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void ConfigurarEstilosGrilla()
         {
-            // Similar al estilo de frmProfesionales
             dgvObrasSociales.BackgroundColor = System.Drawing.Color.FromArgb(0, 50, 50);
             dgvObrasSociales.GridColor = System.Drawing.Color.Teal;
             dgvObrasSociales.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(0, 64, 64);
@@ -85,7 +90,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             dgvObrasSociales.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvObrasSociales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            // Ocultar columnas que no se deben editar manualmente
             dgvObrasSociales.Columns["id_obra_social"].Visible = false;
             dgvObrasSociales.Columns["estado"].Visible = false;
         }
@@ -116,6 +120,21 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 }
             }
         }
+        private void CargarCombos()
+        {
+            var cargaLocalidades = _rellenador.ObtenerLocalidades();
+            var cargaProvincias = _rellenador.ObtenerProvincias();
+
+            try
+            {
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbLocalidad, cargaLocalidades.Localidades, "nombre_localidad", "id_localidad");
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbProvincia, cargaProvincias.Provincias, "provincia", "id");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void LimpiarCampos()
         {
             txtNombreOS.Clear();
@@ -125,6 +144,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             txtNumDomicilio.Clear();
             txtTelefono.Clear();
             dgvObrasSociales.ClearSelection();
+            cmbLocalidad.SelectedIndex = -1;
+            cmbProvincia.SelectedIndex = -1;
             cmbOrden.SelectedIndex = 0;
         }
 
@@ -139,7 +160,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 num_domicilio = Convert.ToInt32(txtNumDomicilio.Text),
                 telefono = txtTelefono.Text,
                 estado = Convert.ToBoolean(1),
-                fecha_alta = DateTime.Now
+                fecha_alta = DateTime.Now,
+                id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
+                id_provincia = Convert.ToInt32(cmbProvincia.SelectedValue)
 
             };
 
@@ -186,7 +209,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     num_domicilio = string.IsNullOrWhiteSpace(txtNumDomicilio.Text) ? 0 : Convert.ToInt32(txtNumDomicilio.Text.Trim()),
                     telefono = txtTelefono.Text.Trim(),
                     estado = true,
-                    fecha_alta = DateTime.Now
+                    //fecha_alta = DateTime.Now,
+                    id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
+                    id_provincia = Convert.ToInt32(cmbProvincia.SelectedValue)
                 };
 
                 if (_obraSocial.ModificarObraSocial(obraSocialModificada))
@@ -323,6 +348,24 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     txtDomicilio.Text = osSeleccionada.domicilio;
                     txtNumDomicilio.Text = osSeleccionada.num_domicilio.ToString();
                     txtTelefono.Text = osSeleccionada.telefono.ToString();
+
+                    if (osSeleccionada.id_provincia.HasValue)
+                    {
+                        cmbProvincia.SelectedValue = osSeleccionada.id_provincia.Value;
+                    }
+                    else
+                    {
+                        cmbProvincia.SelectedValue = -1;
+                    }
+
+                    if (osSeleccionada.id_localidad.HasValue)
+                    {
+                        cmbLocalidad.SelectedValue = osSeleccionada.id_localidad.Value;
+                    }
+                    else
+                    {
+                        cmbLocalidad.SelectedValue = -1;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -350,6 +393,24 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     txtDomicilio.Text = osSeleccionada.domicilio;
                     txtNumDomicilio.Text = osSeleccionada.num_domicilio.ToString();
                     txtTelefono.Text = osSeleccionada.telefono.ToString();
+
+                    if (osSeleccionada.id_provincia.HasValue)
+                    {
+                        cmbProvincia.SelectedValue = osSeleccionada.id_provincia.Value;
+                    }
+                    else
+                    {
+                        cmbProvincia.SelectedIndex = -1;
+                    }
+
+                    if (osSeleccionada.id_localidad.HasValue)
+                    {
+                        cmbLocalidad.SelectedValue = osSeleccionada.id_localidad.Value;
+                    }
+                    else
+                    {
+                        cmbLocalidad.SelectedIndex = -1;
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -39,7 +39,9 @@ namespace CapaDatos
                         telefono = row["telefono"] != DBNull.Value ? row["telefono"].ToString() : string.Empty,
                         estado = row["estado"] != DBNull.Value ? Convert.ToBoolean(row["estado"]) : false,
                         fecha_alta = row["fecha_alta"] != DBNull.Value ? Convert.ToDateTime(row["fecha_alta"]) : DateTime.MinValue,
-                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue
+                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue,
+                        id_provincia = row["id_provincia"] != DBNull.Value ? Convert.ToInt32(row["id_provincia"]) : 0,
+                        id_localidad =row["id_localidad"] != DBNull.Value ? Convert.ToInt32(row["id_localidad"]) : 0
                     });
                 }
                 return listaObrasSociales;
@@ -73,7 +75,9 @@ namespace CapaDatos
                         telefono = row["telefono"] != DBNull.Value ? row["telefono"].ToString() : string.Empty,
                         estado = row["estado"] != DBNull.Value ? Convert.ToBoolean(row["estado"]) : false,
                         fecha_alta = row["fecha_alta"] != DBNull.Value ? Convert.ToDateTime(row["fecha_alta"]) : DateTime.MinValue,
-                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue
+                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue,
+                        id_provincia = row["id_provincia"] != DBNull.Value ? Convert.ToInt32(row["id_provincia"]) : 0,
+                        id_localidad = row["id_localidad"] != DBNull.Value ? Convert.ToInt32(row["id_localidad"]) : 0
                     });
                 }
                 return listaObrasSociales;
@@ -107,7 +111,9 @@ namespace CapaDatos
                         telefono = row["telefono"] != DBNull.Value ? row["telefono"].ToString() : string.Empty,
                         estado = row["estado"] != DBNull.Value ? Convert.ToBoolean(row["estado"]) : false,
                         fecha_alta = row["fecha_alta"] != DBNull.Value ? Convert.ToDateTime(row["fecha_alta"]) : DateTime.MinValue,
-                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue
+                        fecha_baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : DateTime.MinValue,
+                        id_provincia = row["id_provincia"] != DBNull.Value ? Convert.ToInt32(row["id_provincia"]) : 0,
+                        id_localidad = row["id_localidad"] != DBNull.Value ? Convert.ToInt32(row["id_localidad"]) : 0
                     });
                 }
                 return listaObrasSociales;
@@ -123,9 +129,9 @@ namespace CapaDatos
         {
             string query = @"
         INSERT INTO Obra_Social 
-        (nombre_os, codigo, cuit, domicilio, num_domicilio, telefono, estado, fecha_alta)
+        (nombre_os, codigo, cuit, domicilio, num_domicilio, telefono, estado, fecha_alta, id_localidad, id_provincia)
         VALUES 
-        (@NombreOS, @Codigo, @Cuit, @Domicilio, @NumDomicilio, @Telefono, @Estado, @FechaAlta)";
+        (@NombreOS, @Codigo, @Cuit, @Domicilio, @NumDomicilio, @Telefono, @Estado, @FechaAlta @id_localidad, @id_provincia)";
 
             try
             {
@@ -137,8 +143,12 @@ namespace CapaDatos
                 new SqlParameter("@Domicilio", obraSocial.domicilio ?? (object)DBNull.Value),
                 new SqlParameter("@NumDomicilio", obraSocial.num_domicilio ?? (object)DBNull.Value),
                 new SqlParameter("@Telefono", obraSocial.telefono ?? (object)DBNull.Value),
-                new SqlParameter("@Estado", obraSocial.estado ?? true), // Por defecto activa
-                new SqlParameter("@FechaAlta", obraSocial.fecha_alta ?? DateTime.Now)
+                new SqlParameter("@Estado", obraSocial.estado ?? true),
+                new SqlParameter("@FechaAlta", obraSocial.fecha_alta ?? DateTime.Now),
+                new SqlParameter("@id_localidad", obraSocial.id_localidad ?? (object)DBNull.Value),
+                new SqlParameter("@id_provincia", obraSocial.id_provincia ?? (object)DBNull.Value)
+
+
             };
 
                 int filasAfectadas = _ejecutor.ConsultaCUD(query, parametros);
@@ -162,7 +172,9 @@ namespace CapaDatos
                 num_domicilio = @NumDomicilio,
                 telefono = @Telefono,
                 estado = @Estado,
-                fecha_baja = @FechaBaja
+                fecha_baja = @FechaBaja,
+                id_localidad = @id_localidad,
+                id_provincia = @id_provincia
             WHERE id_obra_social = @IdObraSocial";
 
             try
@@ -177,7 +189,9 @@ namespace CapaDatos
                 new SqlParameter("@NumDomicilio", obraSocial.num_domicilio ?? (object)DBNull.Value),
                 new SqlParameter("@Telefono", obraSocial.telefono ?? (object)DBNull.Value),
                 new SqlParameter("@Estado", obraSocial.estado ?? true),
-                new SqlParameter("@FechaBaja", obraSocial.fecha_baja ?? (object)DBNull.Value)
+                new SqlParameter("@FechaBaja", obraSocial.fecha_baja ?? (object)DBNull.Value),
+                new SqlParameter("@id_localidad", obraSocial.id_localidad ?? (object)DBNull.Value),
+                new SqlParameter("@id_provincia", obraSocial.id_provincia ?? (object)DBNull.Value)
             };
 
                 int filasAfectadas = _ejecutor.ConsultaCUD(query, parametros);

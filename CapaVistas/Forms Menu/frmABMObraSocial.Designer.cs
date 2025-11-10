@@ -36,7 +36,11 @@
             this.cmbOrden = new System.Windows.Forms.ComboBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.gbDatosOS = new System.Windows.Forms.GroupBox();
+            this.lblProvincia = new System.Windows.Forms.Label();
+            this.cmbProvincia = new System.Windows.Forms.ComboBox();
+            this.lblLocalidad = new System.Windows.Forms.Label();
             this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.cmbLocalidad = new System.Windows.Forms.ComboBox();
             this.lblTelefono = new System.Windows.Forms.Label();
             this.txtNumDomicilio = new System.Windows.Forms.TextBox();
             this.lblNumDomicilio = new System.Windows.Forms.Label();
@@ -155,7 +159,11 @@
             this.gbDatosOS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbDatosOS.Controls.Add(this.lblProvincia);
+            this.gbDatosOS.Controls.Add(this.cmbProvincia);
+            this.gbDatosOS.Controls.Add(this.lblLocalidad);
             this.gbDatosOS.Controls.Add(this.txtTelefono);
+            this.gbDatosOS.Controls.Add(this.cmbLocalidad);
             this.gbDatosOS.Controls.Add(this.lblTelefono);
             this.gbDatosOS.Controls.Add(this.txtNumDomicilio);
             this.gbDatosOS.Controls.Add(this.lblNumDomicilio);
@@ -176,17 +184,55 @@
             this.gbDatosOS.TabStop = false;
             this.gbDatosOS.Text = "Datos de la Obra Social";
             // 
+            // lblProvincia
+            // 
+            this.lblProvincia.AutoSize = true;
+            this.lblProvincia.Location = new System.Drawing.Point(703, 60);
+            this.lblProvincia.Name = "lblProvincia";
+            this.lblProvincia.Size = new System.Drawing.Size(60, 14);
+            this.lblProvincia.TabIndex = 99;
+            this.lblProvincia.Text = "Provincia:";
+            // 
+            // cmbProvincia
+            // 
+            this.cmbProvincia.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbProvincia.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbProvincia.FormattingEnabled = true;
+            this.cmbProvincia.Location = new System.Drawing.Point(769, 55);
+            this.cmbProvincia.Name = "cmbProvincia";
+            this.cmbProvincia.Size = new System.Drawing.Size(151, 22);
+            this.cmbProvincia.TabIndex = 9;
+            // 
+            // lblLocalidad
+            // 
+            this.lblLocalidad.AutoSize = true;
+            this.lblLocalidad.Location = new System.Drawing.Point(37, 110);
+            this.lblLocalidad.Name = "lblLocalidad";
+            this.lblLocalidad.Size = new System.Drawing.Size(60, 14);
+            this.lblLocalidad.TabIndex = 97;
+            this.lblLocalidad.Text = "Localidad:";
+            // 
             // txtTelefono
             // 
-            this.txtTelefono.Location = new System.Drawing.Point(705, 117);
+            this.txtTelefono.Location = new System.Drawing.Point(769, 112);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(160, 22);
-            this.txtTelefono.TabIndex = 10;
+            this.txtTelefono.Size = new System.Drawing.Size(151, 22);
+            this.txtTelefono.TabIndex = 13;
+            // 
+            // cmbLocalidad
+            // 
+            this.cmbLocalidad.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbLocalidad.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbLocalidad.FormattingEnabled = true;
+            this.cmbLocalidad.Location = new System.Drawing.Point(103, 107);
+            this.cmbLocalidad.Name = "cmbLocalidad";
+            this.cmbLocalidad.Size = new System.Drawing.Size(128, 22);
+            this.cmbLocalidad.TabIndex = 10;
             // 
             // lblTelefono
             // 
             this.lblTelefono.AutoSize = true;
-            this.lblTelefono.Location = new System.Drawing.Point(643, 120);
+            this.lblTelefono.Location = new System.Drawing.Point(703, 115);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(55, 14);
             this.lblTelefono.TabIndex = 10;
@@ -194,31 +240,30 @@
             // 
             // txtNumDomicilio
             // 
-            this.txtNumDomicilio.Location = new System.Drawing.Point(130, 117);
+            this.txtNumDomicilio.Location = new System.Drawing.Point(515, 107);
             this.txtNumDomicilio.Name = "txtNumDomicilio";
-            this.txtNumDomicilio.Size = new System.Drawing.Size(80, 22);
-            this.txtNumDomicilio.TabIndex = 9;
+            this.txtNumDomicilio.Size = new System.Drawing.Size(151, 22);
+            this.txtNumDomicilio.TabIndex = 12;
             // 
             // lblNumDomicilio
             // 
-            this.lblNumDomicilio.AutoSize = true;
-            this.lblNumDomicilio.Location = new System.Drawing.Point(26, 121);
+            this.lblNumDomicilio.Location = new System.Drawing.Point(446, 102);
             this.lblNumDomicilio.Name = "lblNumDomicilio";
-            this.lblNumDomicilio.Size = new System.Drawing.Size(98, 14);
+            this.lblNumDomicilio.Size = new System.Drawing.Size(63, 32);
             this.lblNumDomicilio.TabIndex = 8;
             this.lblNumDomicilio.Text = "Nro de Domicilio:";
             // 
             // txtDomicilio
             // 
-            this.txtDomicilio.Location = new System.Drawing.Point(370, 117);
+            this.txtDomicilio.Location = new System.Drawing.Point(299, 107);
             this.txtDomicilio.Name = "txtDomicilio";
-            this.txtDomicilio.Size = new System.Drawing.Size(203, 22);
+            this.txtDomicilio.Size = new System.Drawing.Size(136, 22);
             this.txtDomicilio.TabIndex = 11;
             // 
             // lblDomicilio
             // 
             this.lblDomicilio.AutoSize = true;
-            this.lblDomicilio.Location = new System.Drawing.Point(304, 120);
+            this.lblDomicilio.Location = new System.Drawing.Point(237, 110);
             this.lblDomicilio.Name = "lblDomicilio";
             this.lblDomicilio.Size = new System.Drawing.Size(60, 14);
             this.lblDomicilio.TabIndex = 6;
@@ -226,7 +271,7 @@
             // 
             // txtCuit
             // 
-            this.txtCuit.Location = new System.Drawing.Point(783, 60);
+            this.txtCuit.Location = new System.Drawing.Point(515, 60);
             this.txtCuit.Name = "txtCuit";
             this.txtCuit.Size = new System.Drawing.Size(151, 22);
             this.txtCuit.TabIndex = 8;
@@ -234,7 +279,7 @@
             // lblCuit
             // 
             this.lblCuit.AutoSize = true;
-            this.lblCuit.Location = new System.Drawing.Point(743, 63);
+            this.lblCuit.Location = new System.Drawing.Point(456, 63);
             this.lblCuit.Name = "lblCuit";
             this.lblCuit.Size = new System.Drawing.Size(34, 14);
             this.lblCuit.TabIndex = 4;
@@ -242,15 +287,15 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(623, 60);
+            this.txtCodigo.Location = new System.Drawing.Point(299, 60);
             this.txtCodigo.Name = "txtCodigo";
-            this.txtCodigo.Size = new System.Drawing.Size(100, 22);
+            this.txtCodigo.Size = new System.Drawing.Size(136, 22);
             this.txtCodigo.TabIndex = 7;
             // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(571, 63);
+            this.lblCodigo.Location = new System.Drawing.Point(247, 63);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(46, 14);
             this.lblCodigo.TabIndex = 2;
@@ -260,7 +305,7 @@
             // 
             this.txtNombreOS.Location = new System.Drawing.Point(103, 60);
             this.txtNombreOS.Name = "txtNombreOS";
-            this.txtNombreOS.Size = new System.Drawing.Size(460, 22);
+            this.txtNombreOS.Size = new System.Drawing.Size(128, 22);
             this.txtNombreOS.TabIndex = 6;
             // 
             // lblNombreOS
@@ -443,5 +488,9 @@
         private System.Windows.Forms.Label lblNumDomicilio;
         private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.Label lblTelefono;
+        private System.Windows.Forms.Label lblLocalidad;
+        private System.Windows.Forms.ComboBox cmbLocalidad;
+        private System.Windows.Forms.Label lblProvincia;
+        private System.Windows.Forms.ComboBox cmbProvincia;
     }
 }

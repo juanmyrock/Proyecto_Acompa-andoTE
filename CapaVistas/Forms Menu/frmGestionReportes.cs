@@ -120,26 +120,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
             }
 
-                // Ocultamos todos los paneles de filtros
-                
-
-                // Limpiamos la grilla
-                dgvReporte.DataSource = null;
+            dgvReporte.DataSource = null;
             dgvReporte.Rows.Clear();
             dgvReporte.Columns.Clear();
-
-            //// Mostramos el panel de filtros correspondiente a la selección
-            //switch (seleccion)
-            //{
-            //    case "Log de Auditoría":
-            //        pnlFiltroFecha.Visible = true;
-            //        break;
-            //    case "Informes por Paciente":
-            //    case "Trámites por Paciente":
-            //    case "Pagos por Paciente":
-            //        pnlFiltroPaciente.Visible = true;
-            //        break;
-            //}
             lblTituloReporte.Text = $"Visor de Reportes: {seleccion}";
         }
 
@@ -272,7 +255,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     }
                 }
             }
-            MessageBox.Show("Funcionalidad para exportar a PDF no implementada.", "En desarrollo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
