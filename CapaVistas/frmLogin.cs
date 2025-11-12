@@ -282,5 +282,9 @@ namespace CapaVistas
             this.Close();
         }
 
+        private void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnAcceder.PerformClick();
+        }
     }
 }

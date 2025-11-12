@@ -341,7 +341,6 @@ namespace CapaVistas.Forms_Menu
 
             int dniPacienteActual = Convert.ToInt32(txtDniPaciente.Text);
 
-            // VERIFICAR SI EL DNI DEL PACIENTE CAMBIÓ
             if (dniPacienteActual != _dniOriginal)
             {
                 bool dniPacienteExiste = _logicaPaciente.VerificarDniExistente(dniPacienteActual);
@@ -671,6 +670,35 @@ namespace CapaVistas.Forms_Menu
             {
                 e.Handled = true;
             }
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetter(e.KeyChar) || e.KeyChar == ' ')
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetter(e.KeyChar) || e.KeyChar == ' ')
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtBusquedaPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscarDNI.PerformClick(); 
         }
     }
 }

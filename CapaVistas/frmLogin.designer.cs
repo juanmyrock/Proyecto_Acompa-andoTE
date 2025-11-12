@@ -89,6 +89,7 @@
             this.txtPass.TabIndex = 3;
             this.txtPass.Text = "CONTRASEÑA";
             this.txtPass.Enter += new System.EventHandler(this.txtBoxPassw_Enter);
+            this.txtPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPass_KeyDown);
             this.txtPass.Leave += new System.EventHandler(this.txtBoxPassw_Leave);
             // 
             // btnAcceder
