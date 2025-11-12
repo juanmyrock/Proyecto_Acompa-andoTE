@@ -17,8 +17,8 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopBar = new System.Windows.Forms.Panel();
             this.lblTituloForm = new System.Windows.Forms.Label();
             this.lblClose = new System.Windows.Forms.Label();
@@ -29,6 +29,7 @@
             this.dateHasta = new System.Windows.Forms.DateTimePicker();
             this.lblFechaDesde = new System.Windows.Forms.Label();
             this.dateDesde = new System.Windows.Forms.DateTimePicker();
+            this.dtpMesInforme = new System.Windows.Forms.DateTimePicker();
             this.pnlFiltroPaciente = new System.Windows.Forms.Panel();
             this.btnBuscarPaciente = new System.Windows.Forms.Button();
             this.txtBuscarPaciente = new System.Windows.Forms.TextBox();
@@ -40,7 +41,6 @@
             this.btnExportarPDF = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.txtInforme = new System.Windows.Forms.TextBox();
-            this.dtpMesInforme = new System.Windows.Forms.DateTimePicker();
             this.panelTopBar.SuspendLayout();
             this.gbFiltros.SuspendLayout();
             this.pnlFiltroFecha.SuspendLayout();
@@ -164,6 +164,14 @@
             this.dateDesde.Size = new System.Drawing.Size(240, 22);
             this.dateDesde.TabIndex = 0;
             // 
+            // dtpMesInforme
+            // 
+            this.dtpMesInforme.Location = new System.Drawing.Point(10, 33);
+            this.dtpMesInforme.Name = "dtpMesInforme";
+            this.dtpMesInforme.Size = new System.Drawing.Size(240, 22);
+            this.dtpMesInforme.TabIndex = 6;
+            this.dtpMesInforme.Visible = false;
+            // 
             // pnlFiltroPaciente
             // 
             this.pnlFiltroPaciente.Controls.Add(this.btnBuscarPaciente);
@@ -193,6 +201,7 @@
             this.txtBuscarPaciente.Name = "txtBuscarPaciente";
             this.txtBuscarPaciente.Size = new System.Drawing.Size(240, 22);
             this.txtBuscarPaciente.TabIndex = 1;
+            this.txtBuscarPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscarPaciente_KeyDown);
             // 
             // label2
             // 
@@ -245,23 +254,23 @@
             this.dgvReporte.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvReporte.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.dgvReporte.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReporte.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReporte.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvReporte.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvReporte.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvReporte.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvReporte.EnableHeadersVisualStyles = false;
             this.dgvReporte.GridColor = System.Drawing.Color.Teal;
             this.dgvReporte.Location = new System.Drawing.Point(325, 80);
@@ -311,14 +320,6 @@
             this.txtInforme.Size = new System.Drawing.Size(715, 450);
             this.txtInforme.TabIndex = 8;
             this.txtInforme.Visible = false;
-            // 
-            // dtpMesInforme
-            // 
-            this.dtpMesInforme.Location = new System.Drawing.Point(10, 33);
-            this.dtpMesInforme.Name = "dtpMesInforme";
-            this.dtpMesInforme.Size = new System.Drawing.Size(240, 22);
-            this.dtpMesInforme.TabIndex = 6;
-            this.dtpMesInforme.Visible = false;
             // 
             // frmGestionReportes
             // 

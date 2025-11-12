@@ -59,6 +59,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cmbOrdenAlfabetico = new System.Windows.Forms.ComboBox();
+            this.lblOrden = new System.Windows.Forms.Label();
             this.gbDatosOS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvObrasSociales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -423,12 +425,39 @@
             this.pictureBox1.TabIndex = 88;
             this.pictureBox1.TabStop = false;
             // 
+            // cmbOrdenAlfabetico
+            // 
+            this.cmbOrdenAlfabetico.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbOrdenAlfabetico.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbOrdenAlfabetico.FormattingEnabled = true;
+            this.cmbOrdenAlfabetico.Items.AddRange(new object[] {
+            "Ascendente (A - Z)",
+            "Descendente (Z - A)"});
+            this.cmbOrdenAlfabetico.Location = new System.Drawing.Point(156, 50);
+            this.cmbOrdenAlfabetico.Name = "cmbOrdenAlfabetico";
+            this.cmbOrdenAlfabetico.Size = new System.Drawing.Size(121, 21);
+            this.cmbOrdenAlfabetico.TabIndex = 96;
+            this.cmbOrdenAlfabetico.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // lblOrden
+            // 
+            this.lblOrden.AutoSize = true;
+            this.lblOrden.Font = new System.Drawing.Font("Bahnschrift", 12F);
+            this.lblOrden.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblOrden.Location = new System.Drawing.Point(9, 50);
+            this.lblOrden.Name = "lblOrden";
+            this.lblOrden.Size = new System.Drawing.Size(138, 19);
+            this.lblOrden.TabIndex = 97;
+            this.lblOrden.Text = "Orden Alfabético: ";
+            // 
             // frmABMObraSocial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1063, 605);
+            this.Controls.Add(this.lblOrden);
+            this.Controls.Add(this.cmbOrdenAlfabetico);
             this.Controls.Add(this.btnBuscarOS);
             this.Controls.Add(this.txtBusquedaOS);
             this.Controls.Add(this.label8);
@@ -492,5 +521,7 @@
         private System.Windows.Forms.ComboBox cmbLocalidad;
         private System.Windows.Forms.Label lblProvincia;
         private System.Windows.Forms.ComboBox cmbProvincia;
+        private System.Windows.Forms.ComboBox cmbOrdenAlfabetico;
+        private System.Windows.Forms.Label lblOrden;
     }
 }

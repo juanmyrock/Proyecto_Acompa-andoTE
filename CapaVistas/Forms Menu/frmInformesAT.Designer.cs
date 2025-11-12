@@ -69,6 +69,7 @@
             this.txtBusquedaPaciente.Name = "txtBusquedaPaciente";
             this.txtBusquedaPaciente.Size = new System.Drawing.Size(179, 20);
             this.txtBusquedaPaciente.TabIndex = 0;
+            this.txtBusquedaPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBusquedaPaciente_KeyDown);
             this.txtBusquedaPaciente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusquedaPaciente_KeyPress);
             // 
             // lblAcompañante
@@ -95,6 +96,9 @@
             // 
             // dtpMesInforme
             // 
+            this.dtpMesInforme.AllowDrop = true;
+            this.dtpMesInforme.CustomFormat = "MM/yyyy";
+            this.dtpMesInforme.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpMesInforme.Location = new System.Drawing.Point(13, 81);
             this.dtpMesInforme.Name = "dtpMesInforme";
             this.dtpMesInforme.Size = new System.Drawing.Size(179, 20);
