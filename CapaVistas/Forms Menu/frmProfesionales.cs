@@ -666,5 +666,10 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Por favor, seleccione un profesional de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void txtBusquedaProfesional_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscarDNI.PerformClick(); 
+        }
     }
 }

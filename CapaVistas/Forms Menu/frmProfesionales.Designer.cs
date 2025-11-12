@@ -112,6 +112,7 @@
             this.txtBusquedaProfesional.Name = "txtBusquedaProfesional";
             this.txtBusquedaProfesional.Size = new System.Drawing.Size(150, 20);
             this.txtBusquedaProfesional.TabIndex = 1;
+            this.txtBusquedaProfesional.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBusquedaProfesional_KeyDown);
             // 
             // label8
             // 

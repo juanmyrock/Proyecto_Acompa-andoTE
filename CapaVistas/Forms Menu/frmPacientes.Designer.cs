@@ -474,6 +474,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(121, 22);
             this.txtApellido.TabIndex = 7;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // label32
             // 
@@ -490,6 +491,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(121, 22);
             this.txtNombre.TabIndex = 6;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // lblNombrePac
             // 
@@ -599,6 +601,7 @@
             this.txtBusquedaPaciente.Name = "txtBusquedaPaciente";
             this.txtBusquedaPaciente.Size = new System.Drawing.Size(121, 20);
             this.txtBusquedaPaciente.TabIndex = 78;
+            this.txtBusquedaPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBusquedaPaciente_KeyDown);
             // 
             // label8
             // 
