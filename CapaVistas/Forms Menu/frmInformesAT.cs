@@ -432,6 +432,11 @@ namespace CapaVistas.Forms_Menu
                 }
             }
         }
+
+        private void txtBusquedaPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
     }
     
 }

@@ -354,5 +354,10 @@ namespace CapaVistas.Forms_Menu
         }
 
         #endregion
+
+        private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
     }
 }

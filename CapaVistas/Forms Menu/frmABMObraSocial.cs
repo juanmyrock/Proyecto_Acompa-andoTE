@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using CapaLogica.ABM;
 using CapaLogica.LlenarCombos;
 
-namespace CapaVistas.Forms_Menu // O tu namespace
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmABMObraSocial : Form
     {
@@ -19,12 +19,14 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             InitializeComponent();
             _rellenador = new cls_LlenarCombos();
             _obraSocial = new cls_LogicaGestionarOS();
-            cmbOrden.SelectedIndex = 0;
+            
            
         }
 
         private void frmObrasSociales_Load(object sender, EventArgs e)
         {
+            cmbOrden.SelectedIndex = 0;
+            cmbOrdenAlfabetico.SelectedIndex = 0;
             CargarGrilla();
             ConfigurarEstilosGrilla();
             CargarCombos();
@@ -146,7 +148,7 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             dgvObrasSociales.ClearSelection();
             cmbLocalidad.SelectedIndex = -1;
             cmbProvincia.SelectedIndex = -1;
-            cmbOrden.SelectedIndex = 0;
+            //cmbOrden.SelectedIndex = 0;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -172,6 +174,7 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 CargarGrilla();
                 LimpiarCampos();
                 cmbOrden.SelectedIndex = 0;
+                cmbOrdenAlfabetico.SelectedIndex = 0;
             }
             else
             {
@@ -302,18 +305,34 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             try
             {
                 List<cls_ObraSocialDTO> listaObraSocial = new List<cls_ObraSocialDTO>();
-                if (filtro == "Activas")
+                if (filtro == "Activas" && cmbOrdenAlfabetico.SelectedIndex >= 0)
                 {
-                    listaObraSocial = _obraSocial.ObtenerOSActivas();
+                    if (cmbOrdenAlfabetico.SelectedIndex == 0) // Primer item
+                    {
+                        listaObraSocial = _obraSocial.ObtenerOSActivasOrdenAZ();
+                    }
+                    else if (cmbOrdenAlfabetico.SelectedIndex == 1) // Segundo item
+                    {
+                        listaObraSocial = _obraSocial.ObtenerOSActivasOrdenZA();
+                    }
                 }
+
                 else if (filtro == "Inactivas")
                 {
                     listaObraSocial = _obraSocial.ObtenerOSInactivas();
                 }
-                else if (filtro == "Todas")
+                else if (filtro == "Todas" && cmbOrdenAlfabetico.SelectedIndex >= 0)
                 {
-                    listaObraSocial = _obraSocial.ObtenerTodasLasOS();
+                    if (cmbOrdenAlfabetico.SelectedIndex == 0) // Primer item
+                    {
+                        listaObraSocial = _obraSocial.ObtenerTodasLasOSOrdenadasAZ();
+                    }
+                    else if (cmbOrdenAlfabetico.SelectedIndex == 1) // Segundo item
+                    {
+                        listaObraSocial = _obraSocial.ObtenerTodasLasOSOrdenadasZA();
+                    }
                 }
+
 
                 dgvObrasSociales.DataSource = listaObraSocial;
                 dgvObrasSociales.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -419,6 +438,13 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
                 }
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LimpiarCampos();
+            string filtroSeleccionado = cmbOrden.SelectedItem.ToString();
+            CargarTodosLosPacientesEnDataGridView(filtroSeleccionado);
         }
     }
 }
