@@ -155,13 +155,13 @@ namespace CapaDatos.Negocio
         public int InsertarTramiteMaestro(cls_TramiteCreacionDTO dto)
         {
             string sql = @"
-        INSERT INTO Tramites (
-            id_paciente, fecha_creacion, id_estado_actual, id_usuario_creador, titulo_inicial
-        ) 
-        VALUES (
-            @id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial
-        );
-        SELECT SCOPE_IDENTITY();"; // Devuelve el ID que se acaba de crear
+                INSERT INTO Tramites (
+                    id_paciente, fecha_creacion, id_estado_actual, id_usuario_creador, titulo_inicial
+                ) 
+                VALUES (
+                    @id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial
+                );
+                SELECT SCOPE_IDENTITY();"; // Devuelve el ID que se acaba de crear
 
             var parametros = new List<SqlParameter>
             {
@@ -175,6 +175,7 @@ namespace CapaDatos.Negocio
             DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
             return Convert.ToInt32(tabla.Rows[0][0]);
         }
+
 
         // Busca el ID de un Tipo de Trámite por su nombre exacto.
         public int ObtenerIdTipoTramitePorDescripcion(string descripcion)
@@ -194,33 +195,6 @@ namespace CapaDatos.Negocio
             return Convert.ToInt32(tabla.Rows[0]["id_tipo_tramite"]);
         }
 
-
-        // Registra el evento de cambio de estado en el historial.
-        public bool RegistrarEventoDeEstado(int id_tp, int id_usuario, int id_nuevo_estado)
-        {
-            // Asumimos que un cambio de estado tiene un 'id_tipo_tramite' = 2 (o el que corresponda)
-            // DEBERÍAS verificar qué ID es "Cambio de Estado" en tu tabla Tipos_Tramite
-            string sqlTipo = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = 'Cambio de Estado'";
-            DataTable tablaTipo = _ejecutar.ConsultaRead(sqlTipo, null);
-            if (tablaTipo.Rows.Count == 0)
-                throw new Exception("Error fatal: No se encontró el 'Tipo_Tramite' llamado 'Cambio de Estado' en la base de datos.");
-
-            int idTipoCambioEstado = Convert.ToInt32(tablaTipo.Rows[0]["id_tipo_tramite"]);
-
-            string sql = @"
-                INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
-                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, NULL, 0)"; // es_comentario = 0 (false)
-
-            var parametros = new List<SqlParameter>
-            {
-                new SqlParameter("@id_tp", id_tp),
-                new SqlParameter("@id_usuario", id_usuario),
-                new SqlParameter("@id_tipo_tramite", idTipoCambioEstado)
-            };
-
-            _ejecutar.ConsultaWrite(sql, parametros);
-            return true;
-        }
 
         // Obtiene los posibles estados MAESTROS para el ComboBox (Abierto, Cerrado, etc.)
         public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
