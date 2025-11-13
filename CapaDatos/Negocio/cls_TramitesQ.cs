@@ -151,9 +151,7 @@ namespace CapaDatos.Negocio
             return lista;
         }
 
-        /// <summary>
-        /// Inserta el trámite principal (la cabecera) y devuelve el nuevo ID.
-        /// </summary>
+        // Inserta el trámite principal (la cabecera) y devuelve el nuevo ID.
         public int InsertarTramiteMaestro(cls_TramiteCreacionDTO dto)
         {
             string sql = @"
@@ -178,9 +176,7 @@ namespace CapaDatos.Negocio
             return Convert.ToInt32(tabla.Rows[0][0]);
         }
 
-        /// <summary>
-        /// Busca el ID de un Tipo de Trámite por su nombre exacto.
-        /// </summary>
+        // Busca el ID de un Tipo de Trámite por su nombre exacto.
         public int ObtenerIdTipoTramitePorDescripcion(string descripcion)
         {
             string sql = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = @descripcion";
@@ -199,9 +195,7 @@ namespace CapaDatos.Negocio
         }
 
 
-        /// <summary>
-        /// Registra el evento de cambio de estado en el historial.
-        /// </summary>
+        // Registra el evento de cambio de estado en el historial.
         public bool RegistrarEventoDeEstado(int id_tp, int id_usuario, int id_nuevo_estado)
         {
             // Asumimos que un cambio de estado tiene un 'id_tipo_tramite' = 2 (o el que corresponda)
@@ -228,9 +222,7 @@ namespace CapaDatos.Negocio
             return true;
         }
 
-        /// <summary>
-        /// Obtiene los posibles estados MAESTROS para el ComboBox (Abierto, Cerrado, etc.).
-        /// </summary>
+        // Obtiene los posibles estados MAESTROS para el ComboBox (Abierto, Cerrado, etc.)
         public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
         {
             string sql = "SELECT id_estado_tramite, estado_descripcion FROM Estado_Tramite ORDER BY estado_descripcion";
