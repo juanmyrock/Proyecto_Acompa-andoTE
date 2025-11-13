@@ -6,7 +6,6 @@ using System;
 using System.Drawing;
 using System.Linq; // Para FirstOrDefault
 using System.Windows.Forms;
-using System.Runtime.InteropServices; // Para arrastrar
 
 namespace CapaVistas.Forms_Menu
 {
@@ -36,7 +35,7 @@ namespace CapaVistas.Forms_Menu
             dateCreacion.Value = DateTime.Now;
             dateCreacion.Enabled = false; // El usuario no debe cambiarla
 
-            // --- Lógica REAL ---
+
             // Cargar el combo de Estados (Abierto, Cerrado, etc.)
             try
             {
@@ -83,12 +82,12 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 // 2. Creamos el DTO con los datos del formulario
-                var nuevoTramite = new cls_TramiteCreacionDTO
+                var nuevoTramite = new cls_TramiteCreacionDTO // Asegúrate de tener este DTO
                 {
                     id_paciente = _idPaciente,
                     titulo_inicial = txtTituloTramite.Text.Trim(),
                     id_estado_actual = (int)cmbEstado.SelectedValue,
-                    id_usuario_creador = SesionUsuario.Instancia.IdUsuario
+                    id_usuario_creador = SesionUsuario.Instancia.IdUsuario // Obtenemos el ID del Singleton
                 };
 
                 // 3. Llamamos a la lógica transaccional
@@ -122,6 +121,7 @@ namespace CapaVistas.Forms_Menu
             this.Close();
         }
 
+        // --- Eventos para arrastrar el formulario (Sin cambios) ---
         private void frm_MouseDown(object sender, MouseEventArgs e) { dragging = true; dragCursorPoint = Cursor.Position; dragFormPoint = this.Location; }
         private void frm_MouseMove(object sender, MouseEventArgs e) { if (dragging) { Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint)); this.Location = Point.Add(dragFormPoint, new Size(diff)); } }
         private void frm_MouseUp(object sender, MouseEventArgs e) { dragging = false; }
