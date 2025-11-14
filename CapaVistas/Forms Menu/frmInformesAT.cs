@@ -30,6 +30,8 @@ namespace CapaVistas.Forms_Menu
         {
             string clave = "MiClave123";
             InitializeComponent();
+            
+            dtpMesInforme.ShowUpDown = true;
             dtpMesInforme.Format = DateTimePickerFormat.Custom;
             dtpMesInforme.CustomFormat = "MMMM yyyy";
 
