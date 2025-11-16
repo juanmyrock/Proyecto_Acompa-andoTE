@@ -156,7 +156,7 @@ namespace CapaVistas.Forms_Menu
             }
             catch (Exception)
             {
-                
+
             }
         }
 
