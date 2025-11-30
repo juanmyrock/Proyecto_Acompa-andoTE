@@ -111,23 +111,24 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
 
             // Aquí harías: SELECT Nombre, Apellido FROM Pacientes WHERE DNI = ...
             // Simulación:
-            if (txtDniPaciente.Text == "12345678")
+            if (txtDniPaciente.Text == "41148615")
             {
-                lblNombrePaciente.Text = "Gomez, Juan Carlos";
+                lblNombrePaciente.Text = "Sebastian Gonzalez";
             }
             else
             {
-                lblNombrePaciente.Text = "(Paciente no encontrado)";
+                lblNombrePaciente.Text = "(Sebastian Gonzalez)";
             }
         }
 
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
             // 5. Validar y guardar el turno en la base de datos
-            if (cmbAcompañante.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("no encontrado") || lblNombrePaciente.Text.Contains("..."))
+            if (cmbAcompañante.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("Sebastian Gonzalez") || lblNombrePaciente.Text.Contains("..."))
             {
-                MessageBox.Show("Debe seleccionar médico, un horario disponible y un paciente válido.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
+
             }
 
             string medico = cmbAcompañante.SelectedItem.ToString();

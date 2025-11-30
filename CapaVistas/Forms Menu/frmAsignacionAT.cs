@@ -14,15 +14,15 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmAsignacionAT : Form
     {
-        // --- Lógica y Estado ---
+
         private readonly cls_LogicaAsignacionAT _logica;
         private cls_PacienteSimpleDTO _pacienteSeleccionado;
         private AcompanamientoDTO _asignacionSeleccionada;
 
-        // Lista temporal SÓLO para el Modo Creación
+      
         private List<AcompanamientoHorarioDTO> _horariosNuevosParaGuardar;
 
-        // Lista bindeada a la grilla en Modo Edición
+
         private List<AcompanamientoHorarioDTO> _horariosExistentes;
 
         private enum ModoFormulario
@@ -73,7 +73,7 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 cls_LlenarCombos.Cargar(cmbAmbito, _logica.ObtenerAmbitos(), "descripcion", "id_ambito");
-                cls_LlenarCombos.Cargar(cmbProfesional, _logica.ObtenerAcompanantes(), "NomApe", "id_profesional");
+                cls_LlenarCombos.Cargar(cmbProfesional, _logica.ObtenerAcompanantes(), "ApeNom", "id_profesional");
                 cls_LlenarCombos.Cargar(cmbJornada, _logica.ObtenerJornadas(), "descripcion", "id_jornada");
                 cmbDiaSemana.Items.AddRange(new object[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" });
                 cmbDiaSemana.SelectedIndex = 0;
@@ -90,7 +90,7 @@ namespace CapaVistas.Forms_Menu
 
             // Apagamos todo por defecto
             gbBuscarAsignacion.Enabled = false;
-            btnNuevaAsignacion.Enabled = false; // <-- NUEVO
+            btnNuevaAsignacion.Enabled = false; 
             gbDetalles.Enabled = false;
             gbDefinirHorario.Enabled = false;
             gbHorariosAsignados.Enabled = false;
@@ -107,21 +107,20 @@ namespace CapaVistas.Forms_Menu
                     break;
                 case ModoFormulario.PacienteEncontrado:
                     gbBuscarAsignacion.Enabled = true;
-                    btnNuevaAsignacion.Enabled = true; // <-- NUEVO
+                    btnNuevaAsignacion.Enabled = true; 
                     break;
                 case ModoFormulario.ModoCreacion:
                     gbDetalles.Enabled = true;
                     gbDefinirHorario.Enabled = true;
                     gbHorariosAsignados.Enabled = true;
                     btnGuardarAsignacion.Enabled = true;
-                    btnAgregarHorario.Enabled = true; // <-- NUEVO
+                    btnAgregarHorario.Enabled = true; 
                     break;
                 case ModoFormulario.ModoEdicion:
-                    gbDetalles.Enabled = true; // Habilitado para ver
+                    gbDetalles.Enabled = true; 
                     gbDefinirHorario.Enabled = true;
                     gbHorariosAsignados.Enabled = true;
-                    btnAgregarHorario.Enabled = true; // <-- NUEVO (Para añadir nuevos días)
-                    // btnActualizarHorario se habilita al seleccionar una fila
+                    btnAgregarHorario.Enabled = true; 
                     break;
             }
         }
@@ -277,7 +276,7 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // Botón 1: Agregar Horario (NUEVO)
+        // Botón 1: Agregar Horario
         private void btnAgregarHorario_Click(object sender, EventArgs e)
         {
             if (timeInicio.Value >= timeFin.Value)
@@ -295,18 +294,15 @@ namespace CapaVistas.Forms_Menu
 
             if (_modoActual == ModoFormulario.ModoCreacion)
             {
-                // MODO CREACIÓN: Solo agregamos a la lista temporal
                 _horariosNuevosParaGuardar.Add(nuevoHorario);
                 dgvHorarios.Rows.Add(nuevoHorario.dia_semana, nuevoHorario.HoraInicioStr, nuevoHorario.HoraFinStr);
             }
             else if (_modoActual == ModoFormulario.ModoEdicion)
             {
-                // MODO EDICIÓN: Agregamos directamente a la BD
                 try
                 {
                     _logica.AgregarNuevoHorario(_asignacionSeleccionada.id_acompanamiento, nuevoHorario);
 
-                    // Recargamos la grilla desde la BD para ver el cambio
                     dgvHorarios.DataSource = null;
                     _horariosExistentes = _logica.ObtenerHorariosPorAsignacion(_asignacionSeleccionada.id_acompanamiento);
                     dgvHorarios.DataSource = _horariosExistentes;
@@ -319,7 +315,7 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // Botón 2: Actualizar Horario (NUEVO)
+        // Botón 2: Actualizar Horario
         private void btnActualizarHorario_Click(object sender, EventArgs e)
         {
             if (_modoActual != ModoFormulario.ModoEdicion || dgvHorarios.SelectedRows.Count == 0) return;
@@ -351,8 +347,7 @@ namespace CapaVistas.Forms_Menu
 
         private void btnEliminarHorario_Click(object sender, EventArgs e)
         {
-            // (Esta lógica necesitaría un _logica.EliminarHorario(id_horario)
-            // que deberías implementar en tus capas de datos y lógica)
+           
         }
 
         #endregion
@@ -384,7 +379,7 @@ namespace CapaVistas.Forms_Menu
                     id_ambito = (int)cmbAmbito.SelectedValue,
                     id_jornada = (int)cmbJornada.SelectedValue,
                     id_usuario_creador = SesionUsuario.Instancia.IdUsuario,
-                    id_estado_acompanamiento = 1, // 1 = Activo (por defecto)
+                    id_estado_acompanamiento = 1,
                     horarios = _horariosNuevosParaGuardar
                 };
 
@@ -412,9 +407,7 @@ namespace CapaVistas.Forms_Menu
             SetearModoFormulario(ModoFormulario.Inicial);
         }
 
-        /// <summary>
-        /// Limpia solo la parte de la asignación, pero mantiene al paciente seleccionado
-        /// </summary>
+       
         private void LimpiarSeccionAsignacion()
         {
             _asignacionSeleccionada = null;
@@ -444,26 +437,27 @@ namespace CapaVistas.Forms_Menu
         }
         private void CargarComboAmbitos()
         {
-            // Guardamos la selección actual para que el usuario no la pierda
             object seleccionActual = cmbAmbito.SelectedItem;
 
             cmbAmbito.Items.Clear();
 
-            // --- Simulación ---
             cmbAmbito.Items.Add("Ámbito Clínico");
             cmbAmbito.Items.Add("Ámbito Comunitario");
             cmbAmbito.Items.Add("Ámbito Domiciliario");
             cmbAmbito.Items.Add("Ámbito Escolar");
             cmbAmbito.Items.Add("Ámbito Particular");
-            // --- Fin Simulación ---
 
-            // Intentamos volver a seleccionar lo que el usuario tenía
+
             if (seleccionActual != null && cmbAmbito.Items.Contains(seleccionActual))
             {
                 cmbAmbito.SelectedItem = seleccionActual;
             }
         }
 
+        private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
     }
 
     #endregion

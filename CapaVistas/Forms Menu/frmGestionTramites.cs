@@ -240,37 +240,25 @@ namespace CapaVistas.Forms_Menu
         private void btnGestionTramite_Click(object sender, EventArgs e)
         {
             // 1. Validamos contra el objeto DTO, no contra el string DNI
-            if (_pacienteEncontrado == null)
+            if (_pacienteEncontrado == null || txtBuscarPaciente.Text == "")
             {
                 MessageBox.Show("Debe buscar y encontrar un paciente (por DNI) para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // 2. Preparamos los datos para el constructor del popup
-            // (Los tomamos del DTO que guardamos al buscar)
             int idPaciente = _pacienteEncontrado.id_paciente;
             string nombrePaciente = _pacienteEncontrado.nombre_completo;
 
-            // 3. Llamamos al formulario popup (frmABMTramites)
-            // Usamos 'using' para que el formulario se destruya correctamente
             using (frmABMTramites formCrear = new frmABMTramites(idPaciente, nombrePaciente))
             {
-                // 4. Lo mostramos como un diálogo (esto detiene la ejecución)
                 DialogResult resultado = formCrear.ShowDialog();
 
-                // 5. Si el usuario cerró el popup presionando "Guardar"...
                 if (resultado == DialogResult.OK)
                 {
-                    // ...refrescamos la lista de trámites simulando
-                    // un nuevo clic en el botón de búsqueda.
                     btnBuscar.PerformClick();
                 }
             }
         }
 
-        #endregion
-
-        #region --- Métodos Auxiliares (Sin cambios de lógica) ---
 
         private void LimpiarSeleccion()
         {
@@ -322,7 +310,6 @@ namespace CapaVistas.Forms_Menu
             pnlMensaje.Controls.Add(lblHeader);
             pnlMensaje.Height = lblBody.Height + lblHeader.Height + 10;
 
-            // Lógica de color (como la tenías antes)
             if (tipo.ToLower().Contains("comentario"))
                 pnlMensaje.BackColor = Color.FromArgb(0, 70, 70);
             else
@@ -340,7 +327,6 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // CORREGIDO: Carga los Tipos de Trámite (los eventos del chat)
         private void CargarComboEstados()
         {
             try
@@ -354,5 +340,10 @@ namespace CapaVistas.Forms_Menu
         }
 
         #endregion
+
+        private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
     }
 }

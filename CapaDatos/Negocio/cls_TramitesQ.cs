@@ -11,10 +11,8 @@ namespace CapaDatos.Negocio
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        // Este método está CORRECTO como estaba.
         public List<cls_TramiteResumenDTO> BuscarTramites(string dniPaciente, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            // 1. Buscamos al paciente
             string sqlPaciente = "SELECT id_paciente FROM Pacientes WHERE dni_paciente = @dni";
             var paramPaciente = new List<SqlParameter> { new SqlParameter("@dni", dniPaciente) };
             DataTable tablaPaciente = _ejecutar.ConsultaRead(sqlPaciente, paramPaciente);
@@ -23,7 +21,6 @@ namespace CapaDatos.Negocio
                 throw new Exception("Paciente no encontrado con ese DNI.");
             int id_paciente = Convert.ToInt32(tablaPaciente.Rows[0]["id_paciente"]);
 
-            // 2. Buscamos los trámites (Cabecera)
             string sql = @"
                 SELECT 
                     t.id_tp, t.titulo_inicial, t.fecha_creacion,
@@ -57,8 +54,6 @@ namespace CapaDatos.Negocio
             }
             return lista;
         }
-
-        // Este método está CORREGIDO para unirse a Tipos_Tramite
         public List<cls_HistorialDTO> ObtenerHistorialTramite(int id_tp)
         {
             string sql = @"
@@ -92,15 +87,13 @@ namespace CapaDatos.Negocio
             return lista;
         }
 
-        // Inserta un nuevo comentario en el historial.
         public bool RegistrarComentario(int id_tp, int id_usuario, string comentario)
         {
-            // Asumimos que "Comentario de Usuario" es un tipo de trámite
-            int idTipoComentario = 1; // DEBERÍAS BUSCARLO DINÁMICAMENTE (ver nota abajo)
+            int idTipoComentario = 1;
 
             string sql = @"
                 INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
-                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, @comentario, 1)"; // es_comentario = 1 (true)
+                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, @comentario, 1)";
 
             var parametros = new List<SqlParameter>
             {
@@ -114,12 +107,11 @@ namespace CapaDatos.Negocio
             return true;
         }
 
-        // CORREGIDO: Ya no actualiza la tabla maestra. Solo inserta un evento.
         public bool RegistrarEventoDeTipo(int id_tp, int id_usuario, int id_tipo_tramite)
         {
             string sql = @"
                 INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
-                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, NULL, 0)"; // es_comentario = 0 (false)
+                VALUES (@id_tp, GETDATE(), @id_usuario, @id_tipo_tramite, NULL, 0)";
 
             var parametros = new List<SqlParameter>
             {
@@ -132,10 +124,8 @@ namespace CapaDatos.Negocio
             return true;
         }
 
-        // CORREGIDO: Ahora obtiene los Tipos de Trámite (para el combo)
         public List<cls_TiposTramitesDTO> ObtenerTiposTramite()
         {
-            // No traemos "Comentario de Usuario" porque ese se maneja con el otro botón
             string sql = "SELECT id_tipo_tramite, descripcion FROM Tipos_Tramite WHERE descripcion <> 'Comentario de Usuario' ORDER BY descripcion";
             DataTable tabla = _ejecutar.ConsultaRead(sql, null);
             var lista = new List<cls_TiposTramitesDTO>();
@@ -151,7 +141,6 @@ namespace CapaDatos.Negocio
             return lista;
         }
 
-        // Inserta el trámite principal (la cabecera) y devuelve el nuevo ID.
         public int InsertarTramiteMaestro(cls_TramiteCreacionDTO dto)
         {
             string sql = @"
@@ -161,7 +150,7 @@ namespace CapaDatos.Negocio
                 VALUES (
                     @id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial
                 );
-                SELECT SCOPE_IDENTITY();"; // Devuelve el ID que se acaba de crear
+                SELECT SCOPE_IDENTITY();";
 
             var parametros = new List<SqlParameter>
             {
@@ -171,13 +160,11 @@ namespace CapaDatos.Negocio
                 new SqlParameter("@titulo_inicial", dto.titulo_inicial)
             };
 
-            // Usamos ConsultaRead para poder capturar el ID que devuelve SCOPE_IDENTITY
             DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
             return Convert.ToInt32(tabla.Rows[0][0]);
         }
 
 
-        // Busca el ID de un Tipo de Trámite por su nombre exacto.
         public int ObtenerIdTipoTramitePorDescripcion(string descripcion)
         {
             string sql = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = @descripcion";
@@ -187,7 +174,6 @@ namespace CapaDatos.Negocio
 
             if (tabla.Rows.Count == 0)
             {
-                // Lanzamos una excepción clara porque el sistema no puede funcionar sin este dato.
                 throw new Exception($"Error fatal: No se encontró el 'Tipo_Tramite' llamado '{descripcion}' en la base de datos.");
             }
 

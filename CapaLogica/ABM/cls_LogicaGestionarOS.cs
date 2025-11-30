@@ -30,11 +30,63 @@ namespace CapaLogica.ABM
             }
         }
 
+        public List<cls_ObraSocialDTO> ObtenerOSActivasOrdenAZ()
+        {
+            try
+            {
+                return _obraSocialQ.ObtenerOSActivasOrdenAZ();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al obtener Obras sociales: {ex.Message}");
+                return new List<cls_ObraSocialDTO>();
+            }
+        }
+
+        public List<cls_ObraSocialDTO> ObtenerOSActivasOrdenZA()
+        {
+            try
+            {
+                return _obraSocialQ.ObtenerOSActivasOrdenZA();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al obtener Obras sociales: {ex.Message}");
+                return new List<cls_ObraSocialDTO>();
+            }
+        }
+
         public List<cls_ObraSocialDTO> ObtenerTodasLasOS()
         {
             try
             {
                 return _obraSocialQ.ObtenerTodasLasOS();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al obtener Obras sociales: {ex.Message}");
+                return new List<cls_ObraSocialDTO>();
+            }
+        }
+
+        public List<cls_ObraSocialDTO> ObtenerTodasLasOSOrdenadasAZ()
+        {
+            try
+            {
+                return _obraSocialQ.ObtenerTodasLasOSOrdenadasAZ();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la capa lógica al obtener Obras sociales: {ex.Message}");
+                return new List<cls_ObraSocialDTO>();
+            }
+        }
+
+        public List<cls_ObraSocialDTO> ObtenerTodasLasOSOrdenadasZA()
+        {
+            try
+            {
+                return _obraSocialQ.ObtenerTodasLasOSOrdenadasZA();
             }
             catch (Exception ex)
             {

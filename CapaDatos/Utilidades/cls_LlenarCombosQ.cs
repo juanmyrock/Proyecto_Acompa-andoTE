@@ -265,6 +265,37 @@ namespace CapaDatos.Utilidades
             }
         }
         #endregion
+
+        #region Tabla Provincias
+        public LlenarCombosResponseDTO ObtenerProvincias()
+        {
+            var response = new LlenarCombosResponseDTO();
+            string query = "SELECT id, provincia FROM Provincias";
+            try
+            {
+                DataTable tablaProvincia = _ejecutar.ConsultaRead(query);
+                if (tablaProvincia.Rows.Count > 0)
+                {
+                    response.Provincias = new List<cls_ProvinciasDTO>();
+                    foreach (DataRow row in tablaProvincia.Rows)
+                    {
+                        response.Provincias.Add(new cls_ProvinciasDTO
+                        {
+                            id = Convert.ToInt32(row["id"]),
+                            provincia = row["provincia"].ToString()
+
+                        });
+                    }
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en cls_LlenarCombosQ al obtener Provincias: {ex.Message}");
+                return null;
+            }
+        }
+        #endregion
     }
 }
 

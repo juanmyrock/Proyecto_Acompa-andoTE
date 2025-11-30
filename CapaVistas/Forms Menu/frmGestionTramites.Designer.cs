@@ -136,6 +136,7 @@
             this.txtBuscarPaciente.Name = "txtBuscarPaciente";
             this.txtBuscarPaciente.Size = new System.Drawing.Size(200, 22);
             this.txtBuscarPaciente.TabIndex = 1;
+            this.txtBuscarPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscarPaciente_KeyDown);
             // 
             // label1
             // 

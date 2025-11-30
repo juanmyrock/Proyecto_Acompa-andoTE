@@ -45,7 +45,6 @@ namespace CapaDatos
             return lista;
         }
 
-        // Obtiene solo los profesionales que son Acompañantes Terapéuticos.
         public List<ProfesionalSimpleDTO> ObtenerAcompanantes()
         {
             string sql = @"
@@ -81,7 +80,6 @@ namespace CapaDatos
             string sql;
             var parametros = new List<SqlParameter>();
 
-            // Creamos la lista VACÍA primero
             var listaPacientes = new List<cls_PacienteSimpleDTO>();
 
             if (Int64.TryParse(busqueda, out long dni))

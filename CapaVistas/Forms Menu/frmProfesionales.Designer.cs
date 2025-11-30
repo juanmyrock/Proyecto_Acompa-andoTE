@@ -112,6 +112,7 @@
             this.txtBusquedaProfesional.Name = "txtBusquedaProfesional";
             this.txtBusquedaProfesional.Size = new System.Drawing.Size(150, 20);
             this.txtBusquedaProfesional.TabIndex = 1;
+            this.txtBusquedaProfesional.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBusquedaProfesional_KeyDown);
             // 
             // label8
             // 
@@ -224,6 +225,7 @@
             this.txtNumDomicilio.Name = "txtNumDomicilio";
             this.txtNumDomicilio.Size = new System.Drawing.Size(151, 22);
             this.txtNumDomicilio.TabIndex = 19;
+            this.txtNumDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumDomicilio_KeyPress);
             // 
             // label5
             // 
@@ -315,6 +317,7 @@
             this.txtDomicilio.Name = "txtDomicilio";
             this.txtDomicilio.Size = new System.Drawing.Size(150, 22);
             this.txtDomicilio.TabIndex = 18;
+            this.txtDomicilio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDomicilio_KeyPress);
             // 
             // label14
             // 
@@ -347,6 +350,7 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(121, 22);
             this.txtDni.TabIndex = 13;
+            this.txtDni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDni_KeyPress);
             // 
             // label30
             // 
@@ -384,6 +388,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(121, 22);
             this.txtApellido.TabIndex = 9;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // label32
             // 
@@ -400,6 +405,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(121, 22);
             this.txtNombre.TabIndex = 8;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // lblNombrePac
             // 
