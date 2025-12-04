@@ -67,7 +67,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
@@ -239,6 +239,9 @@
     <EmbeddedResource Include="Forms Menu\frmABMObraSocial.resx">
       <DependentUpon>frmABMObraSocial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms Menu\frmABMTramites.resx">
+      <DependentUpon>frmABMTramites.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms Menu\frmABMUsuarios.resx">
       <DependentUpon>frmABMUsuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,7 +294,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="CapaVistas_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

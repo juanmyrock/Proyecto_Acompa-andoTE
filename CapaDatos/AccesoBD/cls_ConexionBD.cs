@@ -1,62 +1,88 @@
 ﻿using System;
 using System.Data;
-using System.Data.Sql;
 using System.Data.SqlClient;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CapaDatos
 {
     public abstract class cls_ConexionBD
     {
-        private readonly string conexion;
+        private static string _cadenaConexionCacheada = null;
+        private const string ARCHIVO_CONFIG = "conexion_server.cfg";
+        private const string NOMBRE_BD = "ProyectoAT"; // Tu base de datos
 
         public cls_ConexionBD()
         {
-            conexion = ObtenerCadenaConexionAutomatica();
+            if (_cadenaConexionCacheada == null)
+            {
+                _cadenaConexionCacheada = ObtenerCadenaDeConexion();
+            }
         }
 
         protected SqlConnection GetConexion()
         {
-            return new SqlConnection(conexion);
+            return new SqlConnection(_cadenaConexionCacheada);
         }
 
-        private string ObtenerCadenaConexionAutomatica()
+        private string ObtenerCadenaDeConexion()
         {
-            string[] servidoresProbables = {
-                ".",                          
-                "localhost",                 
-                "(local)",                   
-                @".\SQLEXPRESS",            
-                "localhost\\SQLEXPRESS"      
+            string rutaBase = AppDomain.CurrentDomain.BaseDirectory;
+            string rutaArchivo = Path.Combine(rutaBase, ARCHIVO_CONFIG);
+
+            // 1. PRIMER INTENTO: Leer del archivo (Si ya funcionó antes)
+            if (File.Exists(rutaArchivo))
+            {
+                try
+                {
+                    string cadenaGuardada = File.ReadAllText(rutaArchivo).Trim();
+                    if (ProbarConexion(cadenaGuardada)) return cadenaGuardada;
+                }
+                catch { /* Si el archivo está corrupto, seguimos */ }
+            }
+
+            // 2. SEGUNDO INTENTO: Probar lista de servidores comunes (Fuerza bruta local)
+            // Esto es instantáneo, no escanea la red.
+            string[] servidoresComunes = {
+                @".\SQLEXPRESS",           // El más común para clientes
+                ".",                       // Local default
+                @"(localdb)\MSSQLLocalDB", // Visual Studio local
+                "localhost",
+                @"localhost\SQLEXPRESS"
             };
 
-            string baseDeDatos = "ProyectoAT";
-
-            foreach (string servidor in servidoresProbables)
+            foreach (string servidor in servidoresComunes)
             {
-                string cadenaPrueba = $"Server={servidor}; Database={baseDeDatos}; Integrated Security=True;";
-
+                string cadenaPrueba = $"Server={servidor}; Database={NOMBRE_BD}; Integrated Security=True;";
                 if (ProbarConexion(cadenaPrueba))
                 {
+                    // ¡Encontrado! Lo guardamos para que la próxima sea directo.
+                    GuardarConfiguracion(rutaArchivo, cadenaPrueba);
                     return cadenaPrueba;
                 }
             }
 
-            string instanciaEncontrada = BuscarInstanciasSQL();
-            if (!string.IsNullOrEmpty(instanciaEncontrada))
-            {
-                return $"Server={instanciaEncontrada}; Database={baseDeDatos}; Integrated Security=True;";
-            }
+            // 3. TERCER INTENTO (EL PLAN Z): Si nada funcionó, pedimos ayuda.
+            // Si el servidor tiene un nombre raro (ej: "PC-JUAN\VENTAS"), no lo adivinamos.
+            // Devolvemos un error o una cadena vacía para que la app la maneje.
 
-            throw new Exception("No se pudo encontrar una instancia de SQL Server disponible.");
+            // Opción A: Tirar error y pedir que editen el archivo manual
+            // throw new Exception($"No se encontró el servidor SQL. Por favor, cree el archivo '{ARCHIVO_CONFIG}' con la cadena de conexión correcta.");
+
+            // Opción B (Mejor para desarrollo): Retornar una por defecto y que falle luego
+            return $"Server=.\\SQLEXPRESS; Database={NOMBRE_BD}; Integrated Security=True;";
         }
 
-        private bool ProbarConexion(string cadenaConexion)
+        private bool ProbarConexion(string cadena)
         {
             try
             {
-                using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+                using (SqlConnection con = new SqlConnection(cadena))
                 {
-                    conexion.Open();
+                    // Timeout corto (2 seg) para que la prueba sea rápida
+                    string cadenaTest = cadena + ";Connection Timeout=2";
+                    con.ConnectionString = cadenaTest;
+                    con.Open();
                     return true;
                 }
             }
@@ -66,33 +92,9 @@ namespace CapaDatos
             }
         }
 
-        private string BuscarInstanciasSQL()
+        private void GuardarConfiguracion(string ruta, string cadena)
         {
-            try
-            {
-                DataTable instancias = SqlDataSourceEnumerator.Instance.GetDataSources();
-
-                foreach (DataRow row in instancias.Rows)
-                {
-                    string nombreServidor = row["ServerName"].ToString();
-                    string nombreInstancia = row["InstanceName"].ToString();
-
-                    if (string.IsNullOrEmpty(nombreInstancia))
-                    {
-
-                        return nombreServidor;
-                    }
-                    else
-                    {
-                        return $"{nombreServidor}\\{nombreInstancia}";
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return null;
+            try { File.WriteAllText(ruta, cadena); } catch { }
         }
     }
 }

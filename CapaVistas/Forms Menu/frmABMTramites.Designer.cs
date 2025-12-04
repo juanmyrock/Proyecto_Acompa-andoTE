@@ -37,9 +37,9 @@
             this.lblTituloForm.ForeColor = System.Drawing.Color.White;
             this.lblTituloForm.Location = new System.Drawing.Point(22, 9);
             this.lblTituloForm.Name = "lblTituloForm";
-            this.lblTituloForm.Size = new System.Drawing.Size(217, 25);
+            this.lblTituloForm.Size = new System.Drawing.Size(190, 25);
             this.lblTituloForm.TabIndex = 1;
-            this.lblTituloForm.Text = "Crear Nuevo Trámite";
+            this.lblTituloForm.Text = "Gestionar Trámite";
             this.lblTituloForm.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_MouseDown);
             this.lblTituloForm.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frm_MouseMove);
             this.lblTituloForm.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frm_MouseUp);
@@ -51,7 +51,7 @@
             this.lblPacienteNombre.ForeColor = System.Drawing.Color.Turquoise;
             this.lblPacienteNombre.Location = new System.Drawing.Point(23, 45);
             this.lblPacienteNombre.Name = "lblPacienteNombre";
-            this.lblPacienteNombre.Size = new System.Drawing.Size(155, 21);
+            this.lblPacienteNombre.Size = new System.Drawing.Size(156, 21);
             this.lblPacienteNombre.TabIndex = 2;
             this.lblPacienteNombre.Text = "Para: [PACIENTE]...";
             // 
@@ -74,16 +74,16 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(23, 90);
+            this.label2.Location = new System.Drawing.Point(23, 95);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 21);
+            this.label2.Size = new System.Drawing.Size(146, 21);
             this.label2.TabIndex = 18;
             this.label2.Text = "Título del Trámite:";
             // 
             // txtTituloTramite
             // 
             this.txtTituloTramite.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTituloTramite.Location = new System.Drawing.Point(27, 115);
+            this.txtTituloTramite.Location = new System.Drawing.Point(27, 124);
             this.txtTituloTramite.Name = "txtTituloTramite";
             this.txtTituloTramite.Size = new System.Drawing.Size(419, 27);
             this.txtTituloTramite.TabIndex = 19;
@@ -95,9 +95,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(23, 165);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(164, 21);
+            this.label1.Size = new System.Drawing.Size(155, 21);
             this.label1.TabIndex = 20;
-            this.label1.Text = "Fecha de Creación:";
+            this.label1.Text = "Fecha de Cambio:";
             // 
             // dateCreacion
             // 
@@ -115,9 +115,9 @@
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(23, 210);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(115, 21);
+            this.label3.Size = new System.Drawing.Size(68, 21);
             this.label3.TabIndex = 22;
-            this.label3.Text = "Estado Inicial:";
+            this.label3.Text = "Estado:";
             // 
             // cmbEstado
             // 
@@ -164,7 +164,7 @@
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
-            // frmNuevoTramite
+            // frmABMTramites
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -182,7 +182,7 @@
             this.Controls.Add(this.lblPacienteNombre);
             this.Controls.Add(this.lblTituloForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmNuevoTramite";
+            this.Name = "frmABMTramites";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmNuevoTramite";
             this.Load += new System.EventHandler(this.frmNuevoTramite_Load);
@@ -191,6 +191,7 @@
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frm_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

@@ -36,6 +36,10 @@
             this.lblEstadoActual = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblTramiteSeleccionado = new System.Windows.Forms.Label();
+            this.cmbFiltroTramites = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chkFiltroTodos = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.gbBusqueda.SuspendLayout();
             this.pnlEnviarMensaje.SuspendLayout();
             this.gbEstado.SuspendLayout();
@@ -44,6 +48,10 @@
             // gbBusqueda
             // 
             this.gbBusqueda.Controls.Add(this.mthFechas);
+            this.gbBusqueda.Controls.Add(this.label5);
+            this.gbBusqueda.Controls.Add(this.chkFiltroTodos);
+            this.gbBusqueda.Controls.Add(this.label3);
+            this.gbBusqueda.Controls.Add(this.cmbFiltroTramites);
             this.gbBusqueda.Controls.Add(this.btnGestionTramite);
             this.gbBusqueda.Controls.Add(this.btnFechas);
             this.gbBusqueda.Controls.Add(this.lbTramites);
@@ -62,7 +70,7 @@
             // 
             // mthFechas
             // 
-            this.mthFechas.Location = new System.Drawing.Point(23, 117);
+            this.mthFechas.Location = new System.Drawing.Point(23, 114);
             this.mthFechas.MaxSelectionCount = 30;
             this.mthFechas.Name = "mthFechas";
             this.mthFechas.TabIndex = 0;
@@ -77,11 +85,11 @@
             this.btnGestionTramite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGestionTramite.Font = new System.Drawing.Font("Sans Serif Collection", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGestionTramite.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.btnGestionTramite.Location = new System.Drawing.Point(64, 269);
+            this.btnGestionTramite.Location = new System.Drawing.Point(161, 268);
             this.btnGestionTramite.Name = "btnGestionTramite";
-            this.btnGestionTramite.Size = new System.Drawing.Size(200, 40);
+            this.btnGestionTramite.Size = new System.Drawing.Size(139, 42);
             this.btnGestionTramite.TabIndex = 6;
-            this.btnGestionTramite.Text = "Gestionar Trámite";
+            this.btnGestionTramite.Text = "Nuevo Trámite";
             this.btnGestionTramite.UseVisualStyleBackColor = true;
             this.btnGestionTramite.Click += new System.EventHandler(this.btnGestionTramite_Click);
             // 
@@ -108,6 +116,7 @@
             this.lbTramites.Size = new System.Drawing.Size(280, 116);
             this.lbTramites.TabIndex = 4;
             this.lbTramites.SelectedIndexChanged += new System.EventHandler(this.lbTramites_SelectedIndexChanged);
+            this.lbTramites.DoubleClick += new System.EventHandler(this.lbTramites_DoubleClick);
             // 
             // label2
             // 
@@ -276,6 +285,42 @@
             this.lblTramiteSeleccionado.TabIndex = 6;
             this.lblTramiteSeleccionado.Text = "Seleccione un trámite para ver";
             // 
+            // cmbFiltroTramites
+            // 
+            this.cmbFiltroTramites.FormattingEnabled = true;
+            this.cmbFiltroTramites.Location = new System.Drawing.Point(20, 288);
+            this.cmbFiltroTramites.Name = "cmbFiltroTramites";
+            this.cmbFiltroTramites.Size = new System.Drawing.Size(132, 22);
+            this.cmbFiltroTramites.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 268);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 14);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Filtrado:";
+            // 
+            // chkFiltroTodos
+            // 
+            this.chkFiltroTodos.AutoSize = true;
+            this.chkFiltroTodos.Location = new System.Drawing.Point(70, 268);
+            this.chkFiltroTodos.Name = "chkFiltroTodos";
+            this.chkFiltroTodos.Size = new System.Drawing.Size(57, 18);
+            this.chkFiltroTodos.TabIndex = 10;
+            this.chkFiltroTodos.Text = "Todos";
+            this.chkFiltroTodos.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 123);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 14);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Seleccione el trámite para editar:";
+            // 
             // frmGestionTramites
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,7 +335,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmGestionTramites";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmGestionTramitesChat";
+            this.Text = "Gestión de Tramites e Historial";
             this.gbBusqueda.ResumeLayout(false);
             this.gbBusqueda.PerformLayout();
             this.pnlEnviarMensaje.ResumeLayout(false);
@@ -322,5 +367,9 @@
         private System.Windows.Forms.Button btnFechas;
         private System.Windows.Forms.MonthCalendar mthFechas;
         private System.Windows.Forms.Button btnGestionTramite;
+        private System.Windows.Forms.CheckBox chkFiltroTodos;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cmbFiltroTramites;
+        private System.Windows.Forms.Label label5;
     }
 }

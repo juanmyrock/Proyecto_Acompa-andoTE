@@ -345,5 +345,10 @@ namespace CapaVistas.Forms_Menu
         {
             if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
         }
+
+        private void lbTramites_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

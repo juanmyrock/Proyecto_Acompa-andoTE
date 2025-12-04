@@ -475,7 +475,7 @@
             this.Controls.Add(this.dgvObrasSociales);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmABMObraSocial";
-            this.Text = "frmObrasSociales";
+            this.Text = "Gestión de Obras Sociales";
             this.Load += new System.EventHandler(this.frmObrasSociales_Load);
             this.gbDatosOS.ResumeLayout(false);
             this.gbDatosOS.PerformLayout();

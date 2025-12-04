@@ -369,7 +369,7 @@
             this.Controls.Add(this.txtAcompaniante);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmInformesAT";
-            this.Text = "frmInformesAT";
+            this.Text = "Gestión de Informes AT";
             this.ResumeLayout(false);
             this.PerformLayout();
 
