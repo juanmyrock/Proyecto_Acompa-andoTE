@@ -1,15 +1,17 @@
-﻿using System;
+﻿using CapaDTO.SistemaDTO;
+using CapaLogica.LlenarCombos;
+using CapaLogica.SistemaLogica;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using CapaLogica.LlenarCombos;
 
 namespace CapaVistas.Forms_Menu // O el namespace que corresponda
 {
     public partial class frmGestionTurnos : Form
     {
         // --- SIMULACIÓN DE DATOS (esto vendría de tu base de datos) ---
-
+        private cls_LogicaGestionarProfesionales _logicaProfesional;
         private List<string> medicosPorEspecialidad = new List<string>();
         private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
         private cls_LlenarCombos _rellenador;
@@ -17,7 +19,8 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         {
             InitializeComponent();
             _rellenador = new cls_LlenarCombos();
-            
+            _logicaProfesional = new cls_LogicaGestionarProfesionales();
+
         }
 
         private void frmGestionTurnos_Load(object sender, EventArgs e)
@@ -30,40 +33,89 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             //cmbEspecialidad.Items.Add("Cardiología");
             //cmbEspecialidad.Items.Add("Clínica Médica");
             //cmbEspecialidad.Items.Add("Pediatría");
+            
             CargarCombos();
+           
+
         }
+        private List<CapaDTO.cls_EspecialidadesDTO> _listaEspecialidades; // Usa el namespace completo
+
         private void CargarCombos()
         {
             var cargaEspecialidades = _rellenador.ObtenerEspecialidadesSinAcompaniante();
 
             try
             {
-               
-                CapaUtilidades.cls_LlenarCombos.Cargar(cmbEspecialidad, cargaEspecialidades.Especialidades, "especialidad", "id_especialidad");
+                if (cargaEspecialidades != null && cargaEspecialidades.Especialidades != null)
+                {
+                    // Guardar la lista para usarla después
+                    _listaEspecialidades = cargaEspecialidades.Especialidades;
 
+                    // Configurar el ComboBox correctamente
+                    cmbEspecialidad.DataSource = _listaEspecialidades;
+                    cmbEspecialidad.DisplayMember = "especialidad";
+                    cmbEspecialidad.ValueMember = "id_especialidad";
+
+                    cmbEspecialidad.SelectedIndex = -1;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 2. Cargar Médicos según la Especialidad seleccionada
-            string especialidad = cmbEspecialidad.SelectedItem.ToString();
-            cmbProfesional.Items.Clear();
-
-            //// Aquí harías: SELECT Nombre FROM Medicos WHERE IDEspecialidad = ...
-            //if (medicosPorEspecialidad.ContainsKey(especialidad))
-            //{
-            //    foreach (var medico in medicosPorEspecialidad[especialidad])
-            //    {
-            //        cmbAcompañante.Items.Add(medico);
-            //    }
-            //}
-            //dgvAgenda.Rows.Clear();
-            //lblAgenda.Text = "Agenda del día: (Seleccione médico y fecha)";
+            if (cmbEspecialidad.SelectedIndex >= 0)
+            {
+               
+                // Método alternativo: Usando la lista guardada
+                if (_listaEspecialidades != null && _listaEspecialidades.Count > cmbEspecialidad.SelectedIndex)
+                {
+                    int idEspecialidad = _listaEspecialidades[cmbEspecialidad.SelectedIndex].id_especialidad;
+                    CargarProfesionalesPorEspecialidad(idEspecialidad);
+                }
+            }
         }
+
+        private void CargarProfesionalesPorEspecialidad(int idEspecialidad)
+        {
+            cmbProfesional.Items.Clear();
+            cmbProfesional.Text = "";
+
+            try
+            {
+                List<cls_ProfesionalDTO> listaProfesionales =
+                    _logicaProfesional.ObtenerProfesionalesActivosPorEspecialidad(idEspecialidad);
+
+                if (listaProfesionales != null && listaProfesionales.Count > 0)
+                {
+                    foreach (var profesional in listaProfesionales)
+                    {
+                        cmbProfesional.Items.Add(profesional.nombre + " " + profesional.apellido);
+                    }
+
+                    // Opcional: seleccionar el primer médico si hay solo uno
+                    if (listaProfesionales.Count == 1)
+                    {
+                        cmbProfesional.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    cmbProfesional.Items.Add("No hay profesionales disponibles");
+                    cmbProfesional.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar profesionales: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Asegúrate de que el método en tu lógica acepte el ID correcto
 
         // Eventos que disparan la actualización de la agenda
         private void cmbMedico_SelectedIndexChanged(object sender, EventArgs e) => CargarAgenda();
