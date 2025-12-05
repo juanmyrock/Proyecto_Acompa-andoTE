@@ -71,6 +71,7 @@
     <Compile Include="SistemaDTO\cls_EstadoTramitesDTO.cs" />
     <Compile Include="SistemaDTO\cls_TramiteCreacionDTO.cs" />
     <Compile Include="SistemaDTO\cls_TramiteResumenDTO.cs" />
+    <Compile Include="SistemaDTO\cls_TurnosDTO.cs" />
     <Compile Include="SistemaDTO\cls_UsuarioGestionDTO.cs" />
   </ItemGroup>
   <ItemGroup>

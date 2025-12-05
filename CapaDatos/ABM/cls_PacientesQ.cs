@@ -274,5 +274,145 @@ namespace CapaDatos.ABM
                 return false;
             }
         }
+
+        public cls_PacienteDTO BuscarPorDNI(string dni)
+        {
+            try
+            {
+                string query = @"
+                    SELECT 
+                        id_paciente,
+                        id_os,
+                        Nombre,
+                        Apellido,
+                        dni_titular,
+                        num_afiliado,
+                        id_tipo_dni,
+                        dni_paciente,
+                        fecha_nac,
+                        id_sexo,
+                        cud,
+                        diagnostico,
+                        id_localidad,
+                        domicilio,
+                        num_domicilio,
+                        cargahoraria_at,
+                        telefono,
+                        esActivo,
+                        email
+                    FROM Pacientes 
+                    WHERE dni_paciente = @dni_paciente 
+                    AND (esActivo = 1 OR esActivo IS NULL)";
+
+                var parametros = new List<SqlParameter>
+                {
+                    new SqlParameter("@dni_paciente", Convert.ToInt32(dni))
+                };
+
+                DataTable dt = _ejecutar.ConsultaRead(query, parametros);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return ConvertirDataRowAPaciente(dt.Rows[0]);
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en BuscarPorDNI: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Obtener paciente por ID
+        public cls_PacienteDTO ObtenerPorId(int idPaciente)
+        {
+            try
+            {
+                string query = @"
+                    SELECT 
+                        id_paciente,
+                        id_os,
+                        Nombre,
+                        Apellido,
+                        dni_titular,
+                        num_afiliado,
+                        id_tipo_dni,
+                        dni_paciente,
+                        fecha_nac,
+                        id_sexo,
+                        cud,
+                        diagnostico,
+                        id_localidad,
+                        domicilio,
+                        num_domicilio,
+                        cargahoraria_at,
+                        telefono,
+                        esActivo,
+                        email
+                    FROM Pacientes 
+                    WHERE id_paciente = @id_paciente";
+
+                var parametros = new List<SqlParameter>
+                {
+                    new SqlParameter("@id_paciente", idPaciente)
+                };
+
+                DataTable dt = _ejecutar.ConsultaRead(query, parametros);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return ConvertirDataRowAPaciente(dt.Rows[0]);
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en ObtenerPorId: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Método de conversión para lista
+        private List<cls_PacienteDTO> ConvertirDataTableALista(DataTable dt)
+        {
+            var listaPacientes = new List<cls_PacienteDTO>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                listaPacientes.Add(ConvertirDataRowAPaciente(row));
+            }
+
+            return listaPacientes;
+        }
+
+        // Método de conversión individual
+        private cls_PacienteDTO ConvertirDataRowAPaciente(DataRow row)
+        {
+            return new cls_PacienteDTO
+            {
+                id_paciente = row["id_paciente"] != DBNull.Value ? Convert.ToInt32(row["id_paciente"]) : 0,
+                id_os = row["id_os"] != DBNull.Value ? Convert.ToInt32(row["id_os"]) : (int?)null,
+                Nombre = row["Nombre"]?.ToString() ?? "",
+                Apellido = row["Apellido"]?.ToString() ?? "",
+                dni_titular = row["dni_titular"] != DBNull.Value ? Convert.ToInt32(row["dni_titular"]) : 0,
+                num_afiliado = row["num_afiliado"] != DBNull.Value ? Convert.ToInt64(row["num_afiliado"]) : 0,
+                id_tipo_dni = row["id_tipo_dni"] != DBNull.Value ? Convert.ToInt32(row["id_tipo_dni"]) : (int?)null,
+                dni_paciente = row["dni_paciente"] != DBNull.Value ? Convert.ToInt32(row["dni_paciente"]) : 0,
+                fecha_nac = row["fecha_nac"] != DBNull.Value ? Convert.ToDateTime(row["fecha_nac"]) : (DateTime?)null,
+                id_sexo = row["id_sexo"] != DBNull.Value ? Convert.ToInt32(row["id_sexo"]) : (int?)null,
+                cud = row["cud"]?.ToString() ?? "",
+                diagnostico = row["diagnostico"]?.ToString() ?? "",
+                id_localidad = row["id_localidad"] != DBNull.Value ? Convert.ToInt32(row["id_localidad"]) : 0,
+                domicilio = row["domicilio"]?.ToString() ?? "",
+                num_domicilio = row["num_domicilio"] != DBNull.Value ? Convert.ToInt32(row["num_domicilio"]) : 0,
+                cargahoraria_at = row["cargahoraria_at"] != DBNull.Value ? Convert.ToDecimal(row["cargahoraria_at"]) : 0,
+                telefono = row["telefono"] != DBNull.Value ? Convert.ToInt32(row["telefono"]) : 0,
+                esActivo = row["esActivo"] != DBNull.Value ? Convert.ToBoolean(row["esActivo"]) : (bool?)null,
+                email = row["email"]?.ToString() ?? ""
+            };
+        }
     }
 }

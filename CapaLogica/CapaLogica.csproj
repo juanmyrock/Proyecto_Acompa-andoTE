@@ -62,6 +62,7 @@
     <Compile Include="Login\cls_LogicaPreguntas.cs" />
     <Compile Include="Negocio\cls_LogicaAsignacionAT.cs" />
     <Compile Include="Negocio\cls_LogicaInformes.cs" />
+    <Compile Include="Negocio\cls_LogicaTurnos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

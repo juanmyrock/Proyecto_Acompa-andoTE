@@ -56,6 +56,7 @@
     <Compile Include="Negocio\cls_ProfesionalesQ.cs" />
     <Compile Include="Negocio\cls_ObraSocialQ.cs" />
     <Compile Include="Negocio\cls_TramitesQ.cs" />
+    <Compile Include="Negocio\cls_TurnosQ.cs" />
     <Compile Include="Utilidades\cls_LlenarCombosQ.cs" />
     <Compile Include="Login\cls_ContraseñaQ.cs" />
     <Compile Include="Login\cls_ConectarUserQ.cs" />
