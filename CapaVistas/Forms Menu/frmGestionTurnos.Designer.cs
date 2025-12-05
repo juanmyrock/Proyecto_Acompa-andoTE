@@ -17,11 +17,11 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbFiltros = new System.Windows.Forms.GroupBox();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
-            this.cmbAcompañante = new System.Windows.Forms.ComboBox();
+            this.cmbProfesional = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbEspecialidad = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,7 +50,7 @@
             // gbFiltros
             // 
             this.gbFiltros.Controls.Add(this.monthCalendar);
-            this.gbFiltros.Controls.Add(this.cmbAcompañante);
+            this.gbFiltros.Controls.Add(this.cmbProfesional);
             this.gbFiltros.Controls.Add(this.label2);
             this.gbFiltros.Controls.Add(this.cmbEspecialidad);
             this.gbFiltros.Controls.Add(this.label1);
@@ -71,15 +71,15 @@
             this.monthCalendar.TabIndex = 4;
             this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
             // 
-            // cmbAcompañante
+            // cmbProfesional
             // 
-            this.cmbAcompañante.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAcompañante.FormattingEnabled = true;
-            this.cmbAcompañante.Location = new System.Drawing.Point(26, 108);
-            this.cmbAcompañante.Name = "cmbAcompañante";
-            this.cmbAcompañante.Size = new System.Drawing.Size(227, 24);
-            this.cmbAcompañante.TabIndex = 3;
-            this.cmbAcompañante.SelectedIndexChanged += new System.EventHandler(this.cmbMedico_SelectedIndexChanged);
+            this.cmbProfesional.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbProfesional.FormattingEnabled = true;
+            this.cmbProfesional.Location = new System.Drawing.Point(26, 108);
+            this.cmbProfesional.Name = "cmbProfesional";
+            this.cmbProfesional.Size = new System.Drawing.Size(227, 24);
+            this.cmbProfesional.TabIndex = 3;
+            this.cmbProfesional.SelectedIndexChanged += new System.EventHandler(this.cmbMedico_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -116,27 +116,27 @@
             this.dgvAgenda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAgenda.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.dgvAgenda.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAgenda.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Bahnschrift", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAgenda.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAgenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAgenda.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colHora,
             this.colPaciente,
             this.colEstado});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAgenda.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAgenda.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAgenda.Location = new System.Drawing.Point(355, 50);
             this.dgvAgenda.MultiSelect = false;
             this.dgvAgenda.Name = "dgvAgenda";
@@ -346,7 +346,7 @@
         private System.Windows.Forms.GroupBox gbFiltros;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbEspecialidad;
-        private System.Windows.Forms.ComboBox cmbAcompañante;
+        private System.Windows.Forms.ComboBox cmbProfesional;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.DataGridView dgvAgenda;

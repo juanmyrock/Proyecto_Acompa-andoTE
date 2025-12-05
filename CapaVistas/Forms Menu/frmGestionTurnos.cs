@@ -2,48 +2,67 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using CapaLogica.LlenarCombos;
 
 namespace CapaVistas.Forms_Menu // O el namespace que corresponda
 {
     public partial class frmGestionTurnos : Form
     {
         // --- SIMULACIÓN DE DATOS (esto vendría de tu base de datos) ---
-        private Dictionary<string, List<string>> medicosPorEspecialidad = new Dictionary<string, List<string>>();
-        private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
 
+        private List<string> medicosPorEspecialidad = new List<string>();
+        private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
+        private cls_LlenarCombos _rellenador;
         public frmGestionTurnos()
         {
             InitializeComponent();
+            _rellenador = new cls_LlenarCombos();
+            
         }
 
         private void frmGestionTurnos_Load(object sender, EventArgs e)
         {
             // Simula la carga de datos iniciales
-            CargarDatosDePrueba();
+           // CargarDatosDePrueba();
 
             // 1. Cargar Especialidades desde la Base de Datos
             // Aquí harías: SELECT * FROM Especialidades
-            cmbEspecialidad.Items.Add("Cardiología");
-            cmbEspecialidad.Items.Add("Clínica Médica");
-            cmbEspecialidad.Items.Add("Pediatría");
+            //cmbEspecialidad.Items.Add("Cardiología");
+            //cmbEspecialidad.Items.Add("Clínica Médica");
+            //cmbEspecialidad.Items.Add("Pediatría");
+            CargarCombos();
         }
+        private void CargarCombos()
+        {
+            var cargaEspecialidades = _rellenador.ObtenerEspecialidadesSinAcompaniante();
 
+            try
+            {
+               
+                CapaUtilidades.cls_LlenarCombos.Cargar(cmbEspecialidad, cargaEspecialidades.Especialidades, "especialidad", "id_especialidad");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             // 2. Cargar Médicos según la Especialidad seleccionada
             string especialidad = cmbEspecialidad.SelectedItem.ToString();
-            cmbAcompañante.Items.Clear();
+            cmbProfesional.Items.Clear();
 
-            // Aquí harías: SELECT Nombre FROM Medicos WHERE IDEspecialidad = ...
-            if (medicosPorEspecialidad.ContainsKey(especialidad))
-            {
-                foreach (var medico in medicosPorEspecialidad[especialidad])
-                {
-                    cmbAcompañante.Items.Add(medico);
-                }
-            }
-            dgvAgenda.Rows.Clear();
-            lblAgenda.Text = "Agenda del día: (Seleccione médico y fecha)";
+            //// Aquí harías: SELECT Nombre FROM Medicos WHERE IDEspecialidad = ...
+            //if (medicosPorEspecialidad.ContainsKey(especialidad))
+            //{
+            //    foreach (var medico in medicosPorEspecialidad[especialidad])
+            //    {
+            //        cmbAcompañante.Items.Add(medico);
+            //    }
+            //}
+            //dgvAgenda.Rows.Clear();
+            //lblAgenda.Text = "Agenda del día: (Seleccione médico y fecha)";
         }
 
         // Eventos que disparan la actualización de la agenda
@@ -52,9 +71,9 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
 
         private void CargarAgenda()
         {
-            if (cmbAcompañante.SelectedItem == null) return;
+            if (cmbProfesional.SelectedItem == null) return;
 
-            string medico = cmbAcompañante.SelectedItem.ToString();
+            string medico = cmbProfesional.SelectedItem.ToString();
             DateTime fecha = monthCalendar.SelectionStart;
             lblAgenda.Text = $"Agenda de {medico} - {fecha:dd/MM/yyyy}";
 
@@ -124,14 +143,14 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
             // 5. Validar y guardar el turno en la base de datos
-            if (cmbAcompañante.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("Sebastian Gonzalez") || lblNombrePaciente.Text.Contains("..."))
+            if (cmbProfesional.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("Sebastian Gonzalez") || lblNombrePaciente.Text.Contains("..."))
             {
                 MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
 
             }
 
-            string medico = cmbAcompañante.SelectedItem.ToString();
+            string medico = cmbProfesional.SelectedItem.ToString();
             string hora = cmbHorarios.SelectedItem.ToString();
             string paciente = lblNombrePaciente.Text;
             string fecha = monthCalendar.SelectionStart.ToShortDateString();
@@ -197,15 +216,6 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
             txtObservaciones.Clear();
         }
 
-        private void CargarDatosDePrueba()
-        {
-            // Simulación de datos que vendrían de la DB
-            medicosPorEspecialidad.Add("Cardiología", new List<string> { "Dr. Favaloro", "Dra. López" });
-            medicosPorEspecialidad.Add("Clínica Médica", new List<string> { "Dr. Pérez", "Dra. García" });
-            medicosPorEspecialidad.Add("Pediatría", new List<string> { "Dra. González" });
-
-            turnosOcupados.Add(new Tuple<string, string>("10:00", "Perez, Maria"));
-            turnosOcupados.Add(new Tuple<string, string>("11:30", "Rodriguez, Carlos"));
-        }
+      
     }     
 }
