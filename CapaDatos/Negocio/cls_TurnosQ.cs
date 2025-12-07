@@ -16,7 +16,6 @@ namespace CapaLogica.Negocio
             _ejecutarQ = new cls_EjecutarQ();
         }
 
-        // Buscar turnos por profesional y fecha
         public List<cls_TurnosDTO> BuscarTurnos(int idProfesional, DateTime fecha)
         {
             try
@@ -67,7 +66,6 @@ namespace CapaLogica.Negocio
             }
         }
 
-        // Crear nuevo turno
         public bool CrearTurno(cls_TurnosDTO nuevoTurno)
         {
             try
@@ -115,8 +113,6 @@ namespace CapaLogica.Negocio
                 throw;
             }
         }
-
-        // Cancelar turno (cambiar estado a Cancelado)
         public bool CancelarTurno(int idTurno, int idUsuarioCancela)
         {
             try
@@ -145,7 +141,6 @@ namespace CapaLogica.Negocio
             }
         }
 
-        // Obtener turno por ID
         public cls_TurnosDTO ObtenerTurnoPorId(int idTurno)
         {
             try
@@ -184,8 +179,6 @@ namespace CapaLogica.Negocio
                 throw;
             }
         }
-
-        // Verificar si hay turno solapado
         public bool VerificarTurnoSolapado(int idProfesional, DateTime fechaHoraInicio, DateTime fechaHoraFin, int? idTurnoExcluir = null)
         {
             try
@@ -223,8 +216,6 @@ namespace CapaLogica.Negocio
                 throw;
             }
         }
-
-        // Métodos de conversión
         private List<cls_TurnosDTO> ConvertirDataTableALista(DataTable dt)
         {
             var listaTurnos = new List<cls_TurnosDTO>();

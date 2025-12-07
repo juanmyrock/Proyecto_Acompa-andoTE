@@ -17,9 +17,9 @@ namespace CapaVistas.Forms_Menu
     public partial class frmAdministrarRoles : Form
     {
         private int _idRolSeleccionado = -1;
-        cls_Rol _rol; // Para CRUD de roles y cargar el DataGridView
-        private cls_Permisos _logicaPermisos; // Para la gestión de permisos y su relación con roles
-        cls_LlenarCombos _rellenador; // Para cargar el ComboBox
+        cls_Rol _rol;
+        private cls_Permisos _logicaPermisos;
+        cls_LlenarCombos _rellenador;
 
         public frmAdministrarRoles()
         {
@@ -42,11 +42,10 @@ namespace CapaVistas.Forms_Menu
             ltvPermisosAsignados.Columns.Add("Permiso", 150);
             ltvPermisosAsignados.Columns.Add("Descripción", 250);
 
-            // Seleccionar el primer elemento en el DataGridView si existe
             if (dgvVerRoles.Rows.Count > 0)
             {
                 dgvVerRoles.Rows[0].Selected = true;
-                dgvVerRoles.CurrentCell = dgvVerRoles.Rows[0].Cells[0]; // Asegura que el evento SelectionChanged se dispare
+                dgvVerRoles.CurrentCell = dgvVerRoles.Rows[0].Cells[0];
             }
         }
 
@@ -55,13 +54,11 @@ namespace CapaVistas.Forms_Menu
             var cargaRoles = _rellenador.ObtenerRoles();
             try
             {
-                // Limpiar cmbRol antes de cargar para evitar duplicados si se llama varias veces
                 cmbRol.DataSource = null;
                 cmbRol.Items.Clear();
 
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbRol, cargaRoles.Roles, "NombreRol", "IdRol");
 
-                // Configurar el ComboBox para que no seleccione nada por defecto
                 cmbRol.SelectedIndex = -1;
             }
             catch (Exception ex)
@@ -97,7 +94,7 @@ namespace CapaVistas.Forms_Menu
                         _rol.InsertarRol(nuevoRol);
                         MessageBox.Show("Rol creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         _rol.CargarRolesEnDataGridView(dgvVerRoles);
-                        CargarCombos(); // Recarga el combo para incluir el nuevo rol
+                        CargarCombos();
                         txtNombreRol.Clear();
                         txtDescripcionRol.Clear();
                     }
@@ -145,7 +142,7 @@ namespace CapaVistas.Forms_Menu
                     _rol.ActualizarRol(rolModificado);
                     MessageBox.Show("Rol modificado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _rol.CargarRolesEnDataGridView(dgvVerRoles);
-                    CargarCombos(); // Recarga el combo para reflejar el cambio de nombre/desc
+                    CargarCombos();
                     txtNombreRol.Clear();
                     txtDescripcionRol.Clear();
                     _idRolSeleccionado = -1;
@@ -159,18 +156,13 @@ namespace CapaVistas.Forms_Menu
             }
         }
         #endregion
-
-        // El CellClick es redundante para la carga de permisos si SelectionChanged ya lo hace.
-        // Lo eliminaré o lo dejaré vacío si no tiene otra función.
         private void dgvVerRoles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Puedes dejarlo vacío o eliminarlo si dgvVerRoles_SelectionChanged maneja todo lo necesario
-            // Si necesitas alguna lógica específica al hacer click en una celda, ponla aquí.
+
         }
 
         private void dgvVerRoles_SelectionChanged(object sender, EventArgs e)
         {
-            // Evita disparar el evento al limpiar la selección o cuando no hay fila actual
             if (dgvVerRoles.CurrentRow == null || dgvVerRoles.CurrentRow.Index < 0)
             {
                 _idRolSeleccionado = -1;
@@ -178,7 +170,6 @@ namespace CapaVistas.Forms_Menu
                 txtDescripcionRol.Clear();
                 ltvPermisosAsignados.Items.Clear();
                 ltvPermisosDisp.Items.Clear();
-                // Opcional: Deseleccionar también el ComboBox si no hay rol seleccionado en el DGV
                 if (cmbRol.SelectedIndex != -1)
                 {
                     cmbRol.SelectedIndex = -1;
@@ -193,13 +184,10 @@ namespace CapaVistas.Forms_Menu
                 _idRolSeleccionado = rolSeleccionado.IdRol;
                 txtNombreRol.Text = rolSeleccionado.NombreRol;
                 txtDescripcionRol.Text = rolSeleccionado.Descripcion;
-
-                // Sincronizar el ComboBox con el DataGridView
-                // Encuentra el índice del rol seleccionado en el ComboBox
                 int indexInComboBox = -1;
                 for (int i = 0; i < cmbRol.Items.Count; i++)
                 {
-                    if (cmbRol.Items[i] is DataRowView drv) // Si el DataSource del combo es un DataTable
+                    if (cmbRol.Items[i] is DataRowView drv) 
                     {
                         if (Convert.ToInt32(drv["IdRol"]) == _idRolSeleccionado)
                         {
@@ -207,7 +195,7 @@ namespace CapaVistas.Forms_Menu
                             break;
                         }
                     }
-                    else if (cmbRol.Items[i] is cls_RolDTO dto) // Si el DataSource es una List<cls_RolDTO>
+                    else if (cmbRol.Items[i] is cls_RolDTO dto)
                     {
                         if (dto.IdRol == _idRolSeleccionado)
                         {
@@ -215,18 +203,13 @@ namespace CapaVistas.Forms_Menu
                             break;
                         }
                     }
-                    // Si el DataSource de cmbRol es directamente una lista de cls_RolDTO,
-                    // cmbRol.SelectedValue = _idRolSeleccionado; funcionaría directamente.
-                    // Pero la carga con CapaUtilidades.cls_LlenarCombos.Cargar puede cambiar el tipo de los ítems.
                 }
 
                 if (cmbRol.SelectedIndex != indexInComboBox)
                 {
-                    // Previene que se dispare otro SelectionChanged si ya está seleccionado.
                     cmbRol.SelectedIndex = indexInComboBox;
                 }
 
-                // Llama al método de la lógica para cargar los permisos
                 _logicaPermisos.CargarPermisosParaRolSeleccionado(_idRolSeleccionado, ltvPermisosAsignados, ltvPermisosDisp);
             }
             catch (Exception ex)
@@ -244,42 +227,30 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // Nuevo evento para el ComboBox
         private void cmbRol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Verifica si hay un ítem seleccionado y si el SelectedItem es del tipo esperado
-            if (cmbRol.SelectedItem is cls_RolDTO selectedRolDTO) // Usa 'is' para una verificación y conversión segura
+            if (cmbRol.SelectedItem is cls_RolDTO selectedRolDTO)
             {
                 try
                 {
-                    int nuevoIdRol = selectedRolDTO.IdRol; // Accede directamente a la propiedad IdRol del DTO
+                    int nuevoIdRol = selectedRolDTO.IdRol;
 
-                    // Evita bucles infinitos si este evento es disparado por la sincronización del DGV
                     if (nuevoIdRol == _idRolSeleccionado)
                     {
-                        return; // Ya está seleccionado el mismo rol, no hacer nada
+                        return;
                     }
 
                     _idRolSeleccionado = nuevoIdRol;
-
-                    // Opcional: Actualizar los TextBox si cmbRol es la fuente principal de selección
-                    // (esto ya lo hace dgvVerRoles_SelectionChanged, pero si el usuario solo usa el combo, podrías necesitarlo)
                     txtNombreRol.Text = selectedRolDTO.NombreRol;
                     txtDescripcionRol.Text = selectedRolDTO.Descripcion;
 
-                    // Llama al método de la lógica para cargar los permisos
                     _logicaPermisos.CargarPermisosParaRolSeleccionado(_idRolSeleccionado, ltvPermisosAsignados, ltvPermisosDisp);
-
-                    // Sincronizar el DataGridView con el ComboBox
-                    // Previene que el evento SelectionChanged del DGV se dispare cuando actualizamos.
-                    // Es buena práctica quitar y volver a añadir el evento.
                     dgvVerRoles.SelectionChanged -= dgvVerRoles_SelectionChanged;
                     foreach (DataGridViewRow row in dgvVerRoles.Rows)
                     {
                         if (row.DataBoundItem is cls_RolDTO rolDto && rolDto.IdRol == _idRolSeleccionado)
                         {
                             row.Selected = true;
-                            // Asegúrate de que CurrentCell no sea null antes de asignarle un valor
                             if (row.Cells.Count > 0)
                             {
                                 dgvVerRoles.CurrentCell = row.Cells[0];
@@ -302,7 +273,6 @@ namespace CapaVistas.Forms_Menu
             }
             else
             {
-                // Si no se pudo obtener un cls_RolDTO válido (ej. al limpiar el combo o si SelectedItem es null)
                 _idRolSeleccionado = -1;
                 txtNombreRol.Clear();
                 txtDescripcionRol.Clear();
@@ -328,7 +298,7 @@ namespace CapaVistas.Forms_Menu
                     _rol.EliminarRol(_idRolSeleccionado);
                     MessageBox.Show("Rol eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     _rol.CargarRolesEnDataGridView(dgvVerRoles);
-                    CargarCombos(); // Recarga el combo después de eliminar
+                    CargarCombos();
                     txtNombreRol.Clear();
                     txtDescripcionRol.Clear();
                     _idRolSeleccionado = -1;
@@ -342,8 +312,6 @@ namespace CapaVistas.Forms_Menu
             }
         }
         #endregion
-
-        // Métodos de asignación/desasignación de permisos (ya los tenías, solo cambié la llamada a _logicaPermisos)
         private void btnQuitarPermiso_Click(object sender, EventArgs e)
         {
             if (_idRolSeleccionado == -1)

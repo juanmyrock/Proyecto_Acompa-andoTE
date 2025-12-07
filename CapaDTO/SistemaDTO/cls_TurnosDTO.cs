@@ -12,7 +12,7 @@ namespace CapaDTO.SistemaDTO
         public int id_estado_turno { get; set; }
         public int id_usuario_creador { get; set; }
         public DateTime fecha_creacion { get; set; }
-        public string observaciones { get; set; } // Ya la tienes
-        public string nombre_paciente { get; set; } // Agregar esta propiedad
+        public string observaciones { get; set; } 
+        public string nombre_paciente { get; set; } 
     }
 }

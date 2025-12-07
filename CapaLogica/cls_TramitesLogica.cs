@@ -32,7 +32,6 @@ namespace CapaLogica.CapaLogica.Tramites
             return _tramitesQ.RegistrarComentario(id_tp, id_usuario, comentario);
         }
 
-        // CORREGIDO: Se renombra y simplifica. Ya no hay transacción.
         public bool RegistrarEventoDeTipo(int id_tp, int id_usuario, int id_tipo_tramite)
         {
             if (id_tp <= 0 || id_usuario <= 0 || id_tipo_tramite <= 0)
@@ -47,17 +46,13 @@ namespace CapaLogica.CapaLogica.Tramites
                 return false;
             }
         }
-
-        // CORREGIDO: Se renombra el método
         public List<cls_TiposTramitesDTO> ObtenerTiposTramite()
         {
             return _tramitesQ.ObtenerTiposTramite();
         }
 
-        // Crea un nuevo trámite (solo en la tabla maestra Tramites).
         public bool CrearNuevoTramite(cls_TramiteCreacionDTO dto)
         {
-            // 1. Validaciones
             if (dto.id_paciente <= 0 || dto.id_usuario_creador <= 0 || dto.id_estado_actual <= 0)
                 return false;
             if (string.IsNullOrWhiteSpace(dto.titulo_inicial))
@@ -65,23 +60,18 @@ namespace CapaLogica.CapaLogica.Tramites
 
             try
             {
-                // 2. Llama directamente al INSERT. No hay transacción aquí.
                 int nuevoIdTp = _tramitesQ.InsertarTramiteMaestro(dto);
 
-                // Si devolvió un ID, fue exitoso
                 return (nuevoIdTp > 0);
             }
             catch (Exception ex)
             {
-                // Si algo falló (ej: el DTO no tenía id_tipo_tramite que borramos antes)
                 throw ex;
             }
         }
 
-        // Llama a la capa de datos para poblar el ComboBox de estados maestros (Abierto, Cerrado, etc.).
         public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
         {
-            // Simplemente llama al método de la capa de datos que ya existe
             return _tramitesQ.ObtenerEstadosPosibles();
         }
 

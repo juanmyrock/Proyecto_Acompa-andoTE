@@ -136,7 +136,7 @@ namespace CapaVistas
         }
         #endregion
 
-        private void OpenChildForm(Form childForm, object btnSender) //Método para llamar un formulario hijo dentro del contenedor PanelChildFrm
+        private void OpenChildForm(Form childForm, object btnSender)
         {
             if (activeForm != null)
             { 
@@ -148,7 +148,6 @@ namespace CapaVistas
             childForm.Dock = DockStyle.Fill;
             this.panelChildFrm.Controls.Add(childForm);
             this.panelChildFrm.Tag = childForm;
-            //childForm.BringToFront();
             childForm.Show();
             lblTitulo.Text = childForm.Text;
             btnCerrarForm.Visible = true;

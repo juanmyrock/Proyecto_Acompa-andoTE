@@ -39,12 +39,12 @@ namespace CapaDatos
             try
             {
                 _ejecutor.ConsultaWriteSP(query, parametros);
-                return true; // Si no hay excepción, la inserción fue exitosa
+                return true; 
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al insertar empleado en cls_EmpleadosQ: {ex.Message}");
-                throw; // *** CAMBIO CLAVE: Re-lanza la excepción para que llegue a la capa lógica y luego a la UI ***
+                throw; 
             }
         }
 
@@ -74,7 +74,7 @@ namespace CapaDatos
                         domicilio = row["domicilio"].ToString(),
                         num_domicilio = Convert.ToInt32(row["num_domicilio"]),
                         carga_hs = Convert.ToDecimal(row["carga_hs"]),
-                        email = row["email"].ToString(), // Mapeo del email
+                        email = row["email"].ToString(),
                         telefono = row["telefono"].ToString(),
                         esActivo = Convert.ToBoolean(row["esActivo"])
                     });
@@ -85,7 +85,7 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al obtener y mapear empleados: {ex.Message}");
-                throw; // Re-lanzamos la excepción para que la capa de lógica la maneje.
+                throw; 
             }
         }
 

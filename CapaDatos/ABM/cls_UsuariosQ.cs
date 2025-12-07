@@ -10,7 +10,6 @@ namespace CapaDatos.ABM
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        /// Obtiene los datos específicos para la gestión de un usuario.
         public cls_UsuarioGestionDTO ObtenerUsuarioParaGestion(int idUsuario)
         {
             string sql = "[dbo].[ObtenerUsuarioParaGestion]";
@@ -34,7 +33,6 @@ namespace CapaDatos.ABM
             };
         }
 
-        /// Desbloquea a un usuario, reseteando sus intentos fallidos y reactivándolo.
         public void DesbloquearUsuario(int idUsuario)
         {
             string sql = "[dbo].[DesbloquearUsuario]";
@@ -42,10 +40,8 @@ namespace CapaDatos.ABM
             var parametros = new List<SqlParameter> { new SqlParameter("@idUsuario", idUsuario) };
             _ejecutar.ConsultaWriteSP(sql, parametros);
         }
-        // Cambia el estado de un usuario (activo/inactivo).
         public void CambiarEstadoUsuario(int idUsuario, bool nuevoEstado)
         {
-            // Si se desactiva, se registra la fecha de baja. Si se reactiva, se limpia.
             string sql = "[dbo].[CambiarEstadoUsuario]";
 
             var parametros = new List<SqlParameter>
@@ -56,7 +52,6 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWriteSP(sql, parametros);
         }
 
-        // Actualiza el rol de un usuario específico.
         public void ActualizarRolUsuario(int idUsuario, int idRol)
         {
             string sql = "[dbo].[ActualizarRolUsuario]";
@@ -68,8 +63,6 @@ namespace CapaDatos.ABM
             _ejecutar.ConsultaWriteSP(sql, parametros);
         }
 
-        // Verifica si ya existe un registro en la tabla Usuarios para un id_usuario específico.
-        // True si el usuario existe, de lo contrario False.
         public bool ExisteUsuario(int idUsuario)
         {
             string sql = "[dbo].[ExisteUsuario]";
@@ -78,10 +71,8 @@ namespace CapaDatos.ABM
             return Convert.ToInt32(tabla.Rows[0][0]) > 0;
         }
 
-        // Crea un nuevo registro de Usuario asociado a un Empleado existente.
         public void CrearNuevoUsuario(int idUsuario, string username, int idRol)
         {
-            // Al crear un usuario, siempre lo marcamos para que configure su cuenta en el primer login.
             string sql = "[dbo].[CrearNuevoUsuario]";
 
             var parametros = new List<SqlParameter>

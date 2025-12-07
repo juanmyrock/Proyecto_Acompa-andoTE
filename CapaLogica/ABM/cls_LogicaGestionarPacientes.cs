@@ -169,7 +169,6 @@ namespace CapaLogica.SistemaLogica
         {
             try
             {
-                // Llama al método del DAO
                 return _pacientesQ.VerificarDniExistente(dni);
             }
             catch (Exception ex)

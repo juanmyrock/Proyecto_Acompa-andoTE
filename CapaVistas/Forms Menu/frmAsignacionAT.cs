@@ -1,6 +1,6 @@
 ﻿using CapaDTO;
 using CapaDTO.SistemaDTO;
-using CapaLogica; // O CapaLogica.Negocio, tu namespace
+using CapaLogica;
 using CapaLogica.Negocio;
 using CapaSesion.Login;
 using CapaUtilidades;
@@ -48,11 +48,10 @@ namespace CapaVistas.Forms_Menu
             SetearModoFormulario(ModoFormulario.Inicial);
         }
 
-        #region --- 1. Configuración Inicial y Carga de Combos ---
+        #region configuracion inicial y carga de Combos
 
         private void ConfigurarControlesVisuales()
         {
-            // ... (tu código de timeInicio y timeFin) ...
             timeInicio.Format = DateTimePickerFormat.Custom; timeInicio.CustomFormat = "HH:mm";
             timeInicio.ShowUpDown = true; timeInicio.Value = DateTime.Today.AddHours(9);
             timeFin.Format = DateTimePickerFormat.Custom; timeFin.CustomFormat = "HH:mm";
@@ -87,8 +86,6 @@ namespace CapaVistas.Forms_Menu
         private void SetearModoFormulario(ModoFormulario modo)
         {
             _modoActual = modo;
-
-            // Apagamos todo por defecto
             gbBuscarAsignacion.Enabled = false;
             btnNuevaAsignacion.Enabled = false; 
             gbDetalles.Enabled = false;
@@ -97,7 +94,6 @@ namespace CapaVistas.Forms_Menu
             btnGuardarAsignacion.Enabled = false;
             lbAsignacionesExistentes.Visible = false;
 
-            // Botones de horario
             btnAgregarHorario.Enabled = false;
             btnActualizarHorario.Enabled = false;
 
@@ -127,9 +123,8 @@ namespace CapaVistas.Forms_Menu
 
         #endregion
 
-        #region --- 2. Flujo Principal: Buscar-o-Crear ---
+        #region buscar o crear
 
-        // PASO 1: Buscar Paciente
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             string busqueda = txtBuscarPaciente.Text.Trim();
@@ -180,16 +175,11 @@ namespace CapaVistas.Forms_Menu
             lbResultadosBusqueda.Visible = false;
             SetearModoFormulario(ModoFormulario.PacienteEncontrado);
         }
-
-        // PASO 1.5: Botón para "Crear Nueva" (Soluciona tu Problema 1)
         private void btnNuevaAsignacion_Click(object sender, EventArgs e)
         {
-            // Limpia la parte de asignación y entra en Modo Creación
             LimpiarSeccionAsignacion();
             SetearModoFormulario(ModoFormulario.ModoCreacion);
         }
-
-        // PASO 2: Buscar Asignaciones Existentes
         private void btnBuscarAsignacion_Click(object sender, EventArgs e)
         {
             if (_pacienteSeleccionado == null)
@@ -205,7 +195,7 @@ namespace CapaVistas.Forms_Menu
                 if (asignaciones == null || asignaciones.Count == 0)
                 {
                     MessageBox.Show("El paciente no tiene asignaciones activas. Puede crear una nueva.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarSeccionAsignacion(); // Limpia por si acaso
+                    LimpiarSeccionAsignacion();
                     SetearModoFormulario(ModoFormulario.ModoCreacion);
                 }
                 else
@@ -221,8 +211,6 @@ namespace CapaVistas.Forms_Menu
                 MessageBox.Show("Error al buscar asignaciones: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        // PASO 3: Seleccionar Asignación Existente
         private void lbAsignacionesExistentes_Click(object sender, EventArgs e)
         {
             if (lbAsignacionesExistentes.SelectedItem == null) return;
@@ -233,12 +221,10 @@ namespace CapaVistas.Forms_Menu
                 _asignacionSeleccionada = _logica.ObtenerAcompanamientoPorId(resumen.id_acompanamiento);
                 _horariosExistentes = _logica.ObtenerHorariosPorAsignacion(resumen.id_acompanamiento);
 
-                // Autocompletar campos
                 cmbAmbito.SelectedValue = _asignacionSeleccionada.id_ambito;
                 cmbProfesional.SelectedValue = _asignacionSeleccionada.id_profesional;
                 cmbJornada.SelectedValue = _asignacionSeleccionada.id_jornada;
 
-                // Cargar Grilla
                 dgvHorarios.DataSource = _horariosExistentes;
 
                 SetearModoFormulario(ModoFormulario.ModoEdicion);
@@ -251,9 +237,8 @@ namespace CapaVistas.Forms_Menu
 
         #endregion
 
-        #region --- 3. Lógica de Horarios (Crear y Editar) ---
+        #region crear y editar horarios
 
-        // PASO 4: Carga Inversa (Seleccionar Fila para Editar)
         private void dgvHorarios_SelectionChanged(object sender, EventArgs e)
         {
             if (_modoActual == ModoFormulario.ModoEdicion && dgvHorarios.SelectedRows.Count > 0)
@@ -261,22 +246,18 @@ namespace CapaVistas.Forms_Menu
                 var horarioDTO = (AcompanamientoHorarioDTO)dgvHorarios.SelectedRows[0].DataBoundItem;
                 if (horarioDTO == null) return;
 
-                // Carga inversa
                 cmbDiaSemana.SelectedItem = horarioDTO.dia_semana;
                 timeInicio.Value = DateTime.Today.Add(horarioDTO.hora_inicio);
                 timeFin.Value = DateTime.Today.Add(horarioDTO.hora_fin);
 
-                // Habilitamos el botón de actualizar
                 btnActualizarHorario.Enabled = true;
             }
             else if (_modoActual == ModoFormulario.ModoEdicion)
             {
-                // Si no hay fila seleccionada, deshabilitamos el botón
                 btnActualizarHorario.Enabled = false;
             }
         }
 
-        // Botón 1: Agregar Horario
         private void btnAgregarHorario_Click(object sender, EventArgs e)
         {
             if (timeInicio.Value >= timeFin.Value)
@@ -315,7 +296,6 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // Botón 2: Actualizar Horario
         private void btnActualizarHorario_Click(object sender, EventArgs e)
         {
             if (_modoActual != ModoFormulario.ModoEdicion || dgvHorarios.SelectedRows.Count == 0) return;
@@ -336,7 +316,7 @@ namespace CapaVistas.Forms_Menu
 
                 _logica.ActualizarHorario(horarioDTO);
 
-                dgvHorarios.Refresh(); // Refresca la grilla para mostrar el cambio
+                dgvHorarios.Refresh();
                 MessageBox.Show("Horario actualizado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -352,7 +332,7 @@ namespace CapaVistas.Forms_Menu
 
         #endregion
 
-        #region --- 4. Guardado y Cierre ---
+        #region guardar y cerrar
 
         private void btnGuardarAsignacion_Click(object sender, EventArgs e)
         {

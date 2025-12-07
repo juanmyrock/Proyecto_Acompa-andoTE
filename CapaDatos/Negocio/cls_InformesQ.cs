@@ -149,7 +149,7 @@ namespace CapaDatos.Negocio
             new SqlParameter("@Ruta", informe.ruta ?? (object)DBNull.Value)
         };
 
-                // DEBUG de parámetros
+                // para debugear, no me tengo que olvidar de sacarlo
                 foreach (var param in parametros)
                 {
                     Console.WriteLine($"Parámetro: {param.ParameterName} = {param.Value} (Tipo: {param.Value?.GetType()})");
@@ -174,20 +174,18 @@ namespace CapaDatos.Negocio
         {
             try
             {
-                // Consulta para obtener el id_acompanamiento del paciente
                 string query = @"
                     SELECT TOP 1 id_acompanamiento 
                     FROM Accompanamientos ac
                     INNER JOIN Pacientes p ON ac.id_paciente = p.id_paciente
                     WHERE p.dni_paciente = @DniPaciente
-                    ORDER BY ac.fecha_inicio DESC"; // El acompañamiento más reciente
+                    ORDER BY ac.fecha_inicio DESC"; 
 
                 var parametros = new List<SqlParameter>
                 {
                     new SqlParameter("@DniPaciente", dniPaciente)
                 };
 
-                // Usar tu ejecutor existente
                 DataTable resultado = _ejecutor.ConsultaRead(query, parametros);
 
                 if (resultado.Rows.Count > 0)
@@ -195,7 +193,6 @@ namespace CapaDatos.Negocio
                     return Convert.ToInt32(resultado.Rows[0]["id_acompanamiento"]);
                 }
 
-                // Si no encuentra acompañamiento, podrías crear uno o lanzar excepción
                 throw new Exception("No se encontró un acompañamiento activo para el paciente.");
             }
             catch (Exception)
@@ -204,12 +201,11 @@ namespace CapaDatos.Negocio
             }
         }
         public bool GuardarInforme(cls_InformeATDTO informe)
-        {
+        {//debugear y no olvidarme de sacarlo
             Console.WriteLine($"=== DEBUG GuardarInforme INICIO ===");
             Console.WriteLine($"id_informe_at: '{informe?.id_informe_at}'");
             Console.WriteLine($"id_acompanamiento: {informe?.id_acompanamiento}");
 
-            // VERIFICAR SI EL INFORME EXISTE EN LA BD
             bool existeEnBD = VerificarSiExisteInforme(informe.id_informe_at);
             Console.WriteLine($"Existe en BD: {existeEnBD}");
 
@@ -223,7 +219,6 @@ namespace CapaDatos.Negocio
             else
             {
                 Console.WriteLine("-> Ejecutando INSERCIÓN");
-                // Si no existe en BD pero tiene GUID, es un nuevo informe
                 if (string.IsNullOrEmpty(informe.id_informe_at))
                 {
                     informe.id_informe_at = Guid.NewGuid().ToString();

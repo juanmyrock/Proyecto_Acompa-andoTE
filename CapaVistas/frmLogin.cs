@@ -26,7 +26,7 @@ namespace CapaVistas
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
-        private void MoverForm() //Método para mover la ventana del formulario por la pantalla libremente
+        private void MoverForm()
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
@@ -128,30 +128,7 @@ namespace CapaVistas
             }
             return true;
         }
-        //private bool ValidarCampos() //Método para validar los campos del Login
-        //{
-        //    string usuario = txtUsers.Text;
-        //    string contraseña = txtPass.Text;
-
-        //    if (txtUsers.Text == "USUARIO" && txtPass.Text == "CONTRASEÑA")
-        //    {
-        //        MsgError("Complete los campos Usuario y Contraseña");
-        //        return false;
-        //    }
-        //    else if (txtUsers.Text == "USUARIO")
-        //    {
-        //        MsgError("Complete el campo Usuario");
-        //        return false;
-        //    }
-        //    else if (txtPass.Text == "CONTRASEÑA")
-        //    {
-        //        MsgError("Complete el campo Contraseña");
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-        private void MsgError(string msg) //Mensaje de error de validación de campos
+        private void MsgError(string msg)
         {
             lblErrorMsg.Text = msg;
             lblErrorMsg.Visible = true;
@@ -168,8 +145,6 @@ namespace CapaVistas
                 formValidar.ShowDialog();
             }
         }
-
-        // MÉTODO PRINCIPAL DEL BOTÓN ACCEDER
         private void btnAcceder_Click(object sender, EventArgs e)
         {
             lblErrorMsg.Visible = false;
@@ -185,12 +160,10 @@ namespace CapaVistas
 
             try
             {
-                // 1. PRIMER INTENTO DE LOGIN: Llama a la lógica sin forzar el cierre.
                 RealizarIntentoDeLogin(credenciales, false);
             }
             catch (Exception ex)
             {
-                // 2. MANEJO DE ERRORES: Comprueba si el error es por una sesión activa.
                 if (ex.Message == "SESION_ACTIVA")
                 {
                     var confirmacion = MessageBox.Show(
@@ -203,8 +176,6 @@ namespace CapaVistas
                     {
                         try
                         {
-                            // 3. SEGUNDO INTENTO: Si el usuario confirma, vuelve a llamar a la lógica,
-                            // y fuerza el ciere de la anterior
                             RealizarIntentoDeLogin(credenciales, true);
                         }
                         catch (Exception exFinal)
@@ -215,31 +186,21 @@ namespace CapaVistas
                 }
                 else
                 {
-                    // 4. Si es cualquier otro error (pass incorrecta, usuario no existe), lo muestra.
                     MsgError(ex.Message);
                 }
             }
         }
-
-        // Llama a la capa de lógica
         private void RealizarIntentoDeLogin(cls_CredencialesLoginDTO credenciales, bool forzarCierre)
         {
             var logicaLogin = new cls_LogicaLogin();
             string ipCliente = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)?.ToString() ?? "127.0.0.1";
-
-            // Llama a la lógica y obtiene el resultado, además en forzarCierre se ve si ya existe una sesion activa o huérfana
             ResultadoLoginDTO resultado = logicaLogin.ValidarLogin(credenciales, ipCliente, forzarCierre);
-
-            // Pasa el resultado al siguiente método para procesarlo
             ProcesarLoginExitoso(resultado);
         }
-
-        //  Procesa el resultado de un login exitoso
         private void ProcesarLoginExitoso(ResultadoLoginDTO resultado)
         {
             if (!resultado.Exitoso) return; // doble check pa mas security
 
-            // Verifica si se requiere alguna configuración inicial
             if (resultado.RequiereConfigurarPreguntas || resultado.RequiereCambioContraseña)
             {
                 this.Hide();
@@ -260,7 +221,6 @@ namespace CapaVistas
                     }
                 }
 
-                // --- Flujo de Cambio de Contraseña ---
                 if (resultado.RequiereCambioContraseña)
                 {
                     using (var formNuevaPass = new Forms_Login.frmNuevaContraseña(idUsuarioLogueado))
@@ -275,9 +235,6 @@ namespace CapaVistas
                     }
                 }
             }
-
-            // si llegamos hasta acá, significa que el login fue exitoso y que toda la
-            // configuración requerida se completó correctamente. Le indica a Program.cs que puede continuar al menu.
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

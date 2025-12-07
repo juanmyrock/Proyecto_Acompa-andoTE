@@ -47,7 +47,6 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // Validar que se seleccionó un mes
             if (dtpMesInforme.Value == null)
             {
                 MessageBox.Show("Por favor, seleccione un mes para el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -56,7 +55,6 @@ namespace CapaVistas.Forms_Menu
 
             try
             {
-                // Obtener el mes y año seleccionados
                 DateTime mesSeleccionado = dtpMesInforme.Value;
                 int mes = mesSeleccionado.Month;
                 int año = mesSeleccionado.Year;
@@ -78,7 +76,6 @@ namespace CapaVistas.Forms_Menu
                     List<cls_PacienteDTO> resultado = new List<cls_PacienteDTO> { paciente };
                     DateTime fechaactual = DateTime.Today;
                     DateTime? cumple = paciente.fecha_nac;
-                    // Mostrar datos del paciente
                     if (cumple.HasValue)
                     {
                         int añito = cumple.Value.Year;
@@ -91,13 +88,8 @@ namespace CapaVistas.Forms_Menu
                     lblDiagnosticoEscrito.Text = $"{paciente.diagnostico}";
                     lblPrestadorEscrito.Text = "VincularAzul S.R.L.";
                     lblPrestacionEscrita.Text = "Acompañante Terapeutico/Externo";
-
-                    
-
-                    // Guardar el id_acompanamiento
                     _idAcompanamientoActual = pacienteEncontrado.id_acompanamiento;
 
-                    // BUSCAR INFORMES EXISTENTES EN EL MES SELECCIONADO
                     var informesDelMes = informesEncontrados.Where(i =>
                         !string.IsNullOrEmpty(i.id_informe_at) &&
                         i.fecha_periodo.Month == mes &&
@@ -108,10 +100,7 @@ namespace CapaVistas.Forms_Menu
 
                     if (informesDelMes.Count > 0)
                     {
-                        // Hay informe en el mes seleccionado - Cargar para ACTUALIZAR
                         var informeDelMes = informesDelMes[0];
-
-                        // Guardar el GUID del informe existente
                         guidArchivo = informeDelMes.id_informe_at;
                         Console.WriteLine($"DEBUG - GUID cargado: {guidArchivo}");
 
@@ -119,8 +108,6 @@ namespace CapaVistas.Forms_Menu
                         {
                             txtInforme.Text = gestor.CargarOCrearArchivo(informeDelMes.ruta);
                         }
-
-                        // Mostrar solo botón Actualizar
                         btnGuardarInforme.Visible = false;
                         btnActualizar.Visible = true;
                         txtAcompaniante.Visible = false;
@@ -132,13 +119,10 @@ namespace CapaVistas.Forms_Menu
                     }
                     else
                     {
-                        // No hay informe en el mes seleccionado - Preparar para NUEVO informe
                         txtInforme.Clear();
-                        guidArchivo = string.Empty; // Limpiar GUID para nuevo informe
+                        guidArchivo = string.Empty;
                         Console.WriteLine($"DEBUG - No hay informes para {mesSeleccionado:MMMM yyyy}, GUID limpiado");
                         btnExportarPDF.Visible = false;
-
-                        // Mostrar solo botón Guardar
                         btnGuardarInforme.Visible = true;
                         btnActualizar.Visible = false;
 
@@ -181,10 +165,8 @@ namespace CapaVistas.Forms_Menu
 
                 string ruta = Path.Combine(rutaArchivoGuardado, guidArchivo + ".dat");
 
-                // 1. Guardar archivo físicamente
                 gestor.GuardarArchivo(ruta, txtInforme.Text);
 
-                // 2. Crear el DTO con los datos del informe
                 var informe = new cls_InformeATDTO
                 {
                     id_informe_at = guidArchivo,
@@ -199,7 +181,6 @@ namespace CapaVistas.Forms_Menu
                     cargahoraria_at = Convert.ToDecimal(lblHoras.Text)
                 };
 
-                // 3. Guardar en la base de datos
                 bool guardadoExitoso = gestor.GuardarInforme(informe);
 
                 if (guardadoExitoso)
@@ -245,16 +226,12 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Construir el encabezado con la información de los controles
                 string encabezado = ConstruirEncabezadoInforme();
 
-                // Combinar el encabezado con el contenido actual del informe
                 string contenidoCompleto = encabezado + "\n\n" + txtInforme.Text;
 
-                // Asignar el contenido completo al textbox (opcional - si quieres que el usuario lo vea)
                 txtInforme.Text = contenidoCompleto;
 
-                // Luego proceder con el guardado normal
                 GuardarInforme();
             }
             catch (Exception ex)
@@ -268,7 +245,6 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Validar que hay un mes seleccionado
                 if (dtpMesInforme.Value == null)
                 {
                     MessageBox.Show("Debe seleccionar un mes para el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -289,34 +265,30 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 List<cls_InformeATDTO> informesEncontrados = gestor.ObtenerInformesPorDni(dniBuscado);
-                // Validar que hay un paciente seleccionado
                 if (_idAcompanamientoActual == 0)
                 {
                     MessageBox.Show("Debe buscar un paciente primero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validar que hay un GUID de informe existente
                 if (string.IsNullOrEmpty(guidArchivo))
                 {
                     MessageBox.Show("No hay un informe cargado para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Validar que hay contenido en el informe
                 if (string.IsNullOrWhiteSpace(txtInforme.Text))
                 {
                     MessageBox.Show("El informe no puede estar vacío.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Crear el DTO con los datos actualizados
                 var informe = new cls_InformeATDTO
                 {
-                    id_informe_at = guidArchivo, // El GUID existente
+                    id_informe_at = guidArchivo,
                     id_acompanamiento = _idAcompanamientoActual,
                     fecha_periodo = DateTime.Now,
-                    id_usuario_creador = 1, // O obtener del usuario logueado
+                    id_usuario_creador = 1, 
                     fecha_creacion = DateTime.Now,
                     ruta = Path.Combine(rutaArchivoGuardado, guidArchivo + ".dat"),
                     dni_paciente = Convert.ToInt32(txtBusquedaPaciente.Text),
@@ -325,10 +297,8 @@ namespace CapaVistas.Forms_Menu
                     cargahoraria_at = Convert.ToDecimal(lblHoras.Text)
                 };
 
-                // 1. Actualizar archivo físicamente
                 gestor.GuardarArchivo(informe.ruta, txtInforme.Text);
 
-                // 2. Actualizar en la base de datos
                 bool actualizadoExitoso = gestor.ActualizarInforme(informe);
 
                 if (actualizadoExitoso == true)
@@ -360,7 +330,6 @@ namespace CapaVistas.Forms_Menu
         {
             StringBuilder encabezado = new StringBuilder();
 
-            // Agregar información de los controles
             encabezado.AppendLine($"=== INFORME DE ACOMPAÑAMIENTO TERAPÉUTICO ===");
             encabezado.AppendLine($"Fecha: {DateTime.Now:dd/MM/yyyy}");
 
@@ -369,7 +338,6 @@ namespace CapaVistas.Forms_Menu
 
             if (!string.IsNullOrEmpty(lblHoras.Text))
                 encabezado.AppendLine($"Carga horaria: {lblHoras.Text} horas");
-            // Agregar más controles si necesitas
             if (!string.IsNullOrEmpty(lblPrestadorEscrito.Text))
                 encabezado.AppendLine($"Prestador: {lblPrestadorEscrito.Text}");
 
@@ -382,7 +350,7 @@ namespace CapaVistas.Forms_Menu
             if (!string.IsNullOrEmpty(lblDiagnosticoEscrito.Text))
                 encabezado.AppendLine($"Diagnóstico Inicial: {lblDiagnosticoEscrito.Text}");
 
-            encabezado.AppendLine("".PadRight(50, '=')); // Línea separadora
+            encabezado.AppendLine("".PadRight(50, '='));
 
             return encabezado.ToString();
         }

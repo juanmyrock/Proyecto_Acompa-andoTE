@@ -150,7 +150,7 @@ namespace CapaDatos.Negocio
                 new SqlParameter("@fecha_nac", (object)profesional.fecha_nac ?? DBNull.Value),
                 new SqlParameter("@email", profesional.email),
                 new SqlParameter("@id_especialidad", profesional.id_especialidad),
-                new SqlParameter("@es_activo", profesional.es_activo ?? true) // Si es null, usar true por defecto
+                new SqlParameter("@es_activo", profesional.es_activo ?? true) 
     
         };
 
@@ -267,7 +267,6 @@ namespace CapaDatos.Negocio
             return ConvertirDataTableALista(dt);
         }
 
-        // Método auxiliar para evitar código duplicado
         private List<cls_ProfesionalDTO> ConvertirDataTableALista(DataTable dt)
         {
             List<cls_ProfesionalDTO> listaProfesionales = new List<cls_ProfesionalDTO>();

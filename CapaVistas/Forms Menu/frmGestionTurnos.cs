@@ -14,12 +14,12 @@ namespace CapaVistas.Forms_Menu
     {
         private cls_LogicaGestionarProfesionales _logicaProfesional;
         private cls_LogicaTurnos _logicaTurnos;
-        private cls_LogicaGestionarPacientes _logicaPacientes; // Nuevo - para buscar pacientes
+        private cls_LogicaGestionarPacientes _logicaPacientes;
         private cls_LlenarCombos _rellenador;
         private List<CapaDTO.cls_EspecialidadesDTO> _listaEspecialidades;
         private List<cls_ProfesionalDTO> _listaProfesionales;
-        private List<cls_TurnosDTO> _turnosActuales; // Guardar turnos actuales para referencia
-        private int _idUsuarioActual = 1; // Esto debería venir de tu sistema de autenticación
+        private List<cls_TurnosDTO> _turnosActuales;
+        private int _idUsuarioActual = 1;
 
         public frmGestionTurnos()
         {
@@ -75,7 +75,7 @@ namespace CapaVistas.Forms_Menu
         {
             cmbProfesional.Items.Clear();
             cmbProfesional.Text = "";
-            _listaProfesionales = null; // Limpiar la lista anterior
+            _listaProfesionales = null;
 
             try
             {
@@ -84,7 +84,7 @@ namespace CapaVistas.Forms_Menu
 
                 if (listaProfesionales != null && listaProfesionales.Count > 0)
                 {
-                    _listaProfesionales = listaProfesionales; // Guardar la lista
+                    _listaProfesionales = listaProfesionales;
 
                     foreach (var profesional in listaProfesionales)
                     {
@@ -121,21 +121,17 @@ namespace CapaVistas.Forms_Menu
 
             try
             {
-                // Buscar turnos
                 _turnosActuales = _logicaTurnos.BuscarTurnos(idProfesional, fechaSeleccionada);
 
-                // Limpiar controles
                 dgvAgenda.Rows.Clear();
                 cmbHorarios.Items.Clear();
-                txtObservaciones.Clear(); // Limpiar TextBox también
+                txtObservaciones.Clear();
 
-                // Verificar que el DataGridView tiene columnas
                 if (dgvAgenda.Columns.Count == 0)
                 {
                     ConfigurarDataGridView();
                 }
 
-                // Generar horarios
                 DateTime horaInicio = fechaSeleccionada.Date.AddHours(8);
                 DateTime horaFin = fechaSeleccionada.Date.AddHours(18);
 
@@ -144,7 +140,6 @@ namespace CapaVistas.Forms_Menu
                     string horaStr = hora.ToString("HH:mm");
                     bool horarioOcupado = false;
 
-                    // Verificar si hay turno en este horario
                     if (_turnosActuales != null)
                     {
                         foreach (var turno in _turnosActuales)
@@ -152,24 +147,21 @@ namespace CapaVistas.Forms_Menu
                             if (turno.id_estado_turno != 3 &&
                                 turno.fecha_hora_inicio.ToString("HH:mm") == horaStr)
                             {
-                                // Usar el nombre del paciente que viene en la consulta
                                 string nombrePaciente = turno.nombre_paciente;
                                 if (string.IsNullOrEmpty(nombrePaciente))
                                 {
                                     nombrePaciente = ObtenerNombrePaciente(turno.id_paciente);
                                 }
 
-                                // Agregar fila con observaciones
                                 int rowIndex = dgvAgenda.Rows.Add();
 
                                 dgvAgenda.Rows[rowIndex].Cells["colHora"].Value = horaStr;
                                 dgvAgenda.Rows[rowIndex].Cells["colPaciente"].Value = nombrePaciente;
                                 dgvAgenda.Rows[rowIndex].Cells["colEstado"].Value = "Ocupado";
-                                dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = turno.observaciones; // OBSERVACIONES
+                                dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = turno.observaciones;
                                 dgvAgenda.Rows[rowIndex].Cells["colIdTurno"].Value = turno.id_turno;
                                 dgvAgenda.Rows[rowIndex].Cells["colIdPaciente"].Value = turno.id_paciente;
 
-                                // Colorear
                                 dgvAgenda.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
 
                                 horarioOcupado = true;
@@ -185,7 +177,7 @@ namespace CapaVistas.Forms_Menu
                         dgvAgenda.Rows[rowIndex].Cells["colHora"].Value = horaStr;
                         dgvAgenda.Rows[rowIndex].Cells["colPaciente"].Value = "";
                         dgvAgenda.Rows[rowIndex].Cells["colEstado"].Value = "Disponible";
-                        dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = ""; // Vacío para turnos disponibles
+                        dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = "";
                         dgvAgenda.Rows[rowIndex].Cells["colIdTurno"].Value = 0;
                         dgvAgenda.Rows[rowIndex].Cells["colIdPaciente"].Value = 0;
 
@@ -194,7 +186,6 @@ namespace CapaVistas.Forms_Menu
                     }
                 }
 
-                // Actualizar título
                 lblAgenda.Text = $"Agenda - {cmbProfesional.SelectedItem} - {fechaSeleccionada:dd/MM/yyyy}";
             }
             catch (Exception ex)
@@ -206,7 +197,6 @@ namespace CapaVistas.Forms_Menu
 
         private void ConfigurarDataGridView()
         {
-            // Limpiar columnas existentes
             dgvAgenda.Columns.Clear();
 
             dgvAgenda.Columns.Add("colHora", "Hora");
@@ -241,13 +231,11 @@ namespace CapaVistas.Forms_Menu
 
             try
             {
-                // Buscar paciente por DNI
                 var paciente = _logicaPacientes.BuscarPorDNI(txtDniPaciente.Text.Trim());
 
                 if (paciente != null)
                 {
                     lblNombrePaciente.Text = $"{paciente.Nombre} {paciente.Apellido}";
-                    // Guardar ID del paciente en el Tag del label o en una variable
                     lblNombrePaciente.Tag = paciente.id_paciente;
                 }
                 else
@@ -267,7 +255,6 @@ namespace CapaVistas.Forms_Menu
 
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
-            // Validaciones básicas
             if (cmbProfesional.SelectedIndex < 0)
             {
                 MessageBox.Show("Seleccione un profesional.", "Atención",
@@ -296,20 +283,18 @@ namespace CapaVistas.Forms_Menu
                 string hora = cmbHorarios.SelectedItem.ToString();
                 DateTime fechaHoraTurno = fecha.Date + TimeSpan.Parse(hora);
 
-                // Crear objeto turno
                 var nuevoTurno = new cls_TurnosDTO
                 {
                     id_paciente = Convert.ToInt32(lblNombrePaciente.Tag),
                     id_profesional = idProfesional,
                     fecha_hora_inicio = fechaHoraTurno,
-                    fecha_hora_fin = fechaHoraTurno.AddMinutes(30), // Duración fija de 30 min
-                    id_estado_turno = 1, // 1 = Confirmado
+                    fecha_hora_fin = fechaHoraTurno.AddMinutes(30),
+                    id_estado_turno = 1,
                     id_usuario_creador = _idUsuarioActual,
                     fecha_creacion = DateTime.Now,
                     observaciones = txtObservaciones.Text.Trim()
                 };
 
-                // Mostrar confirmación
                 string mensaje = $"¿Confirma el siguiente turno?\n\n" +
                                $"• Paciente: {lblNombrePaciente.Text}\n" +
                                $"• Médico: {cmbProfesional.SelectedItem}\n" +
@@ -320,7 +305,6 @@ namespace CapaVistas.Forms_Menu
                 if (MessageBox.Show(mensaje, "Confirmar Turno",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    // Crear turno usando la lógica
                     var respuesta = _logicaTurnos.CrearTurno(nuevoTurno);
 
                     if (respuesta.EsExitoso)
@@ -328,7 +312,6 @@ namespace CapaVistas.Forms_Menu
                         MessageBox.Show(respuesta.Mensaje, "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Recargar agenda y limpiar campos
                         CargarAgenda();
                         LimpiarCamposTurno();
                     }
@@ -379,15 +362,12 @@ namespace CapaVistas.Forms_Menu
             {
                 try
                 {
-                    // Cancelar turno usando la lógica
                     var respuesta = _logicaTurnos.CancelarTurno(idTurno, _idUsuarioActual);
 
                     if (respuesta.EsExitoso)
                     {
                         MessageBox.Show(respuesta.Mensaje, "Éxito",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // Recargar la agenda
                         CargarAgenda();
                     }
                     else
@@ -408,7 +388,6 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Implementar método en _logicaPacientes para obtener paciente por ID
                 var paciente = _logicaPacientes.ObtenerPacientePorId(idPaciente);
                 if (paciente != null)
                 {
@@ -431,8 +410,6 @@ namespace CapaVistas.Forms_Menu
             cmbHorarios.SelectedIndex = -1;
             txtObservaciones.Clear();
         }
-
-        // Método auxiliar para obtener ID del profesional
         private int ObtenerIdProfesionalSeleccionado()
         {
             if (cmbProfesional.SelectedIndex < 0) return 0;
@@ -453,7 +430,6 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Habilitar/deshabilitar botón cancelar
                 if (dgvAgenda.SelectedRows.Count > 0)
                 {
                     string estado = dgvAgenda.SelectedRows[0].Cells["colEstado"].Value?.ToString() ?? "";
@@ -464,13 +440,10 @@ namespace CapaVistas.Forms_Menu
                     btnCancelarTurno.Enabled = false;
                 }
 
-                // Mostrar observaciones en el TextBox cuando se selecciona una fila
                 if (dgvAgenda.SelectedRows.Count > 0 && dgvAgenda.CurrentRow != null)
                 {
                     var observaciones = dgvAgenda.CurrentRow.Cells["colObservaciones"].Value?.ToString() ?? "";
                     txtObservaciones.Text = observaciones.ToString();
-
-                    // También puedes mostrar más información
                     var paciente = dgvAgenda.CurrentRow.Cells["colPaciente"].Value?.ToString() ?? "";
                     var hora = dgvAgenda.CurrentRow.Cells["colHora"].Value?.ToString() ?? "";
 
@@ -491,7 +464,6 @@ namespace CapaVistas.Forms_Menu
             }
             catch (Exception ex)
             {
-                // Manejo silencioso para no interrumpir la experiencia
                 Console.WriteLine($"Error en SelectionChanged: {ex.Message}");
             }
         }

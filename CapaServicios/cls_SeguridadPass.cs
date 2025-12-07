@@ -7,7 +7,6 @@ namespace CapaUtilidades
 {
     public static class cls_SeguridadPass
     {
-        // Métodos para Hashing
         #region Hashing
 
         public static string GenerarHashSHA256(string input)
@@ -30,18 +29,17 @@ namespace CapaUtilidades
             StringBuilder sb = new StringBuilder();
             foreach (byte b in bytes)
             {
-                sb.Append(b.ToString("x2")); // Formato hexadecimal
+                sb.Append(b.ToString("x2"));
             }
             return sb.ToString();
         }
         #endregion
 
-        // Métodos para Dígito Verificador
         #region Dígito Verificador
 
         public static int CalcularDigitoVerificadorMod11(string cadena)
         {
-            int[] factores = { 3, 2, 7, 6, 5, 4, 3, 2 }; // Factores típicos para RUTs/DNIs
+            int[] factores = { 3, 2, 7, 6, 5, 4, 3, 2 };
             int suma = 0;
 
             for (int i = 0; i < cadena.Length; i++)
@@ -66,15 +64,13 @@ namespace CapaUtilidades
             return digitoCalculado.ToString() == digitoVerificador.ToString();
         }
 
-        // Alternativa para códigos de control más simples
         public static char CalcularDigitoVerificadorSimple(string cadena)
         {
             int suma = cadena.Sum(c => (int)c);
-            return (char)((suma % 10) + 48); // Retorna un dígito ASCII ('0'-'9')
+            return (char)((suma % 10) + 48);
         }
         #endregion
 
-        // Métodos adicionales útiles
         #region Utilitarios
 
         public static string GenerarSalt(int length = 32)

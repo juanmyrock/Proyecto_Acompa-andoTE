@@ -27,7 +27,7 @@ namespace CapaDatos.Utilidades
 
                 if (tablaLocalidades.Rows.Count > 0)
                 {
-                    response.Localidades = new List<cls_LocalidadDTO>(); // Inicializa la lista
+                    response.Localidades = new List<cls_LocalidadDTO>();
                     foreach (DataRow row in tablaLocalidades.Rows)
                     {
                         response.Localidades.Add(new cls_LocalidadDTO
@@ -89,12 +89,12 @@ namespace CapaDatos.Utilidades
                 DataTable tablaDocumentos = _ejecutar.ConsultaRead(query);
                 if (tablaDocumentos.Rows.Count > 0)
                 {
-                    response.TiposDocumento = new List<cls_TipoDocumentoDTO>(); // Inicializa la lista
+                    response.TiposDocumento = new List<cls_TipoDocumentoDTO>();
                     foreach (DataRow row in tablaDocumentos.Rows)
                     {
-                        response.TiposDocumento.Add(new cls_TipoDocumentoDTO // Usamos LocalidadDTO sin cls_ (según la recomendación anterior)
+                        response.TiposDocumento.Add(new cls_TipoDocumentoDTO 
                         {
-                            id_tipo_documento = Convert.ToInt32(row["id_tipo_dni"]), // PascalCase para propiedades
+                            id_tipo_documento = Convert.ToInt32(row["id_tipo_dni"]), 
                             descripcion = row["descripcion"].ToString()
                         });
                     }

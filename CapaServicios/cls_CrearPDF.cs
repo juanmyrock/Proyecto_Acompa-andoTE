@@ -13,7 +13,6 @@ namespace CapaUtilidades
 
         static cls_CrearPDF()
         {
-            // Crear directorio si no existe
             if (!Directory.Exists(rutaReportes))
             {
                 Directory.CreateDirectory(rutaReportes);
@@ -24,12 +23,10 @@ namespace CapaUtilidades
         {
             try
             {
-                // Obtener el próximo número de secuencia
                 string numeroSecuencia = ObtenerProximoNumero();
                 string nombreArchivo = $"{prefijo}-{numeroSecuencia}.pdf";
                 string rutaCompleta = Path.Combine(rutaReportes, nombreArchivo);
 
-                // Crear el documento PDF
                 using (FileStream fs = new FileStream(rutaCompleta, FileMode.Create))
                 {
                     Document document = new Document(PageSize.A4, 50, 50, 50, 50);
@@ -37,7 +34,6 @@ namespace CapaUtilidades
 
                     document.Open();
 
-                    // Agregar título
                     Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
                     Paragraph tituloParagraph = new Paragraph(titulo, tituloFont)
                     {
@@ -46,7 +42,6 @@ namespace CapaUtilidades
                     };
                     document.Add(tituloParagraph);
 
-                    // Agregar número de reporte
                     Font numeroFont = FontFactory.GetFont(FontFactory.HELVETICA, 12, BaseColor.DARK_GRAY);
                     Paragraph numeroParagraph = new Paragraph($"Reporte: {prefijo}-{numeroSecuencia}", numeroFont)
                     {
@@ -55,7 +50,6 @@ namespace CapaUtilidades
                     };
                     document.Add(numeroParagraph);
 
-                    // Agregar fecha
                     Paragraph fechaParagraph = new Paragraph($"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}", numeroFont)
                     {
                         Alignment = Element.ALIGN_RIGHT,
@@ -63,7 +57,6 @@ namespace CapaUtilidades
                     };
                     document.Add(fechaParagraph);
 
-                    // Agregar contenido
                     Font contenidoFont = FontFactory.GetFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
                     Paragraph contenidoParagraph = new Paragraph(contenido, contenidoFont)
                     {
@@ -86,7 +79,6 @@ namespace CapaUtilidades
         {
             try
             {
-                // Buscar archivos existentes con el patrón RT-001.pdf
                 var archivos = Directory.GetFiles(rutaReportes, $"{prefijo}-*.pdf")
                     .Select(Path.GetFileNameWithoutExtension)
                     .Where(name => name.StartsWith($"{prefijo}-"))
@@ -94,10 +86,8 @@ namespace CapaUtilidades
 
                 if (archivos.Count == 0)
                 {
-                    return "001"; // Primer reporte
+                    return "001"; 
                 }
-
-                // Extraer números y encontrar el máximo
                 int maxNumero = archivos
                     .Select(name =>
                     {
@@ -106,7 +96,6 @@ namespace CapaUtilidades
                     })
                     .Max();
 
-                // Incrementar y formatear a 3 dígitos
                 return (maxNumero + 1).ToString("D3");
             }
             catch (Exception ex)
@@ -114,8 +103,6 @@ namespace CapaUtilidades
                 throw new Exception($"Error al obtener próximo número: {ex.Message}");
             }
         }
-
-        // Método sobrecargado para más personalización
         public static string GenerarPDFConNumeracion(string titulo, string contenido, string contenidoAdicional = "")
         {
             string contenidoCompleto = contenido;
@@ -127,8 +114,6 @@ namespace CapaUtilidades
 
             return GenerarPDFConNumeracion(titulo, contenidoCompleto);
         }
-
-        // Método para generar PDF con DataTable
         public static string GenerarPDFDesdeDataTable(string titulo, System.Data.DataTable dataTable)
         {
             try
@@ -139,34 +124,31 @@ namespace CapaUtilidades
 
                 using (FileStream fs = new FileStream(rutaCompleta, FileMode.Create))
                 {
-                    Document document = new Document(PageSize.A4.Rotate(), 50, 50, 50, 50); // Horizontal para tablas
+                    Document document = new Document(PageSize.A4.Rotate(), 50, 50, 50, 50);
                     PdfWriter writer = PdfWriter.GetInstance(document, fs);
 
                     document.Open();
 
-                    // Título
+                    // para el formato del titulo (despues le tengo que poner uno mas lindo)
                     Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
                     document.Add(new Paragraph(titulo, tituloFont) { Alignment = Element.ALIGN_CENTER });
-                    document.Add(new Paragraph($" ")); // Espacio
+                    document.Add(new Paragraph($" "));
 
-                    // Crear tabla
                     PdfPTable table = new PdfPTable(dataTable.Columns.Count);
                     table.WidthPercentage = 100;
 
-                    // Encabezados de columna
                     Font headerFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.WHITE);
                     foreach (System.Data.DataColumn column in dataTable.Columns)
                     {
                         PdfPCell cell = new PdfPCell(new Phrase(column.ColumnName, headerFont))
                         {
-                            BackgroundColor = new BaseColor(70, 130, 180), // Azul
+                            BackgroundColor = new BaseColor(70, 130, 180),
                             HorizontalAlignment = Element.ALIGN_CENTER,
                             Padding = 5
                         };
                         table.AddCell(cell);
                     }
 
-                    // Datos
                     Font cellFont = FontFactory.GetFont(FontFactory.HELVETICA, 9, BaseColor.BLACK);
                     foreach (System.Data.DataRow row in dataTable.Rows)
                     {
@@ -190,8 +172,6 @@ namespace CapaUtilidades
                 throw new Exception($"Error al generar PDF desde DataTable: {ex.Message}");
             }
         }
-
-        // Método para obtener la lista de reportes existentes
         public static string[] ObtenerReportesExistentes()
         {
             return Directory.GetFiles(rutaReportes, $"{prefijo}-*.pdf")

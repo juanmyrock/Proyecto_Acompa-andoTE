@@ -72,7 +72,6 @@ namespace CapaDatos
 
         public List<string> ObtenerHashesAnteriores(int idUsuario, int cantidad)
         {
-            // Si la cantidad a verificar es 0 o menos, no hay nada que hacer.
             if (cantidad <= 0) return new List<string>();
 
             string sql = $@"
@@ -92,7 +91,6 @@ namespace CapaDatos
             return hashes;
         }
 
-        // Actualiza el hash de la contraseña activa actual de un usuario. Usado solo para contraseña Random
         public void ActualizarContraseñaActiva(int idUsuario, string nuevoHash)
         {
             string sql = @"INSERT INTO Contraseñas (id_usuario, hash_contraseña, fecha_expiracion, es_activa)

@@ -2,11 +2,10 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CapaVistas.Forms_Menu // O tu namespace
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmABMEspecialidades : Form
     {
-        // Variables para poder arrastrar el formulario sin borde
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
@@ -20,9 +19,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         {
             CargarEspecialidades();
         }
-
-        // --- LÓGICA PARA ARRASTRAR EL FORMULARIO ---
-        // (Asociar estos 3 eventos a todo el formulario y a los labels)
         private void frm_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
@@ -44,7 +40,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             dragging = false;
         }
 
-        // --- LÓGICA DE CONTROLES ---
         private void lblClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -57,17 +52,13 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void CargarEspecialidades()
         {
-            // AQUÍ: Harías la consulta a tu base de datos
-            // SELECT Nombre FROM Especialidades ORDER BY Nombre
 
-            // --- Simulación de datos ---
             lbEspecialidades.Items.Clear();
             lbEspecialidades.Items.Add("Cardiología");
             lbEspecialidades.Items.Add("Clínica Médica");
             lbEspecialidades.Items.Add("Dermatología");
             lbEspecialidades.Items.Add("Pediatría");
             lbEspecialidades.Items.Add("Traumatología");
-            // --- Fin Simulación ---
 
             txtNombreEspecialidad.Clear();
             lbEspecialidades.ClearSelected();
@@ -75,7 +66,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void lbEspecialidades_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Al seleccionar un item de la lista, se carga en el TextBox
             if (lbEspecialidades.SelectedItem != null)
             {
                 txtNombreEspecialidad.Text = lbEspecialidades.SelectedItem.ToString();
@@ -90,11 +80,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                 return;
             }
 
-            // AQUÍ: Harías el INSERT en tu DB
-            // INSERT INTO Especialidades (Nombre) VALUES (@nombre)
             MessageBox.Show($"Especialidad '{txtNombreEspecialidad.Text}' agregada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            CargarEspecialidades(); // Recargamos la lista
+            CargarEspecialidades();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -113,12 +101,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
             string nombreViejo = lbEspecialidades.SelectedItem.ToString();
             string nombreNuevo = txtNombreEspecialidad.Text;
-
-            // AQUÍ: Harías el UPDATE en tu DB
-            // UPDATE Especialidades SET Nombre = @nombreNuevo WHERE Nombre = @nombreViejo
             MessageBox.Show($"Especialidad '{nombreViejo}' actualizada a '{nombreNuevo}' con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            CargarEspecialidades(); // Recargamos la lista
+            CargarEspecialidades();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -133,11 +118,9 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
             if (MessageBox.Show($"¿Está seguro que desea eliminar la especialidad '{especialidadEliminar}'?\nEsta acción no se puede deshacer.", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                // AQUÍ: HarIAS el DELETE en tu DB
-                // DELETE FROM Especialidades WHERE Nombre = @especialidadEliminar
                 MessageBox.Show($"Especialidad '{especialidadEliminar}' eliminada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                CargarEspecialidades(); // Recargamos la lista
+                CargarEspecialidades();
             }
         }
     }

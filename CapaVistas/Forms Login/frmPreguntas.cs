@@ -36,7 +36,6 @@ namespace CapaVistas.Forms_Login
             lblErrorMsg.Visible = false;
             picError.Visible = false;
 
-            // Adaptamos la UI según el modo de operación
             if (_modo == "CONFIGURAR")
             {
                 InicializarModoConfigurar();
@@ -73,17 +72,14 @@ namespace CapaVistas.Forms_Login
             lblPregunta.Text = "Seleccione una pregunta:";
             lblRespuesta.Text = "Escriba su respuesta:";
 
-            // Filtramos la lista maestra, sacando las preguntas que ya fueron seleccionadas
             var preguntasParaMostrar = _listaMaestraPreguntas
                 .Where(p => !_respuestasTemporales.ContainsKey(p.IdPregunta))
                 .ToList();
             cls_LlenarCombos.Cargar(cmbPregunta, preguntasParaMostrar, "TextoPregunta", "IdPregunta");
 
-            // Limpiamos la respuesta anterior
             txtRespuesta.Clear();
             txtRespuesta.Focus();
 
-            // Cambiamos el texto del botón si es la última pregunta
             if (_preguntaActualNro == _preguntasRequeridas)
             {
                 btnAceptar.Text = "FINALIZAR";
@@ -188,10 +184,7 @@ namespace CapaVistas.Forms_Login
                     MsgError("Ocurrió un error en el proceso: " + ex.Message);
                 }
             }
-        }
-        
-
-        // --- Métodos de UI y Navegación ---
+        } 
         private void MsgError(string msg)
         {
             lblErrorMsg.Visible = true;
@@ -210,8 +203,6 @@ namespace CapaVistas.Forms_Login
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
-        
 
 
     }

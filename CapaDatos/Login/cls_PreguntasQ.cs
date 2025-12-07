@@ -29,7 +29,6 @@ namespace CapaDatos.Login
             return listaPreguntas;
         }
 
-        // Este método espera recibir el hash ya procesado desde la capa de lógica.
         public void GuardarRespuestaDeSeguridad(int idUsuario, int idPregunta, string respuestaHash)
         {
             string sql = @"INSERT INTO Respuestas (id_usuario, id_pregunta, respuesta) 
@@ -47,7 +46,6 @@ namespace CapaDatos.Login
 
         public int ObtenerCantidadPreguntasRequeridas()
         {
-            // Usamos TOP 1 porque sabemos que solo hay una fila de configuración
             string sql = "SELECT TOP 1 cantidad_preguntas_seguridad FROM Parametros_Contraseña";
             DataTable tabla = _ejecutar.ConsultaRead(sql, null);
 
@@ -94,8 +92,6 @@ namespace CapaDatos.Login
             return listaPreguntas;
 
         }
-
-        // Obtiene el hash de la respuesta de seguridad que está guardado en la BD.
         public string ObtenerHashRespuestaGuardada(int idUsuario, int idPregunta)
         {
             string sql = "SELECT respuesta FROM Respuestas WHERE id_usuario = @idUsuario AND id_pregunta = @idPregunta";

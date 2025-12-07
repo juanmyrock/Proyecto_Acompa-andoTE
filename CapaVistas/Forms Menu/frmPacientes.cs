@@ -278,8 +278,6 @@ namespace CapaVistas.Forms_Menu
         private void btnCrear_Click_1(object sender, EventArgs e)
         {
             if (!ValidarCampos()) return;
-
-            // VERIFICAR SI EL DNI YA EXISTE
             int dniPaciente = Convert.ToInt32(txtDniPaciente.Text);
             bool dniExiste = _logicaPaciente.VerificarDniExistente(dniPaciente);
 

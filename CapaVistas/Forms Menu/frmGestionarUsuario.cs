@@ -9,14 +9,9 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionarUsuario : Form
     {
-        // DTO con los datos iniciales que recibe del formulario padre
         private readonly cls_DatosParaGestionUsuarioDTO _datosIniciales;
-
-        // Instancias de las capas de lógica que usaremos
         private readonly cls_LogicaGestionarUsuarios _logicaGestion = new cls_LogicaGestionarUsuarios();
         private readonly cls_LogicaContraseña _logicaContraseña = new cls_LogicaContraseña();
-
-        // DTO para almacenar los datos del usuario cuando se está modificando
         private cls_UsuarioGestionDTO _usuarioActual;
 
         public frmGestionarUsuario(cls_DatosParaGestionUsuarioDTO datosParaGestion)
@@ -27,37 +22,25 @@ namespace CapaVistas.Forms_Menu
 
         private void frmGestionarUsuario_Load(object sender, EventArgs e)
         {
-            // Mostramos el nombre del empleado en el título
             lblNombreEmpleado.Text = _datosIniciales.NombreCompletoEmpleado;
-            CargarRoles(); // Cargamos los roles en el ComboBox
-
-            // --- Lógica para configurar el formulario en modo CREAR o MODIFICAR ---
+            CargarRoles();
             if (_datosIniciales.UsuarioYaExiste)
             {
-                // MODO MODIFICAR: El usuario ya existe, cargamos sus datos.
                 this.Text = "Modificar Usuario Existente";
                 btnGuardarRol.Text = "Actualizar Rol";
                 CargarDatosUsuarioExistente();
             }
             else
             {
-                // MODO CREAR: El empleado no tiene un usuario asociado.
                 this.Text = "Crear Nuevo Usuario";
                 lblEstadoActual.Text = "NO CREADO";
                 lblEstadoActual.ForeColor = System.Drawing.Color.DodgerBlue;
-                txtUsername.ReadOnly = false; // Permitimos escribir el nombre de usuario
+                txtUsername.ReadOnly = false;
                 txtUsername.Text = "";
                 btnGuardarRol.Text = "Crear Usuario y Enviar Email";
-
-                // Deshabilitamos las acciones administrativas que no aplican a un usuario no creado.
                 groupAccionesAdmin.Enabled = false;
             }
         }
-
-        /// <summary>
-        /// Obtiene y muestra los datos del usuario existente en los controles del formulario.
-        /// Este método solo se llama en modo MODIFICAR.
-        /// </summary>
         private void CargarDatosUsuarioExistente()
         {
             try
@@ -74,13 +57,12 @@ namespace CapaVistas.Forms_Menu
                 txtUsername.Text = _usuarioActual.Username;
                 cmbRoles.SelectedValue = _usuarioActual.IdRol ?? -1;
 
-                // Lógica para mostrar el estado y habilitar/deshabilitar botones
                 if (_usuarioActual.EstaBloqueado)
                 {
                     lblEstadoActual.Text = "BLOQUEADO";
                     lblEstadoActual.ForeColor = System.Drawing.Color.OrangeRed;
                     btnDesbloquear.Enabled = true;
-                    btnActivarDesactivar.Enabled = false; // No se puede activar/desactivar si está bloqueado
+                    btnActivarDesactivar.Enabled = false;
                 }
                 else if (_usuarioActual.EsActivo)
                 {
@@ -109,14 +91,10 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // 1. Llamamos a nuestra nueva capa de lógica para obtener los roles.
                 var logicaRoles = new CapaLogica.ABM.cls_Rol();
                 List<cls_RolDTO> listaDeRoles = logicaRoles.ObtenerRoles();
-
-                // 2. Usamos nuestro helper reutilizable para cargar el ComboBox.
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbRoles, listaDeRoles, "NombreRol", "IdRol");
 
-                // 3. Volvemos a establecer el valor que tenía el usuario, si es que lo tenía.
                 if (_usuarioActual != null)
                 {
                     cmbRoles.SelectedValue = _usuarioActual.IdRol ?? -1;
@@ -129,8 +107,6 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        // --- Lógica de los Botones ---
-
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (cmbRoles.SelectedValue == null)
@@ -141,13 +117,12 @@ namespace CapaVistas.Forms_Menu
 
             if (_datosIniciales.UsuarioYaExiste)
             {
-                // Lógica para MODIFICAR ROL
                 try
                 {
                     int nuevoIdRol = Convert.ToInt32(cmbRoles.SelectedValue);
                     _logicaGestion.ActualizarRolUsuario(_datosIniciales.IdEmpleado, nuevoIdRol);
                     MessageBox.Show("Rol actualizado correctamente.", "Éxito");
-                    CargarDatosUsuarioExistente(); // Recargamos para ver el cambio
+                    CargarDatosUsuarioExistente();
                 }
                 catch (Exception ex)
                 {
@@ -156,7 +131,6 @@ namespace CapaVistas.Forms_Menu
             }
             else
             {
-                // Lógica para CREAR USUARIO
                 if (string.IsNullOrWhiteSpace(txtUsername.Text) || cmbRoles.SelectedValue == null)
                 {
                     MessageBox.Show("Debe ingresar un nombre de usuario y seleccionar un rol.", "Datos Incompletos");
@@ -166,8 +140,6 @@ namespace CapaVistas.Forms_Menu
                 try
                 {
                     int idRol = Convert.ToInt32(cmbRoles.SelectedValue);
-
-                    // Llamamos al método de la lógica, que ahora contiene toda la validación y la transacción.
                     _logicaGestion.CrearUsuarioYEnviarContraseña(
                         _datosIniciales.IdEmpleado,
                         txtUsername.Text,
@@ -180,8 +152,6 @@ namespace CapaVistas.Forms_Menu
                 }
                 catch (Exception ex)
                 {
-                    // La lógica ahora nos devolverá un error claro si el email es nulo
-                    // o si ocurre cualquier otro problema.
                     MessageBox.Show("Error al crear el usuario: " + ex.Message, "Error");
                 }
             }
@@ -193,7 +163,7 @@ namespace CapaVistas.Forms_Menu
             {
                 _logicaGestion.DesbloquearUsuario(_datosIniciales.IdEmpleado);
                 MessageBox.Show("Usuario desbloqueado.", "Éxito");
-                CargarDatosUsuarioExistente(); // Recargamos para ver el nuevo estado
+                CargarDatosUsuarioExistente();
             }
         }
 
@@ -205,7 +175,7 @@ namespace CapaVistas.Forms_Menu
             {
                 _logicaGestion.CambiarEstadoUsuario(_datosIniciales.IdEmpleado, nuevoEstado);
                 MessageBox.Show($"Usuario {accion} con éxito.", "Éxito");
-                CargarDatosUsuarioExistente(); // Recargamos para ver el nuevo estado
+                CargarDatosUsuarioExistente();
             }
         }
 
@@ -215,7 +185,6 @@ namespace CapaVistas.Forms_Menu
             {
                 try
                 {
-                    // Reutilizamos la lógica del flujo "Olvidé mi contraseña"
                     _logicaContraseña.GenerarYEnviarContraseñaTemporal(_usuarioActual.IdUsuario, _usuarioActual.Email, _usuarioActual.Username);
                     MessageBox.Show("Contraseña temporal enviada con éxito.", "Éxito");
                 }
@@ -228,30 +197,15 @@ namespace CapaVistas.Forms_Menu
 
         private void btnGestionPermisos_Click(object sender, EventArgs e)
         {
-            // 1. Asegúrate de tener los datos del usuario que estás editando.
-            // (Estos datos deberías tenerlos cargados en variables cuando abriste frmGestionarUsuario)
-
-            // --- EJEMPLO (reemplaza esto con tus variables reales) ---
-            int idUsuarioActual = 123; // El ID del usuario que estás editando
+            int idUsuarioActual = 123;
             string nombreUsuarioActual = lblNombreEmpleado.Text;
-            int idRolActual = 2; // El ID del rol que tiene ese usuario
-                                 // --- Fin Ejemplo ---
-
-
-            // 2. Aquí llamamos al formulario de permisos
-            //    Le pasamos los 3 datos que su constructor necesita
+            int idRolActual = 2;
             frmPermisos formPermisos = new frmPermisos(idUsuarioActual, nombreUsuarioActual, idRolActual);
 
-            // 3. Lo mostramos con ShowDialog()
-            //    Esto hace que la ventana de permisos aparezca por encima
-            //    y no te deje volver atrás hasta que la cierres.
             formPermisos.ShowDialog();
-
-            // 4. (Opcional) Si el formulario de permisos devuelve OK,
-            //    puedes hacer algo, aunque para este caso no suele ser necesario.
             if (formPermisos.DialogResult == DialogResult.OK)
             {
-                // Los permisos se guardaron
+
             }
         }
     }

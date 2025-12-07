@@ -7,7 +7,6 @@
         public string nombre_profesional { get; set; }
         public string matricula_profesional { get; set; }
 
-        // Propiedad calculada para mostrar en el ListBox
         public string InfoCompleta
         {
             get

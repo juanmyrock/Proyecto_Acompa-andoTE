@@ -222,7 +222,6 @@ namespace CapaDatos.ABM
             {
                 DataRow row = tabla.Rows[0];
 
-                // Mapea la fila a un DTO (cls_PacienteDTO)
                 var paciente = new cls_PacienteDTO
                 {
 
@@ -249,7 +248,6 @@ namespace CapaDatos.ABM
                 return paciente;
             }
 
-            // Si no se encontró el paciente
             return null;
         }
 
@@ -325,7 +323,6 @@ namespace CapaDatos.ABM
             }
         }
 
-        // Obtener paciente por ID
         public cls_PacienteDTO ObtenerPorId(int idPaciente)
         {
             try
@@ -375,20 +372,6 @@ namespace CapaDatos.ABM
             }
         }
 
-        // Método de conversión para lista
-        private List<cls_PacienteDTO> ConvertirDataTableALista(DataTable dt)
-        {
-            var listaPacientes = new List<cls_PacienteDTO>();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                listaPacientes.Add(ConvertirDataRowAPaciente(row));
-            }
-
-            return listaPacientes;
-        }
-
-        // Método de conversión individual
         private cls_PacienteDTO ConvertirDataRowAPaciente(DataRow row)
         {
             return new cls_PacienteDTO

@@ -8,8 +8,8 @@ namespace CapaSesion
     {
         public static void sendMail(string to, string asunto, string body)
         {
-            string from = "malebagonsaez@gmail.com"; //correo de la empresa
-            string displayName = "Nueva contraseña VincularAzul"; //Lo que se ve al recibir el mail
+            string from = "malebagonsaez@gmail.com"; 
+            string displayName = "Nueva contraseña VincularAzul"; 
             try
             {
                 MailMessage mail = new MailMessage
@@ -22,10 +22,10 @@ namespace CapaSesion
                 mail.Body = body;
                 mail.IsBodyHtml = true;
 
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)//Aquí debes sustituir tu servidor SMTP y el puerto
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential(from, "xozc zngh eipt uday"), //correo , contraseña de la cuenta de la empresa
-                    EnableSsl = true//En caso de que tu servidor de correo no utilice cifrado SSL,poner en false
+                    Credentials = new NetworkCredential(from, "xozc zngh eipt uday"),
+                    EnableSsl = true
                 };
                 client.Send(mail);
             }
