@@ -17,11 +17,10 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Threading.Tasks;
 
-namespace CapaVistas.Forms_Menu // O tu namespace
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionReportes : Form
     {
-        // Variables para poder arrastrar el formulario
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
@@ -36,8 +35,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             string clave = "MiClave123";
             gestor = new cls_LogicaInformes(clave);
         }
-
-        // --- LÓGICA PARA ARRASTRAR Y CERRAR EL FORMULARIO ---
         private void panelTopBar_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
@@ -63,9 +60,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         {
             this.Close();
         }
-
-        // --- LÓGICA DE LA APLICACIÓN ---
-
         private void cmbTipoReporte_SelectedIndexChanged(object sender, EventArgs e)
         {
             pnlFiltroPaciente.Visible = false;
@@ -152,22 +146,16 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     break;
             }
         }
-
-        // --- MÉTODOS DE GENERACIÓN DE REPORTES (CON DATOS DE SIMULACIÓN) ---
-
         private void GenerarReporteAuditLog()
         {
-            // AQUÍ: Consultarías tu tabla de auditoría en la DB filtrando por fecha
             dgvReporte.Columns.Clear();
             dgvReporte.Rows.Clear();
 
-            // Definimos las columnas para este reporte
             dgvReporte.Columns.Add("colFecha", "Fecha y Hora");
             dgvReporte.Columns.Add("colUsuario", "Usuario");
             dgvReporte.Columns.Add("colAccion", "Acción");
             dgvReporte.Columns.Add("colDetalle", "Detalle");
 
-            // Agregamos filas de ejemplo
             dgvReporte.Rows.Add("14/09/2025 10:05:12", "admin", "INICIO DE SESIÓN", "Inicio de sesión exitoso.");
             dgvReporte.Rows.Add("14/09/2025 10:06:45", "admin", "ALTA DE TURNO", "Se asignó turno al paciente DNI 12345678.");
             dgvReporte.Rows.Add("14/09/2025 10:08:21", "recepcion", "MODIFICACIÓN TRÁMITE", "Cambio de estado del trámite TR-2025-00123.");
@@ -175,7 +163,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void GenerarReporteInformesPaciente()
         {
-            // AQUÍ: Buscarías los informes médicos del paciente en la DB
             dgvReporte.Columns.Clear();
             dgvReporte.Rows.Clear();
 
@@ -217,7 +204,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             dgvReporte.Rows.Add("01/10/2025", "Consulta Clínica", "$ 12,500.00", "Pendiente");
         }
 
-        // --- Lógica para botones de exportación (placeholders) ---
         private void btnExportarPDF_Click(object sender, EventArgs e)
         {
             if(cmbTipoReporte.Text == "Informes por Paciente")
@@ -274,8 +260,7 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     txtBuscarPaciente.Clear();
                     return;
                 }
-                
-                // Validar que se seleccionó un mes
+
                 if (dtpMesInforme.Value == null)
                 {
                     MessageBox.Show("Por favor, seleccione un mes para el informe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -287,7 +272,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                     dgvReporte.Visible = false;
                     txtInforme.Visible = true;
                     
-                    // Obtener el mes y año seleccionados
                     DateTime mesSeleccionado = dtpMesInforme.Value;
                     int mes = mesSeleccionado.Month;
                     int año = mesSeleccionado.Year;
@@ -309,11 +293,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                         List<cls_PacienteDTO> resultado = new List<cls_PacienteDTO> { paciente };
                         DateTime fechaactual = DateTime.Today;
                         DateTime? cumple = paciente.fecha_nac;
-
-                        // Guardar el id_acompanamiento
                         _idAcompanamientoActual = pacienteEncontrado.id_acompanamiento;
 
-                        // BUSCAR INFORMES EXISTENTES EN EL MES SELECCIONADO
                         var informesDelMes = informesEncontrados.Where(i =>
                             !string.IsNullOrEmpty(i.id_informe_at) &&
                             i.fecha_periodo.Month == mes &&
@@ -324,10 +305,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
                         if (informesDelMes.Count > 0)
                         {
-                            // Hay informe en el mes seleccionado - Cargar para ACTUALIZAR
                             var informeDelMes = informesDelMes[0];
 
-                            // Guardar el GUID del informe existente
                             guidArchivo = informeDelMes.id_informe_at;
                             Console.WriteLine($"DEBUG - GUID cargado: {guidArchivo}");
 
@@ -336,17 +315,14 @@ namespace CapaVistas.Forms_Menu // O tu namespace
                                 txtInforme.Text = gestor.CargarOCrearArchivo(informeDelMes.ruta);
                             }
 
-                            // Mostrar solo botón Actualizar
-
-
                             MessageBox.Show($"Se encontró un informe para {mesSeleccionado:MMMM yyyy}.", "Informe Existente",
                                           MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            // No hay informe en el mes seleccionado - Preparar para NUEVO informe
+
                             txtInforme.Clear();
-                            guidArchivo = string.Empty; // Limpiar GUID para nuevo informe
+                            guidArchivo = string.Empty;
                             Console.WriteLine($"DEBUG - No hay informes para {mesSeleccionado:MMMM yyyy}, GUID limpiado");
 
 

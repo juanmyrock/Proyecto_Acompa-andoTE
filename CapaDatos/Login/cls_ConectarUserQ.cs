@@ -133,7 +133,6 @@ namespace CapaDatos
         }
 
 
-        // Marca a un usuario para que deba cambiar su contraseña en el próximo login.
         public void MarcarContraseñaComoRandom(int idUsuario)
         {
             string sql = "UPDATE Usuarios SET es_random_pass = 1 WHERE id_usuario = @idUsuario";
@@ -144,7 +143,6 @@ namespace CapaDatos
    
         public cls_UsuarioDTO ObtenerUsuarioEmpleadoPorId(int idUsuario)
         {
-            // Es la misma consulta, pero buscando por id_usuario
             string sql = @"
                 SELECT 
                     u.id_usuario, u.username, u.fecha_alta, u.fecha_baja,

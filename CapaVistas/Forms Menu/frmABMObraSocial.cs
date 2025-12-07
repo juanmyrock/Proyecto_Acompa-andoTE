@@ -191,7 +191,6 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // Validar campos obligatorios
             if (string.IsNullOrWhiteSpace(txtNombreOS.Text) ||
                 string.IsNullOrWhiteSpace(txtCodigo.Text) ||
                 string.IsNullOrWhiteSpace(txtCuit.Text))
@@ -212,7 +211,6 @@ namespace CapaVistas.Forms_Menu
                     num_domicilio = string.IsNullOrWhiteSpace(txtNumDomicilio.Text) ? 0 : Convert.ToInt32(txtNumDomicilio.Text.Trim()),
                     telefono = txtTelefono.Text.Trim(),
                     estado = true,
-                    //fecha_alta = DateTime.Now,
                     id_localidad = Convert.ToInt32(cmbLocalidad.SelectedValue),
                     id_provincia = Convert.ToInt32(cmbProvincia.SelectedValue)
                 };
@@ -222,7 +220,7 @@ namespace CapaVistas.Forms_Menu
                     MessageBox.Show("Obra Social modificada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarGrilla();
                     LimpiarCampos();
-                    _idObraSocialSeleccionada = -1; // Resetear el ID
+                    _idObraSocialSeleccionada = -1;
                 }
                 else
                 {
@@ -285,7 +283,6 @@ namespace CapaVistas.Forms_Menu
 
             if (MessageBox.Show($"¿Está seguro que desea reactivar la obra social '{nombre}'?", "Confirmar Reactivación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // Necesitarías implementar un método ReactivarObraSocial en tu capa lógica
                 if (_obraSocial.ReactivarObraSocial(_idObraSocialSeleccionada))
                 {
                     MessageBox.Show("Obra Social reactivada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -307,11 +304,11 @@ namespace CapaVistas.Forms_Menu
                 List<cls_ObraSocialDTO> listaObraSocial = new List<cls_ObraSocialDTO>();
                 if (filtro == "Activas" && cmbOrdenAlfabetico.SelectedIndex >= 0)
                 {
-                    if (cmbOrdenAlfabetico.SelectedIndex == 0) // Primer item
+                    if (cmbOrdenAlfabetico.SelectedIndex == 0)
                     {
                         listaObraSocial = _obraSocial.ObtenerOSActivasOrdenAZ();
                     }
-                    else if (cmbOrdenAlfabetico.SelectedIndex == 1) // Segundo item
+                    else if (cmbOrdenAlfabetico.SelectedIndex == 1)
                     {
                         listaObraSocial = _obraSocial.ObtenerOSActivasOrdenZA();
                     }
@@ -323,11 +320,11 @@ namespace CapaVistas.Forms_Menu
                 }
                 else if (filtro == "Todas" && cmbOrdenAlfabetico.SelectedIndex >= 0)
                 {
-                    if (cmbOrdenAlfabetico.SelectedIndex == 0) // Primer item
+                    if (cmbOrdenAlfabetico.SelectedIndex == 0)
                     {
                         listaObraSocial = _obraSocial.ObtenerTodasLasOSOrdenadasAZ();
                     }
-                    else if (cmbOrdenAlfabetico.SelectedIndex == 1) // Segundo item
+                    else if (cmbOrdenAlfabetico.SelectedIndex == 1) 
                     {
                         listaObraSocial = _obraSocial.ObtenerTodasLasOSOrdenadasZA();
                     }

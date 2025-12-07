@@ -41,7 +41,6 @@ namespace CapaVistas.Forms_Menu
                 dgvVerProfesionales.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgvVerProfesionales.AllowUserToAddRows = false;
 
-                // Ocultar columnas que no se necesitan mostrar
                 dgvVerProfesionales.Columns["id_localidad"].Visible = false;
                 dgvVerProfesionales.Columns["id_sexo"].Visible = false;
                 dgvVerProfesionales.Columns["id_tipo_dni"].Visible = false;
@@ -63,13 +62,10 @@ namespace CapaVistas.Forms_Menu
 
             try
             {
-                // Cargar combos normales (estos parecen funcionar bien)
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbTipoDNI, cargaTiposDocumento.TiposDocumento, "descripcion", "id_tipo_documento");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbLocalidad, cargaLocalidades.Localidades, "nombre_localidad", "id_localidad");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbSexo, cargaSexos.Sexos, "descripcion", "id_sexo");
                 CapaUtilidades.cls_LlenarCombos.Cargar(cmbEspecialidad, cargaEspecialidades.Especialidades, "especialidad", "id_especialidad");
-
-                // CORRECCIÓN COMPLETA PARA cmbOrdenEspecialidad
                 CargarComboEspecialidadesFiltro(cargaEspecialidades.Especialidades);
 
             }
@@ -83,33 +79,25 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // Crear una DataTable para asegurar tipos correctos
                 DataTable dtEspecialidades = new DataTable();
                 dtEspecialidades.Columns.Add("id_especialidad", typeof(int));
                 dtEspecialidades.Columns.Add("especialidad", typeof(string));
-
-                // Agregar opción "Todas las Especialidades"
                 dtEspecialidades.Rows.Add(0, "Todas las Especialidades");
 
-                // Agregar las especialidades reales
                 if (especialidadesOriginales != null)
                 {
                     foreach (var esp in especialidadesOriginales)
                     {
-                        // Acceder a las propiedades por reflexión para ser más seguro
                         int id = (int)esp.GetType().GetProperty("id_especialidad").GetValue(esp, null);
                         string nombre = (string)esp.GetType().GetProperty("especialidad").GetValue(esp, null);
 
                         dtEspecialidades.Rows.Add(id, nombre);
                     }
                 }
-
-                // Asignar directamente al ComboBox
                 cmbOrdenEspecialidad.DataSource = dtEspecialidades;
                 cmbOrdenEspecialidad.DisplayMember = "especialidad";
                 cmbOrdenEspecialidad.ValueMember = "id_especialidad";
 
-                // Establecer selección por defecto
                 cmbOrdenEspecialidad.SelectedIndex = 0;
 
             }
@@ -128,10 +116,8 @@ namespace CapaVistas.Forms_Menu
                 string estadoSeleccionado = cmbOrden.SelectedItem?.ToString() ?? "Profesionales Activos";
                 int? idEspecialidad = ObtenerIdEspecialidadSeleccionada();
 
-                // DEBUG: Ver qué valores estamos obteniendo
+                // pa debugear no tengo que dejarlo
                 Console.WriteLine($"Estado: {estadoSeleccionado}, Especialidad: {idEspecialidad}");
-
-                // Si no hay especialidad seleccionada (o es "Todas"), usar solo el filtro de estado
                 if (!idEspecialidad.HasValue)
                 {
                     if (estadoSeleccionado == "Profesionales Activos")
@@ -143,7 +129,6 @@ namespace CapaVistas.Forms_Menu
                 }
                 else
                 {
-                    // Usar los métodos específicos que filtran en la base de datos
                     if (estadoSeleccionado == "Profesionales Activos")
                         listaProfesionales = _logicaProfesional.ObtenerProfesionalesActivosPorEspecialidad(idEspecialidad.Value);
                     else if (estadoSeleccionado == "Profesionales Inactivos")
@@ -165,9 +150,8 @@ namespace CapaVistas.Forms_Menu
             try
             {
                 if (cmbOrdenEspecialidad.SelectedItem != null &&
-                    cmbOrdenEspecialidad.SelectedIndex > 0) // Index 0 es "Todas"
+                    cmbOrdenEspecialidad.SelectedIndex > 0)
                 {
-                    // Obtener el valor directamente del DataRowView
                     DataRowView selectedRow = cmbOrdenEspecialidad.SelectedItem as DataRowView;
                     if (selectedRow != null)
                     {
@@ -182,7 +166,6 @@ namespace CapaVistas.Forms_Menu
             }
             catch (Exception ex)
             {
-                // Mensaje más informativo
                 MessageBox.Show($"Error al obtener especialidad: {ex.Message}\nTipo: {cmbOrdenEspecialidad.SelectedItem?.GetType().Name}",
                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
@@ -194,7 +177,6 @@ namespace CapaVistas.Forms_Menu
             dgvVerProfesionales.DataSource = profesionales;
             dgvVerProfesionales.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
-            // Configurar columnas
             dgvVerProfesionales.Columns["es_activo"].Visible = false;
             dgvVerProfesionales.Columns["id_localidad"].Visible = false;
             dgvVerProfesionales.Columns["id_sexo"].Visible = false;
@@ -354,7 +336,6 @@ namespace CapaVistas.Forms_Menu
                     cls_ProfesionalDTO profesionalSeleccionado = (cls_ProfesionalDTO)dgvVerProfesionales.CurrentRow.DataBoundItem;
                     _idProfesionalSeleccionado = profesionalSeleccionado.id_profesional;
 
-                    // Manejar tanto bool? como bool
                     bool estaInactivo = profesionalSeleccionado.es_activo.HasValue ?
                                        !profesionalSeleccionado.es_activo.Value :
                                        false;
@@ -645,10 +626,8 @@ namespace CapaVistas.Forms_Menu
 
         private void btnHorariosProf_Click(object sender, EventArgs e)
         {
-            // 1. Verificamos que el usuario haya seleccionado un profesional
             if (dgvVerProfesionales.SelectedRows.Count > 0)
             {
-                // 2. Obtenemos los datos de la fila seleccionada
                 DataGridViewRow filaSeleccionada = dgvVerProfesionales.SelectedRows[0];
 
                 int idProfesionalSeleccionado = Convert.ToInt32(filaSeleccionada.Cells["id_profesional"].Value);

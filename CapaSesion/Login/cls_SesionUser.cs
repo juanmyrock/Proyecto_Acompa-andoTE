@@ -4,7 +4,7 @@ using CapaDTO;
 
 namespace CapaSesion.Login
 {
-    public sealed class SesionUsuario  // Clase que gestiona la sesión del usuario actual utilizando el patrón Singleton
+    public sealed class SesionUsuario 
     {
 
         private static SesionUsuario _instancia; 
@@ -12,7 +12,7 @@ namespace CapaSesion.Login
         private static readonly object _bloqueo = new object();
         private SesionUsuario() { } 
         
-        public static SesionUsuario Instancia // propiedad pública para acceder a la única instancia de la clase (patrón Singleton)
+        public static SesionUsuario Instancia 
         {
             get
             {
@@ -20,7 +20,7 @@ namespace CapaSesion.Login
                 {
                     lock (_bloqueo) 
                     {
-                        if (_instancia == null) // Doble verificación en caso de que otro hilo la haya creado mientras este esperaba
+                        if (_instancia == null) 
                         {
                             _instancia = new SesionUsuario();
                         }
@@ -53,19 +53,16 @@ namespace CapaSesion.Login
             Permisos = permisos ?? new List<string>();
         }
 
-        // Método opcional para "cerrar sesión" (reinicia la instancia)
         public void CerrarSesion()
         {
             _instancia = null;
         }
 
-        // Verifica si el usuario tiene un permiso determinado
         public bool TienePermiso(string permiso)
         {
             return Permisos.Contains(permiso);
         }
 
-        // Verifica si el usuario es administrador (según el IdRol)
         public bool EsAdmin => IdRol == 1;
     }
 }

@@ -337,7 +337,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmGestionReportes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmGestionReportes";
+            this.Text = "Gestión de Reportes";
             this.panelTopBar.ResumeLayout(false);
             this.panelTopBar.PerformLayout();
             this.gbFiltros.ResumeLayout(false);

@@ -13,17 +13,10 @@ namespace CapaLogica.ABM
     {
         private readonly cls_PermisosQ _permisosQ = new cls_PermisosQ();
 
-        /// Item1: List<cls_PermisoDTO> - Permisos asignados al rol.
-        /// Item2: List<cls_PermisoDTO> - Permisos disponibles (no asignados) para el rol.
         public Tuple<List<cls_PermisoDTO>, List<cls_PermisoDTO>> ObtenerPermisosParaGestionDeRol(int idRol)
         {
-            // Obtener todos los permisos existentes en el sistema
-            List<cls_PermisoDTO> todosLosPermisos = _permisosQ.ObtenerTodosLosPermisos(); // Necesitarás un nuevo método en cls_PermisosQ
-
-            // Obtener los permisos actualmente asignados al rol
-            List<cls_PermisoDTO> permisosAsignadosAlRol = _permisosQ.ObtenerPermisosPorRol(idRol); // Necesitarás un nuevo método en cls_PermisosQ
-
-            // Calcular los permisos disponibles (todos los permisos menos los asignados)
+            List<cls_PermisoDTO> todosLosPermisos = _permisosQ.ObtenerTodosLosPermisos();
+            List<cls_PermisoDTO> permisosAsignadosAlRol = _permisosQ.ObtenerPermisosPorRol(idRol); 
             List<cls_PermisoDTO> permisosDisponibles = todosLosPermisos
                                                         .Where(p => !permisosAsignadosAlRol.Any(pa => pa.IdPermiso == p.IdPermiso))
                                                         .ToList();
@@ -35,31 +28,27 @@ namespace CapaLogica.ABM
         {
             ListView ltvPermisosAsignados = _listaPermisos;
             ListView ltvPermisosDisp = _listaDisponibles;
-            // Limpiar los ListViews antes de cargar nuevos datos
             ltvPermisosAsignados.Items.Clear();
             ltvPermisosDisp.Items.Clear();
 
-            // Usa la instancia ya creada
             Tuple<List<cls_PermisoDTO>, List<cls_PermisoDTO>> resultado = ObtenerPermisosParaGestionDeRol(idRolSeleccionado);
 
             List<cls_PermisoDTO> permisosAsignados = resultado.Item1;
             List<cls_PermisoDTO> permisosDisponibles = resultado.Item2;
 
-            // Llenar ltvPermisosAsignados
             foreach (var permiso in permisosAsignados)
             {
                 ListViewItem item = new ListViewItem(permiso.NombrePermiso);
                 item.SubItems.Add(permiso.Descripcion);
-                item.Tag = permiso.IdPermiso; // Almacena el ID para futuras operaciones
+                item.Tag = permiso.IdPermiso;
                 ltvPermisosAsignados.Items.Add(item);
             }
 
-            // Llenar ltvPermisosDisp
             foreach (var permiso in permisosDisponibles)
             {
                 ListViewItem item = new ListViewItem(permiso.NombrePermiso);
                 item.SubItems.Add(permiso.Descripcion);
-                item.Tag = permiso.IdPermiso; // Almacena el ID para futuras operaciones
+                item.Tag = permiso.IdPermiso;
                 ltvPermisosDisp.Items.Add(item);
             }
         }
@@ -72,7 +61,6 @@ namespace CapaLogica.ABM
             }
             catch (Exception ex)
             {
-                // Aquí podrías loggear el error o lanzar una excepción personalizada
                 throw new Exception($"Error en la lógica al asignar permiso {idPermiso} al rol {idRol}: {ex.Message}", ex);
             }
         }
@@ -85,7 +73,6 @@ namespace CapaLogica.ABM
             }
             catch (Exception ex)
             {
-                // Aquí podrías loggear el error o lanzar una excepción personalizada
                 throw new Exception($"Error en la lógica al desasignar permiso {idPermiso} del rol {idRol}: {ex.Message}", ex);
             }
         }

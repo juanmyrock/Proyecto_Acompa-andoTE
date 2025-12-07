@@ -124,9 +124,9 @@
             this.lblErrorMsg.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.818182F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMsg.ForeColor = System.Drawing.Color.White;
             this.lblErrorMsg.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblErrorMsg.Location = new System.Drawing.Point(12, 240);
+            this.lblErrorMsg.Location = new System.Drawing.Point(45, 240);
             this.lblErrorMsg.Name = "lblErrorMsg";
-            this.lblErrorMsg.Size = new System.Drawing.Size(398, 95);
+            this.lblErrorMsg.Size = new System.Drawing.Size(346, 95);
             this.lblErrorMsg.TabIndex = 26;
             this.lblErrorMsg.Text = "Error Message";
             this.lblErrorMsg.Visible = false;

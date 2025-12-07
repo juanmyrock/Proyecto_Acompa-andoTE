@@ -98,8 +98,6 @@ namespace CapaVistas.Forms_Menu
                     cmbSexo.SelectedValue = empleadoSeleccionado.id_sexo;
                     txtPuesto.Text = empleadoSeleccionado.puesto;
                     txtCargaHS.Text = empleadoSeleccionado.carga_hs.ToString();
-                    // DateTimePicker
-                    // Verifica si la fecha está dentro del rango permitido del DateTimePicker
                     if (empleadoSeleccionado.fecha_nac >= dateNacimiento.MinDate &&
                         empleadoSeleccionado.fecha_nac <= dateNacimiento.MaxDate)
                     {
@@ -144,7 +142,6 @@ namespace CapaVistas.Forms_Menu
         #region Creación de Empleado
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            // 1. Validar los campos de entrada
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtDNI.Text) ||
@@ -231,14 +228,11 @@ namespace CapaVistas.Forms_Menu
         #region Eliminar Empleado
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            // 1. Verificar si hay un empleado seleccionado
             if (_idEmpleadoSeleccionado == -1)
             {
                 MessageBox.Show("Por favor, seleccione un empleado de la lista para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // 2. Pedir confirmación al usuario
             DialogResult resultado = MessageBox.Show(
                 "¿Está seguro de que desea eliminar al empleado seleccionado? Esta acción no se puede deshacer.",
                 "Confirmar Eliminación",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
@@ -247,7 +241,6 @@ namespace CapaVistas.Forms_Menu
             {
                 try
                 {
-                    // 3. Llamar al método de eliminación de la capa lógica
                     bool eliminado = _logicaEmpleado.EliminarEmpleado(_idEmpleadoSeleccionado);
 
                     if (eliminado)
@@ -272,7 +265,6 @@ namespace CapaVistas.Forms_Menu
         #region Modificar Empleado
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            // Verificar si hay un empleado seleccionado para modificar
             if (_idEmpleadoSeleccionado == -1)
             {
                 MessageBox.Show("Por favor, seleccione un empleado de la lista para modificar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -345,8 +337,6 @@ namespace CapaVistas.Forms_Menu
                     email = txtEmail.Text,
                     telefono = txtCelular.Text
                 };
-
-                // llamamos al método de actualización de la capa lógica
                 bool actualizado = _logicaEmpleado.ActualizarEmpleado(empleadoModificado);
 
                 if (actualizado)
@@ -478,7 +468,6 @@ namespace CapaVistas.Forms_Menu
                 return;
             }
 
-            // obtenemos el DTO completo del empleado seleccionado
             var empleadoSeleccionado = (cls_EmpleadoDTO)dgvVerUser.CurrentRow.DataBoundItem;
 
             try
@@ -486,7 +475,6 @@ namespace CapaVistas.Forms_Menu
                 var logicaGestion = new cls_LogicaGestionarUsuarios();
                 bool usuarioExiste = logicaGestion.VerificarSiUsuarioExiste(empleadoSeleccionado.id_empleado);
 
-                // creamos el DTO para el formulario hijo y nos aseguramos de pasarle el email.
                 var datosParaGestion = new cls_DatosParaGestionUsuarioDTO
                 {
                     IdEmpleado = empleadoSeleccionado.id_empleado,
@@ -495,13 +483,11 @@ namespace CapaVistas.Forms_Menu
                     Email = empleadoSeleccionado.email
                 };
 
-                // abrimos el formulario de gestión, pasándole el DTO completo
                 using (var formGestion = new frmGestionarUsuario(datosParaGestion))
                 {
                     formGestion.ShowDialog();
                 }
 
-                // actualizamos el dgv por si hubo cambios
                 CargarEmpleadosEnDataGridView();
             }
             catch (Exception ex)

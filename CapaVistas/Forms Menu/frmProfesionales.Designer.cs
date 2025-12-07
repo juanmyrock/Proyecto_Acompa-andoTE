@@ -642,7 +642,7 @@
             this.Controls.Add(this.dgvVerProfesionales);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmProfesionales";
-            this.Text = "frmProfesionales";
+            this.Text = "Lista de Profesionales";
             this.Load += new System.EventHandler(this.frmProfesionales_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

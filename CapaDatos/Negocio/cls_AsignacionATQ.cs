@@ -73,8 +73,6 @@ namespace CapaDatos
             return lista;
         }
 
-
-        // Busca pacientes por DNI (1 resultado) o Apellido (múltiples resultados).
         public List<cls_PacienteSimpleDTO> BuscarPaciente(string busqueda)
         {
             string sql;
@@ -84,7 +82,6 @@ namespace CapaDatos
 
             if (Int64.TryParse(busqueda, out long dni))
             {
-                // SI ES DNI: Busca 1 solo
                 sql = @"
                     SELECT id_paciente, apellido + ', ' + nombre AS nombre_completo, dni_paciente 
                     FROM Pacientes 
@@ -94,7 +91,6 @@ namespace CapaDatos
             }
             else
             {
-                // SI ES APELLIDO: Busca TODOS los que coincidan (quitamos TOP 1)
                 sql = @"
                     SELECT id_paciente, apellido + ', ' + nombre AS nombre_completo, dni_paciente 
                     FROM Pacientes 
@@ -108,7 +104,6 @@ namespace CapaDatos
 
             foreach (DataRow row in tabla.Rows)
             {
-                // Creamos un objeto Paciente Simple por CADA fila
                 var paciente = new cls_PacienteSimpleDTO
                 {
                     id_paciente = Convert.ToInt32(row["id_paciente"]),
@@ -116,17 +111,12 @@ namespace CapaDatos
                     dni_paciente = row["dni_paciente"].ToString()
                 };
 
-                // Agregamos el paciente a la lista
                 listaPacientes.Add(paciente);
             }
 
-            // Devolvemos la lista (puede tener 0, 1 o muchos pacientes)
             return listaPacientes;
         }
 
-
-
-        // Busca las asignaciones existentes de un paciente para el ListBox.
         public List<AcompanamientoResumenDTO> ObtenerAsignacionesPorPaciente(int id_paciente)
         {
             string sql = @"
@@ -138,7 +128,7 @@ namespace CapaDatos
                 FROM Acompanamientos a
                 INNER JOIN Profesionales p ON a.id_profesional = p.id_profesional
                 INNER JOIN Ambitos am ON a.id_ambito = am.id_ambito
-                WHERE a.id_paciente = @id_paciente AND a.fecha_fin IS NULL"; // Traemos solo los activos
+                WHERE a.id_paciente = @id_paciente AND a.fecha_fin IS NULL";
 
             var parametros = new List<SqlParameter>
             {
@@ -161,7 +151,6 @@ namespace CapaDatos
             return lista;
         }
 
-        // Obtiene los datos de una asignación específica para autocompletar los combos.
         public AcompanamientoDTO ObtenerAcompanamientoPorId(int id_acompanamiento)
         {
             string sql = @"
@@ -189,7 +178,6 @@ namespace CapaDatos
             };
         }
 
-        // Obtiene los horarios de una asignación para poblar la grilla (dgvHorarios).
         public List<AcompanamientoHorarioDTO> ObtenerHorariosPorAsignacion(int id_acompanamiento)
         {
             string sql = @"
@@ -229,13 +217,8 @@ namespace CapaDatos
         }
 
 
-        // --- MÉTODOS DE ESCRITURA
-
-        // Inserta el registro principal en Acompañamientos y devuelve el nuevo ID.
         public int InsertarAcompanamiento(AcompanamientoDTO dto)
         {
-            // Usamos 'GETDATE()' para la fecha de inicio y creación.
-            // Usamos 'SCOPE_IDENTITY()' para obtener el ID recién creado.
             string sql = @"
                 INSERT INTO Acompanamientos (
                     id_paciente, id_profesional, id_ambito, id_jornada, 
@@ -245,7 +228,7 @@ namespace CapaDatos
                     @id_paciente, @id_profesional, @id_ambito, @id_jornada, 
                     @id_estado_acompanamiento, GETDATE(), @id_usuario_creador, GETDATE()
                 );
-                SELECT SCOPE_IDENTITY();"; // Devuelve el último ID insertado
+                SELECT SCOPE_IDENTITY();";
 
             var parametros = new List<SqlParameter>
             {
@@ -259,11 +242,9 @@ namespace CapaDatos
 
             DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
 
-            // El nuevo ID estará en la primera fila, primera columna
             return Convert.ToInt32(tabla.Rows[0][0]);
         }
 
-        // Inserta un registro de horario para un acompañamiento.
         public void InsertarHorario(int idAcompanamiento, AcompanamientoHorarioDTO horario)
         {
             string sql = @"
@@ -284,7 +265,6 @@ namespace CapaDatos
             _ejecutar.ConsultaWrite(sql, parametros);
         }
 
-        // Actualiza un horario específico en la base de datos.
         public void ActualizarHorario(AcompanamientoHorarioDTO horario)
         {
             string sql = @"

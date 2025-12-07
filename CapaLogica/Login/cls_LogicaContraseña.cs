@@ -24,7 +24,6 @@ namespace CapaLogica.Login
             return politica;
         }
 
-        // Valida una contraseña contra las políticas de seguridad actuales.
         public List<string> ValidarComplejidad(string contraseña, cls_ParamContraseñaDTO politica)
         {
             var errores = new List<string>();
@@ -45,17 +44,14 @@ namespace CapaLogica.Login
 
         public void EstablecerNuevaContraseña(int idUsuario, string nuevaContraseña)
         {
-            // 1. Obtener las políticas actuales
             var politica = ObtenerPoliticaContraseña();
 
-            // 2. Validar complejidad
             var erroresComplejidad = ValidarComplejidad(nuevaContraseña, politica);
             if (erroresComplejidad.Any())
             {
                 throw new Exception(string.Join("\n", erroresComplejidad));
             }
 
-            // 3. Validar historial de contraseñas
             int cantidadHistorial = _paramDatos.ObtenerCantidadHistorial();
             if (cantidadHistorial > 0)
             {
@@ -68,7 +64,6 @@ namespace CapaLogica.Login
                 }
             }
 
-            // 4. Si todo es válido, procedemos a guardar
             string hashFinal = cls_SeguridadPass.GenerarHashSHA256(nuevaContraseña);
             _contraseñasDatos.DesactivarContraseñasAnteriores(idUsuario);
             _contraseñasDatos.InsertarNuevaContraseña(new cls_ContraseñaDTO
@@ -84,16 +79,12 @@ namespace CapaLogica.Login
 
         public void GenerarYEnviarContraseñaTemporal(int idUsuario, string emailDestino, string nombreUsuario)
         {
-            // 1. Generar una contraseña aleatoria.
             string contraseñaTemporal = new Random().Next(100000, 999999).ToString();
 
-            // 2. Hashear la contraseña temporal.
             string hashTemporal = CapaUtilidades.cls_SeguridadPass.GenerarHashSHA256(contraseñaTemporal);
 
-            // 3. Desactivar la contraseña activa anterior del usuario.
             _contraseñasDatos.DesactivarContraseñasAnteriores(idUsuario);
 
-            // 4. Insertar la nueva contraseña temporal como un NUEVO registro activo.
             _contraseñasDatos.InsertarNuevaContraseña(new cls_ContraseñaDTO
             {
                 IdUsuario = idUsuario,
@@ -102,7 +93,6 @@ namespace CapaLogica.Login
                 FechaExpiracion = null
             });
 
-            // 5. Marcar al usuario para que deba cambiar la contraseña en el próximo login.
             _userDatos.MarcarContraseñaComoRandom(idUsuario);
 
             ArmarMail.Preparar(emailDestino,"Contraseña Temporal", contraseñaTemporal, nombreUsuario);

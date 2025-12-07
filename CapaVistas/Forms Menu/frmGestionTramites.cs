@@ -13,30 +13,22 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionTramites : Form
     {
-        // --- Conexión a la lógica refactorizada ---
         private readonly cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
         private readonly cls_LogicaAsignacionAT _logicaAsignacionAT = new cls_LogicaAsignacionAT();
-
-        // --- DTOs y Sesión ---
         private List<cls_TramiteResumenDTO> _tramitesCargados = new List<cls_TramiteResumenDTO>();
         private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
-
-        // --- Variables de estado del formulario ---
         private cls_TramiteResumenDTO _tramiteSeleccionado = null;
-        private cls_PacienteSimpleDTO _pacienteEncontrado = null; // Para el botón "Gestionar Trámite"
+        private cls_PacienteSimpleDTO _pacienteEncontrado = null;
         private string _dniPacienteBuscado = null;
 
         public frmGestionTramites()
         {
             InitializeComponent();
-            CargarComboEstados(); // Carga el combo de estados (nuevo nombre)
+            CargarComboEstados(); 
             mthFechas.Visible = false;
             mthFechas.SelectionStart = DateTime.Today.AddMonths(-1);
             mthFechas.SelectionEnd = DateTime.Today;
         }
-
-        #region --- Eventos Visuales  ---
-
 
         private void btnFechas_Click(object sender, EventArgs e)
         {
@@ -50,15 +42,8 @@ namespace CapaVistas.Forms_Menu
 
         private void mthFechas_DateSelected(object sender, DateRangeEventArgs e)
         {
-            // Opcional: Ocultar al seleccionar
-            // mthFechas.Visible = false;
-            // O actualizar un label con el rango
+
         }
-
-        #endregion
-
-        #region --- Lógica Principal del Formulario (Refactorizada) ---
-
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             string busquedaDNI = txtBuscarPaciente.Text.Trim();
@@ -71,41 +56,29 @@ namespace CapaVistas.Forms_Menu
             mthFechas.Visible = false;
             DateTime? fechaInicio = mthFechas.SelectionStart.Date;
             DateTime? fechaFin = mthFechas.SelectionEnd.Date.AddDays(1).AddSeconds(-1);
-
-            // Limpiamos todo antes de la búsqueda
             LimpiarSeleccion();
             _pacienteEncontrado = null;
             _dniPacienteBuscado = null;
 
             try
             {
-                // --- PASO 1: BUSCAR Y VALIDAR EL PACIENTE ---
-                // ¡ESTA ES LA LÍNEA CORREGIDA!
-                // Usamos la lógica que YA EXISTE en cls_LogicaAsignacionAT
                 List<cls_PacienteSimpleDTO> pacientesEncontrados = _logicaAsignacionAT.BuscarPaciente(busquedaDNI);
 
                 if (pacientesEncontrados == null || pacientesEncontrados.Count == 0)
                 {
                     MessageBox.Show("Paciente no encontrado con ese DNI/Apellido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // No seguimos si no hay paciente
+                    return;
                 }
 
-                // (Si tu búsqueda de paciente te trae muchos, 
-                // aquí deberías mostrar un ListBox, igual que en el otro form.
-                // Por ahora, asumimos que para DNI trae 1)
                 if (pacientesEncontrados.Count > 1)
                 {
-                    // (Aquí iría la lógica para mostrar el ListBox de pacientes)
                     MessageBox.Show("Se encontró más de un paciente. Lógica pendiente.");
                     return;
                 }
 
-                // Si encontramos uno solo:
                 _pacienteEncontrado = pacientesEncontrados[0];
-                _dniPacienteBuscado = _pacienteEncontrado.dni_paciente; // Guardamos el DNI
+                _dniPacienteBuscado = _pacienteEncontrado.dni_paciente;
 
-
-                // --- PASO 2: BUSCAR LOS TRÁMITES (Sabiendo que el paciente existe) ---
                 _tramitesCargados = _logicaTramites.BuscarTramites(busquedaDNI, fechaInicio, fechaFin);
 
                 lbTramites.DataSource = _tramitesCargados;
@@ -147,12 +120,11 @@ namespace CapaVistas.Forms_Menu
 
                 foreach (var evento in historial)
                 {
-                    // AHORA USAMOS 'descripcion_tipo_tramite'
                     string tipo = evento.descripcion_tipo_tramite;
 
                     string texto = evento.es_comentario
                         ? evento.comentario
-                        : tipo; // Muestra "Pago Vencido", "O.S. Autorizada"
+                        : tipo;
 
                     AgregarMensaje(evento.fecha_hora.ToString("dd/MM/yyyy HH:mm"), evento.nombre_usuario, tipo, texto, false);
                 }
@@ -221,7 +193,6 @@ namespace CapaVistas.Forms_Menu
 
             try
             {
-                // Esta es la lógica nueva: SOLO registra un evento en el historial
                 if (_logicaTramites.RegistrarEventoDeTipo(idTramiteMaestro, idUsuarioActual, idTipoTramite))
                 {
                     AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, descripcionEvento, descripcionEvento);
@@ -239,7 +210,6 @@ namespace CapaVistas.Forms_Menu
 
         private void btnGestionTramite_Click(object sender, EventArgs e)
         {
-            // 1. Validamos contra el objeto DTO, no contra el string DNI
             if (_pacienteEncontrado == null || txtBuscarPaciente.Text == "")
             {
                 MessageBox.Show("Debe buscar y encontrar un paciente (por DNI) para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -339,11 +309,14 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        #endregion
-
         private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
+
+        private void lbTramites_DoubleClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -18,8 +18,6 @@ namespace CapaLogica
         private readonly cls_SesionActivaQ _sesiones;
         private readonly int intentosMaximosPermitidos;
 
-
-        // Constructor
         public cls_LogicaLogin()
         {
             _userDatos = new cls_ConectarUserQ();
@@ -30,25 +28,20 @@ namespace CapaLogica
         }
         public ResultadoLoginDTO ValidarLogin(cls_CredencialesLoginDTO credenciales, string ipCliente, bool forzarCierre = false)
         {
-            // 1. Verificar usuario
             cls_UsuarioDTO usuario = _userDatos.ObtenerUsuarioEmpleado(credenciales.Username);
             if (usuario == null)
                 throw new Exception("Usuario no registrado");
 
-            // 2. Verificar si está bloqueado
             if ((usuario.FechaBloqueo.HasValue))
                 throw new Exception("Usuario está bloqueado, contacte al administrador");
 
-            // 3. Verificar si está activo
             if (usuario.EsActivo != true || usuario.FechaBaja.HasValue)
                 throw new Exception("Usuario inactivo o dado de baja");
             
-            // 4. Obtener contraseña activa
             cls_ContraseñaDTO contraseña = _passDatos.ObtenerContraseñaActiva(usuario.IdUsuario);
             if (contraseña == null)
                 throw new Exception("No hay contraseña activa para este usuario");
 
-            // 5. Validar hash
             if (!cls_SeguridadPass.VerificarHashSHA256(credenciales.Password, contraseña.HashContraseña))
             {
                 _userDatos.RegistrarIntentoFallido(usuario.IdUsuario, intentosMaximosPermitidos);
@@ -57,13 +50,11 @@ namespace CapaLogica
             bool necesitaCambioPass = usuario.EsRandomPass == true;
             bool necesitaPreguntas = usuario.EsPrimerIngreso == true;
 
-            // 6. Validar expiración (solo si no se requiere un cambio forzado)
             if (!necesitaCambioPass && contraseña.FechaExpiracion.HasValue && contraseña.FechaExpiracion < DateTime.Now)
             {
                 throw new Exception("Contraseña expirada. Debe cambiarla");
             }
 
-            // 7. Verificar sesión única
             if (_sesiones.TieneSesionActiva(usuario.IdUsuario))
             {
                 if (forzarCierre)
@@ -75,8 +66,7 @@ namespace CapaLogica
                     throw new Exception("SESION_ACTIVA");
                 }
             }
-            
-            // 8. Registrar nueva sesión en BD
+
             _sesiones.RegistrarSesion(new cls_SesionActivaDTO
             {
                 UsuarioId = usuario.IdUsuario,
@@ -84,15 +74,12 @@ namespace CapaLogica
                 FechaInicio = DateTime.Now
             });
 
-            // 9. Resetear intentos fallidos y registrar ingreso
             _userDatos.ResetearIntentosFallidos(usuario.IdUsuario);
             _userDatos.RegistrarIngreso(usuario.IdUsuario);
 
-            // 10. Obtener permisos
             List<cls_PermisoDTO> permisos = _permisos.ObtenerPermisosEfectivosPorUsuario(usuario.IdUsuario);
             List<string> nombresPermisos = permisos.Select(p => p.NombrePermiso).ToList();
 
-            // 11. Iniciar sesión local (Singleton)
             SesionUsuario.Instancia.IniciarSesion(usuario, nombresPermisos);
 
             return new ResultadoLoginDTO
@@ -104,7 +91,6 @@ namespace CapaLogica
 
         }
 
-        // Cierra la sesión activa, tanto en la base de datos como en la sesión local.
         public void CerrarSesion()
         {
             if (SesionUsuario.Instancia.EstaSesionIniciada)
@@ -112,13 +98,9 @@ namespace CapaLogica
                 try
                 {
                     _sesiones.CerrarSesion(SesionUsuario.Instancia.IdUsuario);
-
-                    // Registrar en bitácora
-                    //_userDatos.RegistrarSalida(SesionUsuario.Instancia.IdUsuario);
                 }
                 finally
                 {
-                    // Cerrar sesión local siempre
                     SesionUsuario.Instancia.CerrarSesion();
                 }
             }

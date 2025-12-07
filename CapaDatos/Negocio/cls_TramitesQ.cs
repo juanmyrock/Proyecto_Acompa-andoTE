@@ -177,12 +177,9 @@ namespace CapaDatos.Negocio
                 throw new Exception($"Error fatal: No se encontró el 'Tipo_Tramite' llamado '{descripcion}' en la base de datos.");
             }
 
-            // Devolvemos el int, no el DataTable
             return Convert.ToInt32(tabla.Rows[0]["id_tipo_tramite"]);
         }
 
-
-        // Obtiene los posibles estados MAESTROS para el ComboBox (Abierto, Cerrado, etc.)
         public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
         {
             string sql = "SELECT id_estado_tramite, estado_descripcion FROM Estado_Tramite ORDER BY estado_descripcion";

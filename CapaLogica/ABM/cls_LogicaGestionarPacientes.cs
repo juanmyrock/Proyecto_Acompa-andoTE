@@ -169,13 +169,36 @@ namespace CapaLogica.SistemaLogica
         {
             try
             {
-                // Llama al método del DAO
                 return _pacientesQ.VerificarDniExistente(dni);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al verificar DNI: {ex.Message}");
                 return false;
+            }
+        }
+
+        public cls_PacienteDTO BuscarPorDNI(string dni)
+        {
+            try
+            {
+                return _pacientesQ.BuscarPorDNI(dni);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al buscar paciente por DNI: {ex.Message}", ex);
+            }
+        }
+
+        public cls_PacienteDTO ObtenerPacientePorId(int idPaciente)
+        {
+            try
+            {
+                return _pacientesQ.ObtenerPorId(idPaciente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener paciente por ID: {ex.Message}", ex);
             }
         }
     }

@@ -34,24 +34,19 @@ namespace CapaVistas.Forms_Login
                 this.DialogResult = DialogResult.OK;
                 this.Close();
                 var logicaLogin = new cls_LogicaLogin();
-                // 1. Verificamos que el usuario existe y está activo.
                 cls_UsuarioDTO usuario = logicaLogin.ObtenerDatosParaRecuperacion(txtUsuario.Text);
 
-                // 2. Si existe, abrimos el formulario de preguntas en modo "RESPONDER".
                 this.Hide();
                 using (var formPreguntas = new frmPreguntas(usuario.IdUsuario, "RESPONDER"))
                 {
-                    // 3. Esperamos el resultado.
                     if (formPreguntas.ShowDialog() == DialogResult.OK)
                     {
                         MessageBox.Show("Se ha enviado una contraseña temporal a su correo electrónico.\nRevise sus correos y proceda con la contraseña otorgada.", "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        // Si el usuario no respondió correctamente, mostramos un mensaje de error.
                         MsgError("Respuesta incorrecta. Por favor, inténtelo nuevamente.");
                     }
-                    // Si el usuario cancela, no hacemos nada y simplemente cerramos.
                 }
                 this.Close();
             }

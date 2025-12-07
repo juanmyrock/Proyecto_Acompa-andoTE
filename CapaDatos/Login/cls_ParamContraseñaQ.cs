@@ -41,7 +41,7 @@ namespace CapaDatos
                 Contras_Anteriores = row["cantidad_historial_password"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["cantidad_historial_password"])
             };
         }
-        public bool ModificarParametros(cls_ParamContraseñaDTO parametros) // bool para indicar si falla
+        public bool ModificarParametros(cls_ParamContraseñaDTO parametros) 
         {
             string sql = @"
                 UPDATE Parametros_Contraseña
@@ -57,7 +57,6 @@ namespace CapaDatos
                     cantidad_historial_password = @Contras_Anteriores";
 
 
-            // Lista de parámetros SQL para la consulta
             List<SqlParameter> parametrosSql = new List<SqlParameter>
             {
                 new SqlParameter("@LongitudMinima", parametros.LongitudMinima ?? (object)DBNull.Value),
@@ -83,13 +82,11 @@ namespace CapaDatos
             }
         }
 
-        // Obtiene la cantidad de contraseñas anteriores que se deben verificar.
         public int ObtenerCantidadHistorial()
         {
             string sql = "SELECT TOP 1 cantidad_historial_password FROM Parametros_Contraseña";
             DataTable tabla = _ejecutar.ConsultaRead(sql);
 
-            // Si no hay configuración, por defecto no se verifica el historial (0).
             if (tabla.Rows.Count == 0 || tabla.Rows[0]["cantidad_historial_password"] == DBNull.Value)
                 return 0;
 

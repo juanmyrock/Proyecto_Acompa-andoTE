@@ -2,19 +2,15 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CapaVistas.Forms_Menu // O tu namespace
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionHorarios : Form
     {
-        // Variables para poder arrastrar el formulario sin borde
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
 
-        // ID del profesional que estamos editando
         private int idProfesional;
-
-        // Constructor modificado
         public frmGestionHorarios(int idProfesional, string nombreProfesional)
         {
             InitializeComponent();
@@ -30,7 +26,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void ConfigurarControles()
         {
-            // Cargar ComboBox de días
             cmbDiaSemana.Items.Add("Lunes");
             cmbDiaSemana.Items.Add("Martes");
             cmbDiaSemana.Items.Add("Miércoles");
@@ -39,18 +34,16 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             cmbDiaSemana.Items.Add("Sábado");
             cmbDiaSemana.SelectedIndex = 0;
 
-            // Configurar TimePickers
             timeInicio.Format = DateTimePickerFormat.Custom;
             timeInicio.CustomFormat = "HH:mm";
             timeInicio.ShowUpDown = true;
-            timeInicio.Value = DateTime.Today.AddHours(9); // Default 09:00
+            timeInicio.Value = DateTime.Today.AddHours(9);
 
             timeFin.Format = DateTimePickerFormat.Custom;
             timeFin.CustomFormat = "HH:mm";
             timeFin.ShowUpDown = true;
-            timeFin.Value = DateTime.Today.AddHours(17); // Default 17:00
+            timeFin.Value = DateTime.Today.AddHours(17);
 
-            // Configurar NumericUpDown
             numDuracion.Value = 30;
             numDuracion.Minimum = 10;
             numDuracion.Maximum = 120;
@@ -59,34 +52,23 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
         private void CargarHorarios()
         {
-            // AQUÍ: Harías la consulta a tu base de datos
-            // SELECT id_hora_prof, dia_semana, hora_inicio, hora_fin, duracion_turno 
-            // FROM Horarios_Profesional WHERE id_profesional = this.idProfesional
-
-            // --- Simulación de datos ---
             dgvHorarios.DataSource = null;
             dgvHorarios.Rows.Clear();
             dgvHorarios.Columns.Clear();
 
-            // Definir columnas
             dgvHorarios.Columns.Add("colIdHorario", "ID");
             dgvHorarios.Columns.Add("colDia", "Día");
             dgvHorarios.Columns.Add("colInicio", "Inicio");
             dgvHorarios.Columns.Add("colFin", "Fin");
             dgvHorarios.Columns.Add("colDuracion", "Duración (min)");
 
-            // Ocultar el ID
             dgvHorarios.Columns["colIdHorario"].Visible = false;
-
-            // Formatear columnas de hora
             dgvHorarios.Columns["colInicio"].DefaultCellStyle.Format = "HH:mm";
             dgvHorarios.Columns["colFin"].DefaultCellStyle.Format = "HH:mm";
 
-            // Cargar filas de ejemplo
             dgvHorarios.Rows.Add(1, "Lunes", DateTime.Today.AddHours(9), DateTime.Today.AddHours(17), 30);
             dgvHorarios.Rows.Add(2, "Martes", DateTime.Today.AddHours(9), DateTime.Today.AddHours(13), 45);
             dgvHorarios.Rows.Add(3, "Jueves", DateTime.Today.AddHours(14), DateTime.Today.AddHours(18), 30);
-            // --- Fin Simulación ---
 
             LimpiarCampos();
         }
@@ -98,10 +80,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             timeFin.Value = DateTime.Today.AddHours(17);
             numDuracion.Value = 30;
             dgvHorarios.ClearSelection();
-            btnAgregar.Text = "Agregar"; // Cambiamos el texto del botón a "Agregar"
+            btnAgregar.Text = "Agregar";
         }
-
-        // --- LÓGICA PARA ARRASTRAR EL FORMULARIO ---
         private void frm_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
@@ -122,8 +102,6 @@ namespace CapaVistas.Forms_Menu // O tu namespace
         {
             dragging = false;
         }
-
-        // --- LÓGICA DE CONTROLES ---
         private void lblClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -140,13 +118,12 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             {
                 DataGridViewRow row = dgvHorarios.SelectedRows[0];
 
-                // Cargar datos en los controles para editar
                 cmbDiaSemana.SelectedItem = row.Cells["colDia"].Value.ToString();
                 timeInicio.Value = Convert.ToDateTime(row.Cells["colInicio"].Value);
                 timeFin.Value = Convert.ToDateTime(row.Cells["colFin"].Value);
                 numDuracion.Value = Convert.ToDecimal(row.Cells["colDuracion"].Value);
 
-                btnAgregar.Text = "Modificar"; // Cambiamos el texto del botón
+                btnAgregar.Text = "Modificar";
             }
             else
             {
@@ -168,27 +145,18 @@ namespace CapaVistas.Forms_Menu // O tu namespace
             TimeSpan horaFin = timeFin.Value.TimeOfDay;
             int duracion = (int)numDuracion.Value;
 
-            if (dgvHorarios.SelectedRows.Count > 0) // Modo Modificar
+            if (dgvHorarios.SelectedRows.Count > 0)
             {
                 int idHorario = Convert.ToInt32(dgvHorarios.SelectedRows[0].Cells["colIdHorario"].Value);
 
-                // AQUÍ: Harías el UPDATE en tu DB
-                // UPDATE Horarios_Profesional SET dia_semana = @dia, hora_inicio = @horaInicio, 
-                // hora_fin = @horaFin, duracion_turno = @duracion 
-                // WHERE id_hora_prof = @idHorario
-
                 MessageBox.Show($"Horario del día {dia} (ID: {idHorario}) modificado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else // Modo Agregar
+            else 
             {
-                // AQUÍ: Harías el INSERT en tu DB
-                // INSERT INTO Horarios_Profesional (id_profesional, dia_semana, hora_inicio, hora_fin, duracion_turno) 
-                // VALUES (@idProfesional, @dia, @horaInicio, @horaFin, @duracion)
-
                 MessageBox.Show($"Nuevo horario para el {dia} agregado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            CargarHorarios(); // Recargamos la lista
+            CargarHorarios();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -204,12 +172,8 @@ namespace CapaVistas.Forms_Menu // O tu namespace
 
             if (MessageBox.Show($"¿Está seguro que desea eliminar el horario del día {dia}?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                // AQUÍ: Harías el DELETE en tu DB
-                // DELETE FROM Horarios_Profesional WHERE id_hora_prof = @idHorario
-
                 MessageBox.Show($"Horario (ID: {idHorario}) eliminado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                CargarHorarios(); // Recargamos la lista
+                CargarHorarios();
             }
         }
     }

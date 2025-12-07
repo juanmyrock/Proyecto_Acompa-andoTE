@@ -83,6 +83,16 @@ namespace CapaLogica.LlenarCombos
             }
         }
 
+
+        public LlenarCombosResponseDTO ObtenerEspecialidadesSinAcompaniante()
+        {
+            try { return _llenador.ObtenerEspecialidadesSinAcompaniante(); }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener especialidades: {ex.Message}");
+                return null;
+            }
+        }
         public LlenarCombosResponseDTO ObtenerRoles()
         {
             try

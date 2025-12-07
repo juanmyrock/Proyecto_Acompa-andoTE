@@ -12,9 +12,7 @@ namespace CapaDatos
 
         public List<cls_PermisoDTO> ObtenerPermisosEfectivosPorUsuario(int idUsuario)
         {
-            // ... (tu código existente para este método)
             string sql = @"
-                -- Permisos por ROL
                 SELECT p.id_permiso, p.nombre_permiso, p.descripcion, 'Rol' AS origen
                 FROM Usuarios u
                 INNER JOIN Rol_Permiso rp ON u.id_rol = rp.id_rol
@@ -23,7 +21,6 @@ namespace CapaDatos
 
                 UNION
 
-                -- Permisos individuales activos por USUARIO
                 SELECT p.id_permiso, p.nombre_permiso, p.descripcion, 'Usuario' AS origen
                 FROM Permiso_Usuario pu
                 INNER JOIN Permisos p ON pu.id_permiso = p.id_permiso

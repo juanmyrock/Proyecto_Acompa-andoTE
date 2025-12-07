@@ -1,62 +1,77 @@
 ﻿using System;
 using System.Data;
-using System.Data.Sql;
 using System.Data.SqlClient;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CapaDatos
 {
     public abstract class cls_ConexionBD
     {
-        private readonly string conexion;
+        private static string _cadenaConexionCacheada = null;
+        private const string ARCHIVO_CONFIG = "conexion_server.cfg";
+        private const string NOMBRE_BD = "ProyectoAT";
 
         public cls_ConexionBD()
         {
-            conexion = ObtenerCadenaConexionAutomatica();
+            if (_cadenaConexionCacheada == null)
+            {
+                _cadenaConexionCacheada = ObtenerCadenaDeConexion();
+            }
         }
 
         protected SqlConnection GetConexion()
         {
-            return new SqlConnection(conexion);
+            return new SqlConnection(_cadenaConexionCacheada);
         }
 
-        private string ObtenerCadenaConexionAutomatica()
+        private string ObtenerCadenaDeConexion()
         {
-            string[] servidoresProbables = {
-                ".",                          
-                "localhost",                 
-                "(local)",                   
-                @".\SQLEXPRESS",            
-                "localhost\\SQLEXPRESS"      
+            string rutaBase = AppDomain.CurrentDomain.BaseDirectory;
+            string rutaArchivo = Path.Combine(rutaBase, ARCHIVO_CONFIG);
+
+            if (File.Exists(rutaArchivo))
+            {
+                try
+                {
+                    string cadenaGuardada = File.ReadAllText(rutaArchivo).Trim();
+                    if (ProbarConexion(cadenaGuardada)) return cadenaGuardada;
+                }
+                catch { }
+            }
+
+
+            // no escanea la red
+            string[] servidoresComunes = {
+                @".\SQLEXPRESS",         
+                ".",                       
+                @"(localdb)\MSSQLLocalDB", 
+                "localhost",
+                @"localhost\SQLEXPRESS"
             };
 
-            string baseDeDatos = "ProyectoAT";
-
-            foreach (string servidor in servidoresProbables)
+            foreach (string servidor in servidoresComunes)
             {
-                string cadenaPrueba = $"Server={servidor}; Database={baseDeDatos}; Integrated Security=True;";
-
+                string cadenaPrueba = $"Server={servidor}; Database={NOMBRE_BD}; Integrated Security=True;";
                 if (ProbarConexion(cadenaPrueba))
                 {
+                    GuardarConfiguracion(rutaArchivo, cadenaPrueba);
                     return cadenaPrueba;
                 }
             }
-
-            string instanciaEncontrada = BuscarInstanciasSQL();
-            if (!string.IsNullOrEmpty(instanciaEncontrada))
-            {
-                return $"Server={instanciaEncontrada}; Database={baseDeDatos}; Integrated Security=True;";
-            }
-
-            throw new Exception("No se pudo encontrar una instancia de SQL Server disponible.");
+            return $"Server=.\\SQLEXPRESS; Database={NOMBRE_BD}; Integrated Security=True;";
         }
 
-        private bool ProbarConexion(string cadenaConexion)
+        private bool ProbarConexion(string cadena)
         {
             try
             {
-                using (SqlConnection conexion = new SqlConnection(cadenaConexion))
+                using (SqlConnection con = new SqlConnection(cadena))
                 {
-                    conexion.Open();
+                    // pongo timeout de 2 segs para que la prueba sea rapida
+                    string cadenaTest = cadena + ";Connection Timeout=2";
+                    con.ConnectionString = cadenaTest;
+                    con.Open();
                     return true;
                 }
             }
@@ -66,33 +81,9 @@ namespace CapaDatos
             }
         }
 
-        private string BuscarInstanciasSQL()
+        private void GuardarConfiguracion(string ruta, string cadena)
         {
-            try
-            {
-                DataTable instancias = SqlDataSourceEnumerator.Instance.GetDataSources();
-
-                foreach (DataRow row in instancias.Rows)
-                {
-                    string nombreServidor = row["ServerName"].ToString();
-                    string nombreInstancia = row["InstanceName"].ToString();
-
-                    if (string.IsNullOrEmpty(nombreInstancia))
-                    {
-
-                        return nombreServidor;
-                    }
-                    else
-                    {
-                        return $"{nombreServidor}\\{nombreInstancia}";
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return null;
+            try { File.WriteAllText(ruta, cadena); } catch { }
         }
     }
 }

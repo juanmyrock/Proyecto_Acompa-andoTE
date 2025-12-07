@@ -500,7 +500,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmABMUsuarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Lista de Empleados";
+            this.Text = "Lista de Personas Empleadas";
             this.Load += new System.EventHandler(this.frmABMUsuarios_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

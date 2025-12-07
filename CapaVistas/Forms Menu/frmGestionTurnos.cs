@@ -1,192 +1,403 @@
-﻿using System;
+﻿using CapaDTO.SistemaDTO;
+using CapaLogica.LlenarCombos;
+using CapaLogica.Negocio;
+using CapaLogica.SistemaLogica;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
-namespace CapaVistas.Forms_Menu // O el namespace que corresponda
+namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionTurnos : Form
     {
-        // --- SIMULACIÓN DE DATOS (esto vendría de tu base de datos) ---
-        private Dictionary<string, List<string>> medicosPorEspecialidad = new Dictionary<string, List<string>>();
-        private List<Tuple<string, string>> turnosOcupados = new List<Tuple<string, string>>();
+        private cls_LogicaGestionarProfesionales _logicaProfesional;
+        private cls_LogicaTurnos _logicaTurnos;
+        private cls_LogicaGestionarPacientes _logicaPacientes;
+        private cls_LlenarCombos _rellenador;
+        private List<CapaDTO.cls_EspecialidadesDTO> _listaEspecialidades;
+        private List<cls_ProfesionalDTO> _listaProfesionales;
+        private List<cls_TurnosDTO> _turnosActuales;
+        private int _idUsuarioActual = 1;
 
         public frmGestionTurnos()
         {
             InitializeComponent();
+            _rellenador = new cls_LlenarCombos();
+            _logicaProfesional = new cls_LogicaGestionarProfesionales();
+            _logicaTurnos = new cls_LogicaTurnos();
+            _logicaPacientes = new cls_LogicaGestionarPacientes();
         }
 
         private void frmGestionTurnos_Load(object sender, EventArgs e)
         {
-            // Simula la carga de datos iniciales
-            CargarDatosDePrueba();
+            CargarCombos();
+            ConfigurarDataGridView();
+        }
 
-            // 1. Cargar Especialidades desde la Base de Datos
-            // Aquí harías: SELECT * FROM Especialidades
-            cmbEspecialidad.Items.Add("Cardiología");
-            cmbEspecialidad.Items.Add("Clínica Médica");
-            cmbEspecialidad.Items.Add("Pediatría");
+        private void CargarCombos()
+        {
+            var cargaEspecialidades = _rellenador.ObtenerEspecialidadesSinAcompaniante();
+
+            try
+            {
+                if (cargaEspecialidades != null && cargaEspecialidades.Especialidades != null)
+                {
+                    _listaEspecialidades = cargaEspecialidades.Especialidades;
+
+                    cmbEspecialidad.DataSource = _listaEspecialidades;
+                    cmbEspecialidad.DisplayMember = "especialidad";
+                    cmbEspecialidad.ValueMember = "id_especialidad";
+                    cmbEspecialidad.SelectedIndex = -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los ComboBoxes: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void cmbEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 2. Cargar Médicos según la Especialidad seleccionada
-            string especialidad = cmbEspecialidad.SelectedItem.ToString();
-            cmbAcompañante.Items.Clear();
-
-            // Aquí harías: SELECT Nombre FROM Medicos WHERE IDEspecialidad = ...
-            if (medicosPorEspecialidad.ContainsKey(especialidad))
+            if (cmbEspecialidad.SelectedIndex >= 0)
             {
-                foreach (var medico in medicosPorEspecialidad[especialidad])
+                if (_listaEspecialidades != null && _listaEspecialidades.Count > cmbEspecialidad.SelectedIndex)
                 {
-                    cmbAcompañante.Items.Add(medico);
+                    int idEspecialidad = _listaEspecialidades[cmbEspecialidad.SelectedIndex].id_especialidad;
+                    CargarProfesionalesPorEspecialidad(idEspecialidad);
                 }
             }
-            dgvAgenda.Rows.Clear();
-            lblAgenda.Text = "Agenda del día: (Seleccione médico y fecha)";
         }
 
-        // Eventos que disparan la actualización de la agenda
-        private void cmbMedico_SelectedIndexChanged(object sender, EventArgs e) => CargarAgenda();
-        private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e) => CargarAgenda();
+        private void CargarProfesionalesPorEspecialidad(int idEspecialidad)
+        {
+            cmbProfesional.Items.Clear();
+            cmbProfesional.Text = "";
+            _listaProfesionales = null;
+
+            try
+            {
+                List<cls_ProfesionalDTO> listaProfesionales =
+                    _logicaProfesional.ObtenerProfesionalesActivosPorEspecialidad(idEspecialidad);
+
+                if (listaProfesionales != null && listaProfesionales.Count > 0)
+                {
+                    _listaProfesionales = listaProfesionales;
+
+                    foreach (var profesional in listaProfesionales)
+                    {
+                        cmbProfesional.Items.Add(profesional.nombre + " " + profesional.apellido);
+                    }
+
+                    if (listaProfesionales.Count == 1)
+                    {
+                        cmbProfesional.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    cmbProfesional.Items.Add("No hay profesionales disponibles");
+                    cmbProfesional.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar profesionales: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void CargarAgenda()
         {
-            if (cmbAcompañante.SelectedItem == null) return;
+            if (cmbProfesional.SelectedIndex < 0) return;
+            if (cmbProfesional.SelectedItem?.ToString() == "No hay profesionales disponibles") return;
 
-            string medico = cmbAcompañante.SelectedItem.ToString();
-            DateTime fecha = monthCalendar.SelectionStart;
-            lblAgenda.Text = $"Agenda de {medico} - {fecha:dd/MM/yyyy}";
+            int idProfesional = ObtenerIdProfesionalSeleccionado();
+            if (idProfesional <= 0) return;
 
-            dgvAgenda.Rows.Clear();
-            cmbHorarios.Items.Clear();
+            DateTime fechaSeleccionada = monthCalendar.SelectionStart;
 
-            // 3. Generar la grilla de horarios para el profesional en la fecha seleccionada
-            // Aquí deberías consultar la tabla de turnos:
-            // SELECT Hora, Paciente FROM Turnos WHERE IDMedico = ... AND Fecha = ...
-
-            // Generamos horarios cada 30 minutos de 9 a 17 hs
-            for (DateTime hora = fecha.Date.AddHours(9); hora < fecha.Date.AddHours(17); hora = hora.AddMinutes(30))
+            try
             {
-                string horaStr = hora.ToString("HH:mm");
+                _turnosActuales = _logicaTurnos.BuscarTurnos(idProfesional, fechaSeleccionada);
 
-                // Verificamos si el turno está ocupado (simulación)
-                var turnoOcupado = turnosOcupados.Find(t => t.Item1 == horaStr);
+                dgvAgenda.Rows.Clear();
+                cmbHorarios.Items.Clear();
+                txtObservaciones.Clear();
 
-                if (turnoOcupado != null)
+                if (dgvAgenda.Columns.Count == 0)
                 {
-                    // Turno Ocupado
-                    dgvAgenda.Rows.Add(horaStr, turnoOcupado.Item2, "Ocupado");
+                    ConfigurarDataGridView();
                 }
-                else
+
+                DateTime horaInicio = fechaSeleccionada.Date.AddHours(8);
+                DateTime horaFin = fechaSeleccionada.Date.AddHours(18);
+
+                for (DateTime hora = horaInicio; hora < horaFin; hora = hora.AddMinutes(30))
                 {
-                    // Turno Disponible
-                    dgvAgenda.Rows.Add(horaStr, "", "Disponible");
-                    cmbHorarios.Items.Add(horaStr); // Agregamos la hora al combo de disponibles
+                    string horaStr = hora.ToString("HH:mm");
+                    bool horarioOcupado = false;
+
+                    if (_turnosActuales != null)
+                    {
+                        foreach (var turno in _turnosActuales)
+                        {
+                            if (turno.id_estado_turno != 3 &&
+                                turno.fecha_hora_inicio.ToString("HH:mm") == horaStr)
+                            {
+                                string nombrePaciente = turno.nombre_paciente;
+                                if (string.IsNullOrEmpty(nombrePaciente))
+                                {
+                                    nombrePaciente = ObtenerNombrePaciente(turno.id_paciente);
+                                }
+
+                                int rowIndex = dgvAgenda.Rows.Add();
+
+                                dgvAgenda.Rows[rowIndex].Cells["colHora"].Value = horaStr;
+                                dgvAgenda.Rows[rowIndex].Cells["colPaciente"].Value = nombrePaciente;
+                                dgvAgenda.Rows[rowIndex].Cells["colEstado"].Value = "Ocupado";
+                                dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = turno.observaciones;
+                                dgvAgenda.Rows[rowIndex].Cells["colIdTurno"].Value = turno.id_turno;
+                                dgvAgenda.Rows[rowIndex].Cells["colIdPaciente"].Value = turno.id_paciente;
+
+                                dgvAgenda.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
+
+                                horarioOcupado = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!horarioOcupado)
+                    {
+                        int rowIndex = dgvAgenda.Rows.Add();
+
+                        dgvAgenda.Rows[rowIndex].Cells["colHora"].Value = horaStr;
+                        dgvAgenda.Rows[rowIndex].Cells["colPaciente"].Value = "";
+                        dgvAgenda.Rows[rowIndex].Cells["colEstado"].Value = "Disponible";
+                        dgvAgenda.Rows[rowIndex].Cells["colObservaciones"].Value = "";
+                        dgvAgenda.Rows[rowIndex].Cells["colIdTurno"].Value = 0;
+                        dgvAgenda.Rows[rowIndex].Cells["colIdPaciente"].Value = 0;
+
+                        dgvAgenda.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                        cmbHorarios.Items.Add(horaStr);
+                    }
                 }
+
+                lblAgenda.Text = $"Agenda - {cmbProfesional.SelectedItem} - {fechaSeleccionada:dd/MM/yyyy}";
             }
-
-            // Colorear las filas según el estado
-            foreach (DataGridViewRow row in dgvAgenda.Rows)
+            catch (Exception ex)
             {
-                if (row.Cells["colEstado"].Value.ToString() == "Ocupado")
-                {
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 192, 192); // Rojo claro
-                }
-                else
-                {
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(192, 255, 192); // Verde claro
-                }
+                MessageBox.Show($"Error al cargar agenda: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            dgvAgenda.Columns.Clear();
+
+            dgvAgenda.Columns.Add("colHora", "Hora");
+            dgvAgenda.Columns.Add("colPaciente", "Paciente");
+            dgvAgenda.Columns.Add("colEstado", "Estado");
+            dgvAgenda.Columns.Add("colObservaciones", "Observaciones");
+            dgvAgenda.Columns.Add("colIdTurno", "ID Turno");
+            dgvAgenda.Columns.Add("colIdPaciente", "ID Paciente");
+
+            dgvAgenda.Columns["colHora"].Width = 70;
+            dgvAgenda.Columns["colPaciente"].Width = 150;
+            dgvAgenda.Columns["colEstado"].Width = 80;
+            dgvAgenda.Columns["colObservaciones"].Width = 200; 
+
+            dgvAgenda.Columns["colIdTurno"].Visible = false;
+            dgvAgenda.Columns["colIdPaciente"].Visible = false;
+
+            dgvAgenda.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAgenda.AllowUserToAddRows = false;
+            dgvAgenda.ReadOnly = true;
+            dgvAgenda.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         private void btnBuscarPaciente_Click(object sender, EventArgs e)
         {
-            // 4. Buscar paciente en la base de datos por DNI
             if (string.IsNullOrWhiteSpace(txtDniPaciente.Text))
             {
-                MessageBox.Show("Por favor, ingrese un DNI.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, ingrese un DNI.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Aquí harías: SELECT Nombre, Apellido FROM Pacientes WHERE DNI = ...
-            // Simulación:
-            if (txtDniPaciente.Text == "41148615")
+            try
             {
-                lblNombrePaciente.Text = "Sebastian Gonzalez";
+                var paciente = _logicaPacientes.BuscarPorDNI(txtDniPaciente.Text.Trim());
+
+                if (paciente != null)
+                {
+                    lblNombrePaciente.Text = $"{paciente.Nombre} {paciente.Apellido}";
+                    lblNombrePaciente.Tag = paciente.id_paciente;
+                }
+                else
+                {
+                    lblNombrePaciente.Text = "Paciente no encontrado";
+                    lblNombrePaciente.Tag = null;
+                    MessageBox.Show("No se encontró ningún paciente con ese DNI.",
+                        "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblNombrePaciente.Text = "(Sebastian Gonzalez)";
+                MessageBox.Show($"Error al buscar paciente: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
-            // 5. Validar y guardar el turno en la base de datos
-            if (cmbAcompañante.SelectedItem == null || cmbHorarios.SelectedItem == null || lblNombrePaciente.Text.Contains("Sebastian Gonzalez") || lblNombrePaciente.Text.Contains("..."))
+            if (cmbProfesional.SelectedIndex < 0)
             {
-                MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Seleccione un profesional.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-
             }
 
-            string medico = cmbAcompañante.SelectedItem.ToString();
-            string hora = cmbHorarios.SelectedItem.ToString();
-            string paciente = lblNombrePaciente.Text;
-            string fecha = monthCalendar.SelectionStart.ToShortDateString();
-
-            string mensaje = $"¿Confirma el siguiente turno?\n\n- Paciente: {paciente}\n- Médico: {medico}\n- Fecha: {fecha}\n- Hora: {hora}";
-
-            if (MessageBox.Show(mensaje, "Confirmar Turno", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (cmbHorarios.SelectedIndex < 0)
             {
-                // Aquí harías: INSERT INTO Turnos (IDMedico, IDPaciente, Fecha, Hora, Observaciones) VALUES (...)
+                MessageBox.Show("Seleccione un horario disponible.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                // Simulación: agregamos el turno a nuestra lista de ocupados
-                turnosOcupados.Add(new Tuple<string, string>(hora, paciente));
+            if (lblNombrePaciente.Tag == null || Convert.ToInt32(lblNombrePaciente.Tag) <= 0)
+            {
+                MessageBox.Show("Debe buscar y seleccionar un paciente válido.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                MessageBox.Show("Turno registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                int idProfesional = ObtenerIdProfesionalSeleccionado();
+                DateTime fecha = monthCalendar.SelectionStart;
+                string hora = cmbHorarios.SelectedItem.ToString();
+                DateTime fechaHoraTurno = fecha.Date + TimeSpan.Parse(hora);
 
-                // Recargamos la agenda para ver el cambio
-                CargarAgenda();
-                LimpiarCamposTurno();
+                var nuevoTurno = new cls_TurnosDTO
+                {
+                    id_paciente = Convert.ToInt32(lblNombrePaciente.Tag),
+                    id_profesional = idProfesional,
+                    fecha_hora_inicio = fechaHoraTurno,
+                    fecha_hora_fin = fechaHoraTurno.AddMinutes(30),
+                    id_estado_turno = 1,
+                    id_usuario_creador = _idUsuarioActual,
+                    fecha_creacion = DateTime.Now,
+                    observaciones = txtObservaciones.Text.Trim()
+                };
+
+                string mensaje = $"¿Confirma el siguiente turno?\n\n" +
+                               $"• Paciente: {lblNombrePaciente.Text}\n" +
+                               $"• Médico: {cmbProfesional.SelectedItem}\n" +
+                               $"• Fecha: {fecha:dd/MM/yyyy}\n" +
+                               $"• Hora: {hora}\n" +
+                               $"• Duración: 30 minutos";
+
+                if (MessageBox.Show(mensaje, "Confirmar Turno",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    var respuesta = _logicaTurnos.CrearTurno(nuevoTurno);
+
+                    if (respuesta.EsExitoso)
+                    {
+                        MessageBox.Show(respuesta.Mensaje, "Éxito",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        CargarAgenda();
+                        LimpiarCamposTurno();
+                    }
+                    else
+                    {
+                        MessageBox.Show(respuesta.Mensaje, "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al confirmar turno: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnCancelarTurno_Click(object sender, EventArgs e)
         {
-            if (dgvAgenda.SelectedRows.Count == 0 || dgvAgenda.SelectedRows[0].Cells["colEstado"].Value.ToString() == "Disponible")
+            if (dgvAgenda.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Seleccione un turno 'Ocupado' para cancelar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un turno para cancelar.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string hora = dgvAgenda.SelectedRows[0].Cells["colHora"].Value.ToString();
-            string paciente = dgvAgenda.SelectedRows[0].Cells["colPaciente"].Value.ToString();
+            DataGridViewRow filaSeleccionada = dgvAgenda.SelectedRows[0];
+            string estado = filaSeleccionada.Cells["colEstado"].Value?.ToString();
+            int idTurno = Convert.ToInt32(filaSeleccionada.Cells["colIdTurno"].Value);
 
-            if (MessageBox.Show($"¿Está seguro que desea cancelar el turno de {paciente} a las {hora} hs?", "Confirmar Cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (estado != "Ocupado" || idTurno <= 0)
             {
-                // 6. Aquí harías: DELETE FROM Turnos WHERE IDMedico = ... AND Fecha = ... AND Hora = ...
-                // O un UPDATE para cambiar el estado a 'Cancelado'
+                MessageBox.Show("Seleccione un turno 'Ocupado' para cancelar.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                // Simulación:
-                turnosOcupados.RemoveAll(t => t.Item1 == hora);
+            string hora = filaSeleccionada.Cells["colHora"].Value?.ToString();
+            string paciente = filaSeleccionada.Cells["colPaciente"].Value?.ToString();
 
-                MessageBox.Show("El turno ha sido cancelado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarAgenda(); // Recargamos
+            string mensaje = $"¿Está seguro que desea cancelar el turno?\n\n" +
+                           $"• Paciente: {paciente}\n" +
+                           $"• Hora: {hora}\n\n" +
+                           $"Esta acción no se puede deshacer.";
+
+            if (MessageBox.Show(mensaje, "Confirmar Cancelación",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    var respuesta = _logicaTurnos.CancelarTurno(idTurno, _idUsuarioActual);
+
+                    if (respuesta.EsExitoso)
+                    {
+                        MessageBox.Show(respuesta.Mensaje, "Éxito",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarAgenda();
+                    }
+                    else
+                    {
+                        MessageBox.Show(respuesta.Mensaje, "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cancelar turno: {ex.Message}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-        private void dgvAgenda_SelectionChanged(object sender, EventArgs e)
+        private string ObtenerNombrePaciente(int idPaciente)
         {
-            // Habilitar o deshabilitar el botón de cancelar según si el turno está ocupado
-            if (dgvAgenda.SelectedRows.Count > 0 && dgvAgenda.SelectedRows[0].Cells["colEstado"].Value.ToString() == "Ocupado")
+            try
             {
-                btnCancelarTurno.Enabled = true;
+                var paciente = _logicaPacientes.ObtenerPacientePorId(idPaciente);
+                if (paciente != null)
+                {
+                    return $"{paciente.Nombre} {paciente.Apellido}";
+                }
+                return $"Paciente ID: {idPaciente}";
             }
-            else
+            catch
             {
-                btnCancelarTurno.Enabled = false;
+                return "Paciente no encontrado";
             }
         }
 
@@ -194,18 +405,67 @@ namespace CapaVistas.Forms_Menu // O el namespace que corresponda
         {
             txtDniPaciente.Clear();
             lblNombrePaciente.Text = "(No seleccionado)...";
+            lblNombrePaciente.Tag = null;
+            txtObservaciones.Clear();
+            cmbHorarios.SelectedIndex = -1;
             txtObservaciones.Clear();
         }
-
-        private void CargarDatosDePrueba()
+        private int ObtenerIdProfesionalSeleccionado()
         {
-            // Simulación de datos que vendrían de la DB
-            medicosPorEspecialidad.Add("Cardiología", new List<string> { "Dr. Favaloro", "Dra. López" });
-            medicosPorEspecialidad.Add("Clínica Médica", new List<string> { "Dr. Pérez", "Dra. García" });
-            medicosPorEspecialidad.Add("Pediatría", new List<string> { "Dra. González" });
+            if (cmbProfesional.SelectedIndex < 0) return 0;
 
-            turnosOcupados.Add(new Tuple<string, string>("10:00", "Perez, Maria"));
-            turnosOcupados.Add(new Tuple<string, string>("11:30", "Rodriguez, Carlos"));
+            if (_listaProfesionales != null && _listaProfesionales.Count > cmbProfesional.SelectedIndex)
+            {
+                return _listaProfesionales[cmbProfesional.SelectedIndex].id_profesional;
+            }
+
+            return 0;
         }
-    }     
+
+        private void cmbProfesional_SelectedIndexChanged(object sender, EventArgs e) => CargarAgenda();
+        private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e) => CargarAgenda();
+
+
+        private void dgvAgenda_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvAgenda.SelectedRows.Count > 0)
+                {
+                    string estado = dgvAgenda.SelectedRows[0].Cells["colEstado"].Value?.ToString() ?? "";
+                    btnCancelarTurno.Enabled = (estado == "Ocupado");
+                }
+                else
+                {
+                    btnCancelarTurno.Enabled = false;
+                }
+
+                if (dgvAgenda.SelectedRows.Count > 0 && dgvAgenda.CurrentRow != null)
+                {
+                    var observaciones = dgvAgenda.CurrentRow.Cells["colObservaciones"].Value?.ToString() ?? "";
+                    txtObservaciones.Text = observaciones.ToString();
+                    var paciente = dgvAgenda.CurrentRow.Cells["colPaciente"].Value?.ToString() ?? "";
+                    var hora = dgvAgenda.CurrentRow.Cells["colHora"].Value?.ToString() ?? "";
+
+                    if (!string.IsNullOrEmpty(paciente))
+                    {
+                        lblInfoSeleccion.Text = $"Turno de {paciente} a las {hora}";
+                    }
+                    else
+                    {
+                        lblInfoSeleccion.Text = $"Horario disponible: {hora}";
+                    }
+                }
+                else
+                {
+                    txtObservaciones.Clear();
+                    lblInfoSeleccion.Text = "Seleccione un turno";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en SelectionChanged: {ex.Message}");
+            }
+        }
+    }
 }

@@ -7,7 +7,6 @@ namespace CapaDatos
 {
     public class cls_EjecutarQ : cls_ConexionBD
     {
-        // Método para ejecutar una consulta SQL que devuelve datos (como SELECT)
         public DataTable ConsultaRead(string consultaSql, List<SqlParameter> parametros = null) 
         {
             DataTable datosTabla = new DataTable();
@@ -75,7 +74,6 @@ namespace CapaDatos
             return datosTabla;
         }
 
-        // Método para ejecutar una consulta SQL que no devuelve datos (como INSERT, UPDATE, DELETE)
         public void ConsultaWrite(string comandoSql, List<SqlParameter> parametros = null)
         {
             try
@@ -233,7 +231,7 @@ namespace CapaDatos
                                 comando.Parameters.AddRange(parametros.ToArray());
                             }
 
-                            return comando.ExecuteScalar(); // Retorna la primera columna de la primera fila
+                            return comando.ExecuteScalar();
                         }
                     }
                 }
@@ -249,7 +247,6 @@ namespace CapaDatos
                 }
             }
 
-            // Versión para Stored Procedures
             public object ExecuteScalarSP(string storedProcedure, List<SqlParameter> parametros = null)
             {
                 try

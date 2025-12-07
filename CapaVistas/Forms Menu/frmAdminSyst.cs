@@ -53,15 +53,9 @@ namespace CapaVistas.Forms_Menu
         {
             try
             {
-                // 1. Obtener los parámetros de contraseña desde la base de datos
                 cls_ParamContraseñaDTO parametrosActuales = parametrosContraQ.ObtenerParametros();
-
-                // 2. Verificar si se obtuvieron parámetros (puede ser null si la tabla está vacía)
                 if (parametrosActuales != null)
                 {
-                    // 3. Asignar los valores del DTO a los controles del formulario
-
-
                     chkCombMayus.Checked = parametrosActuales.RequiereMayuscula ?? false;
                     chkCombMin.Checked = parametrosActuales.RequiereMinuscula ?? false;
                     chkNum.Checked = parametrosActuales.RequiereNumero ?? false;
@@ -106,10 +100,7 @@ namespace CapaVistas.Forms_Menu
 
         private void btnAcceptAdmin_Click(object sender, EventArgs e)
         {
-            // 1. Crea una nueva instancia del DTO para almacenar los valores del formulario
             cls_ParamContraseñaDTO nuevosParametros = new cls_ParamContraseñaDTO();
-
-            // 2. Asigna los valores de los controles del formulario al DTO
             try
             {
                 nuevosParametros.RequiereMayuscula = chkCombMayus.Checked;
@@ -122,8 +113,6 @@ namespace CapaVistas.Forms_Menu
                 nuevosParametros.Contras_Anteriores = Convert.ToInt32(numContrasAnteriores.Value);
                 nuevosParametros.Cantidad_Intentos = Convert.ToInt32(numFallos.Value);
                 nuevosParametros.DiasValidezPassword = Convert.ToInt32(numDiasContra.Value);
-
-                // 3. Llama al método de la capa lógica para modificar los parámetros
                 bool exito = parametrosContraQ.ModificarParametros(nuevosParametros);
 
                 if (exito)

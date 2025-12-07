@@ -62,10 +62,8 @@
     <Compile Include="Login\cls_LogicaPreguntas.cs" />
     <Compile Include="Negocio\cls_LogicaAsignacionAT.cs" />
     <Compile Include="Negocio\cls_LogicaInformes.cs" />
+    <Compile Include="Negocio\cls_LogicaTurnos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
@@ -84,6 +82,9 @@
       <Project>{b1a67ce0-7577-46aa-8cf0-b57d4edcba9c}</Project>
       <Name>CapaSesion</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
