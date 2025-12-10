@@ -164,22 +164,6 @@ namespace CapaDatos.Negocio
             return Convert.ToInt32(tabla.Rows[0][0]);
         }
 
-
-        public int ObtenerIdTipoTramitePorDescripcion(string descripcion)
-        {
-            string sql = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = @descripcion";
-            var parametros = new List<SqlParameter> { new SqlParameter("@descripcion", descripcion) };
-
-            DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
-
-            if (tabla.Rows.Count == 0)
-            {
-                throw new Exception($"Error fatal: No se encontró el 'Tipo_Tramite' llamado '{descripcion}' en la base de datos.");
-            }
-
-            return Convert.ToInt32(tabla.Rows[0]["id_tipo_tramite"]);
-        }
-
         public List<EstadoTramiteDTO> ObtenerEstadosPosibles()
         {
             string sql = "SELECT id_estado_tramite, estado_descripcion FROM Estado_Tramite ORDER BY estado_descripcion";
