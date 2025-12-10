@@ -19,6 +19,10 @@
         {
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
             this.mthFechas = new System.Windows.Forms.MonthCalendar();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chkFiltroTodos = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbFiltroTramites = new System.Windows.Forms.ComboBox();
             this.btnGestionTramite = new System.Windows.Forms.Button();
             this.btnFechas = new System.Windows.Forms.Button();
             this.lbTramites = new System.Windows.Forms.ListBox();
@@ -36,10 +40,6 @@
             this.lblEstadoActual = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblTramiteSeleccionado = new System.Windows.Forms.Label();
-            this.cmbFiltroTramites = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chkFiltroTodos = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.gbBusqueda.SuspendLayout();
             this.pnlEnviarMensaje.SuspendLayout();
             this.gbEstado.SuspendLayout();
@@ -76,6 +76,43 @@
             this.mthFechas.TabIndex = 0;
             this.mthFechas.Visible = false;
             this.mthFechas.MouseLeave += new System.EventHandler(this.mthFechas_MouseLeave);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 123);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 14);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Seleccione el trámite para editar:";
+            // 
+            // chkFiltroTodos
+            // 
+            this.chkFiltroTodos.AutoSize = true;
+            this.chkFiltroTodos.Location = new System.Drawing.Point(85, 284);
+            this.chkFiltroTodos.Name = "chkFiltroTodos";
+            this.chkFiltroTodos.Size = new System.Drawing.Size(57, 18);
+            this.chkFiltroTodos.TabIndex = 10;
+            this.chkFiltroTodos.Text = "Todos";
+            this.chkFiltroTodos.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(32, 284);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 14);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Filtrado:";
+            // 
+            // cmbFiltroTramites
+            // 
+            this.cmbFiltroTramites.FormattingEnabled = true;
+            this.cmbFiltroTramites.Location = new System.Drawing.Point(20, 288);
+            this.cmbFiltroTramites.Name = "cmbFiltroTramites";
+            this.cmbFiltroTramites.Size = new System.Drawing.Size(132, 22);
+            this.cmbFiltroTramites.TabIndex = 8;
+            this.cmbFiltroTramites.Visible = false;
             // 
             // btnGestionTramite
             // 
@@ -284,42 +321,6 @@
             this.lblTramiteSeleccionado.Size = new System.Drawing.Size(271, 23);
             this.lblTramiteSeleccionado.TabIndex = 6;
             this.lblTramiteSeleccionado.Text = "Seleccione un trámite para ver";
-            // 
-            // cmbFiltroTramites
-            // 
-            this.cmbFiltroTramites.FormattingEnabled = true;
-            this.cmbFiltroTramites.Location = new System.Drawing.Point(20, 288);
-            this.cmbFiltroTramites.Name = "cmbFiltroTramites";
-            this.cmbFiltroTramites.Size = new System.Drawing.Size(132, 22);
-            this.cmbFiltroTramites.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 268);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 14);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Filtrado:";
-            // 
-            // chkFiltroTodos
-            // 
-            this.chkFiltroTodos.AutoSize = true;
-            this.chkFiltroTodos.Location = new System.Drawing.Point(70, 268);
-            this.chkFiltroTodos.Name = "chkFiltroTodos";
-            this.chkFiltroTodos.Size = new System.Drawing.Size(57, 18);
-            this.chkFiltroTodos.TabIndex = 10;
-            this.chkFiltroTodos.Text = "Todos";
-            this.chkFiltroTodos.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 123);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(179, 14);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Seleccione el trámite para editar:";
             // 
             // frmGestionTramites
             // 

@@ -1,9 +1,9 @@
-﻿using CapaDTO;           
-using CapaDTO.SistemaDTO; 
+﻿using CapaDTO;
+using CapaDTO.SistemaDTO;
 using CapaLogica.CapaLogica.Tramites;
 using CapaLogica.Negocio;
 using CapaSesion.Login;
-using CapaUtilidades; 
+using CapaUtilidades;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,8 +13,11 @@ namespace CapaVistas.Forms_Menu
 {
     public partial class frmGestionTramites : Form
     {
+        // --- Conexión a la lógica ---
         private readonly cls_TramitesLogica _logicaTramites = new cls_TramitesLogica();
         private readonly cls_LogicaAsignacionAT _logicaAsignacionAT = new cls_LogicaAsignacionAT();
+
+        // --- Variables de Estado ---
         private List<cls_TramiteResumenDTO> _tramitesCargados = new List<cls_TramiteResumenDTO>();
         private SesionUsuario _usuariologeado = SesionUsuario.Instancia;
         private cls_TramiteResumenDTO _tramiteSeleccionado = null;
@@ -24,11 +27,13 @@ namespace CapaVistas.Forms_Menu
         public frmGestionTramites()
         {
             InitializeComponent();
-            CargarComboEstados(); 
+            CargarComboEstados();
             mthFechas.Visible = false;
             mthFechas.SelectionStart = DateTime.Today.AddMonths(-1);
             mthFechas.SelectionEnd = DateTime.Today;
         }
+
+        #region --- Eventos Visuales / Controles ---
 
         private void btnFechas_Click(object sender, EventArgs e)
         {
@@ -42,8 +47,27 @@ namespace CapaVistas.Forms_Menu
 
         private void mthFechas_DateSelected(object sender, DateRangeEventArgs e)
         {
-
+            // Opcional: Podrías poner la fecha seleccionada en el texto del botón
         }
+
+        private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
+        }
+
+        // NUEVO: Refrescar búsqueda al cambiar el filtro
+        private void chkFiltroTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_pacienteEncontrado != null)
+            {
+                btnBuscar.PerformClick();
+            }
+        }
+
+        #endregion
+
+        #region --- Lógica Principal ---
+
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             string busquedaDNI = txtBuscarPaciente.Text.Trim();
@@ -56,12 +80,14 @@ namespace CapaVistas.Forms_Menu
             mthFechas.Visible = false;
             DateTime? fechaInicio = mthFechas.SelectionStart.Date;
             DateTime? fechaFin = mthFechas.SelectionEnd.Date.AddDays(1).AddSeconds(-1);
+
             LimpiarSeleccion();
             _pacienteEncontrado = null;
             _dniPacienteBuscado = null;
 
             try
             {
+                // 1. Buscar Paciente
                 List<cls_PacienteSimpleDTO> pacientesEncontrados = _logicaAsignacionAT.BuscarPaciente(busquedaDNI);
 
                 if (pacientesEncontrados == null || pacientesEncontrados.Count == 0)
@@ -76,10 +102,16 @@ namespace CapaVistas.Forms_Menu
                     return;
                 }
 
+                // 2. Paciente Encontrado
                 _pacienteEncontrado = pacientesEncontrados[0];
                 _dniPacienteBuscado = _pacienteEncontrado.dni_paciente;
 
-                _tramitesCargados = _logicaTramites.BuscarTramites(busquedaDNI, fechaInicio, fechaFin);
+                // 3. Buscar Trámites (CON FILTRO)
+                // AQUI: Pasamos el estado del CheckBox 'chkFiltroTodos'
+                // true = Mostrar Todos (incluido cerrados), false = Ocultar Cerrados
+                bool mostrarTodos = chkFiltroTodos.Checked;
+
+                _tramitesCargados = _logicaTramites.BuscarTramites(busquedaDNI, fechaInicio, fechaFin, mostrarTodos);
 
                 lbTramites.DataSource = _tramitesCargados;
                 lbTramites.DisplayMember = "DescripcionLista";
@@ -87,7 +119,7 @@ namespace CapaVistas.Forms_Menu
 
                 if (_tramitesCargados.Count == 0)
                 {
-                    MessageBox.Show("Paciente encontrado, pero no tiene trámites registrados.", "Búsqueda Sin Resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Paciente encontrado, pero no tiene trámites (según el filtro actual).", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -98,6 +130,7 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
+        // --- SELECCIONAR TRÁMITE (Click simple) ---
         private void lbTramites_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbTramites.SelectedItem == null)
@@ -121,10 +154,7 @@ namespace CapaVistas.Forms_Menu
                 foreach (var evento in historial)
                 {
                     string tipo = evento.descripcion_tipo_tramite;
-
-                    string texto = evento.es_comentario
-                        ? evento.comentario
-                        : tipo;
+                    string texto = evento.es_comentario ? evento.comentario : tipo;
 
                     AgregarMensaje(evento.fecha_hora.ToString("dd/MM/yyyy HH:mm"), evento.nombre_usuario, tipo, texto, false);
                 }
@@ -140,95 +170,102 @@ namespace CapaVistas.Forms_Menu
             }
         }
 
-        private void btnEnviar_Click(object sender, EventArgs e)
+        // --- CAMINO 1: CREAR NUEVO (Botón) ---
+        private void btnGestionTramite_Click(object sender, EventArgs e)
         {
-            if (_tramiteSeleccionado == null)
+            if (_pacienteEncontrado == null)
             {
-                MessageBox.Show("Debe seleccionar un trámite primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Debe buscar y encontrar un paciente primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            int idPaciente = _pacienteEncontrado.id_paciente;
+            string nombrePaciente = _pacienteEncontrado.nombre_completo;
+
+            // Usamos el constructor para CREAR (recibe paciente)
+            using (frmABMTramites formCrear = new frmABMTramites(idPaciente, nombrePaciente))
+            {
+                if (formCrear.ShowDialog() == DialogResult.OK)
+                {
+                    btnBuscar.PerformClick(); // Refrescar lista
+                }
+            }
+        }
+
+        // --- CAMINO 2: EDITAR EXISTENTE (Doble Click) ---
+        private void lbTramites_DoubleClick(object sender, EventArgs e)
+        {
+            if (lbTramites.SelectedItem == null) return;
+
+            var tramiteSeleccionado = (cls_TramiteResumenDTO)lbTramites.SelectedItem;
+
+            // Usamos el constructor para EDITAR (recibe ID trámite)
+            using (frmABMTramites formEditar = new frmABMTramites(tramiteSeleccionado.id_tp))
+            {
+                if (formEditar.ShowDialog() == DialogResult.OK)
+                {
+                    btnBuscar.PerformClick(); // Refrescar lista para ver cambios
+                }
+            }
+        }
+
+        // --- ACCIONES DEL CHAT ---
+
+        private void btnEnviar_Click(object sender, EventArgs e)
+        {
+            if (_tramiteSeleccionado == null) return;
             string mensaje = txtMensaje.Text.Trim();
             if (string.IsNullOrWhiteSpace(mensaje)) return;
 
-            int id_tp = _tramiteSeleccionado.id_tp;
-            int id_usuario = _usuariologeado.IdUsuario;
-            string nombreUsuario = $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}";
-
             try
             {
-                if (_logicaTramites.RegistrarComentario(id_tp, id_usuario, mensaje))
+                if (_logicaTramites.RegistrarComentario(_tramiteSeleccionado.id_tp, _usuariologeado.IdUsuario, mensaje))
                 {
-                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, "Comentario de Usuario", mensaje);
+                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                        $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}",
+                        "Comentario de Usuario", mensaje);
                     txtMensaje.Clear();
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el comentario.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo registrar el comentario.", "Error");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al enviar el comentario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al enviar el comentario: " + ex.Message, "Error");
             }
         }
 
         private void btnCambiarEstado_Click(object sender, EventArgs e)
         {
-            if (_tramiteSeleccionado == null)
-            {
-                MessageBox.Show("Debe seleccionar un trámite primero.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (cmbNuevoEstado.SelectedValue == null)
-            {
-                MessageBox.Show("Debe seleccionar un tipo de evento.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int idTipoTramite = (int)cmbNuevoEstado.SelectedValue;
-            string descripcionEvento = cmbNuevoEstado.Text;
-            int idTramiteMaestro = _tramiteSeleccionado.id_tp;
-            int idUsuarioActual = _usuariologeado.IdUsuario;
-            string nombreUsuario = $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}";
+            if (_tramiteSeleccionado == null || cmbNuevoEstado.SelectedValue == null) return;
 
             try
             {
-                if (_logicaTramites.RegistrarEventoDeTipo(idTramiteMaestro, idUsuarioActual, idTipoTramite))
+                int idTipoTramite = (int)cmbNuevoEstado.SelectedValue;
+                string descripcionEvento = cmbNuevoEstado.Text;
+
+                if (_logicaTramites.RegistrarEventoDeTipo(_tramiteSeleccionado.id_tp, _usuariologeado.IdUsuario, idTipoTramite))
                 {
-                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"), nombreUsuario, descripcionEvento, descripcionEvento);
+                    AgregarMensaje(DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
+                        $"{_usuariologeado.NombreEmpleado} {_usuariologeado.ApellidoEmpleado}",
+                        descripcionEvento, descripcionEvento);
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo registrar el evento.", "Error de Operación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo registrar el evento.", "Error");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar el evento: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al registrar el evento: " + ex.Message, "Error");
             }
         }
 
-        private void btnGestionTramite_Click(object sender, EventArgs e)
-        {
-            if (_pacienteEncontrado == null || txtBuscarPaciente.Text == "")
-            {
-                MessageBox.Show("Debe buscar y encontrar un paciente (por DNI) para poder crear un trámite.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int idPaciente = _pacienteEncontrado.id_paciente;
-            string nombrePaciente = _pacienteEncontrado.nombre_completo;
+        #endregion
 
-            using (frmABMTramites formCrear = new frmABMTramites(idPaciente, nombrePaciente))
-            {
-                DialogResult resultado = formCrear.ShowDialog();
-
-                if (resultado == DialogResult.OK)
-                {
-                    btnBuscar.PerformClick();
-                }
-            }
-        }
-
+        #region --- Métodos Auxiliares ---
 
         private void LimpiarSeleccion()
         {
@@ -291,10 +328,7 @@ namespace CapaVistas.Forms_Menu
 
             pnlChat.Controls.Add(pnlMensaje);
 
-            if (scroll)
-            {
-                pnlChat.ScrollControlIntoView(pnlMensaje);
-            }
+            if (scroll) pnlChat.ScrollControlIntoView(pnlMensaje);
         }
 
         private void CargarComboEstados()
@@ -305,18 +339,10 @@ namespace CapaVistas.Forms_Menu
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los tipos de trámite: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar los tipos de trámite: " + ex.Message, "Error");
             }
         }
 
-        private void txtBuscarPaciente_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) btnBuscar.PerformClick();
-        }
-
-        private void lbTramites_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

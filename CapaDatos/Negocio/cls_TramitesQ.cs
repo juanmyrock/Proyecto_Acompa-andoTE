@@ -11,8 +11,10 @@ namespace CapaDatos.Negocio
     {
         private readonly cls_EjecutarQ _ejecutar = new cls_EjecutarQ();
 
-        public List<cls_TramiteResumenDTO> BuscarTramites(string dniPaciente, DateTime? fechaInicio, DateTime? fechaFin)
+        // 1. BUSCAR (Modificado para aceptar filtro 'mostrarCerrados')
+        public List<cls_TramiteResumenDTO> BuscarTramites(string dniPaciente, DateTime? fechaInicio, DateTime? fechaFin, bool mostrarCerrados)
         {
+            // 1. Buscar ID Paciente
             string sqlPaciente = "SELECT id_paciente FROM Pacientes WHERE dni_paciente = @dni";
             var paramPaciente = new List<SqlParameter> { new SqlParameter("@dni", dniPaciente) };
             DataTable tablaPaciente = _ejecutar.ConsultaRead(sqlPaciente, paramPaciente);
@@ -21,6 +23,7 @@ namespace CapaDatos.Negocio
                 throw new Exception("Paciente no encontrado con ese DNI.");
             int id_paciente = Convert.ToInt32(tablaPaciente.Rows[0]["id_paciente"]);
 
+            // 2. Query Base
             string sql = @"
                 SELECT 
                     t.id_tp, t.titulo_inicial, t.fecha_creacion,
@@ -31,14 +34,26 @@ namespace CapaDatos.Negocio
 
             var parametros = new List<SqlParameter> { new SqlParameter("@id_paciente", id_paciente) };
 
+            // 3. Filtros Dinámicos
+
+            // Fechas
             if (fechaInicio.HasValue && fechaFin.HasValue)
             {
                 sql += " AND t.fecha_creacion BETWEEN @fechaInicio AND @fechaFin";
                 parametros.Add(new SqlParameter("@fechaInicio", fechaInicio.Value));
                 parametros.Add(new SqlParameter("@fechaFin", fechaFin.Value));
             }
+
+            // --- NUEVO: Filtro de Cerrados ---
+            if (!mostrarCerrados)
+            {
+                // Si NO queremos ver los cerrados, los excluimos
+                sql += " AND et.estado_descripcion <> 'Cerrado'";
+            }
+
             sql += " ORDER BY t.fecha_creacion DESC";
 
+            // 4. Ejecución
             DataTable tabla = _ejecutar.ConsultaRead(sql, parametros);
             var lista = new List<cls_TramiteResumenDTO>();
 
@@ -54,14 +69,56 @@ namespace CapaDatos.Negocio
             }
             return lista;
         }
+
+        // 2. ACTUALIZAR (Nuevo método para editar título y estado)
+        public bool ActualizarTramiteMaestro(int id_tp, string titulo, int id_estado)
+        {
+            string sql = @"
+                UPDATE Tramites 
+                SET titulo_inicial = @titulo, 
+                    id_estado_actual = @id_estado
+                WHERE id_tp = @id_tp";
+
+            var parametros = new List<SqlParameter>
+            {
+                new SqlParameter("@id_tp", id_tp),
+                new SqlParameter("@titulo", titulo),
+                new SqlParameter("@id_estado", id_estado)
+            };
+
+            _ejecutar.ConsultaWrite(sql, parametros);
+            return true;
+        }
+
+        // 3. OBTENER POR ID (Nuevo método para llenar el popup de edición)
+        public cls_TramiteCreacionDTO ObtenerTramitePorId(int id_tp)
+        {
+            // Nota: Aquí no necesitamos el ID de usuario creador ni paciente para editar,
+            // pero reutilizamos el DTO de Creación para no crear uno nuevo.
+            string sql = @"SELECT titulo_inicial, id_estado_actual FROM Tramites WHERE id_tp = @id_tp";
+            var parametros = new List<SqlParameter> { new SqlParameter("@id_tp", id_tp) };
+
+            DataTable dt = _ejecutar.ConsultaRead(sql, parametros);
+
+            if (dt.Rows.Count > 0)
+            {
+                return new cls_TramiteCreacionDTO
+                {
+                    titulo_inicial = dt.Rows[0]["titulo_inicial"].ToString(),
+                    id_estado_actual = Convert.ToInt32(dt.Rows[0]["id_estado_actual"]),
+                    // Los demás campos quedan en 0/null porque no se usan para pintar el form
+                };
+            }
+            return null;
+        }
+
+        // --- MÉTODOS EXISTENTES (Sin cambios) ---
+
         public List<cls_HistorialDTO> ObtenerHistorialTramite(int id_tp)
         {
             string sql = @"
                 SELECT 
-                    h.fecha_hora,
-                    u.username AS nombre_usuario, 
-                    h.comentario,
-                    h.es_comentario,
+                    h.fecha_hora, u.username AS nombre_usuario, h.comentario, h.es_comentario,
                     tt.descripcion AS descripcion_tipo_tramite
                 FROM Tramites_Historial h
                 INNER JOIN Usuarios u ON h.id_usuario = u.id_usuario
@@ -89,7 +146,9 @@ namespace CapaDatos.Negocio
 
         public bool RegistrarComentario(int id_tp, int id_usuario, string comentario)
         {
-            int idTipoComentario = 1;
+            string sqlTipo = "SELECT id_tipo_tramite FROM Tipos_Tramite WHERE descripcion = 'Comentario de Usuario'";
+            DataTable tablaTipo = _ejecutar.ConsultaRead(sqlTipo, null);
+            int idTipoComentario = (tablaTipo.Rows.Count > 0) ? Convert.ToInt32(tablaTipo.Rows[0]["id_tipo_tramite"]) : 1;
 
             string sql = @"
                 INSERT INTO Tramites_Historial (id_tp, fecha_hora, id_usuario, id_tipo_tramite, comentario, es_comentario) 
@@ -102,7 +161,6 @@ namespace CapaDatos.Negocio
                 new SqlParameter("@id_tipo_tramite", idTipoComentario),
                 new SqlParameter("@comentario", comentario)
             };
-
             _ejecutar.ConsultaWrite(sql, parametros);
             return true;
         }
@@ -119,7 +177,6 @@ namespace CapaDatos.Negocio
                 new SqlParameter("@id_usuario", id_usuario),
                 new SqlParameter("@id_tipo_tramite", id_tipo_tramite)
             };
-
             _ejecutar.ConsultaWrite(sql, parametros);
             return true;
         }
@@ -129,7 +186,6 @@ namespace CapaDatos.Negocio
             string sql = "SELECT id_tipo_tramite, descripcion FROM Tipos_Tramite WHERE descripcion <> 'Comentario de Usuario' ORDER BY descripcion";
             DataTable tabla = _ejecutar.ConsultaRead(sql, null);
             var lista = new List<cls_TiposTramitesDTO>();
-
             foreach (DataRow row in tabla.Rows)
             {
                 lista.Add(new cls_TiposTramitesDTO
@@ -144,12 +200,8 @@ namespace CapaDatos.Negocio
         public int InsertarTramiteMaestro(cls_TramiteCreacionDTO dto)
         {
             string sql = @"
-                INSERT INTO Tramites (
-                    id_paciente, fecha_creacion, id_estado_actual, id_usuario_creador, titulo_inicial
-                ) 
-                VALUES (
-                    @id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial
-                );
+                INSERT INTO Tramites (id_paciente, fecha_creacion, id_estado_actual, id_usuario_creador, titulo_inicial) 
+                VALUES (@id_paciente, GETDATE(), @id_estado_actual, @id_usuario_creador, @titulo_inicial);
                 SELECT SCOPE_IDENTITY();";
 
             var parametros = new List<SqlParameter>
@@ -169,7 +221,6 @@ namespace CapaDatos.Negocio
             string sql = "SELECT id_estado_tramite, estado_descripcion FROM Estado_Tramite ORDER BY estado_descripcion";
             DataTable tabla = _ejecutar.ConsultaRead(sql, null);
             var lista = new List<EstadoTramiteDTO>();
-
             foreach (DataRow row in tabla.Rows)
             {
                 lista.Add(new EstadoTramiteDTO
@@ -180,9 +231,5 @@ namespace CapaDatos.Negocio
             }
             return lista;
         }
-
-
-
-
     }
 }
